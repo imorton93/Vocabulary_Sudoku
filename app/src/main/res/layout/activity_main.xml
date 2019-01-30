@@ -20,17 +20,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/square8">
 
+        <!--Comment / uncomment a line of code. -->
+
+        <!--One Activity layout for filling in Spanish (default), and another for filling in English?-->
+        <!--Would it work? Or I could somehow make the buttons change when user select "Fill in English"-->
+        <!--Perhaps it's better to do the second one (1 activity_main.xml )?-->
+
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/span_1" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/span_2"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -38,7 +44,7 @@
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/span_3"
             app:layout_column="2"
             app:layout_row="0" />
 
@@ -46,7 +52,7 @@
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/span_4"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -54,7 +60,7 @@
             android:id="@+id/button5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/span_5"
             app:layout_column="0"
             app:layout_row="2" />
 
@@ -62,7 +68,7 @@
             android:id="@+id/button6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/span_6"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -70,7 +76,7 @@
             android:id="@+id/button7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/span_7"
             app:layout_column="1"
             app:layout_row="2" />
 
@@ -78,7 +84,7 @@
             android:id="@+id/button8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/span_8"
             app:layout_column="2"
             app:layout_row="1" />
 
@@ -86,7 +92,7 @@
             android:id="@+id/button9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/span_9"
             app:layout_column="2"
             app:layout_row="2" />
     </android.support.v7.widget.GridLayout>
@@ -910,7 +916,7 @@
 
         <Button
             android:id="@+id/b21"
-            android:layout_width="35dp"
+            android:layout_width="36dp"
             android:layout_height="35dp"
             android:background="@xml/my_button_bg"
             android:textSize="12sp"

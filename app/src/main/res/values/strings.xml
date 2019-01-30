@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">My Application</string>
+    //Beginning of 9 word pairs
+    <string name="span_1">gato</string> //First spanish word
+    <string name="eng_1">cat</string> //First Spanish word's corresponding English word
+    <string name="span_2">perro</string>
+    <string name="eng_2">dog</string>
+    <string name="span_3">niña</string>
+    <string name="eng_3">girl</string>
+    <string name="span_4">niño</string>
+    <string name="eng_4">boy</string>
+    <string name="span_5">loro</string>
+    <string name="eng_5">parrot</string>
+    <string name="span_6">triste</string>
+    <string name="eng_6">sad</string>
+    <string name="span_7">feliz</string>
+    <string name="eng_7">happy</string>
+    <string name="span_8">padre</string>
+    <string name="eng_8">father</string>
+    <string name="span_9">madre</string>
+    <string name="eng_9">mother</string>
+//End of nine word pairs
+
+
 </resources>
