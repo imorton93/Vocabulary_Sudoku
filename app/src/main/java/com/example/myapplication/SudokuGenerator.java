@@ -24,7 +24,7 @@ public class SudokuGenerator {
         return initialGame;
     }
 
-    public String[][] generateGrid() {
+    public String[][] generateGrid(char lan) {
         String[][] Sudoku = new String[9][9];
 
         int currentPos = 0;
@@ -42,18 +42,28 @@ public class SudokuGenerator {
                 for (int x = 0; x < 81; x++) {
                     Words.add(new ArrayList<String>());
                     for (int i = 0; i < 9; i++) {
-                        Words.get(x).add(wordsEng[i]);
+                        if (lan == 'E') {
+                            Words.get(x).add(wordsEng[i]);
+                        }else{
+                            Words.get(x).add(wordsSpa[i]);
+                        }
                     }
                 }
             }
 
             if (Words.get(currentPos).size() > 0 ) {
                 int i = rand.nextInt(Words.get(currentPos).size());
-                String word = wordsEng[i];
+                String word;
+                if (lan == 'E') {
+                    word = wordsEng[i];
+                }else{
+                    word = wordsSpa[i];
+                }
 
-                if (!isConflict(Sudoku, currentPos, word)) {
-                    int xPos = currentPos % 9;
-                    int yPos = currentPos / 9;
+                int xPos = currentPos % 9;
+                int yPos = currentPos / 9;
+
+                if (!isConflict(Sudoku, xPos, yPos, word)) {
 
                     Sudoku[xPos][yPos] = word;
 
@@ -66,7 +76,11 @@ public class SudokuGenerator {
 
             } else {
                 for (int i = 0; i < 9; i++) {
-                    Words.get(currentPos).add(wordsEng[i]);
+                    if (lan == 'E') {
+                        Words.get(currentPos).add(wordsEng[i]);
+                    }else{
+                        Words.get(currentPos).add(wordsSpa[i]);
+                    }
                 }
                 currentPos--;
             }
@@ -76,14 +90,10 @@ public class SudokuGenerator {
     }
 
 
-    private boolean isConflict(String[][] Sudoku, int currentPos, final String word) {
-        int xPos = currentPos % 9;
-        int yPos = currentPos / 9;
-
+    private boolean isConflict(String[][] Sudoku, int xPos, int yPos, final String word) {
         if (isRowlConflict(Sudoku, xPos, yPos, word) || isColConflict(Sudoku, xPos, yPos, word) || isBlockConflict(Sudoku, xPos, yPos, word)) {
             return true;
         }
-
         return false;
     }
 
@@ -97,7 +107,6 @@ public class SudokuGenerator {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -107,7 +116,6 @@ public class SudokuGenerator {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -122,7 +130,6 @@ public class SudokuGenerator {
                 }
             }
         }
-
         return false;
     }
 

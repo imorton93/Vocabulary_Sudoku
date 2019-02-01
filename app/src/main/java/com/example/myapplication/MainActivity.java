@@ -6,15 +6,38 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.makeText;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "CMPT276-1191E1-Delta";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final String[][] SudokuEng = SudokuGenerator.getInitialGame().generateGrid('E');
+        final String[][] SudokuSpa = SudokuGenerator.getInitialGame().generateGrid('S');
+        printSudoku(SudokuEng);
+        printSudoku(SudokuSpa);
+
     }
 
+    private void printSudoku(String[][] Sudoku) {
+        for (int y = 0; y < 9; y++) {
+            for (int x = 0; x < 9; x++) {
+                System.out.print(Sudoku[x][y] + "|");
+            }
+            System.out.println();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
