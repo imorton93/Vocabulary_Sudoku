@@ -64,11 +64,8 @@ public class SudokuGenerator {
                 int yPos = currentPos / 9;
 
                 if (!isConflict(Sudoku, xPos, yPos, word)) {
-
                     Sudoku[xPos][yPos] = word;
-
                     Words.get(currentPos).remove(i);
-
                     currentPos++;
                 } else {
                     Words.get(currentPos).remove(i);
@@ -91,7 +88,7 @@ public class SudokuGenerator {
 
 
     private boolean isConflict(String[][] Sudoku, int xPos, int yPos, final String word) {
-        if (isRowlConflict(Sudoku, xPos, yPos, word) || isColConflict(Sudoku, xPos, yPos, word) || isBlockConflict(Sudoku, xPos, yPos, word)) {
+        if (isRowlConflict(Sudoku, xPos, yPos, word) || isColConflict(Sudoku, xPos, yPos, word) || isBoxConflict(Sudoku, xPos, yPos, word)) {
             return true;
         }
         return false;
@@ -102,8 +99,8 @@ public class SudokuGenerator {
      *
      */
     private boolean isRowlConflict(final String[][] Sudoku, final int xPos, final int yPos, final String word) {
-        for (int x = xPos - 1; x >= 0; x--) {
-            if (word == Sudoku[x][yPos]) {
+        for (int x = 0; x < xPos; x++) {
+            if (Sudoku[x][yPos] == word) {
                 return true;
             }
         }
@@ -111,21 +108,21 @@ public class SudokuGenerator {
     }
 
     private boolean isColConflict(final String[][] Sudoku, final int xPos, final int yPos, final String word) {
-        for (int y = yPos - 1; y >= 0; y--) {
-            if (word == Sudoku[xPos][y]) {
+        for (int y = 0; y < yPos; y++) {
+            if (Sudoku[xPos][y] == word) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean isBlockConflict(final String[][] Sudoku, final int xPos, final int yPos, final String word) {
-        int xBlock = xPos / 3;
-        int yBlock = yPos / 3;
+    private boolean isBoxConflict(final String[][] Sudoku, final int xPos, final int yPos, final String word) {
+        int xBox = xPos - xPos % 3;
+        int yBox = yPos -  yPos % 3;
 
-        for (int x = xBlock * 3; x < xBlock * 3 + 3; x++) {
-            for (int y = yBlock * 3; y < yBlock * 3 + 3; y++) {
-                if ((x != xPos || y != yPos) && word == Sudoku[x][y]) {
+        for (int x = xBox ; x < xBox + 3; x++) {
+            for (int y = yBox ; y < yBox + 3; y++) {
+                if ((x != xPos || y != yPos) && Sudoku[x][y] == word) {
                     return true;
                 }
             }

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="fin_button"></string>
     //Beginning of 9 word pairs
     <string name="span_1">gato</string> //First spanish word
     <string name="eng_1">cat</string> //First Spanish word's corresponding English word
