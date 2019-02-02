@@ -6,8 +6,7 @@
     <item
         android:id="@+id/fill_Span"
         android:title="Fill in Spanish"
-        app:showAsAction="never"
-        />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/fill_Eng"
