@@ -1,7 +1,34 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="fin_button"></string>
-    //Beginning of 9 word pairs
+
+    //Two arrays of words
+    <string-array name="Span_words">
+        <item>gato</item> //spanish word 1. The word order is preserved.
+        <item>perro</item>
+        <item>niña</item>
+        <item>niño</item>
+        <item>loro</item>
+        <item>triste</item>
+        <item>feliz</item>
+        <item>padre</item>
+        <item>madre</item>
+    </string-array>
+
+    <string-array name="Eng_words">
+        <item>cat</item>
+        <item>dog</item>
+        <item>girl</item>
+        <item>boy</item>
+        <item>parrot</item>
+        <item>sad</item>
+        <item>happy</item>
+        <item>father</item>
+        <item>mother</item>
+    </string-array>
+
+    <string name="title_dw">The Word Pairs</string> //Title of Word pair Display
+    //Beginning of 9 word pairs. These two declarations are not in conflict
     <string name="span_1">gato</string> //First spanish word
     <string name="eng_1">cat</string> //First Spanish word's corresponding English word
     <string name="span_2">perro</string>
