@@ -9,4 +9,5 @@
     <string name="seven_button">7</string>
     <string name="eight_button">8</string>
     <string name="nine_button">9</string>
+    <string name="clear_button">Clear</string>
 </resources>

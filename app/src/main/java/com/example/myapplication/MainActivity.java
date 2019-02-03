@@ -39,4 +39,8 @@ public class MainActivity extends AppCompatActivity {
         //set the Selected Buttons Text as text from input button
         SelectedButton.setText(buttonText);
     }
+
+    public void clearButtonOnClick(View z){
+        SelectedButton.setText("");
+    }
 }
