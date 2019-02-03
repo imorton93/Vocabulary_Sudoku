@@ -1,28 +1,22 @@
 package com.example.myapplication;
 
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class SudokuGenerator {
 
-    private static SudokuGenerator initialGame;
+    public SudokuGenerator() {
+
+    }
 
     private ArrayList<ArrayList<String>> Words = new ArrayList<ArrayList<String>>();
+
 
     String[] wordsEng = {"cat", "dog", "girl", "boy", "parrot", "sad", "happy", "father", "mother"};
     String[] wordsSpa = {"gato", "perro", "niña", "niño", "loro", "triste", "feliz", "padre", "madre"};
 
     private Random rand = new Random();
-
-    private SudokuGenerator() {
-    }
-
-    public static SudokuGenerator getInitialGame() {
-        if (initialGame == null) {
-            initialGame = new SudokuGenerator();
-        }
-        return initialGame;
-    }
 
     public String[][] generateGrid(char lan) {
         String[][] Sudoku = new String[9][9];
@@ -96,7 +90,9 @@ public class SudokuGenerator {
 
     /**
      * Return true if there is a conflict
-     *
+     *inRow
+     * inColumn
+     * in3*3Box
      */
     private boolean isRowlConflict(final String[][] Sudoku, final int xPos, final int yPos, final String word) {
         for (int x = 0; x < xPos; x++) {
@@ -131,3 +127,4 @@ public class SudokuGenerator {
     }
 
 }
+
