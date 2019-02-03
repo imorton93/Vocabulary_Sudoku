@@ -12,14 +12,16 @@ public class SudokuGenerator {
 
     private ArrayList<ArrayList<String>> Words = new ArrayList<ArrayList<String>>();
 
-
-    String[] wordsEng = {"cat", "dog", "girl", "boy", "parrot", "sad", "happy", "father", "mother"};
-    String[] wordsSpa = {"gato", "perro", "niña", "niño", "loro", "triste", "feliz", "padre", "madre"};
+    String[] sudokuWords = new String[9];
 
     private Random rand = new Random();
 
-    public String[][] generateGrid(char lan) {
+    public String[][] generateGrid(String[] wordsList,char lan) {
         String[][] Sudoku = new String[9][9];
+
+        for (int i = 0; i < 9; i++){
+            sudokuWords[i] = wordsList[i];
+        }
 
         int currentPos = 0;
 
@@ -36,11 +38,7 @@ public class SudokuGenerator {
                 for (int x = 0; x < 81; x++) {
                     Words.add(new ArrayList<String>());
                     for (int i = 0; i < 9; i++) {
-                        if (lan == 'E') {
-                            Words.get(x).add(wordsEng[i]);
-                        }else{
-                            Words.get(x).add(wordsSpa[i]);
-                        }
+                        Words.get(x).add(sudokuWords[i]);
                     }
                 }
             }
@@ -48,11 +46,8 @@ public class SudokuGenerator {
             if (Words.get(currentPos).size() > 0 ) {
                 int i = rand.nextInt(Words.get(currentPos).size());
                 String word;
-                if (lan == 'E') {
-                    word = wordsEng[i];
-                }else{
-                    word = wordsSpa[i];
-                }
+                word = sudokuWords[i];
+
 
                 int xPos = currentPos % 9;
                 int yPos = currentPos / 9;
@@ -67,11 +62,7 @@ public class SudokuGenerator {
 
             } else {
                 for (int i = 0; i < 9; i++) {
-                    if (lan == 'E') {
-                        Words.get(currentPos).add(wordsEng[i]);
-                    }else{
-                        Words.get(currentPos).add(wordsSpa[i]);
-                    }
+                    Words.get(currentPos).add(sudokuWords[i]);
                 }
                 currentPos--;
             }
@@ -96,7 +87,7 @@ public class SudokuGenerator {
      */
     private boolean isRowlConflict(final String[][] Sudoku, final int xPos, final int yPos, final String word) {
         for (int x = 0; x < xPos; x++) {
-            if (Sudoku[x][yPos] == word) {
+            if (word.equals(Sudoku[x][yPos])) {
                 return true;
             }
         }
@@ -105,7 +96,7 @@ public class SudokuGenerator {
 
     private boolean isColConflict(final String[][] Sudoku, final int xPos, final int yPos, final String word) {
         for (int y = 0; y < yPos; y++) {
-            if (Sudoku[xPos][y] == word) {
+            if (word.equals(Sudoku[xPos][y])) {
                 return true;
             }
         }
@@ -118,7 +109,7 @@ public class SudokuGenerator {
 
         for (int x = xBox ; x < xBox + 3; x++) {
             for (int y = yBox ; y < yBox + 3; y++) {
-                if ((x != xPos || y != yPos) && Sudoku[x][y] == word) {
+                if ((x != xPos || y != yPos) && word.equals(Sudoku[x][y])) {
                     return true;
                 }
             }

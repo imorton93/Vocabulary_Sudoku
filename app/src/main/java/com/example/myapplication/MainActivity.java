@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
     String[] span_words;
     String[] eng_words;
 
-  //  String[] span_words = getResources().getStringArray(R.array.Span_words); //Length : 9
-  //  String[] eng_words = getResources().getStringArray(R.array.Eng_words);
+    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    private static SudokuGenerator initialGame = new SudokuGenerator();
+    private static SudokuChecker resultCheck = new SudokuChecker();
+    private Button mfinButton;
 
 
 //    String[] span_words = { //Takes a while for app to open
@@ -43,37 +48,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final String[][] SudokuEng = initialGame.generateGrid('E');
-        final String[][] SudokuSpa = initialGame.generateGrid('S');
-        printSudoku(SudokuEng);
-        printSudoku(SudokuSpa);
-
-        // test SudokuChecker
-       // SudokuEng[8][4] = null;
-       // SudokuEng[8][1] = "dog";
-        /*SudokuEng[8][2] = "girl";
-        SudokuEng[8][3] = "boy";
-        SudokuEng[8][4] = "parrot";
-        SudokuEng[8][5] = "sad";
-        SudokuEng[8][6] = "happy";
-        SudokuEng[8][7] = "father";
-        SudokuEng[8][8] = "mother";
-        printSudoku(SudokuEng);
-        SudokuEng[0][8] = "cat";
-        SudokuEng[1][8] = "dog";
-        SudokuEng[2][8] = "girl";
-        SudokuEng[3][8] = "boy";
-        SudokuEng[4][8] = "parrot";
-        SudokuEng[5][8] = "sad";
-        SudokuEng[6][8] = "happy";
-        SudokuEng[7][8] = "father";
-        SudokuEng[8][8] = "mother";*/
-        //printSudoku(SudokuEng);
+        span_words = getResources().getStringArray(R.array.Span_words); //Length : 9
+        eng_words = getResources().getStringArray(R.array.Eng_words);
 
 
-        //get string(eng,spa) from resources
-        Resources res = MainActivity.this.getResources();
-        sudokuWords[0] = res.getString(R.string.eng_1);
+        final String[][] Sudoku = initialGame.generateGrid(eng_words,'E');
+        //final String[][] SudokuSpan = initialGame.generateGrid(span_words,'S');//initial Spanish Sudoku Grid
 
         //finish button
         //By clicking finish button, will check the correctness of Sudoku
@@ -83,27 +63,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String msg;
-                if (resultCheck.sudokuCheck(SudokuEng)){
-                    msg = "Congratulation! Sudoku is correct!";
+                if (resultCheck.sudokuCheck(Sudoku)){
+                    msg = "Congratulation! You successfully answer the Sudoku!";
+                    checkAnswer(msg);
+                    Intent intent;
+                    intent = new Intent(MainActivity.this, SudokuDisplay.class);
+                    ArrayList<String> words = new ArrayList<String>();
+                    for (int y = 0; y < 9; y++) {
+                        for (int x = 0; x < 9; x++) {
+                            words.add(Sudoku[x][y]);
+                        }
+                    }
+                    intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
+                   // intent.putExtra(EXTRA_MESSAGE, resultCheck.sudokuCheck(Sudoku));
+                    startActivity(intent);
                 }else{
-                    msg = "Sudoku is incorrect, try again!";
+                    msg = "It is incorrect, Please try again!";
+                    checkAnswer(msg);
                 }
-                Toast result = Toast.makeText(MainActivity.this,msg,Toast.LENGTH_LONG);
-                result.setGravity(Gravity.TOP, 0, 400);
-                result.show();
             }
         });
-
     }
 
-    private void printSudoku(String[][] Sudoku) {
-        for (int y = 0; y < 9; y++) {
-            System.out.print("       ");
-            for (int x = 0; x < 9; x++) {
-                System.out.print("|" + Sudoku[x][y] + "|");
-            }
-            System.out.println();
-        }
+    //Toast answer to users
+    private void checkAnswer(String msg) {
+        Toast result = Toast.makeText(MainActivity.this,msg,Toast.LENGTH_LONG);
+        result.setGravity(Gravity.TOP, 0, 400);
+        result.show();
     }
 
     @Override
