@@ -24,13 +24,15 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:onClick="insertButtonOnClick"
+            android:text="@string/one_button" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:onClick="insertButtonOnClick"
+            android:text="@string/two_button"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -38,7 +40,8 @@
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:onClick="insertButtonOnClick"
+            android:text="@string/three_button"
             app:layout_column="2"
             app:layout_row="0" />
 
@@ -46,7 +49,8 @@
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:onClick="insertButtonOnClick"
+            android:text="@string/four_button"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -54,7 +58,8 @@
             android:id="@+id/button5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:onClick="insertButtonOnClick"
+            android:text="@string/seven_button"
             app:layout_column="0"
             app:layout_row="2" />
 
@@ -62,7 +67,8 @@
             android:id="@+id/button6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:onClick="insertButtonOnClick"
+            android:text="@string/five_button"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -70,7 +76,8 @@
             android:id="@+id/button7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:onClick="insertButtonOnClick"
+            android:text="@string/eight_button"
             app:layout_column="1"
             app:layout_row="2" />
 
@@ -78,7 +85,8 @@
             android:id="@+id/button8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:onClick="insertButtonOnClick"
+            android:text="@string/six_button"
             app:layout_column="2"
             app:layout_row="1" />
 
@@ -86,7 +94,8 @@
             android:id="@+id/button9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:onClick="insertButtonOnClick"
+            android:text="@string/nine_button"
             app:layout_column="2"
             app:layout_row="2" />
     </android.support.v7.widget.GridLayout>
@@ -111,14 +120,16 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/b72"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -127,34 +138,38 @@
             android:id="@+id/b73"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
 
         <Button
-            android:id="@+id/b81"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
-            android:textSize="12sp"
-            app:layout_column="0"
-            app:layout_row="1" />
-
-        <Button
             android:id="@+id/b82"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
+            app:layout_row="1" />
+
+        <Button
+            android:id="@+id/b81"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
+            android:textSize="12sp"
+            app:layout_column="0"
             app:layout_row="1" />
 
         <Button
             android:id="@+id/b83"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -163,7 +178,8 @@
             android:id="@+id/b91"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -172,7 +188,8 @@
             android:id="@+id/b92"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -181,7 +198,8 @@
             android:id="@+id/b93"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -207,14 +225,16 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/b18"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -223,7 +243,8 @@
             android:id="@+id/b19"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -232,7 +253,8 @@
             android:id="@+id/b27"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -241,7 +263,8 @@
             android:id="@+id/b28"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -250,7 +273,8 @@
             android:id="@+id/b29"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -259,7 +283,8 @@
             android:id="@+id/b37"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -268,7 +293,8 @@
             android:id="@+id/b38"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -277,7 +303,8 @@
             android:id="@+id/b39"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -304,14 +331,16 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/b42"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -320,7 +349,8 @@
             android:id="@+id/b43"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -329,7 +359,8 @@
             android:id="@+id/b51"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -338,7 +369,8 @@
             android:id="@+id/b52"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -347,7 +379,8 @@
             android:id="@+id/b53"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -356,7 +389,8 @@
             android:id="@+id/b61"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -365,7 +399,8 @@
             android:id="@+id/b62"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -374,7 +409,8 @@
             android:id="@+id/b63"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -401,14 +437,16 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/b75"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -417,7 +455,8 @@
             android:id="@+id/b76"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -426,7 +465,8 @@
             android:id="@+id/b84"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -435,7 +475,8 @@
             android:id="@+id/b85"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -444,7 +485,8 @@
             android:id="@+id/b86"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -453,7 +495,8 @@
             android:id="@+id/b94"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -462,7 +505,8 @@
             android:id="@+id/b95"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -471,7 +515,8 @@
             android:id="@+id/b96"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -498,14 +543,16 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/b48"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -514,7 +561,8 @@
             android:id="@+id/b49"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -523,7 +571,8 @@
             android:id="@+id/b57"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -532,7 +581,8 @@
             android:id="@+id/b58"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -541,7 +591,8 @@
             android:id="@+id/b59"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -550,7 +601,8 @@
             android:id="@+id/b67"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -559,7 +611,8 @@
             android:id="@+id/b68"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -568,7 +621,8 @@
             android:id="@+id/b69"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -595,14 +649,16 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/b15"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -611,7 +667,8 @@
             android:id="@+id/b16"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -620,7 +677,8 @@
             android:id="@+id/b24"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -629,7 +687,8 @@
             android:id="@+id/b25"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -638,7 +697,8 @@
             android:id="@+id/b26"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -647,7 +707,8 @@
             android:id="@+id/b34"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -656,7 +717,8 @@
             android:id="@+id/b35"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -665,7 +727,8 @@
             android:id="@+id/b36"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -691,14 +754,16 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/b78"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -707,7 +772,8 @@
             android:id="@+id/b79"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -716,7 +782,8 @@
             android:id="@+id/b87"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -725,7 +792,8 @@
             android:id="@+id/b88"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -734,7 +802,8 @@
             android:id="@+id/b89"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -743,7 +812,8 @@
             android:id="@+id/b97"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -752,7 +822,8 @@
             android:id="@+id/b98"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -761,7 +832,8 @@
             android:id="@+id/b99"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -789,14 +861,16 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/b45"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -805,7 +879,8 @@
             android:id="@+id/b46"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -814,7 +889,8 @@
             android:id="@+id/b54"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -823,7 +899,8 @@
             android:id="@+id/b55"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -832,7 +909,8 @@
             android:id="@+id/b56"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -841,7 +919,8 @@
             android:id="@+id/b64"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -850,7 +929,8 @@
             android:id="@+id/b65"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -859,7 +939,8 @@
             android:id="@+id/b66"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -885,7 +966,8 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="0" />
@@ -894,7 +976,8 @@
             android:id="@+id/b12"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -903,7 +986,8 @@
             android:id="@+id/b13"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -912,7 +996,8 @@
             android:id="@+id/b21"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -921,7 +1006,8 @@
             android:id="@+id/b22"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -930,7 +1016,8 @@
             android:id="@+id/b23"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -939,7 +1026,8 @@
             android:id="@+id/b31"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -948,7 +1036,8 @@
             android:id="@+id/b32"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -957,7 +1046,8 @@
             android:id="@+id/b33"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@xml/my_button_bg"
+            android:background="@drawable/unclicked_button"
+            android:onClick="gridButtonOnClick"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
