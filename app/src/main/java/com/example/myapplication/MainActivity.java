@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import android.content.res.Resources;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +15,28 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "CMPT276-1191E1-Delta";
+    private static final int[] Button_ids = { //ID's for the 9 big buttons
+            R.id.button1,
+            R.id.button2,
+            R.id.button3,
+            R.id.button4,
+            R.id.button5,
+            R.id.button6,
+            R.id.button7,
+            R.id.button8,
+            R.id.button9,
+    };
+    String[] span_words;
+    String[] eng_words;
 
-    private Button mfinButton;
-    private SudokuGenerator initialGame = new SudokuGenerator();
-    private SudokuChecker resultCheck = new SudokuChecker();
-    String[] sudokuWords = new String[9]; //get words from string resources
+  //  String[] span_words = getResources().getStringArray(R.array.Span_words); //Length : 9
+  //  String[] eng_words = getResources().getStringArray(R.array.Eng_words);
 
+
+//    String[] span_words = { //Takes a while for app to open
+//        "gato", "perro", "niña","niño", "loro", "triste","feliz", "padre","madre"} ;
+//
+//    String[] eng_words = { "cat", "dog", "girl","boy", "parrot", "sad", "happy", "father","mother"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,14 +115,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        //Button mButton1 = (Button) findViewById(R.id.button1);
+        Button mButtons;
+        int i;
+        span_words = getResources().getStringArray(R.array.Span_words);
+        eng_words = getResources().getStringArray(R.array.Eng_words);
         switch (item.getItemId()){
             case R.id.fill_Span:
-                Log.d(TAG,"User choses to fill in Spanish");
+                Log.d(TAG,"User chooses to fill in Spanish");
+                //The 9 buttons will display Spanish. works.
+                //mButton1.setText(R.string.span_1);
+                for (i = 0; i < 9; i++){
+                    mButtons = findViewById(Button_ids[i]);
+                    mButtons.setText(span_words[i]);
+                }
                 return true;
 
             case R.id.fill_Eng:
-                Log.d(TAG,"User choses to fill in English");
+                Log.d(TAG,"User chooses to fill in English");
+                //The 9 buttons will display English
+                //mButton1.setText(R.string.eng_1);
+                for (i = 0; i < 9; i++){
+                    mButtons = findViewById(Button_ids[i]);
+                    mButtons.setText(eng_words[i]);
+                }
+                return true;
+
+            case R.id.display_words:
+                Log.d(TAG,"User chooses to see word pairs");
+                Intent display_w = new Intent(this, Display_Words.class);
+                this.startActivity(display_w);
                 return true;
         }
         return super.onOptionsItemSelected(item);
