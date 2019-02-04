@@ -16,7 +16,7 @@ public class SudokuGenerator {
 
     private Random rand = new Random();
 
-    public String[][] generateGrid(String[] wordsList,char lan) {
+    public String[][] generateGrid(String[] wordsList) {
         String[][] Sudoku = new String[9][9];
 
         for (int i = 0; i < 9; i++){

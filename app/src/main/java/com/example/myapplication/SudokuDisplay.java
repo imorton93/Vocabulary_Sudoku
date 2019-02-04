@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static com.example.myapplication.MainActivity.EXTRA_MESSAGE;
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class SudokuDisplay extends AppCompatActivity {
 
