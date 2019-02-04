@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Sudoku - Delta</string>
     <string name="one_button">1</string>
     <string name="two_button">2</string>
     <string name="three_button">3</string>
