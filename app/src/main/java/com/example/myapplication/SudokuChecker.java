@@ -30,7 +30,7 @@ public class SudokuChecker {
     private boolean checkCol(String[][] Sudoku) {
         for (int x = 0; x < 9; x++){
             for (int yPos = 0; yPos < 9; yPos++){
-                if (Sudoku[x][yPos] == null){
+                if (Sudoku[x][yPos] == null || Sudoku[x][yPos] == ""){
                     return false;
                 }
                 for (int y = yPos + 1; y < 9; y++){
@@ -46,7 +46,7 @@ public class SudokuChecker {
     private boolean checkRow(String[][] Sudoku) {
         for (int y = 0; y < 9; y++){
             for (int xPos = 0; xPos < 9; xPos++){
-                if (Sudoku[xPos][y] == null){
+                if (Sudoku[xPos][y] == null || Sudoku[xPos][y] == ""){
                     return false;
                 }
                 for (int x = xPos + 1; x < 9; x++){
