@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="one_button">1</string>
+    <string name="two_button">2</string>
+    <string name="three_button">3</string>
+    <string name="four_button">4</string>
+    <string name="five_button">5</string>
+    <string name="six_button">6</string>
+    <string name="seven_button">7</string>
+    <string name="eight_button">8</string>
+    <string name="nine_button">9</string>
+    <string name="clear_button">Clear</string>
     <string name="fin_button"></string>
     <string name="sudoku_view"></string>
 
@@ -49,6 +59,7 @@
     <string name="span_9">madre</string>
     <string name="eng_9">mother</string>
 //End of nine word pairs
+
 
 
 </resources>
