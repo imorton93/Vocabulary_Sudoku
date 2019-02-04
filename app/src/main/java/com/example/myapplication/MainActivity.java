@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 <<<<<<< app/src/main/java/com/example/myapplication/MainActivity.java
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "CMPT276-1191E1-Delta";
     private static final int[] Button_ids = { //ID's for the 9 big buttons
-            R.id.button1,
+            R.id.button,
             R.id.button2,
             R.id.button3,
             R.id.button4,
@@ -80,19 +81,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         //get string(eng,spa) from resources
-        Resources res = MainActivity.this.getResources();
-        sudokuWords[0] = res.getString(R.string.eng_1);
+     //   Resources res = MainActivity.this.getResources();
+    //    sudokuWords[0] = res.getString(R.string.eng_1);
 
         //finish button
         //By clicking finish button, will check the correctness of Sudoku
         //display whether right or wrong
-        mfinButton = (Button)findViewById(R.id.fin_button);
+        Button mfinButton;
+        mfinButton = (Button)findViewById(R.id.button10);
         mfinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String msg;
                 if (resultCheck.sudokuCheck(SudokuEng)){
-                    msg = "Congratulation! Sudoku is correct!";
+                    msg = "Congratulations! Sudoku is correct!";
                 }else{
                     msg = "Sudoku is incorrect, try again!";
                 }

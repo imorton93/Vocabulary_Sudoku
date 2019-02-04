@@ -61,15 +61,15 @@
 
     <string name="Display_words">English	Spanish
             \n
-            cat	gato \n
-            dog	perro \n
-            girl	niña \n
-            boy	niño \n
-            parrot	loro \n
-            sad	triste \n
-            Happy	feliz \n
-            father	padre \n
-            mother	madre  \n</string>
+            cat--------gato \n
+            dog--------perro \n
+            girl--------niña \n
+            boy--------niño \n
+            parrot--------loro \n
+            sad--------triste \n
+            Happy--------feliz \n
+            father--------padre \n
+            mother--------madre  \n</string>
 
 
 </resources>
