@@ -70,12 +70,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getGameGrid(String[] words){
-        InitializedGame = true;
         Sudoku = initialGame.generateGrid(words);
         Random rand = new Random();
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                gridButton[x][y].setText(Sudoku[x][y]);
+                gridButton[x][y].setText("");
+                int i = rand.nextInt(x+1);
+                int j = rand.nextInt(y+1);
+                gridButton[i][j].setText(Sudoku[i][j]);
+                gridButton[i][j].setClickable(false);
             }
         }
     }
@@ -115,15 +118,15 @@ public class MainActivity extends AppCompatActivity {
         result.show();
         //only for test
         //intent the 9*9 Grid Sudoku to a new page
-      /*  Intent intent = new Intent(MainActivity.this, SudokuDisplay.class);
+        Intent intent = new Intent(MainActivity.this, SudokuDisplay.class);
         ArrayList<String> words = new ArrayList<String>();
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                words.add(originalSudoku[x][y]);
+                words.add(Sudoku[x][y]);
             }
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
 

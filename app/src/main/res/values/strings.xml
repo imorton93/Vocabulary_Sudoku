@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Sudoku - Delta</string>
     <string name="one_button">1</string>
     <string name="two_button">2</string>
     <string name="three_button">3</string>
@@ -60,6 +60,17 @@
     <string name="eng_9">mother</string>
 //End of nine word pairs
 
+    <string name="Display_words">English	Spanish
+            \n
+            cat--------gato \n
+            dog--------perro \n
+            girl--------niña \n
+            boy--------niño \n
+            parrot--------loro \n
+            sad--------triste \n
+            Happy--------feliz \n
+            father--------padre \n
+            mother--------madre  \n</string>
 
 
 </resources>
