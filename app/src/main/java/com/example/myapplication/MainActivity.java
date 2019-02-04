@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     String[][] Sudoku = new String[9][9];
     private static SudokuChecker resultCheck = new SudokuChecker();
     private Button mfinButton;
-
+    private boolean InitializedGame = false;
 
 
 
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getGameGrid(String[] words){
+        InitializedGame = true;
         Sudoku = initialGame.generateGrid(words);
         Random rand = new Random();
         for (int y = 0; y < 9; y++) {
@@ -130,20 +131,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void gridButtonOnClick(View v){
         //user hits one of the grid blocks to insert a word
-        if(SelectedButton != null){
-            //if a button has already been selected change that button back to normal
-            SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-            SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+        if(InitializedGame == false){
+            Toast.makeText(MainActivity.this , R.string.not_initialized,Toast.LENGTH_SHORT).show();
         }
-        SelectedButton = (Button) v;
-        SelectedButton.setBackgroundResource(R.drawable.clicked_button);
-        SelectedButton.setTextColor(Color.parseColor("#FFFFFF"));
-        //SelectedButton.setText("clicked");
-
+        else {
+            if (SelectedButton != null) {
+                //if a button has already been selected change that button back to normal
+                SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+            }
+            SelectedButton = (Button) v;
+            SelectedButton.setBackgroundResource(R.drawable.clicked_button);
+            SelectedButton.setTextColor(Color.parseColor("#FFFFFF"));
+            //SelectedButton.setText("clicked");
+        }
     }
 
     public void insertButtonOnClick(View w){
         //user hits button to change text of selectedbutton
+
         if(SelectedButton != null) {
             Button button = (Button) w;
             // text of input button is extracted
