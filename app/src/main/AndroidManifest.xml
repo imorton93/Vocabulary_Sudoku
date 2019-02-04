@@ -19,7 +19,10 @@
         <activity android:name=".Display_Words"
             android:label="Display Word Pairs"
             android:parentActivityName=".MainActivity" >
-
+        </activity>
+        <activity android:name=".SudokuDisplay"
+            android:label="Sudoku Correct Grid"
+            android:parentActivityName=".MainActivity" >
         </activity>
     </application>
 

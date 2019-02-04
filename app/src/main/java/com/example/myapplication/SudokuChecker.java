@@ -17,7 +17,7 @@ public class SudokuChecker {
                 //row, column should be the start of 3*3 grid
                 for (int xBox = 0; xBox < 9; xBox++){
                     for (int yBox = xBox + 1 ; yBox < 9; yBox++){
-                        if (Sudoku[x+xBox%3][y+xBox/3] == Sudoku[x+yBox%3][y+yBox/3]){
+                        if (Sudoku[x+xBox%3][y+xBox/3].equals(Sudoku[x+yBox%3][y+yBox/3])){
                             return false;
                         }
                     }
@@ -34,7 +34,7 @@ public class SudokuChecker {
                     return false;
                 }
                 for (int y = yPos + 1; y < 9; y++){
-                    if (Sudoku[x][yPos] == Sudoku[x][y]){
+                    if (Sudoku[x][yPos].equals(Sudoku[x][y])){
                         return false;
                     }
                 }
@@ -50,7 +50,7 @@ public class SudokuChecker {
                     return false;
                 }
                 for (int x = xPos + 1; x < 9; x++){
-                    if (Sudoku[xPos][y] == Sudoku[x][y]){
+                    if (Sudoku[xPos][y].equals(Sudoku[x][y])){
                         return false;
                     }
                 }
