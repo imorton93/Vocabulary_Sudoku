@@ -41,14 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private static SudokuChecker resultCheck = new SudokuChecker();
     private Button mfinButton;
 
-
-
-
-//    String[] span_words = { //Takes a while for app to open
-//        "gato", "perro", "niña","niño", "loro", "triste","feliz", "padre","madre"} ;
-//
-//    String[] eng_words = { "cat", "dog", "girl","boy", "parrot", "sad", "happy", "father","mother"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
                 gridButton[x][y].setText("");
+                gridButton[x][y].setClickable(true);
                 int i = rand.nextInt(x+1);
                 int j = rand.nextInt(y+1);
                 gridButton[i][j].setText(Sudoku[i][j]);
