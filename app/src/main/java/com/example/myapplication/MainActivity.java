@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast result1 = Toast.makeText(MainActivity.this,"User chooses to fill in Spanish",Toast.LENGTH_LONG);
                 result1.setGravity(Gravity.TOP, 0, 400);
                 result1.show();
-                getGameGrid(span_words);
+                getGameGrid(span_words);//After choosing "fill in Spanish", start a new game with Spanish
                 for (i = 0; i < 9; i++){
                     mButtons = findViewById(Button_ids[i]);
                     mButtons.setText(span_words[i]);
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast result2 = Toast.makeText(MainActivity.this,"User chooses to fill in English",Toast.LENGTH_LONG);
                 result2.setGravity(Gravity.TOP, 0, 400);
                 result2.show();
-                getGameGrid(eng_words);
+                getGameGrid(eng_words); //After choosing "fill in Englisn", start a new game with English
                 for (i = 0; i < 9; i++){
                     mButtons = findViewById(Button_ids[i]);
                     mButtons.setText(eng_words[i]);
