@@ -74,7 +74,11 @@ public class MainActivity extends AppCompatActivity {
         Random rand = new Random();
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                gridButton[x][y].setText(Sudoku[x][y]);
+                gridButton[x][y].setText("");
+                int i = rand.nextInt(x+1);
+                int j = rand.nextInt(y+1);
+                gridButton[i][j].setText(Sudoku[i][j]);
+                gridButton[i][j].setClickable(false);
             }
         }
     }
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> words = new ArrayList<String>();
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                words.add(originalSudoku[x][y]);
+                words.add(Sudoku[x][y]);
             }
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
@@ -142,15 +146,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void insertButtonOnClick(View w){
         //user hits button to change text of selectedbutton
-        Button button = (Button) w;
-        // text of input button is extracted
-        CharSequence buttonText = button.getText();
-        //set the Selected Buttons Text as text from input button
-        SelectedButton.setText(buttonText);
+        if (SelectedButton != null){
+            Button button = (Button) w;
+            // text of input button is extracted
+            CharSequence buttonText = button.getText();
+            //set the Selected Buttons Text as text from input button
+            SelectedButton.setText(buttonText);
+        }
     }
 
     public void clearButtonOnClick(View z){
-        SelectedButton.setText("");
+        if(SelectedButton != null){
+            SelectedButton.setText("");
+        }
     }
 
     @Override
