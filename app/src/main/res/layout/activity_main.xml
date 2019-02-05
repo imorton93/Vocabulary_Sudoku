@@ -126,7 +126,6 @@
             app:layout_column="3"
             app:layout_row="1" />
 
-
         <Button
             android:id="@+id/fin_button"
             android:layout_width="wrap_content"
@@ -134,6 +133,7 @@
             android:text="@string/fin_button"
             app:layout_column="2"
             app:layout_row="3" />
+
 
     </android.support.v7.widget.GridLayout>
 
