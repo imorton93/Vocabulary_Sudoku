@@ -13,6 +13,7 @@
     <string name="not_initialized">You have not initialized the game, to initialize,
         choose "Fill in English" or "Fill in Spanish"</string>
     <string name="fin_button">Finish</string>
+    <string name="sudoku_view"></string>
 
 
     <string name="warn_reinit">Warning!!! If you initialized the game already,
