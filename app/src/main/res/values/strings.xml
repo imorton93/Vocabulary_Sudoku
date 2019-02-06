@@ -10,10 +10,20 @@
     <string name="eight_button">8</string>
     <string name="nine_button">9</string>
     <string name="clear_button">Clear</string>
-    <string name="not_initialized">You have not initialized the game</string>
+    <string name="not_initialized">You have not initialized the game, to initialize,
+        choose "Fill in English" or "Fill in Spanish"</string>
     <string name="fin_button">Finish</string>
     <string name="sudoku_view"></string>
 
+
+    <string name="warn_reinit">Warning!!! If you initialized the game already,
+        the game will be reset and you will start all over if you continue. Do you want to continue?
+        </string>
+    <string name="yes">YES</string>
+    <string name="cancel">CANCEL</string>
+
+    <string name="cant_init">You have already started. You can only finish the game first,
+        then restart another game</string>
     //Two arrays of words
     <string-array name="Span_words">
         <item>gato</item> //spanish word 1. The word order is preserved.
