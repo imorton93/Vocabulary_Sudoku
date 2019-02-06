@@ -44,10 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//    String[] span_words = { //Takes a while for app to open
-//        "gato", "perro", "niña","niño", "loro", "triste","feliz", "padre","madre"} ;
-//
-//    String[] eng_words = { "cat", "dog", "girl","boy", "parrot", "sad", "happy", "father","mother"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +138,8 @@ public class MainActivity extends AppCompatActivity {
     public void gridButtonOnClick(View v){
         //user hits one of the grid blocks to insert a word
         if(InitializedGame == false){
-            Toast.makeText(MainActivity.this , R.string.not_initialized,Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this ,
+                    R.string.not_initialized,Toast.LENGTH_LONG).show();
         }
         else {
             if (SelectedButton != null) {
@@ -194,13 +191,20 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG,"User chooses to fill in Spanish");
                 //The 9 buttons will display Spanish. works.
                 //mButton1.setText(R.string.span_1);
-                Toast result1 = Toast.makeText(MainActivity.this,"User chooses to fill in Spanish",Toast.LENGTH_LONG);
-                result1.setGravity(Gravity.TOP, 0, 400);
-                result1.show();
-                getGameGrid(eng_words); //After choosing "fill in Spanish", start a new game with Spanish
-                for (i = 0; i < 9; i++){
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(span_words[i]);
+                Toast result1 = Toast.makeText(MainActivity.this,
+                        "User chooses to fill in Spanish",Toast.LENGTH_LONG);
+                if (InitializedGame == false) {
+                    result1.setGravity(Gravity.TOP, 0, 400);
+                    result1.show();
+                    getGameGrid(span_words); //After choosing "fill in Spanish", start a new game with Spanish
+                    for (i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(span_words[i]);
+                    }
+                }
+                else{
+                    //Make warning dialog appear
+                    Toast.makeText(MainActivity.this,R.string.cant_init,Toast.LENGTH_LONG).show();
                 }
                 return true;
 
@@ -208,17 +212,26 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG,"User chooses to fill in English");
                 //The 9 buttons will display English
                 //mButton1.setText(R.string.eng_1);
-                Toast result2 = Toast.makeText(MainActivity.this,"User chooses to fill in English",Toast.LENGTH_LONG);
-                result2.setGravity(Gravity.TOP, 0, 400);
-                result2.show();
-                getGameGrid(span_words); //After choosing "fill in Spanish", start a new game with English
-                for (i = 0; i < 9; i++){
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(eng_words[i]);
+                Toast result2 = Toast.makeText(MainActivity.this,
+                        "User chooses to fill in English",Toast.LENGTH_LONG);
+                if (InitializedGame == false) {
+                    result2.setGravity(Gravity.TOP, 0, 400);
+                    result2.show();
+                    getGameGrid(eng_words); //After choosing "fill in Spanish", start a new game with English
+                    for (i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(eng_words[i]);
+                    }
+                }
+                else {
+                    //make dialog here
+                    //Temporary Toast
+                    Toast.makeText(MainActivity.this,R.string.cant_init,Toast.LENGTH_LONG).show();
                 }
                 return true;
 
             case R.id.display_words:
+
                 Log.d(TAG,"User chooses to see word pairs");
                 Intent display_w = new Intent(this, Display_Words.class);
                 this.startActivity(display_w);
