@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.widget.Toast;
+
 public class SudokuChecker {
 
     public SudokuChecker(){
@@ -63,6 +65,7 @@ public class SudokuChecker {
         for (int y = 0; y < 9; y++){
             for (int xPos = 0; xPos < 9; xPos++){
                 if (Sudoku[xPos][y] == null || Sudoku[xPos][y].equals("")){
+
                     return false;
                 }
                 String eng = null;
@@ -75,6 +78,7 @@ public class SudokuChecker {
                 }
                 for (int x = xPos + 1; x < 9; x++){
                     if (Sudoku[xPos][y].equals(Sudoku[x][y]) || Sudoku[x][y].equals(eng) || Sudoku[x][y].equals(span)){
+
                         return false;
                     }
                 }
