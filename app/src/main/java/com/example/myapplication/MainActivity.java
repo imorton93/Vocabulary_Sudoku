@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void insertButtonOnClick(View w){
         //user hits button to change text of selectedbutton
-
         if(SelectedButton != null) {
             Button button = (Button) w;
             // text of input button is extracted
@@ -178,15 +177,15 @@ public class MainActivity extends AppCompatActivity {
             /* when clicking a English word and filling into the cell,
             the English word will be automatically translated to Spanish
             *  vice versa
-            * *
+            * *perhaps for next iteration
             */
-            for (int i = 0; i < 9; i++) {
+        /*    for (int i = 0; i < 9; i++) {
                 if (buttonText.equals(eng_wordsList[i])){
                     buttonText = ""+span_wordsList[i];
                 }else if (buttonText.equals(span_wordsList[i])){
                     buttonText =""+eng_wordsList[i];
                 }
-            }
+            }*/
             //set the Selected Buttons Text as text from input button
             SelectedButton.setText(buttonText);
         }
@@ -226,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                     getGameGrid(eng_words); //After choosing "fill in Spanish", start a new game with Spanish
                     for (i = 0; i < 9; i++) {
                         mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(eng_words[i]);
+                        mButtons.setText(span_words[i]);
                     }
                 }
                 else{
@@ -247,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
                     getGameGrid(span_words); //After choosing "fill in Spanish", start a new game with English
                     for (i = 0; i < 9; i++) {
                         mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(span_words[i]);
+                        mButtons.setText(eng_words[i]);
                     }
                 }
                 else {

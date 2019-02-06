@@ -11,8 +11,11 @@ import android.view.Window;
 import android.widget.Button;
 
 
-public class reinit_dialog extends Dialog implements android.view.View.OnClickListener{
-
+public class reinit_adialog extends Dialog implements android.view.View.OnClickListener{
+//public class CustomDialog extends Dialog implements android.view.View.OnClickListener {
+//public class Reinit_dialog extends Dialog implements android.view.View.OnClickListener{
+//public class reinit_dialog extends Dialog    {
+//public class reinit_dialog {
     public Activity activity;
     public Button yes, cancel;
 

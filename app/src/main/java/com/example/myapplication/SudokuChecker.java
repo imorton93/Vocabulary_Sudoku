@@ -8,7 +8,9 @@ public class SudokuChecker {
     }
     private static final String TAG = "CMPT276-1191E1-Delta";
 
+
     public boolean sudokuCheck(String[][] Sudoku, String[] eng_list, String[] span_list){
+
         return (checkRow(Sudoku,eng_list,span_list) && checkCol(Sudoku,eng_list,span_list) && checkBox(Sudoku,eng_list,span_list));
     }
 
