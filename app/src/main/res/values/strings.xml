@@ -12,6 +12,7 @@
     <string name="clear_button">Clear</string>
     <string name="not_initialized">You have not initialized the game</string>
     <string name="fin_button">Finish</string>
+    <string name="sudoku_view"></string>
 
     //Two arrays of words
     <string-array name="Span_words">

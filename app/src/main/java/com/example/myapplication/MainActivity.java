@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private static SudokuChecker resultCheck = new SudokuChecker();
     private Button mfinButton;
     private boolean InitializedGame = false;
+    String[] eng_wordsList = new String[9];
+    String[] span_wordsList = new String[9];
 
 
 
@@ -63,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 gridButton[x][y] = (Button) findViewById(resID);
             }
+        }
+
+        span_words = getResources().getStringArray(R.array.Span_words);
+        eng_words = getResources().getStringArray(R.array.Eng_words);
+        for (int i = 0; i < 9; i++){
+            span_wordsList[i] = span_words[i];
+            eng_wordsList[i] = eng_words[i];
         }
         //gameInitial
         //finish Button
@@ -103,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int y = 0; y < 9; y++) {
                     for (int x = 0; x < 9; x++) {
                         CharSequence temp = gridButton[x][y].getText();
-                        checkSudoku[x][y] = "" + temp ;
+                        checkSudoku[x][y] = temp + "";
                         originalSudoku[x][y] = Sudoku[x][y];
                     }
                 }
@@ -115,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, String[][] originalSudoku){
         String msg;
-        if (resultCheck.sudokuCheck(Sudoku, eng_words,span_words)){
+        if (resultCheck.sudokuCheck(Sudoku, eng_wordsList,span_wordsList)){
             msg = "Congratulation! Sudoku is correct!";
         }else{
             msg = "Sudoku is incorrect, try again!";
@@ -133,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
+        intent.putExtra(EXTRA_MESSAGE,words);
         startActivity(intent);
     }
 
@@ -187,8 +197,6 @@ public class MainActivity extends AppCompatActivity {
         //Button mButton1 = (Button) findViewById(R.id.button1);
         Button mButtons;
         int i;
-        span_words = getResources().getStringArray(R.array.Span_words);
-        eng_words = getResources().getStringArray(R.array.Eng_words);
         switch (item.getItemId()){
             case R.id.fill_Span:
                 Log.d(TAG,"User chooses to fill in Spanish");

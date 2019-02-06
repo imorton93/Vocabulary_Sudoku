@@ -26,8 +26,8 @@ public class SudokuDisplay extends AppCompatActivity {
                 text = text + " " + list.get(i-1);
             }
         }
-       // Boolean text = getIntent().getBooleanExtra(EXTRA_MESSAGE,false);
-        //String sText = "check = "+text;
-        textView.setText(text);
+
+        String sText = text;
+        textView.setText(sText);
     }
 }
