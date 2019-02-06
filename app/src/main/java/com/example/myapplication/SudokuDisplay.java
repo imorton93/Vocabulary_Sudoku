@@ -21,9 +21,9 @@ public class SudokuDisplay extends AppCompatActivity {
         String text = "The Correct Sudoku Vocabulary:" + System.getProperty("line.separator") + System.getProperty("line.separator");
         for(int i = 1; i <= list.size(); i++) {
             if (i % 9 == 0){
-                text = text +  "   " + list.get(i-1) + System.getProperty("line.separator") + System.getProperty("line.separator");
+                text = text +  " " + list.get(i-1) + System.getProperty("line.separator") + System.getProperty("line.separator");
             }else{
-                text = text + "   " + list.get(i-1);
+                text = text + " " + list.get(i-1);
             }
         }
        // Boolean text = getIntent().getBooleanExtra(EXTRA_MESSAGE,false);
