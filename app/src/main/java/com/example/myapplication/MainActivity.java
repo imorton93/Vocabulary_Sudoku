@@ -66,19 +66,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getGameGrid(String[] words){
-        Sudoku = initialGame.generateGrid(words);
         InitializedGame = true;
-        Random rand = new Random();
+        Sudoku = initialGame.generateGrid(words);
+        double remainingGrids = 81;
+        double remainingHoles = 55;
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                gridButton[x][y].setText("");
-                gridButton[x][y].setClickable(true);
-                int i = rand.nextInt(x+1);
-                int j = rand.nextInt(y+1);
-                gridButton[i][j].setText(Sudoku[i][j]);
-                gridButton[i][j].setClickable(false);
+                gridButton[x][y].setText(Sudoku[x][y]);
+                gridButton[x][y].setClickable(false);
+                double makingHole = remainingHoles/remainingGrids;
+                if(Math.random() <= makingHole) {
+                    gridButton[x][y].setText(null);
+                    gridButton[x][y].setClickable(true);
+                    remainingHoles--;
+                }
+                remainingGrids--;
             }
         }
+
     }
 
     public void finButton(){
@@ -106,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, String[][] originalSudoku){
         String msg;
-        if (resultCheck.sudokuCheck(Sudoku)){
+        if (resultCheck.sudokuCheck(Sudoku, eng_words,span_words)){
             msg = "Congratulation! Sudoku is correct!";
         }else{
             msg = "Sudoku is incorrect, try again!";
@@ -120,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> words = new ArrayList<String>();
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                words.add(Sudoku[x][y]);
+                words.add(originalSudoku[x][y]);
             }
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);

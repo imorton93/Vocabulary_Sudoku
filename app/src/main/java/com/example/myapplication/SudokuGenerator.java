@@ -10,66 +10,59 @@ public class SudokuGenerator {
 
     }
 
-    private ArrayList<ArrayList<String>> Words = new ArrayList<ArrayList<String>>();
-
-    String[] sudokuWords = new String[9];
-
-    private Random rand = new Random();
-
-    public String[][] generateGrid(String[] wordsList) {
+    public String[][] generateGrid(String[] wordsList)
+    {
         String[][] Sudoku = new String[9][9];
-
-        for (int i = 0; i < 9; i++){
-            sudokuWords[i] = wordsList[i];
-        }
-
-        int currentPos = 0;
-
-        while (currentPos < 81) {
-            if (currentPos == 0) {
-                Words.clear();
-
-                for (int y = 0; y < 9; y++) {
-                    for (int x = 0; x < 9; x++) {
-                        Sudoku[x][y] = null;
-                    }
-                }
-
-                for (int x = 0; x < 81; x++) {
-                    Words.add(new ArrayList<String>());
-                    for (int i = 0; i < 9; i++) {
-                        Words.get(x).add(sudokuWords[i]);
-                    }
-                }
-            }
-
-            if (Words.get(currentPos).size() > 0 ) {
-                int i = rand.nextInt(Words.get(currentPos).size());
-                String word;
-                word = sudokuWords[i];
-
-
-                int xPos = currentPos % 9;
-                int yPos = currentPos / 9;
-
-                if (!isConflict(Sudoku, xPos, yPos, word)) {
-                    Sudoku[xPos][yPos] = word;
-                    Words.get(currentPos).remove(i);
-                    currentPos++;
-                } else {
-                    Words.get(currentPos).remove(i);
-                }
-
-            } else {
-                for (int i = 0; i < 9; i++) {
-                    Words.get(currentPos).add(sudokuWords[i]);
-                }
-                currentPos--;
-            }
-        }
-
+        nextGrid(Sudoku,0,0,wordsList);
         return Sudoku;
+
     }
+
+    /*
+     * Recursive method that place String in the grid.
+     *
+     * x value of the current cell
+     * y value of the current cell
+     *return  true if the grid is complete without conflicts
+     */
+    public boolean nextGrid(String[][] Sudoku, int xPos, int yPos, String[] wordList)
+    {
+        int X = xPos;  //x value of current cell
+        int Y = yPos;  //y value of the current cell
+        Random rand = new Random();
+        String tmp = null;
+        int current = 0;
+
+        for(int i= wordList.length - 1;i > 0;i--) {
+            current = rand.nextInt(i);
+            tmp = wordList[current];
+            wordList[current] = wordList[i];
+            wordList[i] = tmp;
+        }
+
+        for(int i = 0;i < wordList.length;i++) {
+            if(!isConflict(Sudoku,xPos, yPos, wordList[i])) {
+                Sudoku[xPos][yPos] = wordList[i];
+                if(xPos == 8) {
+                    if(yPos == 8)
+                        return true; //all done
+                    else {
+                        X = 0;
+                        Y = yPos + 1;   // chanege a row
+                    }
+                }
+                else {
+                    X = xPos + 1;   //change a column
+                }
+                if(nextGrid(Sudoku,X, Y,wordList))
+                    return true;
+            }
+        }
+        Sudoku[xPos][yPos] = null;
+        return false;
+    }
+
+
 
 
     private boolean isConflict(String[][] Sudoku, int xPos, int yPos, final String word) {
@@ -116,6 +109,7 @@ public class SudokuGenerator {
         }
         return false;
     }
+
 
 }
 
