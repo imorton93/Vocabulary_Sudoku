@@ -169,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void insertButtonOnClick(View w){
         //user hits button to change text of selectedbutton
-
         if(SelectedButton != null) {
             Button button = (Button) w;
             // text of input button is extracted
@@ -219,10 +218,10 @@ public class MainActivity extends AppCompatActivity {
                 if (InitializedGame == false) {
                     result1.setGravity(Gravity.TOP, 0, 400);
                     result1.show();
-                    getGameGrid(span_words); //After choosing "fill in Spanish", start a new game with Spanish
+                    getGameGrid(eng_words); //After choosing "fill in Spanish", start a new game with Spanish
                     for (i = 0; i < 9; i++) {
                         mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(eng_words[i]);
+                        mButtons.setText(span_words[i]);
                     }
                 }
                 else{
@@ -240,10 +239,10 @@ public class MainActivity extends AppCompatActivity {
                 if (InitializedGame == false) {
                     result2.setGravity(Gravity.TOP, 0, 400);
                     result2.show();
-                    getGameGrid(eng_words); //After choosing "fill in Spanish", start a new game with English
+                    getGameGrid(span_words); //After choosing "fill in Spanish", start a new game with English
                     for (i = 0; i < 9; i++) {
                         mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(span_words[i]);
+                        mButtons.setText(eng_words[i]);
                     }
                 }
                 else {
