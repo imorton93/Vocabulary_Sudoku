@@ -176,15 +176,15 @@ public class MainActivity extends AppCompatActivity {
             /* when clicking a English word and filling into the cell,
             the English word will be automatically translated to Spanish
             *  vice versa
-            * *
+            * *perhaps for next iteration
             */
-            for (int i = 0; i < 9; i++) {
+        /*    for (int i = 0; i < 9; i++) {
                 if (buttonText.equals(eng_wordsList[i])){
                     buttonText = ""+span_wordsList[i];
                 }else if (buttonText.equals(span_wordsList[i])){
                     buttonText =""+eng_wordsList[i];
                 }
-            }
+            }*/
             //set the Selected Buttons Text as text from input button
             SelectedButton.setText(buttonText);
         }
