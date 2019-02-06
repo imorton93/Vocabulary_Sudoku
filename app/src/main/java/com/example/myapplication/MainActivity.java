@@ -2,6 +2,7 @@ package com.example.myapplication;
 
         import android.content.Intent;
         import android.graphics.Color;
+        import android.graphics.drawable.ColorDrawable;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
@@ -204,9 +205,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //reinit_dialog Reinit_warn = new reinit_dialog(MainActivity.this);
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //Button mButton1 = (Button) findViewById(R.id.button1);
+
         Button mButtons;
         int i;
         switch (item.getItemId()){
@@ -216,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 //mButton1.setText(R.string.span_1);
                 Toast result1 = Toast.makeText(MainActivity.this,
                         "User chooses to fill in Spanish",Toast.LENGTH_LONG);
-                if (InitializedGame == false) {
+                if (!InitializedGame) {
                     result1.setGravity(Gravity.TOP, 0, 400);
                     result1.show();
                     getGameGrid(eng_words); //After choosing "fill in Spanish", start a new game with Spanish
@@ -237,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 //mButton1.setText(R.string.eng_1);
                 Toast result2 = Toast.makeText(MainActivity.this,
                         "User chooses to fill in English",Toast.LENGTH_LONG);
-                if (InitializedGame == false) {
+                if (!InitializedGame) {
                     result2.setGravity(Gravity.TOP, 0, 400);
                     result2.show();
                     getGameGrid(span_words); //After choosing "fill in Spanish", start a new game with English
@@ -254,10 +258,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.display_words:
-
                 Log.d(TAG,"User chooses to see word pairs");
-                Intent display_w = new Intent(this, Display_Words.class);
-                this.startActivity(display_w);
+                //The warning dialog:
+                reinit_dialog Reinit_warn = new reinit_dialog(this);
+                Reinit_warn.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Reinit_warn.show();
+
+//                Intent display_w = new Intent(this, Display_Words.class);
+//                this.startActivity(display_w);
                 return true;
         }
         return super.onOptionsItemSelected(item);
