@@ -2,6 +2,7 @@ package com.example.myapplication;
 
         import android.content.Intent;
         import android.graphics.Color;
+        import android.graphics.drawable.ColorDrawable;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             R.id.button9,
     };
 
-    private static final Button[][] gridButton = new Button[9][9];//button b11-b99
+    private static final Button[][] gridButton = new Button[9][9];//buttons b11-b99
     String[] span_words;
     String[] eng_words;
     private static SudokuGenerator initialGame = new SudokuGenerator();
@@ -41,13 +42,11 @@ public class MainActivity extends AppCompatActivity {
     private static SudokuChecker resultCheck = new SudokuChecker();
     private Button mfinButton;
     private boolean InitializedGame = false;
+    String[] eng_wordsList = new String[9];
+    String[] span_wordsList = new String[9];
 
 
 
-//    String[] span_words = { //Takes a while for app to open
-//        "gato", "perro", "niña","niño", "loro", "triste","feliz", "padre","madre"} ;
-//
-//    String[] eng_words = { "cat", "dog", "girl","boy", "parrot", "sad", "happy", "father","mother"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +58,18 @@ public class MainActivity extends AppCompatActivity {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
                 String buttonID = "b" + (y+1) + (x+1);
-
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 gridButton[x][y] = (Button) findViewById(resID);
             }
+        }
+        //store words from String Resources
+        span_words = getResources().getStringArray(R.array.Span_words);
+        eng_words = getResources().getStringArray(R.array.Eng_words);
+        //in case, order of String from String Resources may change
+        //store in local variables
+        for (int i = 0; i < 9; i++){
+            span_wordsList[i] = span_words[i];
+            eng_wordsList[i] = eng_words[i];
         }
         //gameInitial
         //finish Button
@@ -70,17 +77,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getGameGrid(String[] words){
+        InitializedGame = true;
         Sudoku = initialGame.generateGrid(words);
-        Random rand = new Random();
+
+        double remainingGrids = 81;
+        double remainingHoles = 50; //set up a num to determine how many words to hide
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                gridButton[x][y].setText("");
-                int i = rand.nextInt(x+1);
-                int j = rand.nextInt(y+1);
-                gridButton[i][j].setText(Sudoku[i][j]);
-                gridButton[i][j].setClickable(false);
+                gridButton[x][y].setText(Sudoku[x][y]);
+                gridButton[x][y].setClickable(false);
+                double makingHole = remainingHoles/remainingGrids;  //randomly hide some words
+                if(Math.random() <= makingHole) {
+                    gridButton[x][y].setText(null);
+                    gridButton[x][y].setClickable(true);
+                    remainingHoles--;
+                }
+                remainingGrids--;
             }
         }
+
     }
 
     public void finButton(){
@@ -95,8 +110,9 @@ public class MainActivity extends AppCompatActivity {
                 String[][] originalSudoku = new String[9][9];
                 for (int y = 0; y < 9; y++) {
                     for (int x = 0; x < 9; x++) {
+                        //pass words in grid to a Sting[][] Sudoku in order to check correctness
                         CharSequence temp = gridButton[x][y].getText();
-                        checkSudoku[x][y] = "" + temp ;
+                        checkSudoku[x][y] = temp + "";
                         originalSudoku[x][y] = Sudoku[x][y];
                     }
                 }
@@ -108,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, String[][] originalSudoku){
         String msg;
-        if (resultCheck.sudokuCheck(Sudoku)){
+        if (resultCheck.sudokuCheck(Sudoku, eng_wordsList,span_wordsList)){
             msg = "Congratulation! Sudoku is correct!";
         }else{
             msg = "Sudoku is incorrect, try again!";
@@ -122,10 +138,11 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> words = new ArrayList<String>();
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                words.add(Sudoku[x][y]);
+                words.add(originalSudoku[x][y]);
             }
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
+        intent.putExtra(EXTRA_MESSAGE,words);
         startActivity(intent);
     }
 
@@ -134,8 +151,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void gridButtonOnClick(View v){
         //user hits one of the grid blocks to insert a word
-        if(InitializedGame == false){
-            Toast.makeText(MainActivity.this , R.string.not_initialized,Toast.LENGTH_SHORT).show();
+        if(!InitializedGame){
+            Toast.makeText(MainActivity.this ,
+                    R.string.not_initialized,Toast.LENGTH_LONG).show();
         }
         else {
             if (SelectedButton != null) {
@@ -152,11 +170,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void insertButtonOnClick(View w){
         //user hits button to change text of selectedbutton
-
         if(SelectedButton != null) {
             Button button = (Button) w;
             // text of input button is extracted
             CharSequence buttonText = button.getText();
+            /* when clicking a English word and filling into the cell,
+            the English word will be automatically translated to Spanish
+            *  vice versa
+            * *perhaps for next iteration
+            */
+        /*    for (int i = 0; i < 9; i++) {
+                if (buttonText.equals(eng_wordsList[i])){
+                    buttonText = ""+span_wordsList[i];
+                }else if (buttonText.equals(span_wordsList[i])){
+                    buttonText =""+eng_wordsList[i];
+                }
+            }*/
             //set the Selected Buttons Text as text from input button
             SelectedButton.setText(buttonText);
         }
@@ -175,25 +204,33 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //reinit_dialog Reinit_warn = new reinit_dialog(MainActivity.this);
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //Button mButton1 = (Button) findViewById(R.id.button1);
+
         Button mButtons;
         int i;
-        span_words = getResources().getStringArray(R.array.Span_words);
-        eng_words = getResources().getStringArray(R.array.Eng_words);
         switch (item.getItemId()){
             case R.id.fill_Span:
                 Log.d(TAG,"User chooses to fill in Spanish");
                 //The 9 buttons will display Spanish. works.
                 //mButton1.setText(R.string.span_1);
-                Toast result1 = Toast.makeText(MainActivity.this,"User chooses to fill in Spanish",Toast.LENGTH_LONG);
-                result1.setGravity(Gravity.TOP, 0, 400);
-                result1.show();
-                getGameGrid(span_words); //After choosing "fill in Spanish", start a new game with Spanish
-                for (i = 0; i < 9; i++){
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(span_words[i]);
+                Toast result1 = Toast.makeText(MainActivity.this,
+                        "User chooses to fill in Spanish",Toast.LENGTH_LONG);
+                if (!InitializedGame) {
+                    result1.setGravity(Gravity.TOP, 0, 400);
+                    result1.show();
+                    getGameGrid(eng_words); //After choosing "fill in Spanish", start a new game with Spanish
+                    for (i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(span_words[i]);
+                    }
+                }
+                else{
+                    //Make warning dialog appear
+                    Toast.makeText(MainActivity.this,R.string.cant_init,Toast.LENGTH_LONG).show();
                 }
                 return true;
 
@@ -201,20 +238,33 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG,"User chooses to fill in English");
                 //The 9 buttons will display English
                 //mButton1.setText(R.string.eng_1);
-                Toast result2 = Toast.makeText(MainActivity.this,"User chooses to fill in English",Toast.LENGTH_LONG);
-                result2.setGravity(Gravity.TOP, 0, 400);
-                result2.show();
-                getGameGrid(eng_words); //After choosing "fill in Spanish", start a new game with English
-                for (i = 0; i < 9; i++){
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(eng_words[i]);
+                Toast result2 = Toast.makeText(MainActivity.this,
+                        "User chooses to fill in English",Toast.LENGTH_LONG);
+                if (!InitializedGame) {
+                    result2.setGravity(Gravity.TOP, 0, 400);
+                    result2.show();
+                    getGameGrid(span_words); //After choosing "fill in Spanish", start a new game with English
+                    for (i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(eng_words[i]);
+                    }
+                }
+                else {
+                    //make dialog here
+                    //Temporary Toast
+                    Toast.makeText(MainActivity.this,R.string.cant_init,Toast.LENGTH_LONG).show();
                 }
                 return true;
 
             case R.id.display_words:
                 Log.d(TAG,"User chooses to see word pairs");
-                Intent display_w = new Intent(this, Display_Words.class);
-                this.startActivity(display_w);
+                //The warning dialog:
+                reinit_dialog Reinit_warn = new reinit_dialog(this);
+                Reinit_warn.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Reinit_warn.show();
+
+//                Intent display_w = new Intent(this, Display_Words.class);
+//                this.startActivity(display_w);
                 return true;
         }
         return super.onOptionsItemSelected(item);
