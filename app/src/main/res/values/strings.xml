@@ -13,7 +13,8 @@
     <string name="not_initialized">You have not initialized the game, to initialize,
         choose "Fill in English" or "Fill in Spanish"</string>
     <string name="fin_button">Finish</string>
-    <string name="sudoku_view"></string>
+    <string name="start_game">Start</string>
+
 
 
     <string name="warn_reinit">Warning!!! If you initialized the game already,
@@ -49,6 +50,8 @@
         <item>mother</item>
     </string-array>
 
+
+
     <string name="title_dw">The Word Pairs</string> //Title of Word pair Display
     //Beginning of 9 word pairs. These two declarations are not in conflict
     <string name="span_1">gato</string> //First spanish word
@@ -82,6 +85,7 @@
             Happy--------feliz \n
             father--------padre \n
             mother--------madre  \n</string>
+
 
 
 </resources>

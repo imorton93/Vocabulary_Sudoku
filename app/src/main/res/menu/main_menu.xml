@@ -20,6 +20,12 @@
         app:showAsAction="never"
         />
 
+    <item
+        android:id="@+id/load_wordpairs"
+        android:title="Load New Word Pairs"
+        app:showAsAction="never"
+        />
+
    <!-- <item
         android:id="@+id/stats"
         android:title="Statistics"
