@@ -15,12 +15,33 @@ package com.example.myapplication;
         import android.widget.Toast;
 
         import java.util.ArrayList;
+        import java.util.Arrays;
         import java.util.Random;
 
         import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 
 public class MainActivity extends AppCompatActivity {
+    private static final String KEY_InitializedGame = "initializedgame";
+    private static final String KEY_Sudoku = "saved_Sudoku" ;
+    private static final String KEY_prefilled_words = "prefilled_Words";
+    private static final String KEY_userfilled_words = "userfilled_Words";
+    private static final String KEY_fill_Eng = "fill_Eng";
+    private static final String KEY_fill_Span = "fill_Span";
+/*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
+    //The leftmost column
+    private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
+    private static final String KEY_filled_words_2 = "col_2"; //The words that the user has filled
+    private static final String KEY_filled_words_3 = "col_3"; //The words that the user has filled
+    private static final String KEY_filled_words_4 = "col_4"; //The words that the user has filled
+    private static final String KEY_filled_words_5 = "col_5"; //The words that the user has filled
+    private static final String KEY_filled_words_6 = "col_6"; //The words that the user has filled
+    private static final String KEY_filled_words_7 = "col_7"; //The words that the user has filled
+    private static final String KEY_filled_words_8 = "col_8"; //The words that the user has filled */
+/*    private String[] KEY_filled_words =
+            {KEY_filled_words_0, KEY_filled_words_1, KEY_filled_words_2, KEY_filled_words_3,
+            KEY_filled_words_4, KEY_filled_words_5, KEY_filled_words_6, KEY_filled_words_7,
+            KEY_filled_words_8 }; */
     private static final String TAG = "CMPT276-1191E1-Delta";
     private static final int[] Button_ids = { //ID's for the 9 big buttons
             R.id.button1,
@@ -41,12 +62,14 @@ public class MainActivity extends AppCompatActivity {
     String[][] Sudoku = new String[9][9];
     private static SudokuChecker resultCheck = new SudokuChecker();
     private Button mfinButton;
+    private boolean fill_Eng = false;
+    private boolean fill_Span = false;
     private boolean InitializedGame = false;
+    private boolean restored_s = false; //boolean for checking if sudoku is restored.
     String[] eng_wordsList = new String[9];
     String[] span_wordsList = new String[9];
-
-
-
+    String[][] Sudoku_temp = new String[9][9];
+    String[][] Sudoku_user = new String[9][9];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,30 +95,113 @@ public class MainActivity extends AppCompatActivity {
             eng_wordsList[i] = eng_words[i];
         }
         //gameInitial
-        //finish Button
-        finButton();
-    }
-
-    public void getGameGrid(String[] words){
-        InitializedGame = true;
-        Sudoku = initialGame.generateGrid(words);
-
-        double remainingGrids = 81;
-        double remainingHoles = 50; //set up a num to determine how many words to hide
-        for (int y = 0; y < 9; y++) {
-            for (int x = 0; x < 9; x++) {
-                gridButton[x][y].setText(Sudoku[x][y]);
-                gridButton[x][y].setClickable(false);
-                double makingHole = remainingHoles/remainingGrids;  //randomly hide some words
-                if(Math.random() <= makingHole) {
-                    gridButton[x][y].setText(null);
-                    gridButton[x][y].setClickable(true);
-                    remainingHoles--;
+        if ((savedInstanceState != null)) {
+        //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
+        // so user does not need to restart game.
+            Button mButtons;
+            InitializedGame = savedInstanceState.getBoolean(KEY_InitializedGame);
+            fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
+            fill_Span = savedInstanceState.getBoolean(KEY_fill_Span);
+            int j = 0;  //For breakpoint purpose
+            Log.i(TAG, "loads the words user filled in before");
+            /* for (int i = 0; i < 9; i++) {
+                Sudoku_temp[i] = savedInstanceState.getStringArray(KEY_filled_words[i]); //break point here
+                j = 1; //for break point purpose
+                //BUG: at least after the screen is turned and turned back, the words (wrong) are preserved
+                //Problem: sudoku [i] is the same for all i
+            } */
+            //
+            if (fill_Eng){
+                for (int i = 0; i < 9; i++) {
+                    mButtons = findViewById(Button_ids[i]);
+                    mButtons.setText(eng_words[i]);
                 }
-                remainingGrids--;
             }
+            else if (fill_Span){
+                for (int i = 0; i < 9; i++) {
+                    mButtons = findViewById(Button_ids[i]);
+                    mButtons.setText(span_words[i]);
+                }
+            }
+
+            Sudoku_temp = (String [][]) savedInstanceState.getSerializable(KEY_prefilled_words);
+            Sudoku_user = (String [][]) savedInstanceState.getSerializable(KEY_userfilled_words);
+                // The arrays in Sudoku_temp has the columns of the original sudoku from right to left (should be from left to right)
+            for (int y = 0; y < 9; y++) { //break point here
+                for (int x = 0; x < 9; x++) {
+                    gridButton[x][y].setText(Sudoku_temp[y][x]); //No problem here.
+                    j += 5; //break point here
+                    if (Sudoku_temp[y][x] != null) {
+                        gridButton[x][y].setClickable(false);
+                         //Sudoku 'memorizes' the pre-set words
+                    } else {
+                        gridButton[x][y].setClickable(true);
+                        if (Sudoku_user[y][x] != null) {
+                            gridButton[x][y].setText(Sudoku_user[y][x]);
+                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                            //Set the button to clikable and the text to user's text color
+                        }
+                        else{
+                            gridButton[x][y].setText(null);
+                        }
+                    }
+                }
+            }
+            Sudoku = (String [][]) savedInstanceState.getSerializable(KEY_Sudoku);
+            restored_s = true;
+            //InitializedGame = true;
+
         }
 
+        //finish Button
+        finButton();
+    } //End of OnCreate()
+
+    //To make debugger display tags
+    @Override public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() called");
+    }
+    @Override public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() called");
+    }
+    @Override public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume() called");
+    }
+    @Override public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() called");
+    }
+    @Override public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
+    }
+
+//    public interface Serializable;
+    public void getGameGrid(String[] words) {
+
+        InitializedGame = true;
+        if (!(restored_s)) {
+            Sudoku = initialGame.generateGrid(words);
+
+            double remainingGrids = 81;
+            double remainingHoles = 50; //set up a number to determine how many words to hide
+            for (int y = 0; y < 9; y++) {
+                for (int x = 0; x < 9; x++) {
+                    gridButton[x][y].setText(Sudoku[x][y]);
+                    gridButton[x][y].setClickable(false);
+                    double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
+                    if (Math.random() <= makingHole) {
+                        gridButton[x][y].setText(null);
+                        gridButton[x][y].setClickable(true);
+                        remainingHoles--;
+                    }
+                    remainingGrids--;
+                }
+            }
+        }
     }
 
     public void finButton(){
@@ -120,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, String[][] originalSudoku){
@@ -159,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
             if (SelectedButton != null) {
                 //if a button has already been selected change that button back to normal
                 SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+                SelectedButton.setTextColor(Color.parseColor("#FF008577")); //Set the word on the grid to be green.
             }
             SelectedButton = (Button) v;
             SelectedButton.setBackgroundResource(R.drawable.clicked_button);
@@ -217,6 +324,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG,"User chooses to fill in Spanish");
                 //The 9 buttons will display Spanish. works.
                 //mButton1.setText(R.string.span_1);
+                fill_Span = true;
+
                 Toast result1 = Toast.makeText(MainActivity.this,
                         "User chooses to fill in Spanish",Toast.LENGTH_LONG);
                 if (!InitializedGame) {
@@ -238,6 +347,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG,"User chooses to fill in English");
                 //The 9 buttons will display English
                 //mButton1.setText(R.string.eng_1);
+                fill_Eng = true;
                 Toast result2 = Toast.makeText(MainActivity.this,
                         "User chooses to fill in English",Toast.LENGTH_LONG);
                 if (!InitializedGame) {
@@ -268,6 +378,58 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //After the grids are created, save the words
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        //Saves: InitializedGame , Sudoku[][], words on gridButton
+        savedInstanceState.putBoolean(KEY_InitializedGame, InitializedGame);
+        savedInstanceState.putBoolean(KEY_fill_Eng, fill_Eng);
+        savedInstanceState.putBoolean(KEY_fill_Span, fill_Span);
+        //savedInstanceState.put(KEY_filled_words, gridButton);
+        int x = 0;
+        String[] stringA_p_temp = new String[9];
+        String[][] stringA_preset = new String[9][9]; //Array of preset words
+        String[] stringA_u_temp = new String[9];
+        String[][] stringA_user_filled = new String[9][9]; //Array of user-filled words
+        CharSequence temp = "";
+        Boolean temp_not_null = false;
+        savedInstanceState.putSerializable(KEY_Sudoku,Sudoku);
+        int temp_Color;
+        for (int i = 0; i < 9; i++){
+            x += 0; //for break point purpose
+            for (int j = 0; j < 9; j++ ){
+                //savedInstanceState.putString(KEY_filled_words[i][j], gridButton[i][j].getText());
+                temp = gridButton[i][j].getText();
+                //temp_Color = gridButton[i][j].getCurrentTextColor();
+                temp_not_null = (temp != null && temp != "");
+                if (temp_not_null) {
+                    if (!(gridButton[i][j].isClickable())) { //the word on gridButton is pre-set
+                            stringA_p_temp[j] = temp + "";
+                            stringA_u_temp[j] = null;
+                    } else { //The word on gridButton is user-filled
+                            stringA_u_temp[j] = temp + "";
+                            stringA_p_temp[j] = null;
+                    }
+                }
+                else{ //temp == null
+                    stringA_p_temp[j] = null;
+                    stringA_u_temp[j] = null;
+                }
+            }
+            stringA_preset[i] = Arrays.copyOf(stringA_p_temp, stringA_p_temp.length);
+            stringA_user_filled[i] = Arrays.copyOf(stringA_u_temp, stringA_u_temp.length);
+            // savedInstanceState.putStringArray(KEY_filled_words[i],stringA[i]);
+            // savedInstanceState.putStringArray(KEY_filled_words[i],stringA_temp);
+            x += 5; //for break point purpose
+        }
+        savedInstanceState.putSerializable(KEY_prefilled_words, stringA_preset);
+        savedInstanceState.putSerializable(KEY_userfilled_words, stringA_user_filled);
+        x = 8;
+
     }
 
 }
