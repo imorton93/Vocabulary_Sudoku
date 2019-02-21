@@ -66,10 +66,17 @@ public class MainActivity extends AppCompatActivity {
     private boolean fill_Span = false;
     private boolean InitializedGame = false;
     private boolean restored_s = false; //boolean for checking if sudoku is restored.
+    ArrayList<String> lists = new ArrayList<>();
+    private int mistakeCount = 0;
+    private String msg;
     String[] eng_wordsList = new String[9];
     String[] span_wordsList = new String[9];
     String[][] Sudoku_temp = new String[9][9];
     String[][] Sudoku_user = new String[9][9];
+    String[] list = new String[9];
+
+    DBHelper mDBHelper = new DBHelper(this);
+
 
     //After the grids are created, save the words
     @Override
@@ -226,20 +233,79 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         Log.d(TAG, "onStop() called");
     }
-    @Override public void onDestroy() {
+    @Override
+    protected void onDestroy() {
+        mDBHelper.close();
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
     }
 
-//    public interface Serializable;
+    //initial game with data from selectec words by users
+    public void setInitialGame(String msg, String[] list){
+        Button mButtons;
+        int i;
+        wordsSplit(list);
+        switch (msg){
+            case "SPAN":
+                Toast result1 = Toast.makeText(MainActivity.this,
+                        "User chooses to fill in Spanish",Toast.LENGTH_LONG);
+                result1.setGravity(Gravity.TOP, 0, 400);
+                result1.show();
+                getGameGrid(eng_wordsList); //After choosing "fill in Spanish", start a new game with Spanish
+                for (i = 0; i < 9; i++) {
+                    mButtons = findViewById(Button_ids[i]);
+                    mButtons.setText(span_wordsList[i]);
+                }
+                break;
+            case "ENG":
+                Toast result2 = Toast.makeText(MainActivity.this,
+                        "User chooses to fill in English",Toast.LENGTH_LONG);
+                result2.setGravity(Gravity.TOP, 0, 400);
+                result2.show();
+                getGameGrid(span_wordsList); //After choosing "fill in Spanish", start a new game with English
+                for (i = 0; i < 9; i++) {
+                    mButtons = findViewById(Button_ids[i]);
+                    mButtons.setText(eng_wordsList[i]);
+                }
+                break;
+        }
+    }
+
+
+    //To guarantee each English word's position is correctly correspondent to a a Spanish word
+    public void wordsSplit(String[] list){
+        for (int i = 0; i < 9; i++) {
+            // `the words in the file are separated by -`, so to get each words
+            String[] words = list[i].split("-");
+            eng_wordsList[i] = words[0];
+            span_wordsList[i] = words[1];
+        }
+    }
+
+
+
     public void getGameGrid(String[] words) {
 
         InitializedGame = true;
+        Sudoku = initialGame.generateGrid(words);
+        double remainingGrids = 81;
+        double remainingHoles = 50; //set up a num to determine how many words to hide
+        for (int y = 0; y < 9; y++) {
+            for (int x = 0; x < 9; x++) {
+                gridButton[x][y].setText(Sudoku[x][y]);
+                gridButton[x][y].setClickable(false);
+                double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
+                if (Math.random() <= makingHole) {
+                    gridButton[x][y].setText(null);
+                    gridButton[x][y].setClickable(true);
+                    remainingHoles--;
+                }}
+            remainingGrids--;}
         if (!(restored_s)) {
             Sudoku = initialGame.generateGrid(words);
 
-            double remainingGrids = 81;
-            double remainingHoles = 50; //set up a number to determine how many words to hide
+            remainingGrids = 81;
+            remainingHoles = 50; //set up a number to determine how many words to hide
             for (int y = 0; y < 9; y++) {
                 for (int x = 0; x < 9; x++) {
                     gridButton[x][y].setText(Sudoku[x][y]);
@@ -255,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     public void finButton(){
         //finish button listening action
@@ -276,8 +343,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 checkAnswer(checkSudoku, originalSudoku);
             }
-        });
-    }
+    });
+}
 
 
     //check sudoku correctness
@@ -431,6 +498,30 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != MainActivity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == 1) {
+            if (data == null) {
+                Log.d(TAG, "data is null");
+                return;
+            }
+            msg = data.getStringExtra("LANGUAGE");
+            list = data.getStringArrayExtra("EXTRA_WORDS_LIST");
+
+            for (int i =0; i< 9; i++) {
+                Log.d(TAG, "Words from selection ENG are " + list[i]);
+                //  Log.d(TAG, "Words from selection SPAN are " + span_wordsList[i]);
+
+            }
+            setInitialGame(msg,list);
+        }
+    }
+
 
 }
 
