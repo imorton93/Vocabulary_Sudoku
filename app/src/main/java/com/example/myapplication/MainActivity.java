@@ -283,29 +283,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void getGameGrid(String[] words) {
-
         InitializedGame = true;
-        Sudoku = initialGame.generateGrid(words);
-        double remainingGrids = 81;
-        double remainingHoles = 50; //set up a num to determine how many words to hide
-        for (int y = 0; y < 9; y++) {
-            for (int x = 0; x < 9; x++) {
-                gridButton[x][y].setText(Sudoku[x][y]);
-                gridButton[x][y].setClickable(false);
-                double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
-                if (Math.random() <= makingHole) {
-                    gridButton[x][y].setText(null);
-                    gridButton[x][y].setClickable(true);
-                    remainingHoles--;
-                }}
-            remainingGrids--;}
         if (!(restored_s)) {
             Sudoku = initialGame.generateGrid(words);
-
-            remainingGrids = 81;
-            remainingHoles = 50; //set up a number to determine how many words to hide
+            double remainingGrids = 81;
+            double remainingHoles = 50; //set up a number to determine how many words to hide
             for (int y = 0; y < 9; y++) {
                 for (int x = 0; x < 9; x++) {
                     gridButton[x][y].setText(Sudoku[x][y]);
@@ -321,7 +304,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
     public void finButton(){
         //finish button listening action
