@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
         String select;
         switch (item.getItemId()){
             case R.id.fill_Span:
-                if (!InitializedGame || mistakeCount >= 3)  {
+                if (!InitializedGame || mistakeCount < 3)  {
                     Log.d(TAG, "User chooses to fill in Spanish");
 
                     intent = new Intent(MainActivity.this, Words_Selection.class);
@@ -308,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
                 //The 9 buttons will display English
                 //mButton1.setText(R.string.eng_1);
 
-                if (!InitializedGame || mistakeCount >= 3) {
+                if (!InitializedGame || mistakeCount < 3) {
                     Log.d(TAG, "User chooses to fill in English");
 
                     intent = new Intent(MainActivity.this, Words_Selection.class);
