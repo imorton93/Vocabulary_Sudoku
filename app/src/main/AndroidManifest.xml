@@ -24,6 +24,10 @@
             android:label="Sudoku Correct Grid"
             android:parentActivityName=".MainActivity" >
         </activity>
+        <activity android:name=".Words_Selection"
+            android:label=""
+            android:parentActivityName=".MainActivity" >
+        </activity>
     </application>
 
 </manifest>

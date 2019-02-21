@@ -4,16 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:columnCount = "9">
 
-    <TextView
+    <GridView
         android:id="@+id/sudoku_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="24dp" />
+        android:gravity="center"
+        android:numColumns="9"
+        android:columnWidth="90dp"
+        android:verticalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:padding="20dp">
         <!--//android:text="@string/sudoku_view"-->
-    />
+
+    </GridView>
+
 
 
 </LinearLayout>
