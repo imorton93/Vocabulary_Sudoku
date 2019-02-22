@@ -17,8 +17,7 @@ package com.example.myapplication;
         import java.util.ArrayList;
         import java.util.Arrays;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
+        import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private static final Button[][] gridButton = new Button[9][9];//buttons b11-b99
+    String[] span_words;
+    String[] eng_words;
     private static SudokuGenerator initialGame = new SudokuGenerator();
     String[][] Sudoku = new String[9][9];
     private static SudokuChecker resultCheck = new SudokuChecker();
@@ -73,9 +74,128 @@ public class MainActivity extends AppCompatActivity {
 
     DBHelper mDBHelper = new DBHelper(this);
 
+
+    //After the grids are created, save the words
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState -- saving words");
+        //Saves: InitializedGame , Sudoku[][], words on gridButton
+        savedInstanceState.putBoolean(KEY_InitializedGame, InitializedGame);
+        savedInstanceState.putBoolean(KEY_fill_Eng, fill_Eng);
+        savedInstanceState.putBoolean(KEY_fill_Span, fill_Span);
+        //savedInstanceState.put(KEY_filled_words, gridButton);
+        int x = 0;
+        String[] stringA_p_temp = new String[9];
+        String[][] stringA_preset = new String[9][9]; //Array of preset words
+        String[] stringA_u_temp = new String[9];
+        String[][] stringA_user_filled = new String[9][9]; //Array of user-filled words
+        CharSequence temp = "";
+        Boolean temp_not_null = false;
+        savedInstanceState.putSerializable(KEY_Sudoku,Sudoku);
+        int temp_Color;
+        for (int i = 0; i < 9; i++){
+            x += 0; //for break point purpose
+            for (int j = 0; j < 9; j++ ){
+                //savedInstanceState.putString(KEY_filled_words[i][j], gridButton[i][j].getText());
+                temp = gridButton[i][j].getText();
+                //temp_Color = gridButton[i][j].getCurrentTextColor();
+                temp_not_null = (temp != null && temp != "");
+                if (temp_not_null) {
+                    if (!(gridButton[i][j].isClickable())) { //the word on gridButton is pre-set
+                        stringA_p_temp[j] = temp + "";
+                        stringA_u_temp[j] = null;
+                    } else { //The word on gridButton is user-filled
+                        stringA_u_temp[j] = temp + "";
+                        stringA_p_temp[j] = null;
+                    }
+                }
+                else{ //temp == null
+                    stringA_p_temp[j] = null;
+                    stringA_u_temp[j] = null;
+                }
+            }
+            stringA_preset[i] = Arrays.copyOf(stringA_p_temp, stringA_p_temp.length);
+            stringA_user_filled[i] = Arrays.copyOf(stringA_u_temp, stringA_u_temp.length);
+            // savedInstanceState.putStringArray(KEY_filled_words[i],stringA[i]);
+            // savedInstanceState.putStringArray(KEY_filled_words[i],stringA_temp);
+            x += 5; //for break point purpose
+        }
+        savedInstanceState.putSerializable(KEY_prefilled_words, stringA_preset);
+        savedInstanceState.putSerializable(KEY_userfilled_words, stringA_user_filled);
+        x = 8;
+    }
+
+    /*
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        // Is not called when display words page is closed, but is called before onResume
+        //gameInitial
+        if ((savedInstanceState != null)) {
+            //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
+            // so user does not need to restart game.
+            Button mButtons;
+            InitializedGame = savedInstanceState.getBoolean(KEY_InitializedGame);
+            if (InitializedGame) {
+                fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
+                fill_Span = savedInstanceState.getBoolean(KEY_fill_Span);
+                int j = 0;  //For breakpoint purpose
+                Log.i(TAG, "onRestoreInstanceState - loads the words user filled in before");
+            /* for (int i = 0; i < 9; i++) {
+                Sudoku_temp[i] = savedInstanceState.getStringArray(KEY_filled_words[i]); //break point here
+                j = 1; //for break point purpose
+                //BUG: at least after the screen is turned and turned back, the words (wrong) are preserved
+                //Problem: sudoku [i] is the same for all i
+            } */
+
+             /*   if (fill_Eng) {
+                    for (int i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(eng_words[i]);
+                    }
+                } else if (fill_Span) {
+                    for (int i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(span_words[i]);
+                    }
+                }
+
+                Sudoku_temp = (String[][]) savedInstanceState.getSerializable(KEY_prefilled_words);
+                Sudoku_user = (String[][]) savedInstanceState.getSerializable(KEY_userfilled_words);
+                // The arrays in Sudoku_temp has the columns of the original sudoku from right to left (should be from left to right)
+                for (int y = 0; y < 9; y++) { //break point here
+                    for (int x = 0; x < 9; x++) {
+                        gridButton[x][y].setText(Sudoku_temp[y][x]); //No problem here.
+                        j += 5; //break point here
+                        if (Sudoku_temp[y][x] != null) {
+                            gridButton[x][y].setClickable(false);
+                            //Sudoku 'memorizes' the pre-set words
+                        } else {
+                            gridButton[x][y].setClickable(true);
+                            if (Sudoku_user[y][x] != null) {
+                                gridButton[x][y].setText(Sudoku_user[y][x]);
+                                gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                //Set the button to clikable and the text to user's text color
+                            } else {
+                                gridButton[x][y].setText(null);
+                            }
+                        }
+                    }
+                }
+                Sudoku = (String[][]) savedInstanceState.getSerializable(KEY_Sudoku);
+                restored_s = true;
+            }
+        }
+        else {
+            Log.i(TAG, "onRestoreInstanceState - savedInstanceState is null");
+        }
+    }
+*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate() called");
         setContentView(R.layout.activity_main);
 
         Log.d(TAG, "onCreate(Bundle) called");
@@ -90,13 +210,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         //store words from String Resources
+        span_words = getResources().getStringArray(R.array.Span_words);
+        eng_words = getResources().getStringArray(R.array.Eng_words);
         //in case, order of String from String Resources may change
         //store in local variables
         //gameInitial
-
         if ((savedInstanceState != null)) {
-        //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
-        // so user does not need to restart game.
+            //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
+            // so user does not need to restart game.
             Button mButtons;
             InitializedGame = savedInstanceState.getBoolean(KEY_InitializedGame);
             fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
@@ -166,12 +287,16 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                Sudoku = (String[][]) savedInstanceState.getSerializable(KEY_Sudoku);
+                restored_s = true;
             }
 
             restored_s = true;
             //InitializedGame = true;
         }
-
+            else {
+                Log.i(TAG, "onCreate - savedInstanceState is null");
+            }
         //finish Button
         finButton();
     } //End of OnCreate()
@@ -199,6 +324,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
     //To guarantee each English word's position is correctly correspondent to a a Spanish word
     public void wordsSplit(String[] list){
@@ -235,9 +361,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void finButton(){
-        Button mfinButton;
         //finish button listening action
         //By clicking finish button, will check the correctness of Sudoku
         //display whether right or wrong
@@ -245,7 +369,6 @@ public class MainActivity extends AppCompatActivity {
         mfinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wordsSplit(list);
                 String[][] checkSudoku = new String[9][9];
                 String[][] originalSudoku = new String[9][9];
                 for (int x = 0; x < 9; x++) {
@@ -256,16 +379,15 @@ public class MainActivity extends AppCompatActivity {
                         originalSudoku[x][y] = Sudoku[x][y];
                     }
                 }
-                checkAnswer(list, checkSudoku, originalSudoku);
+                checkAnswer(checkSudoku, originalSudoku);
             }
-        });
-    }
+    });
+}
 
 
     //check sudoku correctness
-    public void checkAnswer(String[] list, String[][] Sudoku, String[][] originalSudoku){
+    public void checkAnswer(String[][] Sudoku, String[][] originalSudoku){
         String msg;
-        wordsSplit(list);
         if (resultCheck.sudokuCheck(Sudoku, eng_wordsList,span_wordsList)){
             msg = "Congratulation! Sudoku is correct!";
         }else{
@@ -304,6 +426,7 @@ public class MainActivity extends AppCompatActivity {
             if (SelectedButton != null) {
                 //if a button has already been selected change that button back to normal
                 SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                SelectedButton.setTextColor(Color.parseColor("#FF008577")); //Set the word on the grid to be green.
             }
             SelectedButton = (Button) v;
             SelectedButton.setBackgroundResource(R.drawable.clicked_button);
@@ -378,8 +501,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button mButtons;
         int i;
-        Intent intent;
-        String select;
         switch (item.getItemId()){
             case R.id.fill_Span:
                 fill_Span = true;
@@ -422,11 +543,11 @@ public class MainActivity extends AppCompatActivity {
                     //Temporary Toast
                     Toast.makeText(MainActivity.this,R.string.cant_init,Toast.LENGTH_LONG).show();
                 }
-
                 return true;
 
             case R.id.display_words:
                 Log.d(TAG,"User chooses to see word pairs");
+
                 //The warning dialog:
                 reinit_dialog Reinit_warn = new reinit_dialog(this);
                 Reinit_warn.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -434,14 +555,6 @@ public class MainActivity extends AppCompatActivity {
 
 //                Intent display_w = new Intent(this, Display_Words.class);
 //                this.startActivity(display_w);
-                return true;
-
-            case R.id.load_wordpairs:
-                intent = new Intent(MainActivity.this, Words_Selection.class);
-                select = "LOAD";
-                intent.putExtra(EXTRA_MESSAGE,select);
-                startActivity(intent);
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -520,7 +633,7 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i =0; i< 9; i++) {
                 Log.d(TAG, "Words from selection ENG are " + list[i]);
-              //  Log.d(TAG, "Words from selection SPAN are " + span_wordsList[i]);
+                //  Log.d(TAG, "Words from selection SPAN are " + span_wordsList[i]);
 
             }
             setInitialGame(msg,list);
