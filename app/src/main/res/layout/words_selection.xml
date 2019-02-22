@@ -26,7 +26,6 @@
             android:layout_alignStart="@id/tv_view"
             android:layout_marginStart="236dp" />
 
-
     </RelativeLayout>
 
 
@@ -137,6 +136,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/start_game"/>
-
 
 </LinearLayout>
