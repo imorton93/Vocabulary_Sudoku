@@ -74,58 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
     DBHelper mDBHelper = new DBHelper(this);
 
-
-    //After the grids are created, save the words
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        super.onSaveInstanceState(savedInstanceState);
-        Log.i(TAG, "onSaveInstanceState -- saving words");
-        //Saves: InitializedGame , Sudoku[][], words on gridButton
-        savedInstanceState.putBoolean(KEY_InitializedGame, InitializedGame);
-        savedInstanceState.putBoolean(KEY_fill_Eng, fill_Eng);
-        savedInstanceState.putBoolean(KEY_fill_Span, fill_Span);
-        //savedInstanceState.put(KEY_filled_words, gridButton);
-        int x = 0;
-        String[] stringA_p_temp = new String[9];
-        String[][] stringA_preset = new String[9][9]; //Array of preset words
-        String[] stringA_u_temp = new String[9];
-        String[][] stringA_user_filled = new String[9][9]; //Array of user-filled words
-        CharSequence temp = "";
-        Boolean temp_not_null = false;
-        savedInstanceState.putSerializable(KEY_Sudoku,Sudoku);
-        int temp_Color;
-        for (int i = 0; i < 9; i++){
-            x += 0; //for break point purpose
-            for (int j = 0; j < 9; j++ ){
-                //savedInstanceState.putString(KEY_filled_words[i][j], gridButton[i][j].getText());
-                temp = gridButton[i][j].getText();
-                //temp_Color = gridButton[i][j].getCurrentTextColor();
-                temp_not_null = (temp != null && temp != "");
-                if (temp_not_null) {
-                    if (!(gridButton[i][j].isClickable())) { //the word on gridButton is pre-set
-                        stringA_p_temp[j] = temp + "";
-                        stringA_u_temp[j] = null;
-                    } else { //The word on gridButton is user-filled
-                        stringA_u_temp[j] = temp + "";
-                        stringA_p_temp[j] = null;
-                    }
-                }
-                else{ //temp == null
-                    stringA_p_temp[j] = null;
-                    stringA_u_temp[j] = null;
-                }
-            }
-            stringA_preset[i] = Arrays.copyOf(stringA_p_temp, stringA_p_temp.length);
-            stringA_user_filled[i] = Arrays.copyOf(stringA_u_temp, stringA_u_temp.length);
-            // savedInstanceState.putStringArray(KEY_filled_words[i],stringA[i]);
-            // savedInstanceState.putStringArray(KEY_filled_words[i],stringA_temp);
-            x += 5; //for break point purpose
-        }
-        savedInstanceState.putSerializable(KEY_prefilled_words, stringA_preset);
-        savedInstanceState.putSerializable(KEY_userfilled_words, stringA_user_filled);
-        x = 8;
-    }
-
     /*
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState){
@@ -365,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
         //finish button listening action
         //By clicking finish button, will check the correctness of Sudoku
         //display whether right or wrong
-        mfinButton = (Button)findViewById(R.id.fin_button);
+        Button mfinButton = (Button) findViewById(R.id.fin_button);
         mfinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -498,7 +446,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //Button mButton1 = (Button) findViewById(R.id.button1);
-
+        Intent intent;
+        String select;
         Button mButtons;
         int i;
         switch (item.getItemId()){
