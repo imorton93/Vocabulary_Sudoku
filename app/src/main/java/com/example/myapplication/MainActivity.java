@@ -16,7 +16,6 @@ package com.example.myapplication;
 
         import java.util.ArrayList;
         import java.util.Arrays;
-        import java.util.Random;
 
         import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean InitializedGame = false;
     private boolean restored_s = false; //boolean for checking if sudoku is restored.
     private int mistakeCount = 0;
-    private String msg;
     String[] eng_wordsList = new String[9];
     String[] span_wordsList = new String[9];
     String[][] Sudoku_temp = new String[9][9];
@@ -517,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "data is null");
                 return;
             }
-            msg = data.getStringExtra("LANGUAGE");
+            String msg = data.getStringExtra("LANGUAGE");
             list = data.getStringArrayExtra("EXTRA_WORDS_LIST");
 
             for (int i =0; i< 9; i++) {
