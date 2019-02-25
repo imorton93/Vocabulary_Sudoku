@@ -27,7 +27,6 @@
             android:layout_alignStart="@id/tv_view"
             android:layout_marginStart="236dp" />
 
-
     </RelativeLayout>
 
 
