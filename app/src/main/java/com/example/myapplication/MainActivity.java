@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     String[][] Sudoku = new String[9][9];
     private static SudokuChecker resultCheck = new SudokuChecker();
     private Button mfinButton;
+
     private boolean InitializedGame = false;
     String[] eng_wordsList = new String[9];
     String[] span_wordsList = new String[9];
