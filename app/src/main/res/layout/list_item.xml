@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="0sp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
+        android:text="TYPE IN ENGLISH"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/item_edit1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="2dip"
+        android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:singleLine="true"
+        android:layout_marginStart="2dip"
+        android:maxLines="1"
+        android:descendantFocusability="afterDescendants">
+    </EditText>
+
+    <TextView
+        android:id="@+id/txt2"
+        android:layout_width="0sp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
+        android:text="TYPE IN SPANISH"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/item_edit2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="2dip"
+        android:gravity="center_vertical"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:singleLine="true"
+        android:layout_marginEnd="2dip"
+        android:maxLines="1"
+        android:descendantFocusability="afterDescendants">
+    </EditText>
+
+
+</LinearLayout>

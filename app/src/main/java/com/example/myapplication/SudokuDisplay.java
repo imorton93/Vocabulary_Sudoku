@@ -7,12 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
-
 
 import java.util.ArrayList;
 
@@ -36,7 +34,6 @@ public class SudokuDisplay extends AppCompatActivity {
     }
 
 }
-
 
 class GridAdapter extends BaseAdapter {
     private Context mContext;
@@ -72,5 +69,7 @@ class GridAdapter extends BaseAdapter {
         textView.setLayoutParams(new GridView.LayoutParams(144, 144));
         textView.setBackgroundResource(R.drawable.grid_items_border);
         return textView;
+
     }
 }
+
