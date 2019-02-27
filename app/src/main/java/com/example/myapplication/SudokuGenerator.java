@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-
-import java.util.ArrayList;
 import java.util.Random;
 
 public class SudokuGenerator {
@@ -15,7 +13,6 @@ public class SudokuGenerator {
         String[][] Sudoku = new String[9][9];
         nextGrid(Sudoku,0,0,wordsList);
         return Sudoku;
-
     }
 
     /*
@@ -61,7 +58,6 @@ public class SudokuGenerator {
         Sudoku[xPos][yPos] = null;
         return false;
     }
-
 
 
 
