@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,160 +25,122 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class Words_Selection extends AppCompatActivity {
     private static final String TAG = "Words-Selection";
-    private static final int READ_REQUEST_CODE = 100;
+    private static final String PAGE = "Pages";
+    private static final String WORDSLIST_ENG = "wordsList_eng";
+    private static final String WORDSLIST_SPAN = "wordsList_span";
+    private static final String MESSAGE_LANGUAGE = "Message_Language";
+    private static final String WORDS_COUNT = "Words_Count";
+    private static final String GRID_PRE_POSITION = "Pre_Position";
+    private static final String IS_SHOWN_FLAG = "isShowFlag";
 
+    //data structure
     ArrayList<String> eng_wordsList = new ArrayList<>();
     ArrayList<String> span_wordsList = new ArrayList<>();
+    //for gridview
+    ArrayList<String> eng_wordsList_gridview = new ArrayList<>();
+    ArrayList<String> span_wordsList_gridview = new ArrayList<>();
+    //original data from file or database
+    ArrayList<String> strings = null;
+    //monitor pages which may slide by user
+    private int numPages;
+    private int pages = 1;
     private String selectedItem;
     final TextView[] tv = new TextView[9];
     private int wordsCount = 0;
+    //words selected by users will go to MainActivity
     private static String[] wordsList_eng = new String[9];
     private static String[] wordsList_span = new String[9];
+    //English or Spanish
     private String message;
+    //keep track of whether button show/hide is activated
+    int[] pre_pos = new int[9];
+    //show/hide wrong words from users
+    Boolean isShown = false;
 
+    DBHelper mDBHelper = new DBHelper(this);
+
+
+    @SuppressLint("Assert")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.words_selection);
 
-        //retrieve words from text file wordpairs
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
-        ArrayList<String> strings = null;
-        try {
-            strings = readTextFromUri(uri);
-        } catch (IOException e) {
-            e.printStackTrace();
+        //declare TextView[] for showing words
+        for (int x = 0; x < 9; x++) {
+            String tvID = "tv" + (x + 1);
+            int resID = getResources().getIdentifier(tvID, "id", getPackageName());
+            tv[x] = findViewById(resID);
         }
 
-        assert strings != null;
-        for (int i = 0; i < strings.size(); i++){
-            String[] words = strings.get(i).split("-");
-            eng_wordsList.add(words[0]);
-            span_wordsList.add(words[1]);
-            Log.d(TAG,"LIST ENG is "+eng_wordsList.get(i));
-            Log.d(TAG,"LIST SPAN is "+span_wordsList.get(i));
+        if (savedInstanceState != null) {
+            pages = savedInstanceState.getInt(PAGE);
+            Log.d(TAG, "PAGE IS  "+ pages);
+            wordsList_eng = savedInstanceState.getStringArray(WORDSLIST_ENG);
+            wordsList_span = savedInstanceState.getStringArray(WORDSLIST_SPAN);
+            message = savedInstanceState.getString(MESSAGE_LANGUAGE);
+            wordsCount = savedInstanceState.getInt(WORDS_COUNT);
+            pre_pos = savedInstanceState.getIntArray(GRID_PRE_POSITION);
+            isShown = savedInstanceState.getBoolean(IS_SHOWN_FLAG);
+            //re-fill TextView with selected words
+            for (int i = 0; i < wordsCount; i++){
+                if (message.equals("SPAN")){
+                    tv[i].setText(wordsList_span[i]);
+                }else{
+                    tv[i].setText(wordsList_eng[i]);
+                }
+                Log.d(TAG, "WORD LIST ENG IS "+wordsList_eng[i]);
+                Log.d(TAG, "WORD LIST SPAN IS "+wordsList_span[i]);
+            }
         }
-
         TextView textView = (TextView)findViewById(R.id.tv_view);
-        Button button = (Button)findViewById(R.id.button_words);
         final GridView gridView = (GridView)findViewById(R.id.selection_view);
+
+        //EXTRA_MESSAGE from Load_Pairs
+        //words from users loading
         message = getIntent().getStringExtra(EXTRA_MESSAGE);
+        if (message.equals("LOAD")){
+            message = getIntent().getStringExtra("LANGUAGE");
+            strings = getIntent().getStringArrayListExtra("LOAD_WORDS_LIST");
+        }else{
+            //retrieve words from text file wordpairs
+            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
+            try {
+                strings = readTextFromUri(uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ArrayList<WordsPairs> arrayList = mDBHelper.getImportedData();
+            for (int i = 0; i < arrayList.size(); i++){
+                strings.add(arrayList.get(i).getENG()+","+arrayList.get(i).getSPAN());
+                Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
+                        arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
+            }
+        }
+        numPages = strings.size()/30 + 1;
+        setWordsList(strings,pages);
+
         final String msg;
-        String bmsg = "Select from wrong words";
         switch (message) {
             case "SPAN":
                 msg = "Select Spanish words ";
                 textView.setText(msg);
-                button.setText(bmsg);
-                gridView.setAdapter(new GridAdapter(span_wordsList, this));
-                selectWords();
-                intentStartGame();
+                gridView.setAdapter(new GridAdapter(span_wordsList_gridview, this));
                 break;
             case "ENG":
                 msg = "Select English words";
                 textView.setText(msg);
-                button.setText(bmsg);
-                gridView.setAdapter(new GridAdapter(eng_wordsList, this));
-                selectWords();
-                intentStartGame();
+                gridView.setAdapter(new GridAdapter(eng_wordsList_gridview, this));
                 break;
-            default:
-                setContentView(R.layout.load_pairs);
-                msg = "Type words into cells";
-                textView.setText(msg);
-                Button button_load = (Button)findViewById(R.id.button_load);
-                button_load.setText("Load Words from a Chapter of Book");
-                button_load.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        intent.setType("*/*");
-                        startActivityForResult(Intent.createChooser(intent,"select file") , READ_REQUEST_CODE);
-                    }
-                });
+            case "LOAD":
 
-                ArrayList<WordsPairs>arrayList= new ArrayList<>();
-
-                for (int i = 0; i < 9; i++) {
-                    WordsPairs list=new WordsPairs();
-                    list.setENG("");
-                    list.setSPAN("");
-                    arrayList.add(list);
-                }
-
-                final ListView listView = (ListView)findViewById(R.id.words_eng_list);
-                listView.setAdapter(new listArrayAdapter(this,arrayList));
-
-                //back to MainActivity
-                Button back = (Button)findViewById(R.id.back);
-                back.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Words_Selection.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-                //allow users to type in more words
-                //more codes coming
-                //store data into database
-                Button more = (Button)findViewById(R.id.more);
-                more.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ArrayList<WordsPairs>arrayList= new ArrayList<>();
-
-                        for (int i = 0; i < 9; i++) {
-                            WordsPairs list=new WordsPairs();
-                            list.setENG("");
-                            list.setSPAN("");
-                            arrayList.add(list);
-                        }
-
-                        final ListView listView = (ListView)findViewById(R.id.words_eng_list);
-                        listView.setAdapter(new listArrayAdapter(Words_Selection.this,arrayList));
-                    }
-                });
-
-                //Button to set up a Eng game with words that users type in
-                //more codes coming
-                //store data into database
-                Button back_fill_span = (Button) findViewById(R.id.back_fill_span);
-                back_fill_span.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setContentView(R.layout.words_selection);
-                        message = "SPAN";
-                        final GridView gridView = (GridView)findViewById(R.id.selection_view);
-                        gridView.setAdapter(new GridAdapter(span_wordsList, Words_Selection.this));
-                        selectWords();
-                        intentStartGame();
-                    }
-                });
-
-                //Button to set up a Span game with words that users type in
-                //more codes coming
-                //store data into database
-                Button back_fill_eng = (Button) findViewById(R.id.back_fill_eng);
-                back_fill_eng.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setContentView(R.layout.words_selection);
-                        message = "ENG";
-                        final GridView gridView = (GridView)findViewById(R.id.selection_view);
-                        gridView.setAdapter(new GridAdapter(eng_wordsList, Words_Selection.this));
-                        selectWords();
-                        intentStartGame();
-                    }
-                });
-                //LOAD more pairs of words
-
-                //need more codes
-                break;
+               break;
         }
 
+        selectWords();
+        intentStartGame();
     }
+
 
     public void intentStartGame(){
         //back to MainActivity
@@ -189,34 +150,94 @@ public class Words_Selection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (wordsCount < 9){
-                    Toast warn = Toast.makeText(Words_Selection.this, "You MUST select 9 words to start a new game.",Toast.LENGTH_LONG);
-                    warn.setGravity(Gravity.TOP, 0, 400);
-                    warn.show();
+                    Toast.makeText(Words_Selection.this, "You MUST select 9 words to start a new game.",
+                            Toast.LENGTH_LONG).show();
                 }else{
-                    setWordsList(message, wordsList_eng,wordsList_span);
+                    setStartList(message, wordsList_eng,wordsList_span);
                 }
             }
         });
+    }
+
+    //display words in every page
+    //every page has 30 words
+    //re-load words when user change page
+    public void setWordsList(ArrayList<String> strings, int pages) {
+        assert strings != null;
+
+        //if has 30 words to get a complete page
+        if (strings.size()-30*(pages-1) >= 30){
+            int i = 0;
+            while (i + (pages - 1) * 30 < 30 * pages){
+                String[] words = strings.get(i+(pages-1)*30).split(",");
+                if (words.length < 2){
+                    break;
+                }else{
+                    eng_wordsList.add(words[0]);
+                    span_wordsList.add(words[1]);
+                    eng_wordsList_gridview.add(words[0]);
+                    span_wordsList_gridview.add(words[1]);
+                    if (isShown) {
+                        if (lookForWrongWords(i)){
+                            eng_wordsList_gridview.set(i, words[0]+".wrong");
+                            span_wordsList_gridview.set(i, words[1]+".wrong");
+                        }
+                    }
+                    //check whether has words selected before
+                    //make it ""
+                    for (int j = 0; j < wordsCount; j++){
+                        if (wordsList_eng[j].equals(words[0]) || wordsList_span[j].equals(words[1])){
+                            eng_wordsList_gridview.set(i,"");
+                            span_wordsList_gridview.set(i,"");
+                        }
+                    }
+                    i++;
+                }
+            }
+        }else{//display rest words if leaving less than 30 words
+            int i = 0;
+            for (int k = (pages-1)*30; k < strings.size();k++){
+                String[] words = strings.get(k).split(",");
+                if (words.length < 2){
+                    break;
+                }else{
+                    eng_wordsList.add(words[0]);
+                    span_wordsList.add(words[1]);
+                    eng_wordsList_gridview.add(eng_wordsList.get(i));
+                    span_wordsList_gridview.add(span_wordsList.get(i));
+                    if (isShown) {
+                        if (lookForWrongWords(i)){
+                            eng_wordsList_gridview.set(i, words[0]+".wrong");
+                            span_wordsList_gridview.set(i, words[1]+".wrong");
+                        }
+                    }
+                    //check whether has words selected before
+                    //make it ""
+                    for (int j = 0; j < wordsCount; j++) {
+                        if (wordsList_eng[j].equals(words[0]) || wordsList_span[j].equals(words[1])) {
+                            eng_wordsList_gridview.set(i,"");
+                            span_wordsList_gridview.set(i,"");
+                        }
+                    }
+
+                    i++;
+                }
+            }
+        }
 
     }
 
     public void selectWords(){
-        for (int x = 0; x < 9; x++) {
-            String tvID = "tv" + (x + 1);
-            int resID = getResources().getIdentifier(tvID, "id", getPackageName());
-            tv[x] = (TextView) findViewById(resID);
-        }
         //gridview show words in the database
         //allow user to use
         final GridView gridView = (GridView)findViewById(R.id.selection_view);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 //based on the position you have to get value
                 if (wordsCount >= 9){
-                    Toast warn2 = Toast.makeText(Words_Selection.this, "You already select 9 words. ", Toast.LENGTH_LONG);
-                    warn2.setGravity(Gravity.TOP, 0, 400);
-                    warn2.show();
+                    Toast.makeText(Words_Selection.this, "You already select 9 words. ",
+                            Toast.LENGTH_LONG).show();
                 }else{
                     //get Gridview ID
                     //retrieve TextView data through GridView ID
@@ -225,34 +246,196 @@ public class Words_Selection extends AppCompatActivity {
                     //prevent user re-select same word
                     selectedItem = gridView.getItemAtPosition(position).toString();
                     if (!isConflict(selectedItem)){
-                        wordsList(message,selectedItem);
-                        fillTextView(selectedItem);
+
+                        //show which words selected by user in Textview
+                        Log.d(TAG, "SELECTED ITEM IS "+ selectedItem);
+                        if (selectedItem.contains(".wrong")){
+                            String str = selectedItem.replace(selectedItem.substring(selectedItem.length()-6), "");
+                            Log.d(TAG,"STR STR STR STR IS  "+ str);
+                            tv[wordsCount].setText(str);
+                            wordsList(message,str);
+                        }else{
+                            tv[wordsCount].setText(selectedItem);
+                            wordsList(message,selectedItem);
+                        }
+                        tv[wordsCount].setGravity(Gravity.CENTER);
+                        //keep track of position in which words are selected
+                        pre_pos[wordsCount] = position + (pages-1) * 30;
+                        wordsCount++;
                         TextView tv = (TextView) gridView.getChildAt(position);
-                        tv.setBackgroundColor(Color.RED);
                         tv.setText("");
                     }else{
-                        Toast warn3 = Toast.makeText(Words_Selection.this,"You can't select a word twice.",Toast.LENGTH_LONG);
-                        warn3.setGravity(Gravity.TOP, 0, 400);
-                        warn3.show();
+                        Toast.makeText(Words_Selection.this,"You can't select a word twice.",
+                                Toast.LENGTH_LONG).show();
                     }
 
                 }
             }
         });
 
+        //UNDO button can delete last word selected by user
+        final Button undo = (Button) findViewById(R.id.undo);
+        undo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (wordsCount == 0){
+                    Toast.makeText(Words_Selection.this, "There is no words selected now. ",
+                            Toast.LENGTH_LONG).show();
+                }else{
+                    wordsCount--;
+                    String tmp = tv[wordsCount].getText().toString();
+                    tv[wordsCount].setText("");
+                    wordsList_eng[wordsCount] = null;
+                    wordsList_span[wordsCount] = null;
+                    int current_page = pre_pos[wordsCount]/30 + 1;
+                    int current_pos = pre_pos[wordsCount] - (pages -1) * 30;
+                    TextView undo_tv = (TextView) gridView.getChildAt(current_pos);
+                    if (pages == current_page){
+                        eng_wordsList_gridview.set(current_pos,tmp);
+                        span_wordsList_gridview.set(current_pos, tmp);
+                        if (isShown){
+                            if (lookForWrongWords(pre_pos[wordsCount] - (pages -1) * 30) ){
+                                if (tmp.contains(".wrong")){
+                                    undo_tv.setText(tmp.replace(tmp.substring(tmp.length()-6), ""));
+                                    undo_tv.setTextColor(Color.RED);
+                                }else{
+                                    undo_tv.setText(tmp);
+                                    undo_tv.setTextColor(Color.RED);
+                                }
+                            }else{
+                                undo_tv.setText(tmp);
+                                undo_tv.setTextColor(Color.parseColor("#FF008577"));
+                            }
+                        }else{
+                            undo_tv.setText(tmp);
+                            undo_tv.setTextColor(Color.parseColor("#FF008577"));
+                        }
+                        Log.d(TAG, "PAGE is  " + pages);
+                        Log.d(TAG, "TMP IN UNDO IS "+ tmp);
+                    }
+                }
+            }
+        });
+
+        final Button next = (Button) findViewById(R.id.next);
+        final Button prev = (Button) findViewById(R.id.prev);
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pages < numPages){
+                    prev.setEnabled(true);
+                    eng_wordsList.clear();
+                    span_wordsList.clear();
+                    eng_wordsList_gridview.clear();
+                    span_wordsList_gridview.clear();
+                    pages++;
+                    setWordsList(strings,pages);
+                    switch (message){
+                        case "SPAN":
+                            gridView.setAdapter(new GridAdapter(span_wordsList_gridview, Words_Selection.this));
+                            break;
+                        case "ENG":
+                            gridView.setAdapter(new GridAdapter(eng_wordsList_gridview, Words_Selection.this));
+                            break;
+                    }
+                }else{
+                    next.setEnabled(false);
+                }
+            }
+        });
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pages <= 1){
+                    prev.setEnabled(false);
+                }else {
+                    next.setEnabled(true);
+                    eng_wordsList.clear();
+                    span_wordsList.clear();
+                    eng_wordsList_gridview.clear();
+                    span_wordsList_gridview.clear();
+                    pages--;
+                    setWordsList(strings,pages);
+                    switch (message){
+                        case "SPAN":
+                            gridView.setAdapter(new GridAdapter(span_wordsList_gridview, Words_Selection.this));
+                            break;
+                        case "ENG":
+                            gridView.setAdapter(new GridAdapter(eng_wordsList_gridview, Words_Selection.this));
+                            break;
+                    }
+                }
+            }
+        });
+
+        //show/hide previous wrong words
+        //if user click show, it will color all wrong words in this page to be red
+        Button button = (Button)findViewById(R.id.button_words);
+        String bmsg = null;
+        if (isShown){
+            bmsg = "Hide My words";
+        }else{
+            bmsg = "Show My words";
+        }
+        button.setText(bmsg);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isShown){
+                    if (mDBHelper.countWords() == 0) {
+                        isShown = false;
+                        Toast.makeText(Words_Selection.this, "You DON'T have any words in My WORDS",
+                                Toast.LENGTH_LONG).show();
+                    }else{
+                        isShown = true;
+                        Button button = (Button)findViewById(R.id.button_words);
+                        button.setText("Hide My words");
+                        for (int i = 0; i < span_wordsList.size(); i++){
+                            if (lookForWrongWords(i)){
+                                TextView tv = (TextView) gridView.getChildAt(i);
+                                tv.setTextColor(Color.RED);
+                            }
+                        }
+                    }
+                }else{
+                    isShown = false;
+                    Button button = (Button)findViewById(R.id.button_words);
+                    button.setText("Show My words");
+                    for (int i = 0; i < span_wordsList.size(); i++){
+                        TextView tv = (TextView) gridView.getChildAt(i);
+                        tv.setTextColor(Color.parseColor("#FF008577"));
+                    }
+                }
+            }
+        });
+
     }
 
-
-    //show which words selected by user in Textview
-    public void fillTextView(String item){
-        tv[wordsCount].setText(item);
-        wordsCount++;
+    public boolean lookForWrongWords(int i){
+        ArrayList<WordsPairs> arrayList = mDBHelper.getData();
+        if (message.equals("SPAN")){
+            for (int j = 0; j < arrayList.size(); j++){
+                if (arrayList.get(j).getSPAN().equals(span_wordsList.get(i))){
+                    return true;
+                }
+            }
+        }else{
+            for (int j = 0; j < arrayList.size(); j++){
+                if (arrayList.get(j).getENG().equals(eng_wordsList.get(i))){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     //make sure every word only collected once
     public Boolean isConflict(String item){
         for (int i = 0; i< wordsCount; i++){
-            if (tv[i].getText().equals(item)){
+            String tmp = tv[i].getText().toString();
+            if (tmp.equals(item) || item.contains(tmp)){
                 return true;
             }
         }
@@ -282,7 +465,7 @@ public class Words_Selection extends AppCompatActivity {
     }
 
     //pass words that user select to MainActivity
-    private void setWordsList(String msg, String[] eng, String[] span) {
+    private void setStartList(String msg, String[] eng, String[] span) {
         Intent data = new Intent();
         String[] lists = new String[9];
         for (int i = 0; i < eng.length; i++){
@@ -319,62 +502,21 @@ public class Words_Selection extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-
-        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
-        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
-        // response to some other intent, and the code below shouldn't run at all.
-
-        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // The document selected by the user won't be returned in the intent.
-            // Instead, a URI to that document will be contained in the return intent
-            // provided to this method as a parameter.
-            // Pull that URI using resultData.getData().
-            Uri uri = null;
-            if (resultData != null) {
-                uri = resultData.getData();
-                ArrayList<String> fileContent = new ArrayList<>();
-                try {
-                    fileContent = readTextFromUri(uri);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Log.i(TAG, "Uri: " + uri.toString());
-
-                if(fileContent.size() < 9){
-                    Toast.makeText(this, "Can't Start a Game With Less 9 Words",
-                    Toast.LENGTH_LONG).show();
-                }else{
-                    //ListView initial
-                    ArrayList<WordsPairs>arrayList= new ArrayList<>();
-
-                    eng_wordsList.clear();
-                    span_wordsList.clear();
-
-                    for (int i = 0; i < fileContent.size(); i++){
-                        WordsPairs list=new WordsPairs();
-                        String[] words = fileContent.get(i).split("\\s+");
-                        if (words.length == 1){
-                            Toast.makeText(this, "Can't Read This Flie, Make Sure It is From the Chapter of Book.",
-                                    Toast.LENGTH_LONG).show();
-                            list.setENG("");
-                            list.setSPAN("");
-                            arrayList.add(list);
-                        }else{
-                            list.setENG(words[0]);
-                            list.setSPAN(words[1]);
-                            arrayList.add(list);
-                        }
-                        eng_wordsList.add(words[0]);
-                        span_wordsList.add(words[1]);
-                    }
-
-                    ListView listView = (ListView)findViewById(R.id.words_eng_list);
-                    listView.setAdapter(new listArrayAdapter(this,arrayList));
-
-                }
-            }
-        }
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(PAGE,pages);
+        savedInstanceState.putStringArray(WORDSLIST_ENG,wordsList_eng);
+        savedInstanceState.putStringArray(WORDSLIST_SPAN,wordsList_span);
+        savedInstanceState.putString(MESSAGE_LANGUAGE,message);
+        savedInstanceState.putInt(WORDS_COUNT,wordsCount);
+        savedInstanceState.putIntArray(GRID_PRE_POSITION, pre_pos);
+        savedInstanceState.putBoolean(IS_SHOWN_FLAG, isShown);
     }
 
+    @Override public void onDestroy() {
+        mDBHelper.close();
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
+    }
 }
