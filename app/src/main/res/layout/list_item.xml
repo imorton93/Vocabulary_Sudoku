@@ -6,12 +6,12 @@
 
     <TextView
         android:id="@+id/txt1"
-        android:layout_width="0sp"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:background="@android:color/darker_gray"
-        android:text="TYPE IN ENGLISH"
+        android:text="LOAD ENGLISH WORD"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
@@ -30,12 +30,12 @@
 
     <TextView
         android:id="@+id/txt2"
-        android:layout_width="0sp"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:background="@android:color/darker_gray"
-        android:text="TYPE IN SPANISH"
+        android:text="LOAD SPANISH WORD"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
