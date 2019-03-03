@@ -83,10 +83,16 @@ public class MainActivity extends AppCompatActivity {
 
     DBHelper mDBHelper = new DBHelper(this);
     Menu menu;
+    //Begin of variables for listen mode
     private final String[] l_numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}; //The string array for listen comprehension mode
     private int remain_nums = 0;
     private int l_number = 0; //a variable for listen mode functions
     String[] assigned = new String[9]; //For listen mode
+    Locale locSpanish = new Locale("spa", "ES");
+    Locale locEnglish = new Locale("eng", "US");
+    TextToSpeech span;
+    TextToSpeech eng;
+    //End of variables for listen mode
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,74 +124,75 @@ public class MainActivity extends AppCompatActivity {
             fill_Span = savedInstanceState.getBoolean(KEY_fill_Span);
             listen_mode = savedInstanceState.getBoolean(KEY_Listen);
             list = savedInstanceState.getStringArray(KEY_WORDS_LIST);
-            int j = 0;  //For breakpoint purpose
-            Log.i(TAG, "loads the words user filled in before");
+            if (InitializedGame) {
+                //If a game has been initialized
+                int j = 0;  //For breakpoint purpose
+                Log.i(TAG, "loads the words user filled in before");
             /* for (int i = 0; i < 9; i++) {
                 Sudoku_temp[i] = savedInstanceState.getStringArray(KEY_filled_words[i]); //break point here
                 j = 1; //for break point purpose
                 //BUG: at least after the screen is turned and turned back, the words (wrong) are preserved
                 //Problem: sudoku [i] is the same for all i
             } */
-            //
-            wordsSplit(list);
-            if (fill_Eng){
-                for (int i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(eng_wordsList[i]);
+                //
+                wordsSplit(list);
+                if (fill_Eng) {
+                    for (int i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(eng_wordsList[i]);
+                    }
+                } else if (fill_Span) {
+                    for (int i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(span_wordsList[i]);
+                    }
                 }
-            }
-            else if (fill_Span){
-                for (int i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(span_wordsList[i]);
-                }
-            }
-            Sudoku_temp = (String [][]) savedInstanceState.getSerializable(KEY_prefilled_words);
-            Sudoku_user = (String [][]) savedInstanceState.getSerializable(KEY_userfilled_words);
-            Sudoku = (String [][]) savedInstanceState.getSerializable(KEY_Sudoku);
-            // The arrays in Sudoku_temp has the columns of the original sudoku from right to left (should be from left to right)
-            for (int x = 0; x < 9; x++) { //break point here
-                for (int y = 0; y < 9; y++) {
-                    gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
-                    j += 5; //break point here
-                    if (Sudoku_temp[x][y] != null) {
-                        gridButton[x][y].setClickable(false);
-                        //Sudoku 'memorizes' the pre-set words
-                    } else {
-                        gridButton[x][y].setClickable(true);
-                        if (Sudoku_user[x][y] != null) {
-                            gridButton[x][y].setText(Sudoku_user[x][y]);
-                            String tmp = null;
-                            //if is wrong, puts word to be red
-                            for (int i = 0 ; i < 9; i++){
-                                if (gridButton[x][y].getText().equals(eng_wordsList[i])){
-                                    tmp = span_wordsList[i];
+                Sudoku_temp = (String[][]) savedInstanceState.getSerializable(KEY_prefilled_words);
+                Sudoku_user = (String[][]) savedInstanceState.getSerializable(KEY_userfilled_words);
+                Sudoku = (String[][]) savedInstanceState.getSerializable(KEY_Sudoku);
+                // The arrays in Sudoku_temp has the columns of the original sudoku from right to left (should be from left to right)
+                for (int x = 0; x < 9; x++) { //break point here
+                    for (int y = 0; y < 9; y++) {
+                        gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
+                        j += 5; //break point here
+                        if (Sudoku_temp[x][y] != null) {
+                            gridButton[x][y].setClickable(false);
+                            //Sudoku 'memorizes' the pre-set words
+                        } else {
+                            gridButton[x][y].setClickable(true);
+                            if (Sudoku_user[x][y] != null) {
+                                gridButton[x][y].setText(Sudoku_user[x][y]);
+                                String tmp = "";
+                                //if is wrong, puts word to be red
+                                for (int i = 0; i < 9; i++) {
+                                    if (gridButton[x][y].getText().equals(eng_wordsList[i])) {
+                                        tmp = span_wordsList[i];
+                                    }
+                                    if (gridButton[x][y].getText().equals(span_wordsList[i])) {
+                                        tmp = eng_wordsList[i];
+                                    }
                                 }
-                                if (gridButton[x][y].getText().equals(span_wordsList[i])){
-                                    tmp = eng_wordsList[i];
+                                if (tmp.equals(Sudoku[x][y])) {
+                                    Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
+                                    Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                    gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                } else {
+                                    //if it's right, makes it green
+                                    Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
+                                    Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                    gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
                                 }
+                                //Set the button to clikable and the text to user's text color
+                            } else {
+                                gridButton[x][y].setText(null);
                             }
-                            if (tmp.equals(Sudoku[x][y])){
-                                Log.d(TAG, " SUDOKU[X][Y] is "+ Sudoku[x][y] );
-                                Log.d(TAG, " GRIDBUTTON[X][Y] is "+ tmp );
-                                gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
-                            }else{
-                                //if it's right, makes it green
-                                Log.d(TAG, " SUDOKU[X][Y] is "+ Sudoku[x][y] );
-                                Log.d(TAG, " GRIDBUTTON[X][Y] is "+ tmp );
-                                gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
-                            }
-                            //Set the button to clikable and the text to user's text color
-                        }
-                        else{
-                            gridButton[x][y].setText(null);
                         }
                     }
                 }
-            }
 
-            restored_s = true;
-            //InitializedGame = true;
+                restored_s = true;
+                //InitializedGame = true;
+            }
         }
         else {
             Log.i(TAG, "onCreate - savedInstanceState is null");
@@ -296,10 +303,7 @@ public class MainActivity extends AppCompatActivity {
         remain_nums = 9 - number //number = number of words that are assigned a number
 
     */
-    Locale locSpanish = new Locale("spa", "ES");
-    Locale locEnglish = new Locale("eng", "US");
-    TextToSpeech span;
-    TextToSpeech eng;
+
     public void getListenGameGrid(String[] words) {
         Log.d(TAG, "Game in listen mode is initialized.");
         InitializedGame = true;
@@ -433,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     }
-
+                //Case for listen mode ends.
                 }
                 else {
                     for (int x = 0; x < 9; x++) {
@@ -708,7 +712,7 @@ public class MainActivity extends AppCompatActivity {
 
     //After the grids are created, save the words
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
+    public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         //Saves: InitializedGame , Sudoku[][], words on gridButton
@@ -716,7 +720,8 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putBoolean(KEY_fill_Eng, fill_Eng);
         savedInstanceState.putBoolean(KEY_fill_Span, fill_Span);
         savedInstanceState.putBoolean(KEY_Listen, listen_mode);
-        savedInstanceState.putStringArray(KEY_WORDS_LIST,list);
+        savedInstanceState.putStringArray(KEY_WORDS_LIST, list);
+        savedInstanceState.putSerializable(KEY_Sudoku, Sudoku);
         //savedInstanceState.put(KEY_filled_words, gridButton);
         int x = 0;
         String[] stringA_p_temp = new String[9];
@@ -725,43 +730,48 @@ public class MainActivity extends AppCompatActivity {
         String[][] stringA_user_filled = new String[9][9]; //Array of user-filled words
         CharSequence temp = "";
         Boolean temp_not_null = false;
-        savedInstanceState.putSerializable(KEY_Sudoku,Sudoku);
-        for (int i = 0; i < 9; i++){
-            x += 0; //for break point purpose
-            for (int j = 0; j < 9; j++ ){
-                //savedInstanceState.putString(KEY_filled_words[i][j], gridButton[i][j].getText());
-                temp = gridButton[i][j].getText();
-                //temp_Color = gridButton[i][j].getCurrentTextColor();
-                temp_not_null = (temp == null || temp == "");
-                if (!temp_not_null) {
-                    if (!(gridButton[i][j].isClickable())) { //the word on gridButton is pre-set
-                        stringA_p_temp[j] = temp + "";
-                        stringA_u_temp[j] = null;
-                    } else { //The word on gridButton is user-filled
-                        stringA_u_temp[j] = temp + "";
+        if (listen_mode) {
+           /* //Somehow save the onclickListners? Or maybe I don't have the save the onClickListners,
+           just save all variables used for listen mode and reset all the listeners in  savedInstanceState
+            */
+        } else {
+            //Normal mode saveOnInstanceState
+            for (int i = 0; i < 9; i++) {
+                x += 0; //for break point purpose
+                for (int j = 0; j < 9; j++) {
+                    //savedInstanceState.putString(KEY_filled_words[i][j], gridButton[i][j].getText());
+                    temp = gridButton[i][j].getText();
+                    //temp_Color = gridButton[i][j].getCurrentTextColor();
+                    temp_not_null = (temp == null || temp == "");
+                    if (!temp_not_null) {
+                        if (!(gridButton[i][j].isClickable())) { //the word on gridButton is pre-set
+                            stringA_p_temp[j] = temp + "";
+                            stringA_u_temp[j] = null;
+                        } else { //The word on gridButton is user-filled
+                            stringA_u_temp[j] = temp + "";
+                            stringA_p_temp[j] = null;
+                        }
+                    } else { //temp == null
                         stringA_p_temp[j] = null;
+                        stringA_u_temp[j] = null;
                     }
                 }
-                else{ //temp == null
-                    stringA_p_temp[j] = null;
-                    stringA_u_temp[j] = null;
-                }
+                stringA_preset[i] = Arrays.copyOf(stringA_p_temp, stringA_p_temp.length);
+                stringA_user_filled[i] = Arrays.copyOf(stringA_u_temp, stringA_u_temp.length);
+                // savedInstanceState.putStringArray(KEY_filled_words[i],stringA[i]);
+                // savedInstanceState.putStringArray(KEY_filled_words[i],stringA_temp);
+                x += 5; //for break point purpose
             }
-            stringA_preset[i] = Arrays.copyOf(stringA_p_temp, stringA_p_temp.length);
-            stringA_user_filled[i] = Arrays.copyOf(stringA_u_temp, stringA_u_temp.length);
-            // savedInstanceState.putStringArray(KEY_filled_words[i],stringA[i]);
-            // savedInstanceState.putStringArray(KEY_filled_words[i],stringA_temp);
-            x += 5; //for break point purpose
-        }
 
-        for (int i = 0; i < 9; i++){
-            Log.d(TAG, "STRING PRESET are  "+ Arrays.toString(stringA_preset[i]));
-            Log.d(TAG, "STRING USER FILLED are  "+ Arrays.toString(stringA_user_filled[i]));
-        }
+            for (int i = 0; i < 9; i++) {
+                Log.d(TAG, "STRING PRESET are  " + Arrays.toString(stringA_preset[i]));
+                Log.d(TAG, "STRING USER FILLED are  " + Arrays.toString(stringA_user_filled[i]));
+            }
 
-        savedInstanceState.putSerializable(KEY_prefilled_words, stringA_preset);
-        savedInstanceState.putSerializable(KEY_userfilled_words, stringA_user_filled);
-        x = 8;
+            savedInstanceState.putSerializable(KEY_prefilled_words, stringA_preset);
+            savedInstanceState.putSerializable(KEY_userfilled_words, stringA_user_filled);
+            x = 8;
+        }
     }
 
     @Override
