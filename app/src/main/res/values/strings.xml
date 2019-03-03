@@ -18,8 +18,11 @@
 
 
 
-    <string name="warn_reinit">Warning!!! If you initialized the game already,
-        you will receive penalty if you continue to see the Word Pairs. Do you want to continue?
+    <string name="warn_see_words">Warning!!! If you initialized the game already,
+        you will receive penalty if you continue to see the word translations.
+        </string>
+    <string name="warn_dialog">Warning!!! If you initialized the game already,
+        you will receive penalty if you continue to see the word translations. Do you want to continue?
         </string>
     <string name="yes">YES</string>
     <string name="cancel">CANCEL</string>
@@ -88,6 +91,8 @@
             mother--------madre  \n</string>
     <string name="prev">PREV</string>
     <string name="next">NEXT</string>
+    <string name="Word_pairs_intro">Hello, please choose which word you would like to see the translation for.</string>
+
 
 
 </resources>
