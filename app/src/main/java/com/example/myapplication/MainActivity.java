@@ -1,23 +1,24 @@
 package com.example.myapplication;
 
-        import android.content.Intent;
-        import android.graphics.Color;
-        import android.graphics.drawable.ColorDrawable;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.Gravity;
-        import android.view.Menu;
-        import android.view.MenuInflater;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
-        import java.util.ArrayList;
-        import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
-        import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 
 
@@ -29,16 +30,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_fill_Eng = "fill_Eng";
     private static final String KEY_fill_Span = "fill_Span";
     private static final String KEY_WORDS_LIST = "words_list";
-/*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
-    //The leftmost column
-    private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
-    private static final String KEY_filled_words_2 = "col_2"; //The words that the user has filled
-    private static final String KEY_filled_words_3 = "col_3"; //The words that the user has filled
-    private static final String KEY_filled_words_4 = "col_4"; //The words that the user has filled
-    private static final String KEY_filled_words_5 = "col_5"; //The words that the user has filled
-    private static final String KEY_filled_words_6 = "col_6"; //The words that the user has filled
-    private static final String KEY_filled_words_7 = "col_7"; //The words that the user has filled
-    private static final String KEY_filled_words_8 = "col_8"; //The words that the user has filled */
+    /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
+        //The leftmost column
+        private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
+        private static final String KEY_filled_words_2 = "col_2"; //The words that the user has filled
+        private static final String KEY_filled_words_3 = "col_3"; //The words that the user has filled
+        private static final String KEY_filled_words_4 = "col_4"; //The words that the user has filled
+        private static final String KEY_filled_words_5 = "col_5"; //The words that the user has filled
+        private static final String KEY_filled_words_6 = "col_6"; //The words that the user has filled
+        private static final String KEY_filled_words_7 = "col_7"; //The words that the user has filled
+        private static final String KEY_filled_words_8 = "col_8"; //The words that the user has filled */
 /*    private String[] KEY_filled_words =
             {KEY_filled_words_0, KEY_filled_words_1, KEY_filled_words_2, KEY_filled_words_3,
             KEY_filled_words_4, KEY_filled_words_5, KEY_filled_words_6, KEY_filled_words_7,
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean InitializedGame = false;
     private boolean restored_s = false; //boolean for checking if sudoku is restored.
     private int mistakeCount = 0;
+    private String msg;
     String[] eng_wordsList = new String[9];
     String[] span_wordsList = new String[9];
     String[][] Sudoku_temp = new String[9][9];
@@ -95,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
         //gameInitial
 
         if ((savedInstanceState != null)) {
-        //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
-        // so user does not need to restart game.
+            //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
+            // so user does not need to restart game.
             Button mButtons;
             InitializedGame = savedInstanceState.getBoolean(KEY_InitializedGame);
             fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
@@ -127,14 +129,14 @@ public class MainActivity extends AppCompatActivity {
             Sudoku_temp = (String [][]) savedInstanceState.getSerializable(KEY_prefilled_words);
             Sudoku_user = (String [][]) savedInstanceState.getSerializable(KEY_userfilled_words);
             Sudoku = (String [][]) savedInstanceState.getSerializable(KEY_Sudoku);
-                // The arrays in Sudoku_temp has the columns of the original sudoku from right to left (should be from left to right)
+            // The arrays in Sudoku_temp has the columns of the original sudoku from right to left (should be from left to right)
             for (int x = 0; x < 9; x++) { //break point here
                 for (int y = 0; y < 9; y++) {
                     gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
                     j += 5; //break point here
                     if (Sudoku_temp[x][y] != null) {
                         gridButton[x][y].setClickable(false);
-                         //Sudoku 'memorizes' the pre-set words
+                        //Sudoku 'memorizes' the pre-set words
                     } else {
                         gridButton[x][y].setClickable(true);
                         if (Sudoku_user[x][y] != null) {
@@ -171,9 +173,9 @@ public class MainActivity extends AppCompatActivity {
             restored_s = true;
             //InitializedGame = true;
         }
-            else {
-                Log.i(TAG, "onCreate - savedInstanceState is null");
-            }
+        else {
+            Log.i(TAG, "onCreate - savedInstanceState is null");
+        }
         //finish Button
         finButton();
     } //End of OnCreate()
@@ -395,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(intent, 1);
                 }
                 else {//make dialog here
-                        //Temporary Toast
+                    //Temporary Toast
                     Toast.makeText(MainActivity.this,R.string.cant_init,Toast.LENGTH_LONG).show();
                 }
                 return true;
@@ -475,11 +477,11 @@ public class MainActivity extends AppCompatActivity {
                 temp_not_null = (temp == null || temp == "");
                 if (!temp_not_null) {
                     if (!(gridButton[i][j].isClickable())) { //the word on gridButton is pre-set
-                            stringA_p_temp[j] = temp + "";
-                            stringA_u_temp[j] = null;
+                        stringA_p_temp[j] = temp + "";
+                        stringA_u_temp[j] = null;
                     } else { //The word on gridButton is user-filled
-                            stringA_u_temp[j] = temp + "";
-                            stringA_p_temp[j] = null;
+                        stringA_u_temp[j] = temp + "";
+                        stringA_p_temp[j] = null;
                     }
                 }
                 else{ //temp == null
@@ -515,12 +517,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "data is null");
                 return;
             }
-            String msg = data.getStringExtra("LANGUAGE");
+            msg = data.getStringExtra("LANGUAGE");
             list = data.getStringArrayExtra("EXTRA_WORDS_LIST");
 
             for (int i =0; i< 9; i++) {
                 Log.d(TAG, "Words from selection ENG are " + list[i]);
-              //  Log.d(TAG, "Words from selection SPAN are " + span_wordsList[i]);
+                //  Log.d(TAG, "Words from selection SPAN are " + span_wordsList[i]);
 
             }
             setInitialGame(msg,list);
