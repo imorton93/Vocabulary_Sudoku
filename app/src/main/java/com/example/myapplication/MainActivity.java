@@ -1,9 +1,11 @@
 package com.example.myapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.speech.tts.TextToSpeech;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 gridButton[x][y] = findViewById(resID);
             }
+            list[x] = x+1 +"-" + x+1;
         }
         //store words from String Resources
         //in case, order of String from String Resources may change
@@ -251,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
 
     //To guarantee each English word's position is correctly correspondent to a a Spanish word
     public void wordsSplit(String[] list){
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < list.length; i++) {
             //the words in the file are separated by -`, so to get each words
             String[] words = list[i].split("-");
             eng_wordsList[i] = words[0];
@@ -581,6 +584,56 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void addMyWords(String eng, String span) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        if (msg.equals("SPAN")){
+            alertDialogBuilder.setMessage("If having any difficulty recognizing, you can add '"+span+"' " +
+                    "and its English word to My Words");
+        }else{
+            alertDialogBuilder.setMessage("If having any difficulty recognizing, you can add '"+eng+"'" +
+                    "and its Spanish word to My Words");
+        }
+        final String finalEng = eng;
+        final String finalSpan = span;
+        alertDialogBuilder.setPositiveButton(
+                "yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        //initial Database
+                        //store wrong word that made by user
+                        //check if there is same word inside Database
+                        if (mDBHelper.hasWord(new WordsPairs(finalEng, finalSpan, 1))){
+                            //update Total number of wrong words
+                            int num = mDBHelper.numWrong(new WordsPairs(finalEng, finalSpan, 1));
+                            num++;
+                            //update database
+                            mDBHelper.updateWrongNum(new WordsPairs(finalEng, finalSpan,num));
+                        }else{
+                            //insert word to database
+                            mDBHelper.updateWrongWord(new WordsPairs(finalEng, finalSpan,1));
+                        }
+                        ArrayList<WordsPairs> arrayList = mDBHelper.getData();
+                        for (int i = 0; i < arrayList.size(); i++){
+                            Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
+                                    arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
+                        }
+                        Toast.makeText(MainActivity.this,
+                                "This word is added to My Words.", Toast.LENGTH_LONG).show();
+                    }
+                });
+        alertDialogBuilder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -675,9 +728,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.load_wordpairs:
-                intent = new Intent(MainActivity.this, Words_Selection.class);
-                select = "LOAD";
-                intent.putExtra(EXTRA_MESSAGE, select);
+//                intent = new Intent(MainActivity.this, Words_Selection.class);
+//                select = "LOAD";
+//                intent.putExtra(EXTRA_MESSAGE, select);
+                intent = new Intent(MainActivity.this, Load_Pairs.class);
                 startActivityForResult(intent, 1);
 
                 return true;
@@ -791,7 +845,9 @@ public class MainActivity extends AppCompatActivity {
             list = data.getStringArrayExtra("EXTRA_WORDS_LIST");
 
             for (int i =0; i< 9; i++) {
-                Log.d(TAG, "Words from selection ENG are " + list[i]);
+                Log.d(TAG, "Words from selection ENG and SPAN are " + list[i]);
+                Log.d(TAG, "Words from selection LANGUAGE msg is " + msg);
+
                 //  Log.d(TAG, "Words from selection SPAN are " + span_wordsList[i]);
 
             }
