@@ -14,6 +14,7 @@
         choose "Fill in English" or "Fill in Spanish"</string>
     <string name="fin_button">Finish</string>
     <string name="start_game">Start</string>
+    <string name="undo">UNDO</string>
 
 
 
@@ -85,7 +86,8 @@
             happy--------feliz \n
             father--------padre \n
             mother--------madre  \n</string>
-
+    <string name="prev">PREV</string>
+    <string name="next">NEXT</string>
 
 
 </resources>
