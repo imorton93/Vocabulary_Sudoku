@@ -25,6 +25,11 @@
         android:title="Load New Word Pairs"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/listen"
+        android:title="Listen Comprehension Mode"
+        app:showAsAction="never"
+        />
 
    <!-- <item
         android:id="@+id/stats"

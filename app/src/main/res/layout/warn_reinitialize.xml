@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="@string/warn_reinit"
+        android:text="@string/warn_see_words"
         android:textColor="@android:color/black" />
 
     <LinearLayout

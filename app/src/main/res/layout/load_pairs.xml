@@ -39,8 +39,9 @@
             android:id="@+id/words_eng_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="beforeDescendants">
-        </ListView>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:descendantFocusability="beforeDescendants"></ListView>
 
 
     </RelativeLayout>
@@ -63,7 +64,7 @@
             android:id="@+id/back_fill_eng"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="right|center_horizontal|end"
             android:text="START TO FILL ENGLISH" />
 
 
@@ -86,7 +87,7 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="bottom"
             android:text="BACK" />
 
 
