@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -188,7 +189,9 @@ public class Words_Selection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (wordsCount < 9){
-                    Toast.makeText(Words_Selection.this, "You MUST select 9 words to start a new game.",Toast.LENGTH_LONG).show();
+                    Toast warn = Toast.makeText(Words_Selection.this, "You MUST select 9 words to start a new game.",Toast.LENGTH_LONG);
+                    warn.setGravity(Gravity.TOP, 0, 400);
+                    warn.show();
                 }else{
                     setWordsList(message, wordsList_eng,wordsList_span);
                 }
@@ -211,7 +214,9 @@ public class Words_Selection extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //based on the position you have to get value
                 if (wordsCount >= 9){
-                    Toast.makeText(Words_Selection.this, "You already select 9 words. ", Toast.LENGTH_LONG).show();
+                    Toast warn2 = Toast.makeText(Words_Selection.this, "You already select 9 words. ", Toast.LENGTH_LONG);
+                    warn2.setGravity(Gravity.TOP, 0, 400);
+                    warn2.show();
                 }else{
                     //get Gridview ID
                     //retrieve TextView data through GridView ID
@@ -226,7 +231,9 @@ public class Words_Selection extends AppCompatActivity {
                         tv.setBackgroundColor(Color.RED);
                         tv.setText("");
                     }else{
-                        Toast.makeText(Words_Selection.this,"You can't select a word twice.",Toast.LENGTH_LONG).show();
+                        Toast warn3 = Toast.makeText(Words_Selection.this,"You can't select a word twice.",Toast.LENGTH_LONG);
+                        warn3.setGravity(Gravity.TOP, 0, 400);
+                        warn3.show();
                     }
 
                 }
@@ -336,7 +343,7 @@ public class Words_Selection extends AppCompatActivity {
 
                 if(fileContent.size() < 9){
                     Toast.makeText(this, "Can't Start a Game With Less 9 Words",
-                            Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG).show();
                 }else{
                     //ListView initial
                     ArrayList<WordsPairs>arrayList= new ArrayList<>();
