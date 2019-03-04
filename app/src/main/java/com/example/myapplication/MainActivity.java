@@ -640,6 +640,14 @@ public class MainActivity extends AppCompatActivity {
             For listen mode, all buttons are clickable,
             so I need to make it so that the user cannot change the word on the sudoku if the cell is a number
              */
+            // text of input button is extracted
+            /* when inserting a new word into puzzle, check if right or wrong
+             *  if it's right, make it green
+             * *if wrong, put word to be red
+             */
+            //track the button that user selects
+            String tmp = null;
+            wordsSplit(list);
             if (SelectedButton != null) {
                 CharSequence cellText = SelectedButton.getText();
                 if (!(Arrays.asList(l_numbers).contains(cellText))) {
@@ -648,7 +656,32 @@ public class MainActivity extends AppCompatActivity {
                     // text of input button is extracted
                     CharSequence buttonText = button.getText();
                     SelectedButton.setText(buttonText);
-                    SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+                    for (int x = 0; x < 9; x++) {
+                        for (int y = 0; y < 9; y++) {
+                            if (gridButton[x][y] == SelectedButton) {
+                                //translate english to spanish, and vise versa
+                                for (int i = 0; i < 9; i++) {
+                                    if (Sudoku[x][y].equals(eng_wordsList[i])) {
+                                        tmp = span_wordsList[i];
+                                    }
+                                    if (Sudoku[x][y].equals(span_wordsList[i])) {
+                                        tmp = eng_wordsList[i];
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    //if is wrong, puts word to be red
+                    if (!buttonText.equals(tmp) && !buttonText.equals("")) {
+                        SelectedButton.setTextColor(Color.parseColor("#FFFFC0CB"));
+                        mistakeCount++;
+                    } else {
+                        //if it's right, makes it green
+                        SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+                    }
+                    Log.d(TAG, "tmp is " + tmp);
+                    //set the Selected Buttons Text as text from input button
                 }
             }
         }
