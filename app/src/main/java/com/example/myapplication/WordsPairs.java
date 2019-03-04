@@ -8,6 +8,13 @@ public class WordsPairs implements Serializable {
     private String span = null;
     private int totalWrong = 0;
 
+    public WordsPairs(){   }
+    public WordsPairs(String eng, String span, int wrong){
+        this.eng = eng;
+        this.span = span;
+        this.totalWrong = wrong;
+    }
+
     public String getENG() {
         return eng;
     }
