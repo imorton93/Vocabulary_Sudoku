@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 
 public class listArrayAdapter extends BaseAdapter {
-    public ArrayList<WordsPairs> words = new ArrayList();
+    public ArrayList<WordsPairs> words = new ArrayList<WordsPairs>();
     private LayoutInflater mInflater;
     Context mContext;
 
