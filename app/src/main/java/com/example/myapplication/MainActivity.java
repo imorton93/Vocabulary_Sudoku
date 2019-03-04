@@ -238,6 +238,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     public void finButton(){
         //finish button listening action
         //By clicking finish button, will check the correctness of Sudoku
