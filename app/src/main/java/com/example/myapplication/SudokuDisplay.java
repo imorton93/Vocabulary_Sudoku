@@ -25,7 +25,6 @@ public class SudokuDisplay extends AppCompatActivity {
         gridView.setAdapter(new GridAdapter(list,this));
 
     }
-
 }
 
 

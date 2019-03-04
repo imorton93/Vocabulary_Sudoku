@@ -114,7 +114,7 @@ public class Words_Selection extends AppCompatActivity {
             for (int i = 0; i < arrayList.size(); i++){
                 strings.add(arrayList.get(i).getENG()+","+arrayList.get(i).getSPAN());
                 Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
-                        arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
+                        arrayList.get(i).getSPAN()+"  ");
             }
         }
         numPages = strings.size()/30 + 1;
@@ -246,7 +246,6 @@ public class Words_Selection extends AppCompatActivity {
                     //prevent user re-select same word
                     selectedItem = gridView.getItemAtPosition(position).toString();
                     if (!isConflict(selectedItem)){
-
                         //show which words selected by user in Textview
                         Log.d(TAG, "SELECTED ITEM IS "+ selectedItem);
                         if (selectedItem.contains(".wrong")){
