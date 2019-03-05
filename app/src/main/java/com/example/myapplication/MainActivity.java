@@ -274,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     restored_s = true;
                 } else {
+                    //Restore state for normal mode
                     for (int x = 0; x < 9; x++) { //break point here
                         for (int y = 0; y < 9; y++) {
                             gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
@@ -899,7 +900,7 @@ public class MainActivity extends AppCompatActivity {
                     listen_mode = false;
                     item.setTitle("Listen Comprehension Mode");
                     Toast listen = Toast.makeText(MainActivity.this,
-                            "Exiting Listening Comprehension Mode" ,Toast.LENGTH_LONG);
+                            "Exiting Listen Comprehension Mode" ,Toast.LENGTH_LONG);
                     listen.setGravity(Gravity.TOP, 0, 400);
                     listen.show();
                     Log.d(TAG, "Exiting Listening Comprehension Mode");
