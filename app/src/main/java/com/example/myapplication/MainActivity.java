@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -96,6 +97,20 @@ public class MainActivity extends AppCompatActivity {
     TextToSpeech span;
     TextToSpeech eng;
     //End of variables for listen mode
+    Button[] mainButtons = new Button[9];
+    /*
+    Button[] mainButtons = { //This Button array is actually for TestCases
+            findViewById(Button_ids[0]),
+            findViewById(Button_ids[1]),
+            findViewById(Button_ids[2]),
+            findViewById(Button_ids[3]),
+            findViewById(Button_ids[4]),
+            findViewById(Button_ids[5]),
+            findViewById(Button_ids[6]),
+            findViewById(Button_ids[7]),
+            findViewById(Button_ids[8]),
+
+    }; */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         //in case, order of String from String Resources may change
         //store in local variables
         //gameInitial
+        
 
         if ((savedInstanceState != null)) {
             //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
@@ -1080,6 +1096,36 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
     }
+
+    protected String getmsg(){
+        return msg;
+    }
+    protected int[] getButtonids(){
+        int[] temp = new int[9];
+        temp = Arrays.copyOf(Button_ids, Button_ids.length);
+        return temp;
+    }
+    protected String[] getEng_wordsList(){
+        String[] temp = new String[eng_wordsList.length];
+        temp = Arrays.copyOf(eng_wordsList, eng_wordsList.length);
+        return temp;
+    }
+    protected String[] getSpan_wordsList(){
+        String[] temp = new String[span_wordsList.length];
+        temp = Arrays.copyOf(span_wordsList, span_wordsList.length);
+        return temp;
+    }
+    protected String[] getList(){
+        String[] temp = new String[list.length];
+        temp = Arrays.copyOf(list, list.length);
+        return temp;
+    }
+    protected Button[] getMainButtons(){
+        Button[] temp = new Button[mainButtons.length];
+        temp = Arrays.copyOf(mainButtons, mainButtons.length);
+        return temp;
+    }
+
 
 
 }
