@@ -515,68 +515,68 @@ public class MainActivity extends AppCompatActivity {
         mfinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wordsSplit(list);
-                String[][] checkSudoku = new String[9][9];
-                String[][] originalSudoku = new String[9][9];
-                if (listen_mode){
-                    //convert the numbered cells to actual words when passing the array
-                    for (int x = 0; x < 9; x++) {
-                        for (int y = 0; y < 9; y++) {
-                            originalSudoku[x][y] = Sudoku[x][y];
-                            //pass words in grid to a Sting[][] Sudoku in order to check correctness
-                            CharSequence temp = gridButton[x][y].getText();
-                            int indx_temp = Arrays.asList(l_numbers).indexOf(temp);
-                            if (indx_temp != -1){
-                                //If the grid is a pre-filled number, put the corresponding string in checkSudoku
-                                checkSudoku[x][y] = assigned[indx_temp] + "";
-                                gridButton[x][y].setOnClickListener(null);
-                                gridButton[x][y].setOnClickListener(new View.OnClickListener() {
-                                    //user hits one of the grid blocks to insert a word
-                                    public void onClick(View v) {
-                                         if(!InitializedGame){
-                                            Toast.makeText(MainActivity.this ,
-                                                    R.string.not_initialized,Toast.LENGTH_LONG).show();
-                                        }
+                if (InitializedGame) {
+                    wordsSplit(list);
+                    String[][] checkSudoku = new String[9][9];
+                    String[][] originalSudoku = new String[9][9];
+                    if (listen_mode) {
+                        //convert the numbered cells to actual words when passing the array
+                        for (int x = 0; x < 9; x++) {
+                            for (int y = 0; y < 9; y++) {
+                                originalSudoku[x][y] = Sudoku[x][y];
+                                //pass words in grid to a Sting[][] Sudoku in order to check correctness
+                                CharSequence temp = gridButton[x][y].getText();
+                                int indx_temp = Arrays.asList(l_numbers).indexOf(temp);
+                                if (indx_temp != -1) {
+                                    //If the grid is a pre-filled number, put the corresponding string in checkSudoku
+                                    checkSudoku[x][y] = assigned[indx_temp] + "";
+                                    gridButton[x][y].setOnClickListener(null);
+                                    gridButton[x][y].setOnClickListener(new View.OnClickListener() {
+                                        //user hits one of the grid blocks to insert a word
+                                        public void onClick(View v) {
+                                            if (!InitializedGame) {
+                                                Toast.makeText(MainActivity.this,
+                                                        R.string.not_initialized, Toast.LENGTH_LONG).show();
+                                            }
                                    /*     else if (mistakeCount >= 3){
                                             Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
                                         }*/
-                                        else {
-                                            if (SelectedButton != null) {
-                                                //if a button has already been selected change that button back to normal
-                                                SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                                            else {
+                                                if (SelectedButton != null) {
+                                                    //if a button has already been selected change that button back to normal
+                                                    SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                                                }
+                                                SelectedButton = (Button) v;
+                                                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
+                                                //SelectedButton.setText("clicked");
                                             }
-                                            SelectedButton = (Button) v;
-                                            SelectedButton.setBackgroundResource(R.drawable.clicked_button);
-                                            //SelectedButton.setText("clicked");
                                         }
-                                    }
-                                });
-                               // gridButton[x][y].setOnClickListener(gridButtonOnClick());
-                                int hhh = 0; //For breakpoint purpose
-                            }
-                            else {
-                                checkSudoku[x][y] = temp + "";
-                            }
-                            gridButton[x][y].setText(null);
+                                    });
+                                    // gridButton[x][y].setOnClickListener(gridButtonOnClick());
+                                    int hhh = 0; //For breakpoint purpose
+                                } else {
+                                    checkSudoku[x][y] = temp + "";
+                                }
+                                gridButton[x][y].setText(null);
 
+                            }
+                        }
+                        //Case for listen mode ends.
+                    } else {
+                        for (int x = 0; x < 9; x++) {
+                            for (int y = 0; y < 9; y++) {
+                                //pass words in grid to a Sting[][] Sudoku in order to check correctness
+                                CharSequence temp = gridButton[x][y].getText();
+                                checkSudoku[x][y] = temp + "";
+                                originalSudoku[x][y] = Sudoku[x][y];
+                                gridButton[x][y].setText(null);
+                            }
                         }
                     }
-                //Case for listen mode ends.
+                    int ddd = 0; //For breakpoint purpose
+                    checkAnswer(list, checkSudoku, originalSudoku);
+                    InitializedGame = false;
                 }
-                else {
-                    for (int x = 0; x < 9; x++) {
-                        for (int y = 0; y < 9; y++) {
-                            //pass words in grid to a Sting[][] Sudoku in order to check correctness
-                            CharSequence temp = gridButton[x][y].getText();
-                            checkSudoku[x][y] = temp + "";
-                            originalSudoku[x][y] = Sudoku[x][y];
-                            gridButton[x][y].setText(null);
-                        }
-                    }
-                }
-                int ddd = 0; //For breakpoint purpose
-                checkAnswer(list, checkSudoku, originalSudoku);
-                InitializedGame = false;
             }
         });
     }
@@ -878,6 +878,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     //Do a new layout here. Display all word pairs
+                    Toast warn = Toast.makeText(this,"Please start a game first, then look at your chosen word pairs.", Toast.LENGTH_LONG);
+                    warn.setGravity(Gravity.TOP,0,500);
+                    warn.show();
                 }
                 return true;
 
