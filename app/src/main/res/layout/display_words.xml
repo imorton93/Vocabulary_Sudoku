@@ -25,7 +25,7 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="372dp"
-        android:layout_height="87dp"
+        android:layout_height="95dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -40,20 +40,40 @@
         app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.192" />
+        app:layout_constraintVertical_bias="0.176" />
 
     <TextView
         android:id="@+id/words_view"
-        android:layout_width="320dp"
-        android:layout_height="123dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:text="@string/warn_see_words"
+        android:layout_width="372dp"
+        android:layout_height="167dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/tip_dictionary"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.407" />
+        app:layout_constraintVertical_bias="0.411" />
+
+    <TextView
+        android:id="@+id/translation"
+        android:layout_width="206dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.433"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.602" />
 
     <!--Defines Buttons for the word pairs display page-->
     <Button
@@ -109,8 +129,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.773"
-        />
+        app:layout_constraintVertical_bias="0.773" />
 
     <Button
         android:id="@+id/w_b7"
@@ -156,29 +175,44 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.871" />
 
-
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="121dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginRight="152dp"
+        android:text="@string/save"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 
 
     <!--<ListView-->
-        <!--android:layout_width="285dp"-->
-        <!--android:layout_height="536dp"-->
-        <!--android:layout_marginTop="88dp"-->
-        <!--android:layout_marginEnd="72dp"-->
-        <!--android:layout_marginRight="72dp"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
+    <!--android:layout_width="285dp"-->
+    <!--android:layout_height="536dp"-->
+    <!--android:layout_marginTop="88dp"-->
+    <!--android:layout_marginEnd="72dp"-->
+    <!--android:layout_marginRight="72dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
 
     <!--<android.support.v7.widget.GridLayout-->
-        <!--android:layout_width="85dp"-->
-        <!--android:layout_height="36dp"-->
-        <!--android:layout_marginStart="60dp"-->
-        <!--android:layout_marginLeft="60dp"-->
-        <!--android:layout_marginTop="100dp"-->
-        <!--android:text = "@string/span_1"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent">-->
+    <!--android:layout_width="85dp"-->
+    <!--android:layout_height="36dp"-->
+    <!--android:layout_marginStart="60dp"-->
+    <!--android:layout_marginLeft="60dp"-->
+    <!--android:layout_marginTop="100dp"-->
+    <!--android:text = "@string/span_1"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent">-->
 
     <!--</android.support.v7.widget.GridLayout>-->
 

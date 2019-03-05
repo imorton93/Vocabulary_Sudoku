@@ -33,9 +33,10 @@ public class Display_Words extends AppCompatActivity {
             R.id.w_b9,
     };
     boolean InitializedGame = false;
-    DBHelper mDBHelper = new DBHelper(this);
-    Boolean fill_Span = false;
-    Boolean fill_Eng = false;
+    private DBHelper mDBHelper = new DBHelper(this);
+    private Boolean fill_Span = false;
+    private Boolean fill_Eng = false;
+    private String temp_b =""; //To store the string on the button
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
@@ -52,8 +53,22 @@ public class Display_Words extends AppCompatActivity {
         InitializedGame = intent.getBooleanExtra(KEY_InitializedGame, false);
         setContentView(R.layout.display_words);
 
-        final TextView wordstextview = findViewById(R.id.words_view);
+        final TextView wordstextview = findViewById(R.id.translation);
+        Button save_button = findViewById(R.id.save_button);
 
+        save_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if (temp_b != null){
+                    if(fill_Eng) {
+                        addMyWords(temp_b, wordstextview.getText()+"");
+                    }
+                    else if(fill_Span){
+                        addMyWords(wordstextview.getText()+"", temp_b);
+                    }
+                }
+            }
+        });
       //  wordstextview.setText(@string/warn_see_words);
      //   wordstextview.setText("WORD HERE!!!"); //DOES NOT WORK
         if (InitializedGame) {
@@ -67,7 +82,9 @@ public class Display_Words extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             wordstextview.setText(eng_wordlist[temp_i]);
-                            addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
+                            temp_b = span_wordlist[temp_i];
+                           // addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
+                            //SelectedButton = button
                         }
                     });
                 }
@@ -81,7 +98,8 @@ public class Display_Words extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             wordstextview.setText(span_wordlist[temp_i]);
-                            addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
+                            temp_b = eng_wordlist[temp_i];
+                           // addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
                         }
                     });
                 }

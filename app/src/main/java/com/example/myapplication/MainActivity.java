@@ -878,6 +878,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     //Do a new layout here. Display all word pairs
+                    Toast warn = Toast.makeText(this,"Please start a game first, then look at your chosen word pairs.", Toast.LENGTH_LONG);
+                    warn.setGravity(Gravity.TOP,0,500);
+                    warn.show();
                 }
                 return true;
 
