@@ -3,7 +3,6 @@ package com.example.myapplication;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Random;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -83,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     String[][] Sudoku_temp = new String[9][9];
     String[][] Sudoku_user = new String[9][9];
     String[] list = new String[9];
+    Boolean is_default = true;
 
     DBHelper mDBHelper = new DBHelper(this);
     Menu menu;
@@ -650,77 +648,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void addMyWords(CharSequence buttonText) {
-        String eng = null;
-        String span = null;
-        wordsSplit(list);
-        //record wrong word with its opposite word in different language
-        if (msg.equals("SPAN")) {
-            span = buttonText.toString();
-            for (int k = 0; k < 9; k++) {
-                if (span.equals(span_wordsList[k])) {
-                    eng = eng_wordsList[k];
-                }
-            }
-        } else {
-            eng = buttonText.toString();
-            for (int k = 0; k < 9; k++) {
-                if (eng.equals(eng_wordsList[k])) {
-                    span = span_wordsList[k];
-                }
-            }
-        }
-        Log.d(TAG, "ENGLISH  is " + eng);
-        Log.d(TAG, "SPANISH is " + span);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        if (msg.equals("SPAN")) {
-            alertDialogBuilder.setMessage("If having any difficulty recognizing, you can add '" + span + "' " +
-                    "and its English word to My Words");
-        } else {
-            alertDialogBuilder.setMessage("If having any difficulty recognizing, you can add '" + eng + "'" +
-                    "and its Spanish word to My Words");
-        }
-        final String finalEng = eng;
-        final String finalSpan = span;
-        alertDialogBuilder.setPositiveButton(
-                "yes",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        //initial Database
-                        //store wrong word that made by user
-                        //check if there is same word inside Database
-                        if (mDBHelper.hasWord(new WordsPairs(finalEng, finalSpan, 1))) {
-                            //update Total number of wrong words
-                            int num = mDBHelper.numWrong(new WordsPairs(finalEng, finalSpan, 1));
-                            num++;
-                            //update database
-                            mDBHelper.updateWrongNum(new WordsPairs(finalEng, finalSpan, num));
-                        } else {
-                            //insert word to database
-                            mDBHelper.updateWrongWord(new WordsPairs(finalEng, finalSpan, 1));
-                        }
-                        ArrayList<WordsPairs> arrayList = mDBHelper.getData();
-                        for (int i = 0; i < arrayList.size(); i++) {
-                            Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG() + "   " +
-                                    arrayList.get(i).getSPAN() + "  " + arrayList.get(i).getTotal());
-                        }
-                        Toast.makeText(MainActivity.this,
-                                "This word is added to My Words.", Toast.LENGTH_LONG).show();
-                    }
-                });
-        alertDialogBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-
     public void insertButtonOnClick(View w) {
         //user hits button to change text of selectedbutton
         if (listen_mode) {
@@ -744,31 +671,14 @@ public class MainActivity extends AppCompatActivity {
                     // text of input button is extracted
                     CharSequence buttonText = button.getText();
                     SelectedButton.setText(buttonText);
-                    for (int x = 0; x < 9; x++) {
-                        for (int y = 0; y < 9; y++) {
-                            if (gridButton[x][y] == SelectedButton) {
-                                //translate english to spanish, and vise versa
-                                for (int i = 0; i < 9; i++) {
-                                    if (Sudoku[x][y].equals(eng_wordsList[i])) {
-                                        tmp = span_wordsList[i];
-                                    }
-                                    if (Sudoku[x][y].equals(span_wordsList[i])) {
-                                        tmp = eng_wordsList[i];
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     //if is wrong, puts word to be red
-                    if (!buttonText.equals(tmp) && !buttonText.equals("")) {
+                    if (!checkFilledWord(buttonText.toString())) {
                         SelectedButton.setTextColor(Color.parseColor("#FFFFC0CB"));
                         mistakeCount++;
                     } else {
                         //if it's right, makes it green
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                     }
-                    Log.d(TAG, "tmp is " + tmp);
                     //set the Selected Buttons Text as text from input button
                 }
             }
@@ -791,7 +701,6 @@ public class MainActivity extends AppCompatActivity {
                     mistakeCount++;
                     //allow user to keep track of what they get wrong
                     //ask user whether they want to save to My words
-                    addMyWords(buttonText);
                 } else {
                     //if it's right, makes it green
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
@@ -840,11 +749,8 @@ public class MainActivity extends AppCompatActivity {
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                     */
                     Log.d(TAG, "User chooses to fill in Spanish");
-                    intent = new Intent(MainActivity.this, Words_Selection.class);
-                    select = "SPAN";
-                    intent.putExtra(EXTRA_MESSAGE, select);
-                    startActivityForResult(intent, 1);
-
+                    //allow user to pick a word list
+                    pickAFile("SPAN");
                 } else {
                     //Temporary Toast
                     Toast fin = Toast.makeText(MainActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
@@ -866,10 +772,8 @@ public class MainActivity extends AppCompatActivity {
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                     */
                     Log.d(TAG, "User chooses to fill in English");
-                    intent = new Intent(MainActivity.this, Words_Selection.class);
-                    select = "ENG";
-                    intent.putExtra(EXTRA_MESSAGE, select);
-                    startActivityForResult(intent, 1);
+                    //allow user to pick a word list
+                    pickAFile("ENG");
                 } else {
                     //Temporary Toast
                     Toast.makeText(MainActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
@@ -904,7 +808,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.load_wordpairs:
                 intent = new Intent(MainActivity.this, Load_Pairs.class);
                 startActivityForResult(intent, 1);
-
                 return true;
 
             case R.id.listen:
@@ -1064,6 +967,53 @@ public class MainActivity extends AppCompatActivity {
                 setInitialGame(msg, list);
             }
         }
+    }
+
+    public void pickAFile(final String msg){
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose a words list");
+
+        // add a radio button list
+        String[] filename;
+        ArrayList<WordsPairs> list = mDBHelper.getImportedData();
+        if (mDBHelper.getImportedData().isEmpty()){
+            filename = new String[]{"Default"};
+        }else{
+            filename = new String[]{"Default", "Uploaded"};
+        }
+
+        builder.setItems(filename, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // user checked an item
+                Intent intent;
+                switch (which) {
+                    case 0: //defalut_words_list
+                        intent = new Intent(MainActivity.this, Words_Selection.class);
+                        intent.putExtra("PICK_FILE", true);
+                        intent.putExtra(EXTRA_MESSAGE, msg);
+                        startActivityForResult(intent, 1);
+                        Toast.makeText(MainActivity.this,
+                                "You choose default words list", Toast.LENGTH_LONG).show();
+                        break;
+                    case 1: //uploaded_words_file
+                        intent = new Intent(MainActivity.this, Words_Selection.class);
+                        intent.putExtra("PICK_FILE", false);
+                        intent.putExtra(EXTRA_MESSAGE, msg);
+                        startActivityForResult(intent, 1);
+                        Toast.makeText(MainActivity.this,
+                                "You choose Uploaded words list", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        });
+
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 
     //To make debugger display tags

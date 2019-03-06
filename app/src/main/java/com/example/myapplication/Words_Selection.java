@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,7 +42,7 @@ public class Words_Selection extends AppCompatActivity {
     ArrayList<String> eng_wordsList_gridview = new ArrayList<>();
     ArrayList<String> span_wordsList_gridview = new ArrayList<>();
     //original data from file or database
-    ArrayList<String> strings = null;
+    ArrayList<String> strings = new ArrayList<>();
     //monitor pages which may slide by user
     private int numPages;
     private int pages = 1;
@@ -56,6 +58,7 @@ public class Words_Selection extends AppCompatActivity {
     int[] pre_pos = new int[9];
     //show/hide wrong words from users
     Boolean isShown = false;
+    Boolean is_default;
 
     DBHelper mDBHelper = new DBHelper(this);
 
@@ -103,18 +106,28 @@ public class Words_Selection extends AppCompatActivity {
             message = getIntent().getStringExtra("LANGUAGE");
             strings = getIntent().getStringArrayListExtra("LOAD_WORDS_LIST");
         }else{
-            //retrieve words from text file wordpairs
-            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
-            try {
-                strings = readTextFromUri(uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ArrayList<WordsPairs> arrayList = mDBHelper.getImportedData();
-            for (int i = 0; i < arrayList.size(); i++){
-                strings.add(arrayList.get(i).getENG()+","+arrayList.get(i).getSPAN());
-                Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
-                        arrayList.get(i).getSPAN()+"  ");
+            Uri uri;
+            is_default = getIntent().getBooleanExtra("PICK_FILE", true);
+            if (is_default){
+                //retrieve words from text file wordpairs
+                uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
+                try {
+                    strings = readTextFromUri(uri);
+                    for (int i = 0; i < strings.size(); i++){
+                        Log.d(TAG,"STRINGS FROM UPLOAD FILE ARE " + strings.get(i));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                //retrieve words from file uploaded by user
+                //uri = Uri.fromFile(getFileStreamPath("upload_wordspairs.txt"));
+                ArrayList<WordsPairs> arrayList = mDBHelper.getImportedData();
+                for (int i = 0; i < arrayList.size(); i++){
+                    strings.add(arrayList.get(i).getENG()+","+arrayList.get(i).getSPAN());
+                    Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
+                            arrayList.get(i).getSPAN()+"  ");
+                }
             }
         }
         numPages = strings.size()/30 + 1;
@@ -383,7 +396,7 @@ public class Words_Selection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!isShown){
-                    if (mDBHelper.countWords() == 0) {
+                    if (mDBHelper.getData().isEmpty()) {
                         isShown = false;
                         Toast.makeText(Words_Selection.this, "You DON'T have any words in My WORDS",
                                 Toast.LENGTH_LONG).show();

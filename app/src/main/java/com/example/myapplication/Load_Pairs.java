@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -292,6 +293,20 @@ public class Load_Pairs extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
+                        //create a file located in internal storage
+                      /*  try {
+                            FileOutputStream fOut = openFileOutput("upload_wordspairs.txt",MODE_PRIVATE);
+                            for (int i = 0; i < strings.size(); i++){
+                                String tmp = strings.get(i) + "\n";
+                                fOut.write(tmp.getBytes());
+                            }
+                            fOut.close();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }*/
+
                         if (eng.size() == 0 || span.size() == 0){
                             Toast.makeText(Load_Pairs.this,
                                     "Cannot save.", Toast.LENGTH_LONG).show();

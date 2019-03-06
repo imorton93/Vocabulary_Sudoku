@@ -2,14 +2,20 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
@@ -53,13 +59,20 @@ public class GridAdapter extends BaseAdapter {
         }else{
             textView.setText(sudoku.get(position));
             textView.setTextColor(Color.parseColor("#FF008577"));
-
         }
         textView.setGravity(Gravity.CENTER);
-        textView.setLayoutParams(new GridView.LayoutParams(144, 144));
+
+        //Calculation of TextView Size - density independent.
+        Resources r = Resources.getSystem();
+        float px;
+        if (getCount() ==  81){
+             px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 45, r.getDisplayMetrics());
+        }else{
+             px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, r.getDisplayMetrics());
+        }
+        textView.setLayoutParams(new GridView.LayoutParams((int)px, (int)px));
+       // textView.setLayoutParams(new GridView.LayoutParams(144, 144));
         textView.setBackgroundResource(R.drawable.grid_items_border);
-
-
 
         return textView;
     }
