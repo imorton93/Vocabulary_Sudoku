@@ -112,7 +112,6 @@ public class Display_Words extends AppCompatActivity {
             //Or, I could create a new option? For the menu: if not(initialized game), go to a new layout, where all words are displayed.
         } */
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //The user can get back to the puzzle by clicking this
     }
 

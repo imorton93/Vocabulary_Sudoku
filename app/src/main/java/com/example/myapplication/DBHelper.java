@@ -135,6 +135,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return num;
     }
 
+
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
@@ -145,14 +146,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_WRONG);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_IMPORT);
         onCreate(db);
-    }
-
-    //get the total number of how many words in the table
-    public int countWords(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT  (English), (Spanish), (wrongTotal) FROM " + TABLE_NAME_WRONG;
-        Cursor data = db.rawQuery(query, null);
-        return data.getCount();
     }
 
     //fetch all data
