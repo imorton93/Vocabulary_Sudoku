@@ -840,7 +840,6 @@ public class MainActivity extends AppCompatActivity {
                     item.setTitle("Listen Comprehension Mode");
                     Toast listen = Toast.makeText(MainActivity.this,
                             "Exiting Listen Comprehension Mode" ,Toast.LENGTH_LONG);
-                            "Exiting Listening Comprehension Mode", Toast.LENGTH_LONG);
                     listen.setGravity(Gravity.TOP, 0, 400);
                     listen.show();
                     Log.d(TAG, "Exiting Listening Comprehension Mode");
@@ -1071,7 +1070,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
     }
-}
+
 
     //Here are the functions designed specifically for Unit Testing
     protected String getmsg(){
