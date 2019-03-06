@@ -133,7 +133,9 @@ public class MainActivity extends AppCompatActivity {
         //in case, order of String from String Resources may change
         //store in local variables
         //gameInitial
-        
+        for (int j = 0; j < 9; j++){
+            mainButtons[j] = findViewById(Button_ids[j]);
+        }
 
         if ((savedInstanceState != null)) {
             //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
@@ -404,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
 
     //grid cell initialization
     public void getGameGrid(String[] words) {
-        Log.d(TAG, "Game in normal mode is initialized.");
+    //    Log.d(TAG, "Game in normal mode is initialized.");
         InitializedGame = true;
         if (!(restored_s)) {
             Sudoku = initialGame.generateGrid(words);
@@ -1097,6 +1099,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onDestroy() called");
     }
 
+    //Here are the functions designed specifically for Unit Testing
     protected String getmsg(){
         return msg;
     }
@@ -1125,7 +1128,31 @@ public class MainActivity extends AppCompatActivity {
         temp = Arrays.copyOf(mainButtons, mainButtons.length);
         return temp;
     }
-
+    protected Button[][] getGridButtons(){
+        Button[][] temp = new Button[9][9];
+        for (int b = 0; b < 9; b++){
+            for (int a  = 0; a < 9; a++){
+                if(gridButton[b][a] == null){
+                    //Do things, preferrably an assertion
+                }
+            }
+        }
+        for (int i = 0; i < 9; i++){
+            temp[i] = Arrays.copyOf(gridButton[i], 9);
+        }
+        return temp;
+    }
+    protected String[][] getSudoku(){
+        String[][] temp = new String[9][9];
+        for (int i = 0; i < 9; i++){
+            temp[i] = Arrays.copyOf(Sudoku[i], 9);
+        }
+        return temp;
+    }
+    void setLists(String[] list1){
+        list = Arrays.copyOf(list1, list.length);
+    }
+//End of functions that are designed for Unit Testing
 
 
 }

@@ -106,15 +106,36 @@ public class MainActivityTest {
 
     @Test
     public void setInitialGame() {
-
+        //Requires user interaction, so cannot be tested (?)
+        //----------------------------------------//
+    //TEST CANNOT PASS (But the function should work)
+    // ERROR in calling the function.
+    // Functions appear to be overly dependent of one another.
         MainActivity main = new MainActivity();
-
-        String msg1 = main.getmsg();
+        String msg1 = "SPAN";
+        String[] list = {"a-b", "c-d", "e-f","g-h","i-j","k-l","m-n","o-p","q-r"};
+        main.setLists(list);
+        Button [][] grids = main.getGridButtons();
+        assertNotNull(grids); //tests grids are null or not.
+        for (int b = 0; b < 9; b++){
+            for (int a  = 0; a < 9; a++){
+                assertNotNull(grids[b][a]);
+            }
+        }
+        String[][] sudoku = main.getSudoku();
+        assertNotNull(sudoku);
+        for (int b = 0; b < 9; b++){
+            for (int a  = 0; a < 9; a++){
+                assertNotNull(sudoku[b][a]);
+            }
+        }
+        //Test if each individual element is null here.
+        main.setInitialGame(msg1,list); //Does not pass test if user has not loaded words yet.
         int[] Button_ids = main.getButtonids();
         String[] Eng_wordlist = main.getEng_wordsList();
         String[] Span_wordlist = main.getSpan_wordsList();
-        String[] list = main.getList();
-        main.setInitialGame(msg1,list);
+        //String[] list = main.getList();
+
         Button[] mainButtons = main.getMainButtons();
         int i;
         switch (msg1){
