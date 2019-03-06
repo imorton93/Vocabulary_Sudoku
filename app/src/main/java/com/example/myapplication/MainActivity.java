@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -96,6 +97,20 @@ public class MainActivity extends AppCompatActivity {
     TextToSpeech span;
     TextToSpeech eng;
     //End of variables for listen mode
+    Button[] mainButtons = new Button[9];
+    /*
+    Button[] mainButtons = { //This Button array is actually for TestCases
+            findViewById(Button_ids[0]),
+            findViewById(Button_ids[1]),
+            findViewById(Button_ids[2]),
+            findViewById(Button_ids[3]),
+            findViewById(Button_ids[4]),
+            findViewById(Button_ids[5]),
+            findViewById(Button_ids[6]),
+            findViewById(Button_ids[7]),
+            findViewById(Button_ids[8]),
+
+    }; */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +133,9 @@ public class MainActivity extends AppCompatActivity {
         //in case, order of String from String Resources may change
         //store in local variables
         //gameInitial
+        for (int j = 0; j < 9; j++){
+            mainButtons[j] = findViewById(Button_ids[j]);
+        }
 
         if ((savedInstanceState != null)) {
             //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
@@ -274,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     restored_s = true;
                 } else {
+                    //Restore state for normal mode
                     for (int x = 0; x < 9; x++) { //break point here
                         for (int y = 0; y < 9; y++) {
                             gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
@@ -387,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
 
     //grid cell initialization
     public void getGameGrid(String[] words) {
-        Log.d(TAG, "Game in normal mode is initialized.");
+    //    Log.d(TAG, "Game in normal mode is initialized.");
         InitializedGame = true;
         if (!(restored_s)) {
             Sudoku = initialGame.generateGrid(words);
@@ -899,7 +918,7 @@ public class MainActivity extends AppCompatActivity {
                     listen_mode = false;
                     item.setTitle("Listen Comprehension Mode");
                     Toast listen = Toast.makeText(MainActivity.this,
-                            "Exiting Listening Comprehension Mode" ,Toast.LENGTH_LONG);
+                            "Exiting Listen Comprehension Mode" ,Toast.LENGTH_LONG);
                     listen.setGravity(Gravity.TOP, 0, 400);
                     listen.show();
                     Log.d(TAG, "Exiting Listening Comprehension Mode");
@@ -1079,6 +1098,61 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
     }
+
+    //Here are the functions designed specifically for Unit Testing
+    protected String getmsg(){
+        return msg;
+    }
+    protected int[] getButtonids(){
+        int[] temp = new int[9];
+        temp = Arrays.copyOf(Button_ids, Button_ids.length);
+        return temp;
+    }
+    protected String[] getEng_wordsList(){
+        String[] temp = new String[eng_wordsList.length];
+        temp = Arrays.copyOf(eng_wordsList, eng_wordsList.length);
+        return temp;
+    }
+    protected String[] getSpan_wordsList(){
+        String[] temp = new String[span_wordsList.length];
+        temp = Arrays.copyOf(span_wordsList, span_wordsList.length);
+        return temp;
+    }
+    protected String[] getList(){
+        String[] temp = new String[list.length];
+        temp = Arrays.copyOf(list, list.length);
+        return temp;
+    }
+    protected Button[] getMainButtons(){
+        Button[] temp = new Button[mainButtons.length];
+        temp = Arrays.copyOf(mainButtons, mainButtons.length);
+        return temp;
+    }
+    protected Button[][] getGridButtons(){
+        Button[][] temp = new Button[9][9];
+        for (int b = 0; b < 9; b++){
+            for (int a  = 0; a < 9; a++){
+                if(gridButton[b][a] == null){
+                    //Do things, preferrably an assertion
+                }
+            }
+        }
+        for (int i = 0; i < 9; i++){
+            temp[i] = Arrays.copyOf(gridButton[i], 9);
+        }
+        return temp;
+    }
+    protected String[][] getSudoku(){
+        String[][] temp = new String[9][9];
+        for (int i = 0; i < 9; i++){
+            temp[i] = Arrays.copyOf(Sudoku[i], 9);
+        }
+        return temp;
+    }
+    void setLists(String[] list1){
+        list = Arrays.copyOf(list1, list.length);
+    }
+//End of functions that are designed for Unit Testing
 
 
 }
