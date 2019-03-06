@@ -2,10 +2,7 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,10 +73,13 @@ public class listArrayAdapter extends BaseAdapter {
         holder.edit1.setText(words.get(position).getENG());
         holder.edit1.setId(position);
         holder.edit1.setTextColor(Color.parseColor("#000000"));
+        holder.edit1.setEnabled(false);
 
         holder.edit2.setText(words.get(position).getSPAN());
         holder.edit2.setId(position);
         holder.edit2.setTextColor(Color.parseColor("#000000"));
+        holder.edit2.setEnabled(false);
+
     }
 
     private void setTextChangeListener(final ViewHolder holder) {

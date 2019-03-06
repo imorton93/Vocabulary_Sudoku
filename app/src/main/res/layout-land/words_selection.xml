@@ -7,9 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@color/colorAccent">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -26,12 +25,11 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_view"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="236dp"
+            android:layout_marginLeft="500dp"
             android:layout_alignStart="@id/tv_view"
-            android:layout_marginStart="236dp" />
+            android:layout_marginStart="500dp" />
 
     </RelativeLayout>
-
 
     <GridLayout
         android:layout_width="wrap_content"
@@ -42,18 +40,17 @@
 
         <Button
             android:id="@+id/prev"
-            android:layout_width="35dp"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:text="@string/prev" />
-
         <GridView
             android:id="@+id/selection_view"
-            android:layout_width="324dp"
-            android:layout_height="280dp"
+            android:layout_width="550dp"
+            android:layout_height="190dp"
             android:horizontalSpacing="0.0dip"
             android:listSelector="@null"
-            android:numColumns="6"
+            android:numColumns="10"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:stretchMode="columnWidth"
             android:verticalSpacing="0.0dip">
@@ -62,7 +59,7 @@
 
         <Button
             android:id="@+id/next"
-            android:layout_width="35dp"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
             android:text="@string/next" />
@@ -76,101 +73,79 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:useDefaultMargins="true"
-        android:padding="7dp">
+        android:padding="3dp">
 
 
         <TextView
             android:id="@+id/tv1"
-            android:layout_width="75dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@android:color/darker_gray"
             />
 
         <TextView
             android:id="@+id/tv2"
-            android:layout_width="75dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@android:color/darker_gray"
             />
 
         <TextView
             android:id="@+id/tv3"
-            android:layout_width="75dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@android:color/darker_gray"
             />
 
-    </GridLayout>
-
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:useDefaultMargins="true"
-        android:padding="7dp">
-
         <TextView
             android:id="@+id/tv4"
-            android:layout_width="75dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@android:color/darker_gray"
             />
 
         <TextView
             android:id="@+id/tv5"
-            android:layout_width="75dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@android:color/darker_gray"
             />
 
         <TextView
             android:id="@+id/tv6"
-            android:layout_width="75dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@android:color/darker_gray"
             />
 
-
-    </GridLayout>
-
-
-
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:useDefaultMargins="true"
-        android:padding="7dp">
-
         <TextView
             android:id="@+id/tv7"
-            android:layout_width="75dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@android:color/darker_gray"
             />
 
         <TextView
             android:id="@+id/tv8"
-            android:layout_width="75dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@android:color/darker_gray"
             />
 
         <TextView
             android:id="@+id/tv9"
-            android:layout_width="75dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@android:color/darker_gray"
             />
 
     </GridLayout>
 
-
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:padding="5dp">
+        android:padding="3dp">
 
         <Button
             android:id="@+id/undo"
@@ -186,10 +161,8 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/start_game"/>
 
+
+
     </GridLayout>
-
-
-
-
 
 </LinearLayout>
