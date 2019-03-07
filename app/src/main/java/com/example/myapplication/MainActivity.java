@@ -349,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
         //setting text color of prefilled cells
 
 
-
+            //long click function to bring up popup text
             View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
                 @Override
                 public boolean onLongClick(View v){
@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
             };
 
 
-
+            //click function
             View.OnClickListener listener = new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
