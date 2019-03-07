@@ -177,6 +177,9 @@ public class MainActivity extends AppCompatActivity {
                 Sudoku = (String[][]) savedInstanceState.getSerializable(KEY_Sudoku);
                 // The arrays in Sudoku_temp has the columns of the original sudoku from right to left (should be from left to right)
                 if (listen_mode) {
+                    MenuItem listen_t;
+                    listen_t = findViewById(R.id.listen);
+                    listen_t.setTitle("Exit Listen Comprehension Mode");
                     assigned = savedInstanceState.getStringArray(KEY_assigned);
                     span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
                         @Override
@@ -358,6 +361,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else {
+            Toast tip_popup = Toast.makeText(this, "Word will be magnified if you press the cell it is in for a long time.",Toast.LENGTH_LONG);
+            tip_popup.setGravity(Gravity.TOP, 0, 500);
+            tip_popup.show();
             Log.i(TAG, "onCreate - savedInstanceState is null");
         }
         //finish Button
@@ -366,146 +372,146 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
-                @Override
-                public boolean onLongClick(View v){
-                    if(!InitializedGame){
-                        Toast need_init = Toast.makeText(MainActivity.this ,
-                                R.string.not_initialized,Toast.LENGTH_LONG);
-                        need_init.setGravity(Gravity.TOP, 0, 400);
-                        need_init.show();
-                        return true;
-                    }
-                    Button button = (Button) v;
-                    PopupMenu popup = new PopupMenu(MainActivity.this, (Button) v);
+    View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
+        @Override
+        public boolean onLongClick(View v){
+            if(!InitializedGame){
+                Toast need_init = Toast.makeText(MainActivity.this ,
+                        R.string.not_initialized,Toast.LENGTH_LONG);
+                need_init.setGravity(Gravity.TOP, 0, 400);
+                need_init.show();
+                return true;
+            }
+            Button button = (Button) v;
+            PopupMenu popup = new PopupMenu(MainActivity.this, (Button) v);
 
-                    popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
+            popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
 
-                    MenuItem text = popup.getMenu().getItem(0);
+            MenuItem text = popup.getMenu().getItem(0);
 
-                    CharSequence buttonText = button.getText();
-                    Log.d(TAG, "buttonText length is " + buttonText.length() );
-                    if(buttonText.length() > 6){
-                        CharSequence sixText = buttonText.subSequence(0,6);
-                        CharSequence shortlist;
-                        if(fill_Eng){
-                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                                for(int i = 0; i < 9; i++){
-                                    if(span_wordsList[i].length() > 6){
-                                        shortlist = span_wordsList[i].subSequence(0,6);
-                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                        if(sixText.equals(shortlist)){
-                                            Log.d(TAG, "passed comparison");
-                                            buttonText = span_wordsList[i];
-                                        }
-                                    }
-
+            CharSequence buttonText = button.getText();
+            Log.d(TAG, "buttonText length is " + buttonText.length() );
+            if(buttonText.length() > 6){
+                CharSequence sixText = buttonText.subSequence(0,6);
+                CharSequence shortlist;
+                if(fill_Eng){
+                    if(button.getCurrentTextColor() == Color.parseColor("#000000")){
+                        for(int i = 0; i < 9; i++){
+                            if(span_wordsList[i].length() > 6){
+                                shortlist = span_wordsList[i].subSequence(0,6);
+                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                if(sixText.equals(shortlist)){
+                                    Log.d(TAG, "passed comparison");
+                                    buttonText = span_wordsList[i];
                                 }
                             }
-                            else{
-                                for(int j = 0; j < 9; j++){
-                                    if(eng_wordsList[j].length() > 6){
-                                        shortlist = eng_wordsList[j].subSequence(0,6);
-                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                        if(sixText.equals(shortlist)){
-                                            Log.d(TAG, "passed comparison");
-                                            buttonText = eng_wordsList[j];
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if(fill_Span){
-                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                                for(int i = 0; i < 9; i++){
-                                    if(eng_wordsList[i].length() > 6){
-                                        shortlist = eng_wordsList[i].subSequence(0,6);
-                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                        if(sixText.equals(shortlist)){
-                                            Log.d(TAG, "passed comparison");
-                                            buttonText = eng_wordsList[i];
-                                        }
-                                    }
 
-                                }
-                            }
-                            else{
-                                for(int j = 0; j < 9; j++){
-                                    if(span_wordsList[j].length() > 6){
-                                        shortlist = span_wordsList[j].subSequence(0,6);
-                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                        if(sixText.equals(shortlist)){
-                                            Log.d(TAG, "passed comparison");
-                                            buttonText = span_wordsList[j];
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
-                    text.setTitle(buttonText);
-
-                    popup.show();
-
-                    return true;
-                }
-            };
-
-
-
-            View.OnClickListener listener = new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    if(!InitializedGame){
-                        Toast need_init = Toast.makeText(MainActivity.this ,
-                                R.string.not_initialized,Toast.LENGTH_LONG);
-                        need_init.setGravity(Gravity.TOP, 0, 400);
-                        need_init.show();
-                    }
-
-
-   /*     else if (mistakeCount >= 3){
-                    Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
-                }*/
-                    else {
-                        Button test = (Button) v;
-                        if(test.getCurrentTextColor() == Color.parseColor("#000000")){
-                            return;
+                    else{
+                        for(int j = 0; j < 9; j++){
+                            if(eng_wordsList[j].length() > 6){
+                                shortlist = eng_wordsList[j].subSequence(0,6);
+                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                if(sixText.equals(shortlist)){
+                                    Log.d(TAG, "passed comparison");
+                                    buttonText = eng_wordsList[j];
+                                }
+                            }
                         }
-
-                        else if (SelectedButton != null) {
-                            //if a button has already been selected change that button back to normal
-                            SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                        }
-                        SelectedButton = (Button) v;
-                        SelectedButton.setBackgroundResource(R.drawable.clicked_button);
-                        Log.d(TAG, "buttonText length is" );
                     }
                 }
-            };
+                if(fill_Span){
+                    if(button.getCurrentTextColor() == Color.parseColor("#000000")){
+                        for(int i = 0; i < 9; i++){
+                            if(eng_wordsList[i].length() > 6){
+                                shortlist = eng_wordsList[i].subSequence(0,6);
+                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                if(sixText.equals(shortlist)){
+                                    Log.d(TAG, "passed comparison");
+                                    buttonText = eng_wordsList[i];
+                                }
+                            }
 
-            int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
-                    R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,R.id.b27, R.id.b28,R.id.b29,
-                    R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,R.id.b37, R.id.b38,R.id.b39,
-                    R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,R.id.b47, R.id.b48,R.id.b49,
-                    R.id.b51, R.id.b52,R.id.b53, R.id.b54, R.id.b55,R.id.b56,R.id.b57, R.id.b58,R.id.b59,
-                    R.id.b61, R.id.b62,R.id.b63, R.id.b64, R.id.b65,R.id.b66,R.id.b67, R.id.b68,R.id.b69,
-                    R.id.b71, R.id.b72,R.id.b73, R.id.b74, R.id.b75,R.id.b76,R.id.b77, R.id.b78,R.id.b79,
-                    R.id.b81, R.id.b82,R.id.b83, R.id.b84, R.id.b85,R.id.b86,R.id.b87, R.id.b88,R.id.b89,
-                    R.id.b91, R.id.b92,R.id.b93, R.id.b94, R.id.b95,R.id.b96,R.id.b97, R.id.b98,R.id.b99};
+                        }
+                    }
+                    else{
+                        for(int j = 0; j < 9; j++){
+                            if(span_wordsList[j].length() > 6){
+                                shortlist = span_wordsList[j].subSequence(0,6);
+                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                if(sixText.equals(shortlist)){
+                                    Log.d(TAG, "passed comparison");
+                                    buttonText = span_wordsList[j];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            text.setTitle(buttonText);
+
+            popup.show();
+
+            return true;
+        }
+    };
+
+
+
+    View.OnClickListener listener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+            if(!InitializedGame){
+                Toast need_init = Toast.makeText(MainActivity.this ,
+                        R.string.not_initialized,Toast.LENGTH_LONG);
+                need_init.setGravity(Gravity.TOP, 0, 400);
+                need_init.show();
+            }
+
+
+/*     else if (mistakeCount >= 3){
+            Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
+        }*/
+            else {
+                Button test = (Button) v;
+                if(test.getCurrentTextColor() == Color.parseColor("#000000")){
+                    return;
+                }
+
+                else if (SelectedButton != null) {
+                    //if a button has already been selected change that button back to normal
+                    SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                }
+                SelectedButton = (Button) v;
+                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
+                Log.d(TAG, "buttonText length is" );
+            }
+        }
+    };
+
+    int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
+            R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,R.id.b27, R.id.b28,R.id.b29,
+            R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,R.id.b37, R.id.b38,R.id.b39,
+            R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,R.id.b47, R.id.b48,R.id.b49,
+            R.id.b51, R.id.b52,R.id.b53, R.id.b54, R.id.b55,R.id.b56,R.id.b57, R.id.b58,R.id.b59,
+            R.id.b61, R.id.b62,R.id.b63, R.id.b64, R.id.b65,R.id.b66,R.id.b67, R.id.b68,R.id.b69,
+            R.id.b71, R.id.b72,R.id.b73, R.id.b74, R.id.b75,R.id.b76,R.id.b77, R.id.b78,R.id.b79,
+            R.id.b81, R.id.b82,R.id.b83, R.id.b84, R.id.b85,R.id.b86,R.id.b87, R.id.b88,R.id.b89,
+            R.id.b91, R.id.b92,R.id.b93, R.id.b94, R.id.b95,R.id.b96,R.id.b97, R.id.b98,R.id.b99};
 
 
 
 // loop through the array, find the button with respective id and set the listener
-        for(int i=0; i<ids.length; i++){
-            Button gbutton = (Button) findViewById(ids[i]);
-            ((Button) gbutton).setOnClickListener(listener);
-        }
-
-            for(int i=0; i<ids.length; i++) {
-                Button button = (Button) findViewById(ids[i]);
-                button.setOnLongClickListener(longClickListener);
-            }
+/*        for(int i=0; i<ids.length; i++){
+    Button gbutton = (Button) findViewById(ids[i]);
+    ((Button) gbutton).setOnClickListener(listener);
+}
+*/
+    for(int i=0; i<ids.length; i++) {
+        Button button = (Button) findViewById(ids[i]);
+        button.setOnLongClickListener(longClickListener);
+    }
 
 
 
@@ -608,10 +614,11 @@ public class MainActivity extends AppCompatActivity {
                         preset[x*9 + y] = 0;
                     }
                     remainingGrids--;
+                    Log.d(TAG, "GRIDBUTTON [X][Y] is  " + gridButton[x][y].getText());
+                    Log.d(TAG, "SUDOKU [X][Y] is  " + Sudoku[x][y]);
                 }
-                remainingGrids--;
-                Log.d(TAG, "GRIDBUTTON [X][Y] is  " + gridButton[x][y].getText());
-                Log.d(TAG, "SUDOKU [X][Y] is  " + Sudoku[x][y]);
+               // remainingGrids--;
+
             }
         }
     }
@@ -672,8 +679,6 @@ public class MainActivity extends AppCompatActivity {
                     if (indx_temp != -1) {
                         //if sudoku[x][y] in assigned:
                         gridButton[x][y].setText(l_numbers[indx_temp]);
-                        gridButton[x][y].setTextColor(Color.parseColor("#000000"));
-                        gridButton[x][y].setClickable(true); //bug: user is able to update the pre-filled words because now the cell is clickable
 
                     } else {
                         //if sudoku[x][y] not in assigned:
@@ -681,6 +686,9 @@ public class MainActivity extends AppCompatActivity {
                         gridButton[x][y].setText(l_numbers[l_number]);
                         l_number++;
                     }
+                    gridButton[x][y].setTextColor(Color.parseColor("#000000"));
+
+                    gridButton[x][y].setClickable(true);
                     if (fill_Span) {
                         final int temp_x = x;
                         final int temp_y = y;
