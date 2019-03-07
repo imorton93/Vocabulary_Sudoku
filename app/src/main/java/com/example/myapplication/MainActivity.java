@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
             findViewById(Button_ids[8]),
 
     }; */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -250,7 +249,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     text.setTitle(buttonText);
-
                     popup.show();
 
                     return true;
@@ -339,7 +337,8 @@ public class MainActivity extends AppCompatActivity {
                                     //This cell (gridbutton) is pre-filled.
                                     gridButton[x][y].setTextColor(Color.parseColor("#000000"));
                                     temp_indx =  Arrays.asList(l_numbers).indexOf(Sudoku_temp[x][y]);
-                                    final String tospeak = assigned[temp_indx];
+                                   // final String tospeak = assigned[temp_indx];
+                                    final String tospeak = list.get(temp_indx).getSPAN();
                                     gridButton[x][y].setOnClickListener(new View.OnClickListener() {
                                         //Whenever user clicks on the numbered cells, a sound occurs
                                         //The sound is the pronunciation of Spanish words
@@ -390,7 +389,8 @@ public class MainActivity extends AppCompatActivity {
                                     //This cell (gridbutton) is pre-filled.
                                     gridButton[x][y].setTextColor(Color.parseColor("#000000"));
                                     temp_indx =  Arrays.asList(l_numbers).indexOf(Sudoku_temp[x][y]);
-                                    final String tospeak = assigned[temp_indx];
+                                   // final String tospeak = assigned[temp_indx];
+                                    final String tospeak = list.get(temp_indx).getENG();
                                     gridButton[x][y].setOnClickListener(new View.OnClickListener() {
                                         //Whenever user clicks on the numbered cells, a sound occurs.
                                         //The sound is the pronunciation of English words
@@ -507,7 +507,6 @@ public class MainActivity extends AppCompatActivity {
 
     } //End of OnCreate()
 
-
     //grid cell initialization
     public void getGameGrid(String msg) {
         Log.d(TAG, "Game in normal mode is initialized.");
@@ -598,6 +597,91 @@ public class MainActivity extends AppCompatActivity {
                     gridButton[x][y].setClickable(true);
                     remainingHoles--;
                 } else {
+                    if (fill_Span) {
+                        //If the cells aren't to be hidden, display them on the sudoku Board
+                       // indx_temp = list.indexOf(Sudoku[x][y]);
+                        for (int i = 0; i < 9; i++){
+                            if (( list.get(i).getENG()).equals(Sudoku[x][y])){
+                                indx_temp = i;
+                                break;
+                            }
+                        }
+                        gridButton[x][y].setText(l_numbers[indx_temp]);
+                        gridButton[x][y].setTextColor(Color.parseColor("#000000"));
+
+                        gridButton[x][y].setClickable(true);
+                        final int temp_x = x;
+                        final int temp_y = y;
+                        gridButton[x][y].setOnClickListener(new View.OnClickListener() {
+                            //Whenever user clicks on the numbered cells, a sound occurs
+                            //The sound is the pronunciation of Spanish words
+                            public void onClick(View view) {
+                                eng.speak(Sudoku[temp_x][temp_y], TextToSpeech.QUEUE_FLUSH, null);
+                            }
+                        });
+                    } else if (fill_Eng) {
+                        //If the cells aren't to be hidden, display them on the sudoku Board
+                        for (int i = 0; i < 9; i++){
+                            if (( list.get(i).getSPAN() ).equals(Sudoku[x][y])){
+                                indx_temp = i;
+                                break;
+                            }
+                        }
+                        gridButton[x][y].setText(l_numbers[indx_temp]);
+                        gridButton[x][y].setTextColor(Color.parseColor("#000000"));
+
+                        gridButton[x][y].setClickable(true);
+                        final int temp_x = x;
+                        final int temp_y = y;
+                        gridButton[x][y].setOnClickListener(new View.OnClickListener() {
+                            //Whenever user clicks on the numbered cells, a sound occurs
+                            //The sound is the pronunciation of Spanish words
+                            public void onClick(View view) {
+                                span.speak(Sudoku[temp_x][temp_y], TextToSpeech.QUEUE_FLUSH, null);
+                                }
+                        });
+                    }
+                }
+                remainingGrids--;
+            }
+        }
+    }
+
+
+    public void getListenGameGrid2(String msg) {
+        //Original function for getListenGameGrid
+        Log.d(TAG, "Game in listen mode is initialized.");
+        InitializedGame = true;
+        listen_mode_game_init = true; //User has initialized a game in listen mode
+        l_number = 0;
+        int indx_temp = -1;
+        Sudoku = initialGame.generateGrid(msg,list);
+        double remainingGrids = 81;
+        double remainingHoles = 51; //set up a number to determine how many words to hide
+        span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status != TextToSpeech.ERROR) {
+                    span.setLanguage(locSpanish);
+                }
+            }
+        });
+        eng = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status != TextToSpeech.ERROR) {
+                    eng.setLanguage(locEnglish);
+                }
+            }
+        });
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
+                if (Math.random() <= makingHole) {
+                    gridButton[x][y].setText(null);
+                    gridButton[x][y].setClickable(true);
+                    remainingHoles--;
+                } else {
                     //If the cells aren't to be hidden, display them on the sudoku Board
                     indx_temp = Arrays.asList(assigned).indexOf(Sudoku[x][y]);
                     //indx_temp = the first occurance of Sudoku[x][y] in assigned
@@ -641,6 +725,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    View.OnClickListener listener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+            if(!InitializedGame){
+                Toast need_init = Toast.makeText(MainActivity.this ,
+                        R.string.not_initialized,Toast.LENGTH_LONG);
+                need_init.setGravity(Gravity.TOP, 0, 400);
+                need_init.show();
+            }
+
+   /*     else if (mistakeCount >= 3){
+                    Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
+                }*/
+            else {
+                Button test = (Button) v;
+                if(test.getCurrentTextColor() == Color.parseColor("#000000")){
+                    return;
+                }
+
+                else if (SelectedButton != null) {
+                    //if a button has already been selected change that button back to normal
+                    SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                }
+                SelectedButton = (Button) v;
+                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
+                Log.d(TAG, "buttonText length is" );
+            }
+        }
+    };
+
+
     public void finButton() {
         //finish button listening action
         //By clicking finish button, will check the correctness of Sudoku
@@ -663,7 +778,9 @@ public class MainActivity extends AppCompatActivity {
                                 if (indx_temp != -1) {
                                     //If the grid is a pre-filled number, put the corresponding string in checkSudoku
                                     checkSudoku[x][y] = assigned[indx_temp] + "";
-                                    gridButton[x][y].setOnClickListener(null);
+                                    gridButton[x][y].setOnClickListener(listener);
+                                    //gridButton[x][y].setOnClickListener(null);
+                                    /*
                                     gridButton[x][y].setOnClickListener(new View.OnClickListener() {
                                         //user hits one of the grid blocks to insert a word
                                         public void onClick(View v) {
@@ -673,7 +790,7 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                    /*     else if (mistakeCount >= 3){
                                             Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
-                                        }*/
+                                        }*/ /*
                                             else {
                                                 if (SelectedButton != null) {
                                                     //if a button has already been selected change that button back to normal
@@ -684,7 +801,7 @@ public class MainActivity extends AppCompatActivity {
                                                 //SelectedButton.setText("clicked");
                                             }
                                         }
-                                    });
+                                    }); */
                                     // gridButton[x][y].setOnClickListener(gridButtonOnClick());
                                     int hhh = 0; //For breakpoint purpose
                                 } else {
@@ -709,6 +826,9 @@ public class MainActivity extends AppCompatActivity {
                     int ddd = 0; //For breakpoint purpose
                     checkAnswer(checkSudoku, originalSudoku);
                     InitializedGame = false;
+                    listen_mode_game_init = false;
+                    fill_Span = false;
+                    fill_Eng = false;
                 }
             }
         });
