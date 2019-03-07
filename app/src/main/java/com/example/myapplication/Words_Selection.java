@@ -467,7 +467,7 @@ public class Words_Selection extends AppCompatActivity {
     public Boolean isConflict(String item){
         for (int i = 0; i< wordsCount; i++){
             String tmp = tv[i].getText().toString();
-            if (tmp.equals(item) || item.contains(tmp)){
+            if (tmp.equals(item) || item.equals(tmp+".wrong")){
                 return true;
             }
         }

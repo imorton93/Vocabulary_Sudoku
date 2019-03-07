@@ -86,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
     String[][] Sudoku_user = new String[9][9];
     //WordsPairs object
     private ArrayList<WordsPairs> list = new ArrayList<>();
-    //initial database
-    int[] preset = new int[81];
 
+    int[] preset = new int[81];
+    //initial database
     DBHelper mDBHelper = new DBHelper(this);
     Menu menu;
     //Begin of variables for listen mode
@@ -462,7 +462,6 @@ public class MainActivity extends AppCompatActivity {
                         need_init.show();
                     }
 
-
    /*     else if (mistakeCount >= 3){
                     Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
                 }*/
@@ -483,7 +482,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-      /*      int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
+            int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
                     R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,R.id.b27, R.id.b28,R.id.b29,
                     R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,R.id.b37, R.id.b38,R.id.b39,
                     R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,R.id.b47, R.id.b48,R.id.b49,
@@ -491,11 +490,11 @@ public class MainActivity extends AppCompatActivity {
                     R.id.b61, R.id.b62,R.id.b63, R.id.b64, R.id.b65,R.id.b66,R.id.b67, R.id.b68,R.id.b69,
                     R.id.b71, R.id.b72,R.id.b73, R.id.b74, R.id.b75,R.id.b76,R.id.b77, R.id.b78,R.id.b79,
                     R.id.b81, R.id.b82,R.id.b83, R.id.b84, R.id.b85,R.id.b86,R.id.b87, R.id.b88,R.id.b89,
-                    R.id.b91, R.id.b92,R.id.b93, R.id.b94, R.id.b95,R.id.b96,R.id.b97, R.id.b98,R.id.b99};*/
+                    R.id.b91, R.id.b92,R.id.b93, R.id.b94, R.id.b95,R.id.b96,R.id.b97, R.id.b98,R.id.b99};
 
 
 // loop through the array, find the button with respective id and set the listener
-   /*     for(int i=0; i<ids.length; i++){
+        for(int i=0; i<ids.length; i++){
             Button gbutton = (Button) findViewById(ids[i]);
             ((Button) gbutton).setOnClickListener(listener);
         }
@@ -503,19 +502,16 @@ public class MainActivity extends AppCompatActivity {
             for(int i=0; i<ids.length; i++) {
                 Button button = (Button) findViewById(ids[i]);
                 button.setOnLongClickListener(longClickListener);
-            }*/
+            }
 
-        for (int x = 0; x < 9; x++) {
+    /*    for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 gridButton[x][y].setOnClickListener(listener);
                 gridButton[x][y].setOnLongClickListener(longClickListener);
             }
-        }
+        }*/
     } //End of OnCreate()
 
-    public void clickButton(){
-
-    }
 
     //grid cell initialization
     public void getGameGrid(String msg) {
@@ -523,18 +519,33 @@ public class MainActivity extends AppCompatActivity {
         InitializedGame = true;
         Sudoku = initialGame.generateGrid(msg,list);
         Log.d(TAG, "restored_s is " + restored_s);
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                preset[i*9 + j] = 1;
+            }
+        }
+
         double remainingGrids = 81;
         double remainingHoles = 51; //set up a number to determine how many words to hide
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
-                gridButton[x][y].setText(Sudoku[x][y]);
+                //Adjust the text based on the length of the word
+                if (Sudoku[x][y].length() > 6) {
+                    CharSequence text = Sudoku[x][y].subSequence(0, 6) + "..";
+                    gridButton[x][y].setText(text);
+
+                } else {
+                    gridButton[x][y].setText(Sudoku[x][y]);
+                }
                 gridButton[x][y].setTextColor(Color.parseColor("#000000"));
-               // gridButton[x][y].setClickable(false);
+                gridButton[x][y].setClickable(false);
                 double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
                 if (Math.random() <= makingHole) {
                     gridButton[x][y].setText(null);
-                 //   gridButton[x][y].setClickable(true);
+                    gridButton[x][y].setClickable(true);
+                    gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
                     remainingHoles--;
+                    preset[x * 9 + y] = 0;
                 }
                 remainingGrids--;
             }
@@ -566,7 +577,7 @@ public class MainActivity extends AppCompatActivity {
         int indx_temp = -1;
         Sudoku = initialGame.generateGrid(msg,list);
         double remainingGrids = 81;
-        double remainingHoles = 50; //set up a number to determine how many words to hide
+        double remainingHoles = 51; //set up a number to determine how many words to hide
         span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -732,28 +743,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button SelectedButton; //button that user selects to insert
 
-    /*public void gridButtonOnClick(View v){
-        //user hits one of the grid blocks to insert a word
-        if (!InitializedGame) {
-            Toast need_init = Toast.makeText(MainActivity.this,
-                    R.string.not_initialized, Toast.LENGTH_LONG);
-            need_init.setGravity(Gravity.TOP, 0, 400);
-            need_init.show();
-        }
-   *//*     else if (mistakeCount >= 3){
-            Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
-        }*//*
-        else {
-            if (SelectedButton != null) {
-                //if a button has already been selected change that button back to normal
-                SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-            }
-            SelectedButton = (Button) v;
-            SelectedButton.setBackgroundResource(R.drawable.clicked_button);
-            //SelectedButton.setText("clicked");
-            Log.d(TAG, "(SelectedButton.isClickable()) is " + (SelectedButton.isClickable()));
-        }
-    }*/
 
     public boolean checkFilledWord(String buttonText){
         String tmp = null;
