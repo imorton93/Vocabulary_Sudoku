@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean restored_s = false; //boolean for checking if sudoku is restored.
     private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
     private int mistakeCount = 0;
-    private String msg;
+    //private String msg;
    // String[] eng_wordsList = new String[9];
    // String[] span_wordsList = new String[9];
     String[][] Sudoku_temp = new String[9][9];
@@ -148,10 +148,9 @@ public class MainActivity extends AppCompatActivity {
             fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
             fill_Span = savedInstanceState.getBoolean(KEY_fill_Span);
             listen_mode = savedInstanceState.getBoolean(KEY_Listen);
-            list = savedInstanceState.getStringArray(KEY_WORDS_LIST);
+            list = savedInstanceState.getParcelableArrayList(KEY_WORDS_LIST);
             preset = savedInstanceState.getIntArray(KEY_preset);
 
-            list = savedInstanceState.getParcelableArrayList(KEY_WORDS_LIST);
             if (InitializedGame) {
                 //If a game has been initialized
                 int j = 0;  //For breakpoint purpose
@@ -393,12 +392,12 @@ public class MainActivity extends AppCompatActivity {
                         if(fill_Eng){
                             if(button.getCurrentTextColor() == Color.parseColor("#000000")){
                                 for(int i = 0; i < 9; i++){
-                                    if(span_wordsList[i].length() > 6){
-                                        shortlist = span_wordsList[i].subSequence(0,6);
+                                    if(list.get(i).getSPAN().length() > 6){
+                                        shortlist = list.get(i).getSPAN().subSequence(0,6);
                                         Log.d(TAG, "comparing " + sixText + " and " + shortlist);
                                         if(sixText.equals(shortlist)){
                                             Log.d(TAG, "passed comparison");
-                                            buttonText = span_wordsList[i];
+                                            buttonText = list.get(i).getSPAN();
                                         }
                                     }
 
@@ -406,12 +405,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else{
                                 for(int j = 0; j < 9; j++){
-                                    if(eng_wordsList[j].length() > 6){
-                                        shortlist = eng_wordsList[j].subSequence(0,6);
+                                    if(list.get(j).getENG().length() > 6){
+                                        shortlist = list.get(j).getENG().subSequence(0,6);
                                         Log.d(TAG, "comparing " + sixText + " and " + shortlist);
                                         if(sixText.equals(shortlist)){
                                             Log.d(TAG, "passed comparison");
-                                            buttonText = eng_wordsList[j];
+                                            buttonText = list.get(j).getENG();
                                         }
                                     }
                                 }
@@ -420,12 +419,12 @@ public class MainActivity extends AppCompatActivity {
                         if(fill_Span){
                             if(button.getCurrentTextColor() == Color.parseColor("#000000")){
                                 for(int i = 0; i < 9; i++){
-                                    if(eng_wordsList[i].length() > 6){
-                                        shortlist = eng_wordsList[i].subSequence(0,6);
+                                    if(list.get(i).getENG().length() > 6){
+                                        shortlist = list.get(i).getENG().subSequence(0,6);
                                         Log.d(TAG, "comparing " + sixText + " and " + shortlist);
                                         if(sixText.equals(shortlist)){
                                             Log.d(TAG, "passed comparison");
-                                            buttonText = eng_wordsList[i];
+                                            buttonText = list.get(i).getENG();
                                         }
                                     }
 
@@ -433,12 +432,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else{
                                 for(int j = 0; j < 9; j++){
-                                    if(span_wordsList[j].length() > 6){
-                                        shortlist = span_wordsList[j].subSequence(0,6);
+                                    if(list.get(j).getSPAN().length() > 6){
+                                        shortlist = list.get(j).getSPAN().subSequence(0,6);
                                         Log.d(TAG, "comparing " + sixText + " and " + shortlist);
                                         if(sixText.equals(shortlist)){
                                             Log.d(TAG, "passed comparison");
-                                            buttonText = span_wordsList[j];
+                                            buttonText = list.get(j).getSPAN();
                                         }
                                     }
                                 }
@@ -452,8 +451,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
-
-
 
             View.OnClickListener listener = new View.OnClickListener(){
                 @Override
@@ -486,7 +483,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-            int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
+      /*      int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
                     R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,R.id.b27, R.id.b28,R.id.b29,
                     R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,R.id.b37, R.id.b38,R.id.b39,
                     R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,R.id.b47, R.id.b48,R.id.b49,
@@ -494,12 +491,11 @@ public class MainActivity extends AppCompatActivity {
                     R.id.b61, R.id.b62,R.id.b63, R.id.b64, R.id.b65,R.id.b66,R.id.b67, R.id.b68,R.id.b69,
                     R.id.b71, R.id.b72,R.id.b73, R.id.b74, R.id.b75,R.id.b76,R.id.b77, R.id.b78,R.id.b79,
                     R.id.b81, R.id.b82,R.id.b83, R.id.b84, R.id.b85,R.id.b86,R.id.b87, R.id.b88,R.id.b89,
-                    R.id.b91, R.id.b92,R.id.b93, R.id.b94, R.id.b95,R.id.b96,R.id.b97, R.id.b98,R.id.b99};
-
+                    R.id.b91, R.id.b92,R.id.b93, R.id.b94, R.id.b95,R.id.b96,R.id.b97, R.id.b98,R.id.b99};*/
 
 
 // loop through the array, find the button with respective id and set the listener
-        for(int i=0; i<ids.length; i++){
+   /*     for(int i=0; i<ids.length; i++){
             Button gbutton = (Button) findViewById(ids[i]);
             ((Button) gbutton).setOnClickListener(listener);
         }
@@ -507,73 +503,22 @@ public class MainActivity extends AppCompatActivity {
             for(int i=0; i<ids.length; i++) {
                 Button button = (Button) findViewById(ids[i]);
                 button.setOnLongClickListener(longClickListener);
+            }*/
+
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                gridButton[x][y].setOnClickListener(listener);
+                gridButton[x][y].setOnLongClickListener(longClickListener);
             }
-
-
-
+        }
     } //End of OnCreate()
 
+    public void clickButton(){
 
-    //initial game with data from select words by users
-    public void setInitialGame(String msg) {
-        Button mButtons;
-        int i;
-        switch (msg) {
-            case "SPAN":
-                for (i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(list.get(i).getSPAN());
-                }
-                getGameGrid(); //After choosing "fill in Spanish", start a new game with Spanish
-
-                break;
-            case "ENG":
-                for (i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(list.get(i).getENG());
-                }
-                getGameGrid(); //After choosing "fill in Spanish", start a new game with English
-                break;
-        }
     }
-
-    //initial game with data from selectec words by users
-    public void setListenInitialGame(String msg) {
-        Button mButtons;
-        int i;
-        switch (msg) {
-            case "SPAN":
-                for (i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(list.get(i).getSPAN());
-                }
-                getListenGameGrid(); //After choosing "fill in Spanish", start a new game with Spanish
-                break;
-            case "ENG":
-                for (i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(list.get(i).getENG());
-                }
-                getListenGameGrid(); //After choosing "fill in Spanish", start a new game with Spanish
-                break;
-        }
-    }
-
-
-    //To guarantee each English word's position is correctly correspondent to a a Spanish word
-  /*  public void wordsSplit(String[] list) {
-        for (int i = 0; i < list.length; i++) {
-            //the words in the file are separated by -`, so to get each words
-            String[] words = list[i].split("-");
-            eng_wordsList[i] = words[0];
-            span_wordsList[i] = words[1];
-            i += 0;
-        }
-        int b = 0;
-    }*/
 
     //grid cell initialization
-    public void getGameGrid() {
+    public void getGameGrid(String msg) {
         Log.d(TAG, "Game in normal mode is initialized.");
         InitializedGame = true;
         Sudoku = initialGame.generateGrid(msg,list);
@@ -584,11 +529,11 @@ public class MainActivity extends AppCompatActivity {
             for (int y = 0; y < 9; y++) {
                 gridButton[x][y].setText(Sudoku[x][y]);
                 gridButton[x][y].setTextColor(Color.parseColor("#000000"));
-                gridButton[x][y].setClickable(false);
+               // gridButton[x][y].setClickable(false);
                 double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
                 if (Math.random() <= makingHole) {
                     gridButton[x][y].setText(null);
-                    gridButton[x][y].setClickable(true);
+                 //   gridButton[x][y].setClickable(true);
                     remainingHoles--;
                 }
                 remainingGrids--;
@@ -614,7 +559,7 @@ public class MainActivity extends AppCompatActivity {
 
     */
 
-    public void getListenGameGrid() {
+    public void getListenGameGrid(String msg) {
         Log.d(TAG, "Game in listen mode is initialized.");
         InitializedGame = true;
         l_number = 0;
@@ -754,7 +699,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     int ddd = 0; //For breakpoint purpose
-                    checkAnswer(list, checkSudoku, originalSudoku);
+                    checkAnswer(checkSudoku, originalSudoku);
                     InitializedGame = false;
                 }
             }
@@ -1152,19 +1097,35 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             //Deals with the results sent from words selection
-            msg = data.getStringExtra("LANGUAGE");
+            String msg = data.getStringExtra("LANGUAGE");
             list = data.getParcelableArrayListExtra("EXTRA_WORDS_LIST");
 
             for (int i = 0; i < 9; i++) {
                 Log.d(TAG, "Words from selection ENG and SPAN are " + list.get(i).getENG() + "  " +list.get(i).getSPAN());
                 Log.d(TAG, "Words from selection LANGUAGE msg is " + msg);
             }
+            Button mButtons;
+            int i;
+            switch (msg) {
+                case "SPAN":
+                    for (i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(list.get(i).getSPAN());
+                    }
+                    break;
+                case "ENG":
+                    for (i = 0; i < 9; i++) {
+                        mButtons = findViewById(Button_ids[i]);
+                        mButtons.setText(list.get(i).getENG());
+                    }
+                    break;
+            }
             if (listen_mode) {
                 //Initialize the game in listen mode
-                setListenInitialGame(msg);
+                getListenGameGrid(msg);
             } else {
                 //Initialize the game with normal node
-                setInitialGame(msg);
+                getGameGrid(msg);
             }
         }
     }

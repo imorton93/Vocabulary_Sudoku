@@ -413,13 +413,22 @@ public class Words_Selection extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                     }else{
                         isShown = true;
+                        int count = 0;
                         Button button = (Button)findViewById(R.id.button_words);
                         button.setText("Hide My words");
                         for (int i = 0; i < span_wordsList.size(); i++){
                             if (lookForWrongWords(i)){
                                 TextView tv = (TextView) gridView.getChildAt(i);
                                 tv.setTextColor(Color.RED);
+                                count++;
                             }
+                        }
+                        if (count == 0){
+                            isShown = false;
+                            Toast.makeText(Words_Selection.this, "You DON'T have any words in this words list",
+                                    Toast.LENGTH_LONG).show();
+                            Button b = (Button)findViewById(R.id.button_words);
+                            b.setText("Show My words");
                         }
                     }
                 }else{
@@ -507,7 +516,8 @@ public class Words_Selection extends AppCompatActivity {
         //data.putExtra("EXTRA_WORDS_LIST", lists);
         data.putExtra("EXTRA_WORDS_LIST", words);
         for (int i = 0; i < 9; i++) {
-            Log.d(TAG, "Words ing selection ENG and SPAN are " + words.get(i).getENG() + "  " +words.get(i).getSPAN()); Log.d(TAG, "Words from selection LANGUAGE msg is " + msg);
+            Log.d(TAG, "Words ing selection ENG and SPAN are " + words.get(i).getENG() + "  " +words.get(i).getSPAN());
+            Log.d(TAG, "Words in selection LANGUAGE msg is " + msg);
         }
         setResult(RESULT_OK, data);
         finish();
