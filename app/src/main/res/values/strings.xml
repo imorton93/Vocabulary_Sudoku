@@ -15,6 +15,10 @@
     <string name="warn_dialog">Warning!!! If you initialized the game already,
         you will receive penalty if you continue to see the word translations. Do you want to continue?
         </string>
+    <string name="tip_dictionary">You can save words to the dictionary by pressing the
+        button with the word that you want to save on it first,
+        then the "Save" button</string>
+    <string name="save">Save</string>
     <string name="yes">YES</string>
     <string name="cancel">CANCEL</string>
 
