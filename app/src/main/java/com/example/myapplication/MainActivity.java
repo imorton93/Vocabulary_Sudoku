@@ -79,9 +79,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean restored_s = false; //boolean for checking if sudoku is restored.
     private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
     private int mistakeCount = 0;
-    //private String msg;
-   // String[] eng_wordsList = new String[9];
-   // String[] span_wordsList = new String[9];
     String[][] Sudoku_temp = new String[9][9];
     String[][] Sudoku_user = new String[9][9];
     //WordsPairs object
