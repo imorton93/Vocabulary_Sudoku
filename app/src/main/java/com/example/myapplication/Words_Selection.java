@@ -28,6 +28,7 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 public class Words_Selection extends AppCompatActivity {
     private static final String TAG = "Words-Selection";
     private static final String PAGE = "Pages";
+    private static final String WORDSLIST = "WORDSPAIRS";
     private static final String WORDSLIST_ENG = "wordsList_eng";
     private static final String WORDSLIST_SPAN = "wordsList_span";
     private static final String MESSAGE_LANGUAGE = "Message_Language";
@@ -50,8 +51,9 @@ public class Words_Selection extends AppCompatActivity {
     final TextView[] tv = new TextView[9];
     private int wordsCount = 0;
     //words selected by users will go to MainActivity
-    private static String[] wordsList_eng = new String[9];
-    private static String[] wordsList_span = new String[9];
+    ArrayList<WordsPairs> wordpairs = new ArrayList<>();
+    //private static String[] wordsList_eng = new String[9];
+    //private static String[] wordsList_span = new String[9];
     //English or Spanish
     private String message;
     //keep track of whether button show/hide is activated
@@ -79,8 +81,9 @@ public class Words_Selection extends AppCompatActivity {
         if (savedInstanceState != null) {
             pages = savedInstanceState.getInt(PAGE);
             Log.d(TAG, "PAGE IS  "+ pages);
-            wordsList_eng = savedInstanceState.getStringArray(WORDSLIST_ENG);
-            wordsList_span = savedInstanceState.getStringArray(WORDSLIST_SPAN);
+            wordpairs = savedInstanceState.getParcelableArrayList(WORDSLIST);
+           // wordsList_eng = savedInstanceState.getStringArray(WORDSLIST_ENG);
+           // wordsList_span = savedInstanceState.getStringArray(WORDSLIST_SPAN);
             message = savedInstanceState.getString(MESSAGE_LANGUAGE);
             wordsCount = savedInstanceState.getInt(WORDS_COUNT);
             pre_pos = savedInstanceState.getIntArray(GRID_PRE_POSITION);
@@ -88,12 +91,16 @@ public class Words_Selection extends AppCompatActivity {
             //re-fill TextView with selected words
             for (int i = 0; i < wordsCount; i++){
                 if (message.equals("SPAN")){
-                    tv[i].setText(wordsList_span[i]);
+                    //tv[i].setText(wordsList_span[i]);
+                    tv[i].setText(wordpairs.get(i).getSPAN());
                 }else{
-                    tv[i].setText(wordsList_eng[i]);
+                    //tv[i].setText(wordsList_eng[i]);
+                    tv[i].setText(wordpairs.get(i).getENG());
                 }
-                Log.d(TAG, "WORD LIST ENG IS "+wordsList_eng[i]);
-                Log.d(TAG, "WORD LIST SPAN IS "+wordsList_span[i]);
+                Log.d(TAG, "WORD LIST ENG IS "+wordpairs.get(i).getENG());
+                Log.d(TAG, "WORD LIST SPAN IS "+wordpairs.get(i).getSPAN());
+                //Log.d(TAG, "WORD LIST ENG IS "+wordsList_eng[i]);
+               // Log.d(TAG, "WORD LIST SPAN IS "+wordsList_span[i]);
             }
         }
         TextView textView = (TextView)findViewById(R.id.tv_view);
@@ -114,7 +121,7 @@ public class Words_Selection extends AppCompatActivity {
                 try {
                     strings = readTextFromUri(uri);
                     for (int i = 0; i < strings.size(); i++){
-                        Log.d(TAG,"STRINGS FROM UPLOAD FILE ARE " + strings.get(i));
+                     //   Log.d(TAG,"STRINGS FROM UPLOAD FILE ARE " + strings.get(i));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -125,8 +132,8 @@ public class Words_Selection extends AppCompatActivity {
                 ArrayList<WordsPairs> arrayList = mDBHelper.getImportedData();
                 for (int i = 0; i < arrayList.size(); i++){
                     strings.add(arrayList.get(i).getENG()+","+arrayList.get(i).getSPAN());
-                    Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
-                            arrayList.get(i).getSPAN()+"  ");
+                  //  Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
+                      //      arrayList.get(i).getSPAN()+"  ");
                 }
             }
         }
@@ -166,7 +173,8 @@ public class Words_Selection extends AppCompatActivity {
                     Toast.makeText(Words_Selection.this, "You MUST select 9 words to start a new game.",
                             Toast.LENGTH_LONG).show();
                 }else{
-                    setStartList(message, wordsList_eng,wordsList_span);
+                    //setStartList(message, wordsList_eng,wordsList_span);
+                    setStartList(message, wordpairs);
                 }
             }
         });
@@ -199,7 +207,8 @@ public class Words_Selection extends AppCompatActivity {
                     //check whether has words selected before
                     //make it ""
                     for (int j = 0; j < wordsCount; j++){
-                        if (wordsList_eng[j].equals(words[0]) || wordsList_span[j].equals(words[1])){
+                        //if (wordsList_eng[j].equals(words[0]) || wordsList_span[j].equals(words[1])){
+                        if (wordpairs.get(j).getENG().equals(words[0]) || wordpairs.get(j).getSPAN().equals(words[1])){
                             eng_wordsList_gridview.set(i,"");
                             span_wordsList_gridview.set(i,"");
                         }
@@ -227,7 +236,8 @@ public class Words_Selection extends AppCompatActivity {
                     //check whether has words selected before
                     //make it ""
                     for (int j = 0; j < wordsCount; j++) {
-                        if (wordsList_eng[j].equals(words[0]) || wordsList_span[j].equals(words[1])) {
+                        //if (wordsList_eng[j].equals(words[0]) || wordsList_span[j].equals(words[1])) {
+                        if (wordpairs.get(j).getENG().equals(words[0]) || wordpairs.get(j).getSPAN().equals(words[1])){
                             eng_wordsList_gridview.set(i,"");
                             span_wordsList_gridview.set(i,"");
                         }
@@ -258,7 +268,7 @@ public class Words_Selection extends AppCompatActivity {
                     //display to user which words they already select
                     //prevent user re-select same word
                     selectedItem = gridView.getItemAtPosition(position).toString();
-                    if (!isConflict(selectedItem)){
+                    if (!isConflict(selectedItem) && !selectedItem.equals("")){
                         //show which words selected by user in Textview
                         Log.d(TAG, "SELECTED ITEM IS "+ selectedItem);
                         if (selectedItem.contains(".wrong")){
@@ -297,8 +307,9 @@ public class Words_Selection extends AppCompatActivity {
                     wordsCount--;
                     String tmp = tv[wordsCount].getText().toString();
                     tv[wordsCount].setText("");
-                    wordsList_eng[wordsCount] = null;
-                    wordsList_span[wordsCount] = null;
+                    wordpairs.remove(wordsCount);
+                    //wordsList_eng[wordsCount] = null;
+                    //wordsList_span[wordsCount] = null;
                     int current_page = pre_pos[wordsCount]/30 + 1;
                     int current_pos = pre_pos[wordsCount] - (pages -1) * 30;
                     TextView undo_tv = (TextView) gridView.getChildAt(current_pos);
@@ -402,13 +413,22 @@ public class Words_Selection extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                     }else{
                         isShown = true;
+                        int count = 0;
                         Button button = (Button)findViewById(R.id.button_words);
                         button.setText("Hide My words");
                         for (int i = 0; i < span_wordsList.size(); i++){
                             if (lookForWrongWords(i)){
                                 TextView tv = (TextView) gridView.getChildAt(i);
                                 tv.setTextColor(Color.RED);
+                                count++;
                             }
+                        }
+                        if (count == 0){
+                            isShown = false;
+                            Toast.makeText(Words_Selection.this, "You DON'T have any words in this words list",
+                                    Toast.LENGTH_LONG).show();
+                            Button b = (Button)findViewById(R.id.button_words);
+                            b.setText("Show My words");
                         }
                     }
                 }else{
@@ -447,7 +467,7 @@ public class Words_Selection extends AppCompatActivity {
     public Boolean isConflict(String item){
         for (int i = 0; i< wordsCount; i++){
             String tmp = tv[i].getText().toString();
-            if (tmp.equals(item) || item.contains(tmp)){
+            if (tmp.equals(item) || item.equals(tmp+".wrong")){
                 return true;
             }
         }
@@ -458,35 +478,47 @@ public class Words_Selection extends AppCompatActivity {
     public void wordsList(String msg, String item){
         switch (msg) {
             case "SPAN":
-                wordsList_span[wordsCount] = item;
+                String eng = null;
+                //wordsList_span[wordsCount] = item;
                 for (int i = 0; i < span_wordsList.size(); i++) {
                     if (item.equals(span_wordsList.get(i))) {
-                        wordsList_eng[wordsCount] = eng_wordsList.get(i);
+                        //wordsList_eng[wordsCount] = eng_wordsList.get(i);
+                        eng = eng_wordsList.get(i);
                     }
                 }
+                wordpairs.add(new WordsPairs(eng, item));
                 break;
             case "ENG":
-                wordsList_eng[wordsCount] = item;
+                String span = null;
+                //wordsList_eng[wordsCount] = item;
                 for (int i = 0; i < eng_wordsList.size(); i++) {
                     if (item.equals(eng_wordsList.get(i))) {
-                        wordsList_span[wordsCount] = span_wordsList.get(i);
+                        //wordsList_span[wordsCount] = span_wordsList.get(i);
+                        span = span_wordsList.get(i);
                     }
                 }
+                wordpairs.add(new WordsPairs(item, span));
                 break;
         }
     }
 
     //pass words that user select to MainActivity
-    private void setStartList(String msg, String[] eng, String[] span) {
+    private void setStartList(String msg, ArrayList<WordsPairs> words) {
         Intent data = new Intent();
         String[] lists = new String[9];
-        for (int i = 0; i < eng.length; i++){
+       /* for (int i = 0; i < eng.length; i++){
             String tmp = eng[i] + "-" + span[i];
             lists[i] = tmp;
             Log.d(TAG, "TMP is    " + lists[i]);
-        }
+        }*/
+
         data.putExtra("LANGUAGE", msg);
-        data.putExtra("EXTRA_WORDS_LIST", lists);
+        //data.putExtra("EXTRA_WORDS_LIST", lists);
+        data.putExtra("EXTRA_WORDS_LIST", words);
+        for (int i = 0; i < 9; i++) {
+            Log.d(TAG, "Words ing selection ENG and SPAN are " + words.get(i).getENG() + "  " +words.get(i).getSPAN());
+            Log.d(TAG, "Words in selection LANGUAGE msg is " + msg);
+        }
         setResult(RESULT_OK, data);
         finish();
     }
@@ -518,8 +550,7 @@ public class Words_Selection extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         savedInstanceState.putInt(PAGE,pages);
-        savedInstanceState.putStringArray(WORDSLIST_ENG,wordsList_eng);
-        savedInstanceState.putStringArray(WORDSLIST_SPAN,wordsList_span);
+        savedInstanceState.putParcelableArrayList(WORDSLIST, wordpairs);
         savedInstanceState.putString(MESSAGE_LANGUAGE,message);
         savedInstanceState.putInt(WORDS_COUNT,wordsCount);
         savedInstanceState.putIntArray(GRID_PRE_POSITION, pre_pos);

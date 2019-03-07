@@ -188,6 +188,5 @@ public class DBHelper extends SQLiteOpenHelper {
         return words;
     }
 
-
 }
 
