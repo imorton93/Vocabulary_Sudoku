@@ -60,7 +60,7 @@ public class SudokuGenerator {
                         return true; //all done
                     else {
                         X = 0;
-                        Y = yPos + 1;   // chanege a row
+                        Y = yPos + 1;   // change a row
                     }
                 }
                 else {
