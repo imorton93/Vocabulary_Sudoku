@@ -21,6 +21,7 @@ public class Display_Words extends AppCompatActivity {
     private static final String KEY_fill_Eng = "fill_Eng";
     private static final String KEY_fill_Span = "fill_Span";
     private static final String KEY_InitializedGame = "initializedgame";
+    private static final String KEY_wordlist = "list";
     private static final int[] W_Button_ids = { //ID's for the 9 big buttons in the word pairs page
             R.id.w_b1,
             R.id.w_b2,
@@ -37,6 +38,7 @@ public class Display_Words extends AppCompatActivity {
     private Boolean fill_Span = false;
     private Boolean fill_Eng = false;
     private String temp_b =""; //To store the string on the button
+    ArrayList<WordsPairs> list = new ArrayList<>();
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
@@ -46,8 +48,10 @@ public class Display_Words extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        final String[] eng_wordlist = intent.getStringArrayExtra(KEY_Eng_wordlist);
-        final String[] span_wordlist = intent.getStringArrayExtra(KEY_Span_wordlist);
+       // final String[] eng_wordlist = intent.getStringArrayExtra(KEY_Eng_wordlist);
+        //final String[] span_wordlist = intent.getStringArrayExtra(KEY_Span_wordlist);
+        //WordsPairs object
+        list = intent.getParcelableArrayListExtra(KEY_wordlist);
         fill_Eng = intent.getBooleanExtra(KEY_fill_Eng, false); //Return false if value not initialized
         fill_Span = intent.getBooleanExtra(KEY_fill_Span, false); //Return false if value not initialized
         InitializedGame = intent.getBooleanExtra(KEY_InitializedGame, false);
@@ -74,15 +78,15 @@ public class Display_Words extends AppCompatActivity {
         if (InitializedGame) {
             Button button;
             if (fill_Span) {
-                for (int i = 0; i < span_wordlist.length; i++) {
+                for (int i = 0; i < list.size(); i++) {
                     button = findViewById(W_Button_ids[i]);
-                    button.setText(span_wordlist[i]);
+                    button.setText(list.get(i).getSPAN());
                     final int temp_i = i;
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            wordstextview.setText(eng_wordlist[temp_i]);
-                            temp_b = span_wordlist[temp_i];
+                            wordstextview.setText(list.get(temp_i).getENG());
+                            temp_b = list.get(temp_i).getSPAN();
                            // addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
                             //SelectedButton = button
                         }
@@ -90,15 +94,15 @@ public class Display_Words extends AppCompatActivity {
                 }
 
             } else if (fill_Eng) {
-                for (int i = 0; i < eng_wordlist.length; i++) {
+                for (int i = 0; i < list.size(); i++) {
                     button = findViewById(W_Button_ids[i]);
-                    button.setText(eng_wordlist[i]);
+                    button.setText(list.get(i).getENG());
                     final int temp_i = i;
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            wordstextview.setText(span_wordlist[temp_i]);
-                            temp_b = eng_wordlist[temp_i];
+                            wordstextview.setText(list.get(temp_i).getSPAN());
+                            temp_b = list.get(temp_i).getENG();
                            // addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
                         }
                     });

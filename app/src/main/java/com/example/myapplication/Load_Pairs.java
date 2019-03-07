@@ -35,14 +35,13 @@ public class Load_Pairs extends AppCompatActivity {
 
 
     private static final int READ_REQUEST_CODE = 100;
-    private static final String ENG_WORDS_LIST = "englishlist";
-    private static final String SPAN_WORDS_LIST = "spanishlist";
+    private static final String WORDS_LIST = "wordslist";
     private static final String TAG = "LOAD_WORDS";
 
-    ArrayList<String> eng_wordsList = new ArrayList<>();
-    ArrayList<String> span_wordsList = new ArrayList<>();
+    ArrayList<WordsPairs> mPairs = new ArrayList<>();
     ArrayList<String> strings = null;
     private String message;
+    Boolean loadMore = false;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -50,26 +49,24 @@ public class Load_Pairs extends AppCompatActivity {
         setContentView(R.layout.load_pairs);
 
         if (savedInstanceState != null) {
-            eng_wordsList = savedInstanceState.getStringArrayList(ENG_WORDS_LIST);
-            span_wordsList = savedInstanceState.getStringArrayList(SPAN_WORDS_LIST);
+            mPairs = savedInstanceState.getParcelableArrayList(WORDS_LIST);
         }
 
         //set up ListView
-        ArrayList<WordsPairs> arrayList= new ArrayList<>();
         final ListView listView = (ListView)findViewById(R.id.words_eng_list);
-        if (eng_wordsList.isEmpty()){
+        ArrayList<WordsPairs> arrayList= new ArrayList<>();
+        if (mPairs.isEmpty()){
             for (int i = 0; i < 9; i++) {
                 WordsPairs list=new WordsPairs();
                 list.setENG("");
                 list.setSPAN("");
                 arrayList.add(list);
             }
-
         }else{
-            for (int i = 0; i < eng_wordsList.size(); i++){
+            for (int i = 0; i < mPairs.size(); i++){
                 WordsPairs list=new WordsPairs();
-                list.setENG(eng_wordsList.get(i));
-                list.setSPAN(span_wordsList.get(i));
+                list.setENG(mPairs.get(i).getENG());
+                list.setSPAN(mPairs.get(i).getSPAN());
                 arrayList.add(list);
             }
         }
@@ -106,10 +103,11 @@ public class Load_Pairs extends AppCompatActivity {
         //allow users to type in more words
         //more codes coming
         //store data into database
-        Button more = (Button)findViewById(R.id.more);
+        final Button more = (Button)findViewById(R.id.more);
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadMore = true;
                 ArrayList<WordsPairs>arrayList= new ArrayList<>();
 
                 for (int i = 0; i < 9; i++) {
@@ -132,7 +130,7 @@ public class Load_Pairs extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 message = "SPAN";
-                setWordsList(message,eng_wordsList,span_wordsList);
+                setWordsList(message,mPairs);
             }
         });
 
@@ -144,7 +142,7 @@ public class Load_Pairs extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 message = "ENG";
-                setWordsList(message,eng_wordsList,span_wordsList);
+                setWordsList(message,mPairs);
             }
         });
 
@@ -153,7 +151,7 @@ public class Load_Pairs extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveUploadedFile(eng_wordsList,span_wordsList);
+                saveUploadedFile(mPairs);
             }
         });
         //LOAD more pairs of words
@@ -162,21 +160,21 @@ public class Load_Pairs extends AppCompatActivity {
     }
 
     //pass words that user select to Words_Selection
-    private void setWordsList(String msg, ArrayList<String> eng, ArrayList<String> span) {
+    private void setWordsList(String msg, ArrayList<WordsPairs> words) {
         Intent data = new Intent(this,Words_Selection.class);
         ArrayList<String> lists = new ArrayList<>();
-        for (int i = 0; i < eng.size(); i++){
-            String tmp = eng.get(i) + "," + span.get(i);
+        for (int i = 0; i < words.size(); i++){
+            String tmp = words.get(i).getENG() + "," + words.get(i).getSPAN();
             lists.add(tmp);
             Log.d(TAG, "TMP is    " + lists.get(i));
         }
+        //
         data.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
         data.putExtra(EXTRA_MESSAGE, "LOAD");
         //pass "ENG" or "SPAN" back
         data.putExtra("LANGUAGE", msg);
         //pass what user loaded
         data.putStringArrayListExtra("LOAD_WORDS_LIST", lists);
-        Log.d(TAG, "DATA is    " + data.getStringArrayListExtra("LOAD_WORDS_LIST"));
         startActivity(data);
         finish();
     }
@@ -245,7 +243,9 @@ public class Load_Pairs extends AppCompatActivity {
                     //ListView initial
                     //set up a new ListView
                     ArrayList<WordsPairs>arrayList= new ArrayList<>();
-
+                    if (!loadMore){
+                        mPairs.clear();
+                    }
                     for (int i = 0; i < strings.size(); i++){
                         WordsPairs list=new WordsPairs();
                         String[] words = strings.get(i).split(",");
@@ -265,11 +265,9 @@ public class Load_Pairs extends AppCompatActivity {
                             Log.d(TAG,"WORD is "+words[0]);
                             list.setSPAN(words[1]);
                             arrayList.add(list);
-                            eng_wordsList.add(words[0]);
-                            span_wordsList.add(words[1]);
                         }
+                        mPairs.add(new WordsPairs(words[0],words[1]));
                     }
-
                     ListView listView = (ListView)findViewById(R.id.words_eng_list);
                     listView.setAdapter(new listArrayAdapter(this,arrayList));
                 }else{
@@ -285,7 +283,7 @@ public class Load_Pairs extends AppCompatActivity {
     //initial a alert dialog to make sure if user wants to save these words
     //open database
     //save words into a table
-    public void saveUploadedFile(final ArrayList<String> eng, final ArrayList<String> span) {
+    public void saveUploadedFile(final ArrayList<WordsPairs> words) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Do you want to save your loaded words?");
         alertDialogBuilder.setPositiveButton(
@@ -307,28 +305,24 @@ public class Load_Pairs extends AppCompatActivity {
                             e.printStackTrace();
                         }*/
 
-                        if (eng.size() == 0 || span.size() == 0){
+                        if (words.size() == 0){
                             Toast.makeText(Load_Pairs.this,
-                                    "Cannot save.", Toast.LENGTH_LONG).show();
+                                    "No words to save.", Toast.LENGTH_LONG).show();
                         }else{
                             //save to database
                             //
                             DBHelper mDB = new DBHelper(Load_Pairs.this);
-                           // mDB.onDestroy();
-                            for (int i = 0; i < Math.min(eng.size(),span.size()); i++){
-                                if (eng.get(i).isEmpty() || span.get(i).isEmpty()){
-                                    Toast.makeText(Load_Pairs.this,
-                                            "Cannot save.", Toast.LENGTH_LONG).show();
-                                }else{
-                                    if (!mDB.hasImported(new WordsPairs(eng.get(i),span.get(i),0))){
-                                        mDB.importWord(new WordsPairs(eng.get(i),span.get(i),0));
-                                    }
+                            // mDB.onDestroy();
+                            for (int i = 0; i < words.size(); i++){
+                                if (!mDB.hasImported(new WordsPairs(words.get(i).getENG(),words.get(i).getSPAN(),0))){
+                                    mDB.importWord(new WordsPairs(words.get(i).getENG(),words.get(i).getSPAN(),0));
                                 }
                             }
                             Toast.makeText(Load_Pairs.this,
                                     "Your file is saved.", Toast.LENGTH_LONG).show();
                             mDB.close();
                         }
+
                         DBHelper mDB = new DBHelper(Load_Pairs.this);
 
                         ArrayList<WordsPairs> arrayList = mDB.getImportedData();
@@ -354,8 +348,7 @@ public class Load_Pairs extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
-        savedInstanceState.putStringArrayList(ENG_WORDS_LIST,eng_wordsList);
-        savedInstanceState.putStringArrayList(SPAN_WORDS_LIST,span_wordsList);
+        savedInstanceState.putParcelableArrayList(WORDS_LIST,mPairs);
     }
 
 }

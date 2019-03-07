@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_Span_wordlist = "Span_wordlist";
     private static final String KEY_Listen = "Listen_Mode";
     private static final String KEY_assigned = "Assigned";
+    private static final String KEY_wordlist = "list";
 
     /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
         //The leftmost column
@@ -76,12 +77,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
     private int mistakeCount = 0;
     private String msg;
-    String[] eng_wordsList = new String[9];
-    String[] span_wordsList = new String[9];
+   // String[] eng_wordsList = new String[9];
+   // String[] span_wordsList = new String[9];
     String[][] Sudoku_temp = new String[9][9];
     String[][] Sudoku_user = new String[9][9];
-    String[] list = new String[9];
-
+    //WordsPairs object
+    private ArrayList<WordsPairs> list = new ArrayList<>();
+    //initial database
     DBHelper mDBHelper = new DBHelper(this);
     Menu menu;
     //Begin of variables for listen mode
@@ -124,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 gridButton[x][y] = findViewById(resID);
             }
-            list[x] = x+1 +"-" + x+1;
         }
         //store words from String Resources
         //in case, order of String from String Resources may change
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
             fill_Span = savedInstanceState.getBoolean(KEY_fill_Span);
             listen_mode = savedInstanceState.getBoolean(KEY_Listen);
-            list = savedInstanceState.getStringArray(KEY_WORDS_LIST);
+            list = savedInstanceState.getParcelableArrayList(KEY_WORDS_LIST);
             if (InitializedGame) {
                 //If a game has been initialized
                 int j = 0;  //For breakpoint purpose
@@ -154,16 +155,15 @@ public class MainActivity extends AppCompatActivity {
                 //Problem: sudoku [i] is the same for all i
             } */
                 //
-                wordsSplit(list);
                 if (fill_Eng) {
                     for (int i = 0; i < 9; i++) {
                         mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(eng_wordsList[i]);
+                        mButtons.setText(list.get(i).getENG());
                     }
                 } else if (fill_Span) {
                     for (int i = 0; i < 9; i++) {
                         mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(span_wordsList[i]);
+                        mButtons.setText(list.get(i).getSPAN());
                     }
                 }
                 Sudoku_temp = (String[][]) savedInstanceState.getSerializable(KEY_prefilled_words);
@@ -213,11 +213,11 @@ public class MainActivity extends AppCompatActivity {
                                     String tmp = "";
                                     //if is wrong, puts word to be red
                                     for (int i = 0; i < 9; i++) {
-                                        if (gridButton[x][y].getText().equals(eng_wordsList[i])) {
-                                            tmp = span_wordsList[i];
+                                        if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
+                                            tmp = list.get(i).getSPAN();
                                         }
-                                        if (gridButton[x][y].getText().equals(span_wordsList[i])) {
-                                            tmp = eng_wordsList[i];
+                                        if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
+                                            tmp = list.get(i).getENG();
                                         }
                                     }
                                     if (tmp.equals(Sudoku[x][y])) {
@@ -262,11 +262,11 @@ public class MainActivity extends AppCompatActivity {
                                     String tmp = "";
                                     //if is wrong, puts word to be red
                                     for (int i = 0; i < 9; i++) {
-                                        if (gridButton[x][y].getText().equals(eng_wordsList[i])) {
-                                            tmp = span_wordsList[i];
+                                        if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
+                                            tmp = list.get(i).getSPAN();
                                         }
-                                        if (gridButton[x][y].getText().equals(span_wordsList[i])) {
-                                            tmp = eng_wordsList[i];
+                                        if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
+                                            tmp = list.get(i).getENG();
                                         }
                                     }
                                     if (tmp.equals(Sudoku[x][y])) {
@@ -304,11 +304,11 @@ public class MainActivity extends AppCompatActivity {
                                     String tmp = "";
                                     //if is wrong, puts word to be red
                                     for (int i = 0; i < 9; i++) {
-                                        if (gridButton[x][y].getText().equals(eng_wordsList[i])) {
-                                            tmp = span_wordsList[i];
+                                        if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
+                                            tmp = list.get(i).getSPAN();
                                         }
-                                        if (gridButton[x][y].getText().equals(span_wordsList[i])) {
-                                            tmp = eng_wordsList[i];
+                                        if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
+                                            tmp = list.get(i).getENG();
                                         }
                                     }
                                     if (tmp.equals(Sudoku[x][y])) {
@@ -341,55 +341,54 @@ public class MainActivity extends AppCompatActivity {
     } //End of OnCreate()
 
 
-    //initial game with data from selectec words by users
-    public void setInitialGame(String msg, String[] list) {
+    //initial game with data from select words by users
+    public void setInitialGame(String msg) {
         Button mButtons;
         int i;
-        wordsSplit(list);
         switch (msg) {
             case "SPAN":
-                getGameGrid(eng_wordsList); //After choosing "fill in Spanish", start a new game with Spanish
                 for (i = 0; i < 9; i++) {
                     mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(span_wordsList[i]);
+                    mButtons.setText(list.get(i).getSPAN());
                 }
+                getGameGrid(); //After choosing "fill in Spanish", start a new game with Spanish
+
                 break;
             case "ENG":
-                getGameGrid(span_wordsList); //After choosing "fill in Spanish", start a new game with English
                 for (i = 0; i < 9; i++) {
                     mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(eng_wordsList[i]);
+                    mButtons.setText(list.get(i).getENG());
                 }
+                getGameGrid(); //After choosing "fill in Spanish", start a new game with English
                 break;
         }
     }
 
     //initial game with data from selectec words by users
-    public void setListenInitialGame(String msg, String[] list) {
+    public void setListenInitialGame(String msg) {
         Button mButtons;
         int i;
-        wordsSplit(list);
         switch (msg) {
             case "SPAN":
-                getListenGameGrid(eng_wordsList); //After choosing "fill in Spanish", start a new game with Spanish
                 for (i = 0; i < 9; i++) {
                     mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(span_wordsList[i]);
+                    mButtons.setText(list.get(i).getSPAN());
                 }
+                getListenGameGrid(); //After choosing "fill in Spanish", start a new game with Spanish
                 break;
             case "ENG":
-                getListenGameGrid(span_wordsList); //After choosing "fill in Spanish", start a new game with English
                 for (i = 0; i < 9; i++) {
                     mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(eng_wordsList[i]);
+                    mButtons.setText(list.get(i).getENG());
                 }
+                getListenGameGrid(); //After choosing "fill in Spanish", start a new game with Spanish
                 break;
         }
     }
 
 
     //To guarantee each English word's position is correctly correspondent to a a Spanish word
-    public void wordsSplit(String[] list) {
+  /*  public void wordsSplit(String[] list) {
         for (int i = 0; i < list.length; i++) {
             //the words in the file are separated by -`, so to get each words
             String[] words = list[i].split("-");
@@ -398,13 +397,13 @@ public class MainActivity extends AppCompatActivity {
             i += 0;
         }
         int b = 0;
-    }
+    }*/
 
     //grid cell initialization
-    public void getGameGrid(String[] words) {
+    public void getGameGrid() {
         Log.d(TAG, "Game in normal mode is initialized.");
         InitializedGame = true;
-        Sudoku = initialGame.generateGrid(words);
+        Sudoku = initialGame.generateGrid(msg,list);
         Log.d(TAG, "restored_s is " + restored_s);
         double remainingGrids = 81;
         double remainingHoles = 51; //set up a number to determine how many words to hide
@@ -420,8 +419,6 @@ public class MainActivity extends AppCompatActivity {
                     remainingHoles--;
                 }
                 remainingGrids--;
-                Log.d(TAG, "GRIDBUTTON [X][Y] is  " + gridButton[x][y].getText());
-                Log.d(TAG, "SUDOKU [X][Y] is  " + Sudoku[x][y]);
             }
         }
     }
@@ -444,12 +441,12 @@ public class MainActivity extends AppCompatActivity {
 
     */
 
-    public void getListenGameGrid(String[] words) {
+    public void getListenGameGrid() {
         Log.d(TAG, "Game in listen mode is initialized.");
         InitializedGame = true;
         l_number = 0;
         int indx_temp = -1;
-        Sudoku = initialGame.generateGrid(words);
+        Sudoku = initialGame.generateGrid(msg,list);
         double remainingGrids = 81;
         double remainingHoles = 50; //set up a number to determine how many words to hide
         span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -527,7 +524,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (InitializedGame) {
-                    wordsSplit(list);
                     String[][] checkSudoku = new String[9][9];
                     String[][] originalSudoku = new String[9][9];
                     if (listen_mode) {
@@ -580,13 +576,13 @@ public class MainActivity extends AppCompatActivity {
                                 CharSequence temp = gridButton[x][y].getText();
                                 checkSudoku[x][y] = temp + "";
                                 originalSudoku[x][y] = Sudoku[x][y];
-                                gridButton[x][y].setText(null);
+                               // gridButton[x][y].setText(null);
                             }
                         }
                     }
                     int ddd = 0; //For breakpoint purpose
-                    checkAnswer(list, checkSudoku, originalSudoku);
-                    InitializedGame = false;
+                    checkAnswer(checkSudoku, originalSudoku);
+                   // InitializedGame = false;
                 }
             }
         });
@@ -594,12 +590,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     //check sudoku correctness
-    public void checkAnswer(String[] list, String[][] Sudoku, String[][] originalSudoku) {
+    public void checkAnswer(String[][] Sudoku, String[][] originalSudoku) {
         String msg;
-        wordsSplit(list);
-        if (resultCheck.sudokuCheck(Sudoku, eng_wordsList, span_wordsList)) {
+        if (resultCheck.sudokuCheck(Sudoku, list)){
             msg = "Congratulation! Sudoku is correct!";
-        } else {
+        }else {
             msg = "Sudoku is incorrect, try again!";
         }
         Toast result = Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG);
@@ -638,12 +633,12 @@ public class MainActivity extends AppCompatActivity {
             SelectedButton = (Button) v;
             SelectedButton.setBackgroundResource(R.drawable.clicked_button);
             //SelectedButton.setText("clicked");
+            Log.d(TAG, "(SelectedButton.isClickable()) is " + (SelectedButton.isClickable()));
         }
     }
 
     public boolean checkFilledWord(String buttonText){
         String tmp = null;
-        wordsSplit(list);
         String str = null;
         //check which word should be right
         for (int x = 0; x < 9; x++) {
@@ -652,11 +647,11 @@ public class MainActivity extends AppCompatActivity {
                     str = Sudoku[x][y];
                     //translate english to spanish, and vise versa
                     for (int i = 0; i < 9; i++) {
-                        if (Sudoku[x][y].equals(eng_wordsList[i])) {
-                            tmp = span_wordsList[i];
+                        if (Sudoku[x][y].equals(list.get(i).getENG())) {
+                            tmp = list.get(i).getSPAN();
                         }
-                        if (Sudoku[x][y].equals(span_wordsList[i])) {
-                            tmp = eng_wordsList[i];
+                        if (Sudoku[x][y].equals(list.get(i).getSPAN())) {
+                            tmp = list.get(i).getENG();
                         }
                     }
                 }
@@ -681,8 +676,6 @@ public class MainActivity extends AppCompatActivity {
              * *if wrong, put word to be red
              */
             //track the button that user selects
-            String tmp = null;
-            wordsSplit(list);
             if (SelectedButton != null) {
                 CharSequence cellText = SelectedButton.getText();
                 if (!(Arrays.asList(l_numbers).contains(cellText))) {
@@ -812,10 +805,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if (InitializedGame) {
                     Intent display_w = new Intent(this, Display_Words.class);
-                    wordsSplit(list); //Ensures eng_wordsList and span_wordsList match
-                    display_w.putExtra(KEY_Eng_wordlist, eng_wordsList);
-                    display_w.putExtra(KEY_Span_wordlist, span_wordsList);
-                    display_w.putExtra(KEY_fill_Eng, fill_Eng);
+                    //wordsSplit(list); //Ensures eng_wordsList and span_wordsList match
+
+                    display_w.putParcelableArrayListExtra(KEY_wordlist, list);
                     display_w.putExtra(KEY_fill_Span, fill_Span);
                     display_w.putExtra(KEY_InitializedGame, InitializedGame);
                     this.startActivity(display_w);
@@ -840,7 +832,6 @@ public class MainActivity extends AppCompatActivity {
                     item.setTitle("Listen Comprehension Mode");
                     Toast listen = Toast.makeText(MainActivity.this,
                             "Exiting Listen Comprehension Mode" ,Toast.LENGTH_LONG);
-                            "Exiting Listening Comprehension Mode", Toast.LENGTH_LONG);
                     listen.setGravity(Gravity.TOP, 0, 400);
                     listen.show();
                     Log.d(TAG, "Exiting Listening Comprehension Mode");
@@ -871,7 +862,7 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putBoolean(KEY_fill_Eng, fill_Eng);
         savedInstanceState.putBoolean(KEY_fill_Span, fill_Span);
         savedInstanceState.putBoolean(KEY_Listen, listen_mode);
-        savedInstanceState.putStringArray(KEY_WORDS_LIST, list);
+        savedInstanceState.putParcelableArrayList(KEY_WORDS_LIST, list);
         savedInstanceState.putSerializable(KEY_Sudoku, Sudoku);
         //savedInstanceState.put(KEY_filled_words, gridButton);
         int x = 0;
@@ -976,19 +967,18 @@ public class MainActivity extends AppCompatActivity {
             }
             //Deals with the results sent from words selection
             msg = data.getStringExtra("LANGUAGE");
-            list = data.getStringArrayExtra("EXTRA_WORDS_LIST");
+            list = data.getParcelableArrayListExtra("EXTRA_WORDS_LIST");
 
             for (int i = 0; i < 9; i++) {
-                Log.d(TAG, "Words from selection ENG and SPAN are " + list[i]);
+                Log.d(TAG, "Words from selection ENG and SPAN are " + list.get(i).getENG() + "  " +list.get(i).getSPAN());
                 Log.d(TAG, "Words from selection LANGUAGE msg is " + msg);
-
             }
             if (listen_mode) {
                 //Initialize the game in listen mode
-                setListenInitialGame(msg, list);
+                setListenInitialGame(msg);
             } else {
                 //Initialize the game with normal node
-                setInitialGame(msg, list);
+                setInitialGame(msg);
             }
         }
     }
@@ -1071,62 +1061,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
     }
-}
 
-    //Here are the functions designed specifically for Unit Testing
-    protected String getmsg(){
-        return msg;
-    }
-    protected int[] getButtonids(){
-        int[] temp = new int[9];
-        temp = Arrays.copyOf(Button_ids, Button_ids.length);
-        return temp;
-    }
-    protected String[] getEng_wordsList(){
-        String[] temp = new String[eng_wordsList.length];
-        temp = Arrays.copyOf(eng_wordsList, eng_wordsList.length);
-        return temp;
-    }
-    protected String[] getSpan_wordsList(){
-        String[] temp = new String[span_wordsList.length];
-        temp = Arrays.copyOf(span_wordsList, span_wordsList.length);
-        return temp;
-    }
-    protected String[] getList(){
-        String[] temp = new String[list.length];
-        temp = Arrays.copyOf(list, list.length);
-        return temp;
-    }
-    protected Button[] getMainButtons(){
-        Button[] temp = new Button[mainButtons.length];
-        temp = Arrays.copyOf(mainButtons, mainButtons.length);
-        return temp;
-    }
-    protected Button[][] getGridButtons(){
-        Button[][] temp = new Button[9][9];
-        for (int b = 0; b < 9; b++){
-            for (int a  = 0; a < 9; a++){
-                if(gridButton[b][a] == null){
-                    //Do things, preferrably an assertion
-                }
-            }
-        }
-        for (int i = 0; i < 9; i++){
-            temp[i] = Arrays.copyOf(gridButton[i], 9);
-        }
-        return temp;
-    }
-    protected String[][] getSudoku(){
-        String[][] temp = new String[9][9];
-        for (int i = 0; i < 9; i++){
-            temp[i] = Arrays.copyOf(Sudoku[i], 9);
-        }
-        return temp;
-    }
-    void setLists(String[] list1){
-        list = Arrays.copyOf(list1, list.length);
-    }
-//End of functions that are designed for Unit Testing
 
 
 }
