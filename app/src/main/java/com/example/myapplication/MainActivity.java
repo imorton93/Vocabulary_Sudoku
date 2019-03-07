@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_Span_wordlist = "Span_wordlist";
     private static final String KEY_Listen = "Listen_Mode";
     private static final String KEY_assigned = "Assigned";
+    private static final String KEY_preset = "Preset";
 
     /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
         //The leftmost column
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     String[][] Sudoku_temp = new String[9][9];
     String[][] Sudoku_user = new String[9][9];
     String[] list = new String[9];
+    int[] preset = new int[81];
 
     DBHelper mDBHelper = new DBHelper(this);
     Menu menu;
@@ -143,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
             fill_Span = savedInstanceState.getBoolean(KEY_fill_Span);
             listen_mode = savedInstanceState.getBoolean(KEY_Listen);
             list = savedInstanceState.getStringArray(KEY_WORDS_LIST);
+            preset = savedInstanceState.getIntArray(KEY_preset);
+
             if (InitializedGame) {
                 //If a game has been initialized
                 int j = 0;  //For breakpoint purpose
@@ -197,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
                             if (Sudoku_temp[x][y] != null) {
                                 //gridButton[x][y].setClickable(false);
                                 //Sudoku 'memorizes' the pre-set words
+                                gridButton[x][y].setTextColor(Color.parseColor("#000000"));
                                 temp_indx =  Arrays.asList(l_numbers).indexOf(Sudoku_temp[x][y]);
                                 final String tospeak = assigned[temp_indx];
                                 gridButton[x][y].setOnClickListener(new View.OnClickListener() {
@@ -206,7 +213,8 @@ public class MainActivity extends AppCompatActivity {
                                         span.speak(tospeak,TextToSpeech.QUEUE_FLUSH,null);
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 gridButton[x][y].setClickable(true);
                                 if (Sudoku_user[x][y] != null) {
                                     gridButton[x][y].setText(Sudoku_user[x][y]);
@@ -246,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                             if (Sudoku_temp[x][y] != null) {
                                 //gridButton[x][y].setClickable(false);
                                 //Sudoku 'memorizes' the pre-set words
+                                gridButton[x][y].setTextColor(Color.parseColor("#000000"));
                                 temp_indx =  Arrays.asList(l_numbers).indexOf(Sudoku_temp[x][y]);
                                 final String tospeak = assigned[temp_indx];
                                 gridButton[x][y].setOnClickListener(new View.OnClickListener() {
@@ -296,8 +305,10 @@ public class MainActivity extends AppCompatActivity {
                             j += 5; //break point here
                             if (Sudoku_temp[x][y] != null) {
                                 gridButton[x][y].setClickable(false);
+                                gridButton[x][y].setTextColor(Color.parseColor("#000000"));
                                 //Sudoku 'memorizes' the pre-set words
-                            } else {
+                            }
+                            else {
                                 gridButton[x][y].setClickable(true);
                                 if (Sudoku_user[x][y] != null) {
                                     gridButton[x][y].setText(Sudoku_user[x][y]);
@@ -333,11 +344,171 @@ public class MainActivity extends AppCompatActivity {
                     //InitializedGame = true;
                 }
             }
-        } else {
+            int count = 0;
+            if(preset != null) {
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 9; j++) {
+                        if (preset[i*9 + j] == 1) {
+                            count++;
+                            gridButton[i][j].setTextColor(Color.parseColor("#000000"));
+                            //System.out.println("blackened text" + count);
+                        }
+                    }
+                }
+            }
+        }
+        else {
             Log.i(TAG, "onCreate - savedInstanceState is null");
         }
         //finish Button
         finButton();
+        //setting text color of prefilled cells
+
+
+
+            View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
+                @Override
+                public boolean onLongClick(View v){
+                    if(!InitializedGame){
+                        Toast need_init = Toast.makeText(MainActivity.this ,
+                                R.string.not_initialized,Toast.LENGTH_LONG);
+                        need_init.setGravity(Gravity.TOP, 0, 400);
+                        need_init.show();
+                        return true;
+                    }
+                    Button button = (Button) v;
+                    PopupMenu popup = new PopupMenu(MainActivity.this, (Button) v);
+
+                    popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
+
+                    MenuItem text = popup.getMenu().getItem(0);
+
+                    CharSequence buttonText = button.getText();
+                    Log.d(TAG, "buttonText length is " + buttonText.length() );
+                    if(buttonText.length() > 6){
+                        CharSequence sixText = buttonText.subSequence(0,6);
+                        CharSequence shortlist;
+                        if(fill_Eng){
+                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
+                                for(int i = 0; i < 9; i++){
+                                    if(span_wordsList[i].length() > 6){
+                                        shortlist = span_wordsList[i].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = span_wordsList[i];
+                                        }
+                                    }
+
+                                }
+                            }
+                            else{
+                                for(int j = 0; j < 9; j++){
+                                    if(eng_wordsList[j].length() > 6){
+                                        shortlist = eng_wordsList[j].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = eng_wordsList[j];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(fill_Span){
+                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
+                                for(int i = 0; i < 9; i++){
+                                    if(eng_wordsList[i].length() > 6){
+                                        shortlist = eng_wordsList[i].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = eng_wordsList[i];
+                                        }
+                                    }
+
+                                }
+                            }
+                            else{
+                                for(int j = 0; j < 9; j++){
+                                    if(span_wordsList[j].length() > 6){
+                                        shortlist = span_wordsList[j].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = span_wordsList[j];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    text.setTitle(buttonText);
+
+                    popup.show();
+
+                    return true;
+                }
+            };
+
+
+
+            View.OnClickListener listener = new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    if(!InitializedGame){
+                        Toast need_init = Toast.makeText(MainActivity.this ,
+                                R.string.not_initialized,Toast.LENGTH_LONG);
+                        need_init.setGravity(Gravity.TOP, 0, 400);
+                        need_init.show();
+                    }
+
+
+   /*     else if (mistakeCount >= 3){
+                    Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
+                }*/
+                    else {
+                        Button test = (Button) v;
+                        if(test.getCurrentTextColor() == Color.parseColor("#000000")){
+                            return;
+                        }
+
+                        else if (SelectedButton != null) {
+                            //if a button has already been selected change that button back to normal
+                            SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                        }
+                        SelectedButton = (Button) v;
+                        SelectedButton.setBackgroundResource(R.drawable.clicked_button);
+                        Log.d(TAG, "buttonText length is" );
+                    }
+                }
+            };
+
+            int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
+                    R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,R.id.b27, R.id.b28,R.id.b29,
+                    R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,R.id.b37, R.id.b38,R.id.b39,
+                    R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,R.id.b47, R.id.b48,R.id.b49,
+                    R.id.b51, R.id.b52,R.id.b53, R.id.b54, R.id.b55,R.id.b56,R.id.b57, R.id.b58,R.id.b59,
+                    R.id.b61, R.id.b62,R.id.b63, R.id.b64, R.id.b65,R.id.b66,R.id.b67, R.id.b68,R.id.b69,
+                    R.id.b71, R.id.b72,R.id.b73, R.id.b74, R.id.b75,R.id.b76,R.id.b77, R.id.b78,R.id.b79,
+                    R.id.b81, R.id.b82,R.id.b83, R.id.b84, R.id.b85,R.id.b86,R.id.b87, R.id.b88,R.id.b89,
+                    R.id.b91, R.id.b92,R.id.b93, R.id.b94, R.id.b95,R.id.b96,R.id.b97, R.id.b98,R.id.b99};
+
+
+
+// loop through the array, find the button with respective id and set the listener
+        for(int i=0; i<ids.length; i++){
+            Button gbutton = (Button) findViewById(ids[i]);
+            ((Button) gbutton).setOnClickListener(listener);
+        }
+
+            for(int i=0; i<ids.length; i++) {
+                Button button = (Button) findViewById(ids[i]);
+                button.setOnLongClickListener(longClickListener);
+            }
+
+
+
     } //End of OnCreate()
 
 
@@ -404,20 +575,39 @@ public class MainActivity extends AppCompatActivity {
     public void getGameGrid(String[] words) {
         Log.d(TAG, "Game in normal mode is initialized.");
         InitializedGame = true;
-        Sudoku = initialGame.generateGrid(words);
-        Log.d(TAG, "restored_s is " + restored_s);
-        double remainingGrids = 81;
-        double remainingHoles = 51; //set up a number to determine how many words to hide
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
-                gridButton[x][y].setText(Sudoku[x][y]);
-                gridButton[x][y].setTextColor(Color.parseColor("#000000"));
-                gridButton[x][y].setClickable(false);
-                double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
-                if (Math.random() <= makingHole) {
-                    gridButton[x][y].setText(null);
-                    gridButton[x][y].setClickable(true);
-                    remainingHoles--;
+        if (!(restored_s)) {
+            Sudoku = initialGame.generateGrid(words);
+
+            for(int i = 0; i < 9; i++){
+                for(int j = 0; j < 9; j++){
+                    preset[i*9 + j] = 1;
+                }
+            }
+
+            double remainingGrids = 81;
+            double remainingHoles = 50; //set up a number to determine how many words to hide
+            for (int x = 0; x < 9; x++) {
+                for (int y = 0; y < 9; y++) {
+                    //Adjust the text based on the length of the word
+                    if(Sudoku[x][y].length() > 6){
+                        CharSequence text = Sudoku[x][y].subSequence(0,6) + "..";
+                        gridButton[x][y].setText(text);
+
+                    }
+                    else{
+                        gridButton[x][y].setText(Sudoku[x][y]);
+                    }
+                    gridButton[x][y].setTextColor(Color.parseColor("#000000"));
+                    gridButton[x][y].setClickable(false);
+                    double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
+                    if (Math.random() <= makingHole) {
+                        gridButton[x][y].setText(null);
+                        gridButton[x][y].setClickable(true);
+                        gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                        remainingHoles--;
+                        preset[x*9 + y] = 0;
+                    }
+                    remainingGrids--;
                 }
                 remainingGrids--;
                 Log.d(TAG, "GRIDBUTTON [X][Y] is  " + gridButton[x][y].getText());
@@ -619,7 +809,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button SelectedButton; //button that user selects to insert
 
-    public void gridButtonOnClick(View v) {
+    /*public void gridButtonOnClick(View v){
         //user hits one of the grid blocks to insert a word
         if (!InitializedGame) {
             Toast need_init = Toast.makeText(MainActivity.this,
@@ -627,9 +817,9 @@ public class MainActivity extends AppCompatActivity {
             need_init.setGravity(Gravity.TOP, 0, 400);
             need_init.show();
         }
-   /*     else if (mistakeCount >= 3){
+   *//*     else if (mistakeCount >= 3){
             Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
-        }*/
+        }*//*
         else {
             if (SelectedButton != null) {
                 //if a button has already been selected change that button back to normal
@@ -639,7 +829,7 @@ public class MainActivity extends AppCompatActivity {
             SelectedButton.setBackgroundResource(R.drawable.clicked_button);
             //SelectedButton.setText("clicked");
         }
-    }
+    }*/
 
     public boolean checkFilledWord(String buttonText){
         String tmp = null;
@@ -690,6 +880,11 @@ public class MainActivity extends AppCompatActivity {
                     Button button = (Button) w;
                     // text of input button is extracted
                     CharSequence buttonText = button.getText();
+                    if(buttonText.length() > 6){
+                        buttonText = buttonText.subSequence(0,6)+"..";
+                        System.out.println("Constrained to six letters");
+                    }
+                    Log.d(TAG, "buttonText length is" + buttonText.length());
                     SelectedButton.setText(buttonText);
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
@@ -716,6 +911,9 @@ public class MainActivity extends AppCompatActivity {
                 //if is wrong, puts word to be red
                 if (!checkFilledWord(buttonText.toString())) {
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                    if(buttonText.length() > 6){
+                        buttonText = buttonText.subSequence(0,6) + "..";
+                    }
                     SelectedButton.setText(buttonText);
                     SelectedButton.setTextColor(Color.parseColor("#FFFFC0CB"));
                     mistakeCount++;
@@ -724,6 +922,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //if it's right, makes it green
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                    if(buttonText.length() > 6){
+                        buttonText = buttonText.subSequence(0,6) + "..";
+                    }
                     SelectedButton.setText(buttonText);
                     SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                 }
@@ -733,9 +934,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void clearButtonOnClick(View z) {
-        if (SelectedButton != null) {
-            SelectedButton.setText("");
+    public void clearButtonOnClick(View z){
+        if(SelectedButton != null) {
+            SelectedButton.setText(null);
         }
     }
 
@@ -872,6 +1073,7 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putBoolean(KEY_Listen, listen_mode);
         savedInstanceState.putStringArray(KEY_WORDS_LIST, list);
         savedInstanceState.putSerializable(KEY_Sudoku, Sudoku);
+        savedInstanceState.putIntArray(KEY_preset, preset);
         //savedInstanceState.put(KEY_filled_words, gridButton);
         int x = 0;
         String[] stringA_p_temp = new String[9];
@@ -917,6 +1119,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "l-STRING PRESET are  " + Arrays.toString(stringA_preset[i]));
                 Log.d(TAG, "l-STRING USER FILLED are  " + Arrays.toString(stringA_user_filled[i]));
             }
+
 
             savedInstanceState.putSerializable(KEY_prefilled_words, stringA_preset);
             savedInstanceState.putSerializable(KEY_userfilled_words, stringA_user_filled);

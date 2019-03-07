@@ -161,8 +161,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
         <Button
@@ -171,8 +171,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -183,8 +183,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -195,8 +195,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -207,8 +207,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -219,8 +219,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -231,8 +231,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -243,8 +243,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -255,8 +255,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -284,8 +284,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
         <Button
@@ -294,8 +294,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -306,8 +306,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -318,8 +318,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -330,8 +330,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -342,8 +342,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -354,8 +354,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -366,8 +366,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -378,8 +378,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -408,8 +408,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
         <Button
@@ -418,8 +418,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -430,8 +430,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -442,8 +442,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -454,8 +454,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -466,8 +466,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -478,8 +478,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -490,8 +490,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -502,8 +502,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -533,8 +533,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
         <Button
@@ -543,8 +543,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -555,8 +555,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -567,8 +567,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -579,8 +579,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -591,8 +591,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -603,8 +603,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -615,8 +615,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -627,8 +627,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -657,8 +657,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
         <Button
@@ -667,8 +667,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -679,8 +679,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -691,8 +691,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -703,8 +703,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -715,8 +715,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -727,8 +727,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -739,8 +739,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -751,8 +751,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -782,8 +782,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
         <Button
@@ -792,8 +792,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -804,8 +804,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -816,8 +816,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -828,8 +828,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -840,8 +840,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -852,8 +852,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -864,8 +864,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -876,8 +876,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -905,8 +905,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
         <Button
@@ -915,8 +915,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -927,8 +927,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -939,8 +939,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -951,8 +951,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -963,8 +963,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -975,8 +975,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -987,8 +987,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -999,8 +999,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -1031,8 +1031,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
         <Button
@@ -1041,8 +1041,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -1053,8 +1053,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -1065,8 +1065,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -1077,8 +1077,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -1089,8 +1089,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -1101,8 +1101,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -1113,8 +1113,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -1125,8 +1125,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
@@ -1154,8 +1154,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="0" />
@@ -1166,8 +1166,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="0" />
@@ -1178,8 +1178,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="0" />
@@ -1190,8 +1190,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="1" />
@@ -1202,8 +1202,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="1" />
@@ -1214,8 +1214,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="1" />
@@ -1226,8 +1226,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="0"
             app:layout_row="2" />
@@ -1238,8 +1238,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="1"
             app:layout_row="2" />
@@ -1250,8 +1250,8 @@
             android:layout_height="30dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
-            android:onClick="gridButtonOnClick"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_column="2"
             app:layout_row="2" />
