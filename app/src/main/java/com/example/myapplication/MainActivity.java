@@ -368,12 +368,68 @@ public class MainActivity extends AppCompatActivity {
                     MenuItem text = popup.getMenu().getItem(0);
 
                     CharSequence buttonText = button.getText();
+                    Log.d(TAG, "buttonText length is " + buttonText.length() );
+                    if(buttonText.length() > 6){
+                        CharSequence sixText = buttonText.subSequence(0,6);
+                        CharSequence shortlist;
+                        if(fill_Eng){
+                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
+                                for(int i = 0; i < 9; i++){
+                                    if(span_wordsList[i].length() > 6){
+                                        shortlist = span_wordsList[i].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = span_wordsList[i];
+                                        }
+                                    }
 
+                                }
+                            }
+                            else{
+                                for(int j = 0; j < 9; j++){
+                                    if(eng_wordsList[j].length() > 6){
+                                        shortlist = eng_wordsList[j].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = eng_wordsList[j];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(fill_Span){
+                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
+                                for(int i = 0; i < 9; i++){
+                                    if(eng_wordsList[i].length() > 6){
+                                        shortlist = eng_wordsList[i].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = eng_wordsList[i];
+                                        }
+                                    }
+
+                                }
+                            }
+                            else{
+                                for(int j = 0; j < 9; j++){
+                                    if(span_wordsList[j].length() > 6){
+                                        shortlist = span_wordsList[j].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = span_wordsList[j];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     text.setTitle(buttonText);
 
                     popup.show();
-
-
 
                     return true;
                 }
@@ -516,7 +572,15 @@ public class MainActivity extends AppCompatActivity {
             double remainingHoles = 50; //set up a number to determine how many words to hide
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 9; y++) {
-                    gridButton[x][y].setText(Sudoku[x][y]);
+                    //Adjust the text based on the length of the word
+                    if(Sudoku[x][y].length() > 6){
+                        CharSequence text = Sudoku[x][y].subSequence(0,6) + "..";
+                        gridButton[x][y].setText(text);
+
+                    }
+                    else{
+                        gridButton[x][y].setText(Sudoku[x][y]);
+                    }
                     gridButton[x][y].setTextColor(Color.parseColor("#000000"));
                     gridButton[x][y].setClickable(false);
                     double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
