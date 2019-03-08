@@ -2,40 +2,9 @@ package com.example.myapplication;
 
 import org.junit.Test;
 
-import android.content.Context;
-import android.speech.tts.TextToSpeech;
-import android.view.Menu;
 import android.widget.Button;
 
-import android.view.View;
-
-import java.util.Locale;
-
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.speech.tts.TextToSpeech;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import controller.MainActivity;
 
 
 import static org.junit.Assert.*;

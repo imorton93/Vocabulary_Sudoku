@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,12 +15,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import Model.DBHelper;
+import com.example.myapplication.R;
+import Model.SudokuChecker;
+import Model.SudokuGenerator;
+import Model.WordsPairs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
@@ -610,8 +614,8 @@ public class MainActivity extends AppCompatActivity {
                     remainingGrids--;
                 }
                 remainingGrids--;
-                Log.d(TAG, "GRIDBUTTON [X][Y] is  " + gridButton[x][y].getText());
-                Log.d(TAG, "SUDOKU [X][Y] is  " + Sudoku[x][y]);
+                //Log.d(TAG, "GRIDBUTTON [X][Y] is  " + gridButton[x][y].getText());
+                //Log.d(TAG, "SUDOKU [X][Y] is  " + Sudoku[x][y]);
             }
         }
     }

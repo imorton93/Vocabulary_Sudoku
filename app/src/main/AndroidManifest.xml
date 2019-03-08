@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity android:name="controller.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,21 +23,21 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".Display_Words"
+        <activity android:name="controller.Display_Words"
             android:label="Display Word Pairs"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName="controller.MainActivity" >
         </activity>
-        <activity android:name=".SudokuDisplay"
+        <activity android:name="controller.SudokuDisplay"
             android:label="Sudoku Correct Grid"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName="controller.MainActivity" >
         </activity>
-        <activity android:name=".Words_Selection"
+        <activity android:name="controller.Words_Selection"
             android:windowSoftInputMode="adjustPan"
             android:label=""
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName="controller.MainActivity" >
         </activity>
 
-        <activity android:name=".Load_Pairs"
+        <activity android:name="controller.Load_Pairs"
             android:windowSoftInputMode="adjustPan"
             android:label="">
         </activity>
