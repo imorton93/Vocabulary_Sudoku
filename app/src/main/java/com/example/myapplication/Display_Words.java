@@ -73,42 +73,39 @@ public class Display_Words extends AppCompatActivity {
                 }
             }
         });
-      //  wordstextview.setText(@string/warn_see_words);
-     //   wordstextview.setText("WORD HERE!!!"); //DOES NOT WORK
-        if (InitializedGame) {
-            Button button;
-            if (fill_Span) {
-                for (int i = 0; i < list.size(); i++) {
-                    button = findViewById(W_Button_ids[i]);
-                    button.setText(list.get(i).getSPAN());
-                    final int temp_i = i;
-                    button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            wordstextview.setText(list.get(temp_i).getENG());
-                            temp_b = list.get(temp_i).getSPAN();
-                           // addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
-                            //SelectedButton = button
-                        }
-                    });
-                }
+        Button button;
+        if (fill_Span) {
+            for (int i = 0; i < list.size(); i++) {
+                button = findViewById(W_Button_ids[i]);
+                button.setText(list.get(i).getSPAN());
+                final int temp_i = i;
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        wordstextview.setText(list.get(temp_i).getENG());
+                        temp_b = list.get(temp_i).getSPAN();
+                       // addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
+                        //SelectedButton = button
+                    }
+                });
+            }
 
-            } else if (fill_Eng) {
-                for (int i = 0; i < list.size(); i++) {
-                    button = findViewById(W_Button_ids[i]);
-                    button.setText(list.get(i).getENG());
-                    final int temp_i = i;
-                    button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            wordstextview.setText(list.get(temp_i).getSPAN());
-                            temp_b = list.get(temp_i).getENG();
-                           // addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
-                        }
-                    });
-                }
+        } else if (fill_Eng) {
+            for (int i = 0; i < list.size(); i++) {
+                button = findViewById(W_Button_ids[i]);
+                button.setText(list.get(i).getENG());
+                final int temp_i = i;
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        wordstextview.setText(list.get(temp_i).getSPAN());
+                        temp_b = list.get(temp_i).getENG();
+                       // addMyWords(eng_wordlist[temp_i], span_wordlist[temp_i]);
+                    }
+                });
             }
         }
+
   /*      else{
             //Do a new layout here.
             //Display the whole lists?
