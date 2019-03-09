@@ -1,12 +1,10 @@
-package com.example.myapplication;
+package controller;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +14,11 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import Model.DBHelper;
+import Model.GridAdapter;
+import com.example.myapplication.R;
+import Model.WordsPairs;
 
 import java.io.BufferedReader;
 import java.io.IOException;

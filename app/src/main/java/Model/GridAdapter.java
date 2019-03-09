@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package Model;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,6 +18,8 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+
+import com.example.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.zip.Inflater;

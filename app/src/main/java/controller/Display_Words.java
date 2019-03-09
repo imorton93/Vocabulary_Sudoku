@@ -1,15 +1,17 @@
-package com.example.myapplication;
+package controller;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import Model.DBHelper;
+import com.example.myapplication.R;
+import Model.WordsPairs;
 
 import java.util.ArrayList;
 

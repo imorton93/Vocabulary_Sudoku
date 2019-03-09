@@ -1,9 +1,12 @@
-package com.example.myapplication;
+package controller;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.GridView;
+
+import Model.GridAdapter;
+import com.example.myapplication.R;
 
 import java.util.ArrayList;
 

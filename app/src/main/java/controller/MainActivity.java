@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,12 +15,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import Model.DBHelper;
+import com.example.myapplication.R;
+import Model.SudokuChecker;
+import Model.SudokuGenerator;
+import Model.WordsPairs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
@@ -387,7 +391,6 @@ public class MainActivity extends AppCompatActivity {
         if ((savedInstanceState != null)) {
             //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
             // so user does not need to restart game.
-
             Button mButtons;
             InitializedGame = savedInstanceState.getBoolean(KEY_InitializedGame);
             fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
@@ -592,9 +595,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    restored_s = true;
 
-//                    }
+                    restored_s = true;
+                    //InitializedGame = true;
                 }
             }
             int count = 0;
@@ -1066,8 +1069,7 @@ public class MainActivity extends AppCompatActivity {
                     //set the Selected Buttons Text as text from input button
                 }
             }
-        }
-        else {
+        } else {
             //Normal mode
             if (SelectedButton != null) {
                 Button button = (Button) w;
@@ -1207,9 +1209,6 @@ public class MainActivity extends AppCompatActivity {
                 //listening comprehension mode
                 if (listen_mode) { //App already in listen mode. User clicks this option to exit listen mode.
                     listen_mode = false;
-                  /*  if(InitializedGame){
-                        listen_mode_game_init = true; //User has initialized a game in listen mode
-                    } */
                     item.setTitle("Listen Comprehension Mode");
                     Toast listen = Toast.makeText(MainActivity.this,
                             "Exiting Listen Comprehension Mode" ,Toast.LENGTH_LONG);
@@ -1218,6 +1217,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Exiting Listening Comprehension Mode");
                 } else {
                     listen_mode = true;
+                    // MenuItem listen = menu.findItem(R.id.listen);
                     item.setTitle("Exit Listen Comprehension Mode");
                     Toast listen = Toast.makeText(MainActivity.this,
                             "Entering Listen Comprehension Mode, " +
