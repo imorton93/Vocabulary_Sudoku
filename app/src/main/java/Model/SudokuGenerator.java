@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package Model;
 
 import java.util.ArrayList;
 import java.util.Random;

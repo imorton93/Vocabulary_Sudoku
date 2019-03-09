@@ -1,14 +1,16 @@
-package com.example.myapplication;
+package Model;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+
+import com.example.myapplication.R;
+
+import controller.Display_Words;
 
 
 public class reinit_dialog extends Dialog implements android.view.View.OnClickListener{

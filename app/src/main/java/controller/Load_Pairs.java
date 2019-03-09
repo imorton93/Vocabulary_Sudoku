@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package controller;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -12,24 +12,22 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import Model.DBHelper;
+import com.example.myapplication.R;
+import Model.WordsPairs;
+import Model.listArrayAdapter;
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
-import static java.lang.Integer.max;
 
 public class Load_Pairs extends AppCompatActivity {
 
@@ -168,13 +166,13 @@ public class Load_Pairs extends AppCompatActivity {
             lists.add(tmp);
             Log.d(TAG, "TMP is    " + lists.get(i));
         }
-        //
         data.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
         data.putExtra(EXTRA_MESSAGE, "LOAD");
         //pass "ENG" or "SPAN" back
         data.putExtra("LANGUAGE", msg);
         //pass what user loaded
         data.putStringArrayListExtra("LOAD_WORDS_LIST", lists);
+        Log.d(TAG, "DATA is    " + data.getStringArrayListExtra("LOAD_WORDS_LIST"));
         startActivity(data);
         finish();
     }

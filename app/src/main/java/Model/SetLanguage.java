@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package Model;
 
 import android.content.ClipData;
 import android.support.v7.app.AppCompatActivity;
