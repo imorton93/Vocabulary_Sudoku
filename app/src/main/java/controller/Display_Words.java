@@ -141,7 +141,7 @@ public class Display_Words extends AppCompatActivity {
                     arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
         }
         Toast.makeText(Display_Words.this,
-                "This word is added to My Words.", Toast.LENGTH_LONG).show();
+                "This word is added to My Words Dictionary.", Toast.LENGTH_LONG).show();
     }
 
 

@@ -1,8 +1,11 @@
-package com.example.myapplication;
+package Model;
 
 import android.os.Parcel;
 
 import org.junit.Test;
+
+
+import Model.WordsPairs;
 
 import static org.junit.Assert.*;
 
