@@ -14,6 +14,8 @@
     <string name="n_3by4grid">3 x 4 Grid</string>
     <string name="listen_mode">Listen Comprehension Mode</string>
 
+    <string name="not_checked">Please check "Fill in English" or "Fill in Spanish" first</string>
+
     <string name="app_name">Sudoku - Delta</string>
     <string name="clear_button">Clear</string>
     <string name="not_initialized">You have not initialized the game, to initialize,

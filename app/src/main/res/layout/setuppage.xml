@@ -53,7 +53,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/listen_switch"
         android:layout_width="201dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
