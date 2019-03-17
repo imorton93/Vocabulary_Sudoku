@@ -96,6 +96,11 @@ public class SetUpPage extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 if (isChecked){
                     fill_English = true;
+                   // fill_span.setSelected(false);
+                    if (fill_Spanish) {
+                        fill_span.toggle();
+                        fill_Spanish = false;
+                    }
                 }
                 else{
                     fill_English = false;
@@ -111,6 +116,11 @@ public class SetUpPage extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 if (isChecked){
                     fill_Spanish = true;
+                    //fill_eng.setSelected(false);
+                    if (fill_English) {
+                        fill_eng.toggle();
+                        fill_English = false;
+                    }
                 }
                 else{
                     fill_Spanish = false;
