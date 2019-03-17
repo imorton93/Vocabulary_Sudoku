@@ -25,11 +25,15 @@
         </activity>
 
         <activity android:name="controller.SetUpPage"
-            android:label="Set Up Page">
+            android:label="Set Up Page"
+            android:parentActivityName="controller.StartPage"
+            >
         </activity>
 
         <activity android:name="controller.MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName="controller.SetUpPage"
+            >
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
