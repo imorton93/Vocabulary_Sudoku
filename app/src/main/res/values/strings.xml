@@ -1,4 +1,18 @@
 <resources>
+
+    <string name="s_game">Start Game</string>
+    <string name="s_game1">Start Game in 9x9 Grid</string>
+    <string name="s_game2">Start Game in 2x3 Grid</string>
+    <string name="s_game3">Start Game in 3x4 Grid</string>
+    <string name="s_game_eng">Start Game - Fill in English</string>
+    <string name="s_game_span">Start Game - Fill in Spanish</string>
+    <string name="how_to_use">How To Use This App</string>
+    <string name="load_new_words">Load New Word Pairs</string>
+
+    <string name="n_9by9grid">9 x 9 Grid</string>
+    <string name="n_2by3grid">2 x 3 Grid</string>
+    <string name="n_3by4grid">3 x 4 Grid</string>
+
     <string name="app_name">Sudoku - Delta</string>
     <string name="clear_button">Clear</string>
     <string name="not_initialized">You have not initialized the game, to initialize,
@@ -7,7 +21,7 @@
     <string name="start_game">Start</string>
     <string name="undo">UNDO</string>
 
-
+    <string name="dic_title">My Words Dictionary</string>
 
     <string name="warn_see_words">Warning!!! If you initialized the game already,
         you will receive penalty if you continue to see the word translations.
@@ -50,6 +64,15 @@
     </string-array>
 
 
+    <string name ="B_1">The</string>
+    <string name="B_2">Words</string>
+    <string name="B_3">You</string>
+    <string name="B_4">Choose</string>
+    <string name="B_5">Will</string>
+    <string name="B_6">Appear</string>
+    <string name="B_7">Here!</string>
+    <string name="B_8">Enjoy</string>
+    <string name="B_9">!</string>
 
     <string name="title_dw">The Word Pairs</string> //Title of Word pair Display
     //Beginning of 9 word pairs. These two declarations are not in conflict
