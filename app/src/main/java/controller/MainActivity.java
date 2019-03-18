@@ -142,6 +142,12 @@ public class MainActivity extends AppCompatActivity {
             mainButtons[j] = findViewById(Button_ids[j]);
         }
 
+    Intent prev_intent = getIntent();
+        fill_Eng = prev_intent.getBooleanExtra(KEY_fill_Eng, false);
+        fill_Span = prev_intent.getBooleanExtra(KEY_fill_Span, false);
+        listen_mode =  prev_intent.getBooleanExtra(KEY_Listen, false);
+        int jj = 0;
+
         if ((savedInstanceState != null)) {
             //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
             // so user does not need to restart game.
@@ -363,6 +369,33 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             Log.i(TAG, "onCreate - savedInstanceState is null");
+            if (fill_Eng){
+                fill_Span = false;
+                Toast result2 = Toast.makeText(MainActivity.this,
+                        "User chooses to fill in English", Toast.LENGTH_LONG);
+                result2.setGravity(Gravity.TOP, 0, 400);
+                result2.show();
+                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
+                    */
+                    Log.d(TAG, "User chooses to fill in English");
+                    //allow user to pick a word list
+                    pickAFile("ENG");
+
+            }
+            else if (fill_Span){
+                fill_Eng = false;
+                Toast result1 = Toast.makeText(MainActivity.this,
+                        "User chooses to fill in Spanish", Toast.LENGTH_LONG);
+                result1.setGravity(Gravity.TOP, 0, 400);
+                result1.show();
+                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
+                    */
+                    Log.d(TAG, "User chooses to fill in Spanish");
+                    //allow user to pick a word list
+                    pickAFile("SPAN");
+            }
         }
         //finish Button
         finButton();

@@ -15,13 +15,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="controller.MainActivity"
-            android:launchMode="singleTop">
+        <activity android:name="controller.StartPage"
+            android:label = "Start page" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
+        </activity>
+
+        <activity android:name="controller.SetUpPage"
+            android:label="Set Up Page"
+            android:parentActivityName="controller.StartPage"
+            >
+        </activity>
+
+        <activity android:name="controller.MainActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="controller.SetUpPage"
+            >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+                <!--<data android:mimeType="text/plain" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name="controller.Display_Words"
             android:label="Display Word Pairs"
