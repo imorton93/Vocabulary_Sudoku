@@ -13,12 +13,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/square4">
 
@@ -344,7 +343,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="10sp"
+            android:textSize="14sp"
             app:layout_column="0"
             app:layout_row="0" />
 
