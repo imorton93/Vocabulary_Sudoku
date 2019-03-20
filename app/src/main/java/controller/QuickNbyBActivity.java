@@ -553,7 +553,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                 */
              Log.d(TAG, "User chooses to fill in Spanish");
-            String msg = "Span";
+            String msg = "SPAN";
             if (listen_mode){
                 getListenGameGrid(msg);
             }
