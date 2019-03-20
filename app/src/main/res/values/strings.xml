@@ -43,8 +43,7 @@
         then restart another game</string>
     //Two arrays of words
     <string-array name="Span_words">
-        <item>gato</item>
-        //spanish word 1. The word order is preserved.
+        <item>gato</item> //spanish word 1. The word order is preserved.
         <item>perro</item>
         <item>niña</item>
         <item>niño</item>
@@ -68,7 +67,7 @@
     </string-array>
 
 
-    <string name="B_1">The</string>
+    <string name ="B_1">The</string>
     <string name="B_2">Words</string>
     <string name="B_3">You</string>
     <string name="B_4">Choose</string>
@@ -78,13 +77,10 @@
     <string name="B_8">Enjoy</string>
     <string name="B_9">!</string>
 
-    <string name="title_dw">The Word Pairs</string>
-    //Title of Word pair Display
+    <string name="title_dw">The Word Pairs</string> //Title of Word pair Display
     //Beginning of 9 word pairs. These two declarations are not in conflict
-    <string name="span_1">gato</string>
-    //First spanish word
-    <string name="eng_1">cat</string>
-    //First Spanish word's corresponding English word
+    <string name="span_1">gato</string> //First spanish word
+    <string name="eng_1">cat</string> //First Spanish word's corresponding English word
     <string name="span_2">perro</string>
     <string name="eng_2">dog</string>
     <string name="span_3">niña</string>
@@ -101,7 +97,7 @@
     <string name="eng_8">father</string>
     <string name="span_9">madre</string>
     <string name="eng_9">mother</string>
-    //End of nine word pairs
+//End of nine word pairs
 
     <string name="Display_words">English	Spanish
             \n

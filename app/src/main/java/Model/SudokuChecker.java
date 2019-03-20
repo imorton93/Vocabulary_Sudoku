@@ -2,6 +2,8 @@ package Model;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class SudokuChecker {
 
     public SudokuChecker(){
@@ -9,7 +11,13 @@ public class SudokuChecker {
     private static final String TAG = "CMPT276-1191E1-Delta";
 
 
-    public boolean sudokuCheck(String[][] Sudoku, String[] eng_list, String[] span_list){
+    public boolean sudokuCheck(String[][] Sudoku, ArrayList<WordsPairs> mPairs){
+        String[] eng_list = new String[9];
+        String[] span_list = new String[9];
+        for (int i = 0; i < 9; i++) {
+            eng_list[i] = mPairs.get(i).getENG();
+            span_list[i] = mPairs.get(i).getSPAN();
+        }
 
         return (checkRow(Sudoku,eng_list,span_list) && checkCol(Sudoku,eng_list,span_list) && checkBox(Sudoku,eng_list,span_list));
     }
