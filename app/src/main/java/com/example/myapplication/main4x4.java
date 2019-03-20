@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import android.graphics.Color;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,13 +14,72 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.Arrays;
+import java.util.Locale;
 
+import Model.DBHelper;
+import Model.SudokuChecker;
+import Model.SudokuGenerator;
 import controller.MainActivity;
 
 public class main4x4 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        private static final String KEY_InitializedGame = "initializedgame";
+        private static final String KEY_Sudoku = "saved_Sudoku";
+        private static final String KEY_prefilled_words = "prefilled_Words";
+        private static final String KEY_userfilled_words = "userfilled_Words";
+        private static final String KEY_fill_Eng = "fill_Eng";
+        private static final String KEY_fill_Span = "fill_Span";
+        private static final String KEY_WORDS_LIST = "words_list";
+        private static final String KEY_Eng_wordlist = "Eng_wordlist";
+        private static final String KEY_Span_wordlist = "Span_wordlist";
+        private static final String KEY_Listen = "Listen_Mode";
+        private static final String KEY_assigned = "Assigned";
+        private static final String KEY_preset = "Preset";
+
+        private static final String TAG = "CMPT276-1191E1-Delta";
+        private static final int[] Button_ids = { //ID's for the 9 big buttons
+                R.id.button1,
+                R.id.button2,
+                R.id.button3,
+                R.id.button4
+        };
+
+        private static final Button[][] gridButton = new Button[4][4];//buttons b11-b99
+        private static SudokuGenerator initialGame = new SudokuGenerator(); //Generate an instance of class SudokuGenerator.
+        String[][] Sudoku = new String[4][4];
+        private static SudokuChecker resultCheck = new SudokuChecker();
+        private boolean fill_Eng = false;
+        private boolean fill_Span = false;
+        private boolean InitializedGame = false;
+        private boolean restored_s = false; //boolean for checking if sudoku is restored.
+        private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
+        private int mistakeCount = 0;
+        private String msg;
+        String[] eng_wordsList = new String[4];
+        String[] span_wordsList = new String[4];
+        String[][] Sudoku_temp = new String[4][4];
+        String[][] Sudoku_user = new String[4][4];
+        String[] list = new String[4];
+        int[] preset = new int[16];
+
+
+        //-----------------------------BLOCK NEEDS TO BE CHECKED----------------------------------------------------
+        /*DBHelper mDBHelper = new DBHelper(this);
+        Menu menu;
+        //Begin of variables for listen mode
+        private final String[] l_numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}; //The string array for listen comprehension mode
+        private int remain_nums = 0;
+        private int l_number = 0; //a variable for listen mode functions
+        String[] assigned = new String[9]; //For listen mode
+        Locale locSpanish = new Locale("spa", "ES");
+        Locale locEnglish = new Locale("eng", "US");
+        TextToSpeech span;
+        TextToSpeech eng;
+        //End of variables for listen mode
+        Button[] mainButtons = new Button[9];*/
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4x4);
 
