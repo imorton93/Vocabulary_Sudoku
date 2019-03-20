@@ -91,12 +91,10 @@
         android:id="@+id/square3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="@android:drawable/editbox_dropdown_dark_frame"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintEnd_toStartOf="@+id/square4"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.75">
@@ -110,7 +108,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/b32"
@@ -120,7 +118,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -132,7 +130,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -144,7 +142,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -157,8 +155,8 @@
         android:background="@android:drawable/editbox_dropdown_dark_frame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/square3"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.75">
 
@@ -171,7 +169,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/b34"
@@ -181,7 +179,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -193,7 +191,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -205,7 +203,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -218,8 +216,8 @@
         android:background="@android:drawable/editbox_dropdown_dark_frame"
         app:layout_constraintBottom_toTopOf="@+id/square4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/square1"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
@@ -232,7 +230,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/b14"
@@ -242,7 +240,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -254,7 +252,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -266,7 +264,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -278,8 +276,8 @@
         android:layout_height="wrap_content"
         android:background="@android:drawable/editbox_dropdown_dark_frame"
         app:layout_constraintBottom_toTopOf="@+id/square3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintEnd_toStartOf="@+id/square2"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
@@ -295,7 +293,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="0" />
 
@@ -309,7 +307,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -323,7 +321,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -337,7 +335,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="1" />
 

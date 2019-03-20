@@ -96,14 +96,14 @@ public class main12x12 extends AppCompatActivity
             @Override
             public boolean onLongClick(View v){
                 if(!InitializedGame){
-                    Toast need_init = Toast.makeText(MainActivity.this ,
+                    Toast need_init = Toast.makeText(main12x12.this ,
                             R.string.not_initialized,Toast.LENGTH_LONG);
                     need_init.setGravity(Gravity.TOP, 0, 400);
                     need_init.show();
                     return true;
                 }
                 Button button = (Button) v;
-                PopupMenu popup = new PopupMenu(MainActivity.this, (Button) v);
+                PopupMenu popup = new PopupMenu(main12x12.this, (Button) v);
 
                 popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
 
@@ -182,7 +182,7 @@ public class main12x12 extends AppCompatActivity
             @Override
             public void onClick(View v){
                 if(!InitializedGame){
-                    Toast need_init = Toast.makeText(MainActivity.this ,
+                    Toast need_init = Toast.makeText(main12x12.this ,
                             R.string.not_initialized,Toast.LENGTH_LONG);
                     need_init.setGravity(Gravity.TOP, 0, 400);
                     need_init.show();
@@ -241,18 +241,20 @@ public class main12x12 extends AppCompatActivity
 
     private Button SelectedButton; //button that user selects to insert
 
-    public void insertButtonOnClick(View w) {
+
+    //---------------------------l_numbers, checkFilledWord, wordsSplit----------------------------------------
+    /*public void insertButtonOnClick(View w) {
         //user hits button to change text of selectedbutton
         if (listen_mode) {
-            /*
+            *//*
             For listen mode, all buttons are clickable,
             so I need to make it so that the user cannot change the word on the sudoku if the cell is a number
-             */
+             *//*
             // text of input button is extracted
-            /* when inserting a new word into puzzle, check if right or wrong
+            *//* when inserting a new word into puzzle, check if right or wrong
              *  if it's right, make it green
              * *if wrong, put word to be red
-             */
+             *//*
             //track the button that user selects
             String tmp = null;
             wordsSplit(list);
@@ -286,10 +288,10 @@ public class main12x12 extends AppCompatActivity
                 Button button = (Button) w;
                 // text of input button is extracted
                 CharSequence buttonText = button.getText();
-                /* when inserting a new word into puzzle, check if right or wrong
+                *//* when inserting a new word into puzzle, check if right or wrong
                  *  if it's right, make it green
                  * *if wrong, put word to be red
-                 */
+                 *//*
                 //track the button that user selects
                 //if is wrong, puts word to be red
                 if (!checkFilledWord(buttonText.toString())) {
@@ -314,7 +316,7 @@ public class main12x12 extends AppCompatActivity
                 //set the Selected Buttons Text as text from input button
             }
         }
-    }
+    }*/
 
     public void clearButtonOnClick(View z){
         if(SelectedButton != null) {

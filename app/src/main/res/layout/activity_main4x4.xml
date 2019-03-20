@@ -108,7 +108,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/b32"
@@ -118,7 +118,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -130,7 +130,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -142,7 +142,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -169,7 +169,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/b34"
@@ -179,7 +179,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -191,7 +191,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -203,7 +203,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -216,8 +216,8 @@
         android:background="@android:drawable/editbox_dropdown_dark_frame"
         app:layout_constraintBottom_toTopOf="@+id/square4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/square1"
+        app:layout_constraintHorizontal_bias="0.82"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
@@ -230,7 +230,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/b14"
@@ -240,7 +240,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -252,7 +252,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -264,7 +264,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -276,8 +276,8 @@
         android:layout_height="wrap_content"
         android:background="@android:drawable/editbox_dropdown_dark_frame"
         app:layout_constraintBottom_toTopOf="@+id/square3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintEnd_toStartOf="@+id/square2"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
@@ -293,7 +293,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="0"
             app:layout_row="0" />
 
@@ -307,7 +307,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -321,7 +321,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -335,7 +335,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_column="1"
             app:layout_row="1" />
 
