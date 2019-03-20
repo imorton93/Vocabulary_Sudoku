@@ -3,18 +3,24 @@ package controller;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import Model.DBHelper;
@@ -406,7 +412,44 @@ public class MainActivity extends AppCompatActivity {
             View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
                 @Override
                 public boolean onLongClick(View v){
-                    if(!InitializedGame){
+                    Button button = (Button) v;
+                    CharSequence buttonText = button.getText();
+
+                    // inflate the layout of the popup window
+                    LayoutInflater inflater = (LayoutInflater)
+                            getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.popwindow, null);
+
+
+                    int[] loc_int = new int[2];
+
+                    Rect location = new Rect();
+                    location.left = loc_int[0];
+                    location.top = loc_int[1];
+                    location.right = loc_int[0] + v.getWidth();
+                    location.bottom = loc_int[1] + v.getHeight();
+
+                    // create the popup window
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+                    ((TextView)popupWindow.getContentView().findViewById(R.id.poptext)).setText(buttonText);
+                    // show the popup window
+                    // which view you pass in doesn't matter, it is only used for the window tolken
+                    popupWindow.showAsDropDown(v, 0, 0);
+
+                    // dismiss the popup window when touched
+                    popupView.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            popupWindow.dismiss();
+                            return true;
+                        }
+                    });
+
+                    /*if(!InitializedGame){
                         Toast need_init = Toast.makeText(MainActivity.this ,
                                 R.string.not_initialized,Toast.LENGTH_LONG);
                         need_init.setGravity(Gravity.TOP, 0, 400);
@@ -482,7 +525,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     text.setTitle(buttonText);
 
-                    popup.show();
+                    popup.show();*/
 
                     return true;
                 }
@@ -1369,3 +1412,20 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
+    /*public static Rect locateView(View v) {
+        int[] loc_int = new int[2];
+        if (v == null)
+            return null;
+        try {
+            v.getLocationOnScreen(loc_int);
+        } catch (NullPointerException npe) {
+            return null;
+        }
+        Rect location = new Rect();
+        location.left = loc_int[0];
+        location.top = loc_int[1];
+        location.right = loc_int[0] + v.getWidth();
+        location.bottom = loc_int[1] + v.getHeight();
+        return location;
+    }*/
