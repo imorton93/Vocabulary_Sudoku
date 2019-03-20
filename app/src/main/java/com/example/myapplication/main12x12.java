@@ -21,7 +21,7 @@ import Model.SudokuChecker;
 import Model.SudokuGenerator;
 import controller.MainActivity;
 
-public class main12x12 extends AppCompatActivity
+public class main12x12 extends AppCompatActivity{
         private static final String KEY_InitializedGame = "initializedgame";
         private static final String KEY_Sudoku = "saved_Sudoku";
         private static final String KEY_prefilled_words = "prefilled_Words";
