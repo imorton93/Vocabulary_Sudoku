@@ -1,6 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class SudokuGenerator {
@@ -9,24 +8,10 @@ public class SudokuGenerator {
 
     }
 
-    public String[][] generateGrid(String msg, ArrayList<WordsPairs> mPairs){
-        int i = 0;
-        String[] wordsList = new String[9];
-        switch (msg) {
-            case "SPAN":
-                for (i = 0; i < 9; i++) {
-                    wordsList[i] = mPairs.get(i).getENG();
-                }
-                break;
-            case "ENG":
-                for (i = 0; i < 9; i++) {
-                    wordsList[i] = mPairs.get(i).getSPAN();
-                }
-                break;
-        }
-
+    public String[][] generateGrid(String[] wordsList)
+    {
         String[][] Sudoku = new String[9][9];
-        nextGrid(Sudoku,0,0, wordsList);
+        nextGrid(Sudoku,0,0,wordsList);
         return Sudoku;
     }
 

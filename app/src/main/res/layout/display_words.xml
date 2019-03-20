@@ -73,8 +73,7 @@
         app:layout_constraintHorizontal_bias="0.433"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.602"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.602" />
 
     <!--Defines Buttons for the word pairs display page-->
     <Button
@@ -86,8 +85,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.676"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.676" />
 
     <Button
         android:id="@+id/w_b1"
@@ -98,8 +96,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.676"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.676" />
 
     <Button
         android:id="@+id/w_b3"
@@ -110,8 +107,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.676"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.676" />
 
     <Button
         android:id="@+id/w_b4"
@@ -122,8 +118,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.773"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.773" />
 
     <Button
         android:id="@+id/w_b5"
@@ -134,8 +129,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.773"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.773" />
 
     <Button
         android:id="@+id/w_b7"
@@ -146,8 +140,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.871"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.871" />
 
     <Button
         android:id="@+id/w_b6"
@@ -158,8 +151,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.773"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.773" />
 
     <Button
         android:id="@+id/w_b9"
@@ -170,8 +162,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.871"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.871" />
 
     <Button
         android:id="@+id/w_b8"
@@ -182,8 +173,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.871"
-        android:textAllCaps="false"/>
+        app:layout_constraintVertical_bias="0.871" />
 
     <Button
         android:id="@+id/save_button"
