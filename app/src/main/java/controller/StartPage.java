@@ -9,12 +9,27 @@ import android.widget.Button;
 
 import com.example.myapplication.R;
 
+import java.util.Set;
+
 public class StartPage extends AppCompatActivity {
+    Boolean from_start = true;
+    private static final String KEY_from_start = "from_start";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.startpage);
+
+        Button q_game = findViewById(R.id.quick_game);
+        q_game.setOnClickListener( new View.OnClickListener()
+        {
+            public void onClick(View view) {
+                //Do stuff for Quick Start game
+                Intent q_start = new Intent(StartPage.this, QuickSetUp.class );
+                startActivity(q_start);
+            }
+
+        });
 
         Button start = findViewById(R.id.start_game1);
         start.setOnClickListener( new View.OnClickListener()
@@ -32,6 +47,19 @@ public class StartPage extends AppCompatActivity {
         {
             public void onClick(View view) {
             //Do Guide
+
+            }
+
+        });
+
+        Button load = findViewById(R.id.load);
+        load.setOnClickListener( new View.OnClickListener()
+        {
+            public void onClick(View view) {
+                //Call load word pairs function
+                Intent load_words = new Intent(StartPage.this, Load_Pairs.class);
+                load_words.putExtra(KEY_from_start, from_start);
+                startActivity(load_words);
 
             }
 

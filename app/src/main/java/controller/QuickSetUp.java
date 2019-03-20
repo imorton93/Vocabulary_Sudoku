@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 
-public class SetUpPage extends AppCompatActivity {
+public class QuickSetUp extends AppCompatActivity {
     private static final String KEY_fill_Eng = "fill_Eng";
     private static final String KEY_fill_Span = "fill_Span";
     private static final String KEY_Listen = "Listen_Mode";
@@ -33,24 +33,22 @@ public class SetUpPage extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.setuppage);
-
-
 
         nine_by_nine = findViewById(R.id.n3by3);
         nine_by_nine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (fill_English || fill_Spanish) {
-                    Intent n9by9 = new Intent(SetUpPage.this, MainActivity.class);
-                    n9by9.putExtra(KEY_fill_Eng, fill_English);
-                    n9by9.putExtra(KEY_fill_Span, fill_Spanish);
-                    n9by9.putExtra(KEY_Listen, listen_mode);
-                    startActivity(n9by9);
+                    //Call the quickSetUp class
+                    Intent q_n9by9 = new Intent(QuickSetUp.this, QuickNbyBActivity.class);
+                    q_n9by9.putExtra(KEY_fill_Eng, fill_English);
+                    q_n9by9.putExtra(KEY_fill_Span, fill_Spanish);
+                    q_n9by9.putExtra(KEY_Listen, listen_mode);
+                    startActivity(q_n9by9);
                 }
                 else{
-                    Toast need_check = Toast.makeText(SetUpPage.this ,
+                    Toast need_check = Toast.makeText(QuickSetUp.this ,
                             R.string.not_checked,Toast.LENGTH_LONG);
                     need_check.setGravity(Gravity.TOP, 0, 400);
                     need_check.show();

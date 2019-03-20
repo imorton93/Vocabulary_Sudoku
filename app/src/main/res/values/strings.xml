@@ -1,17 +1,18 @@
 <resources>
 
     <string name="s_game">Start Game</string>
+    <string name="q_game">Quick Game Mode</string>
     <string name="s_game1">Start Game in 9x9 Grid</string>
-    <string name="s_game2">Start Game in 2x3 Grid</string>
-    <string name="s_game3">Start Game in 3x4 Grid</string>
+    <string name="s_game2">Start Game in 6x6 Grid</string>
+    <string name="s_game3">Start Game in 12x12 Grid</string>
     <string name="s_game_eng">Start Game - Fill in English</string>
     <string name="s_game_span">Start Game - Fill in Spanish</string>
     <string name="how_to_use">How To Use This App</string>
     <string name="load_new_words">Load New Word Pairs</string>
 
-    <string name="n_9by9grid">9 x 9 Grid</string>
-    <string name="n_2by3grid">2 x 3 Grid</string>
-    <string name="n_3by4grid">3 x 4 Grid</string>
+    <string name="n_3by3grid">9 x 9 Grid</string>
+    <string name="n_2by3grid">6 x 6 Grid</string>
+    <string name="n_3by4grid">12 x 12 Grid</string>
     <string name="listen_mode">Listen Comprehension Mode</string>
 
     <string name="not_checked">Please check "Fill in English" or "Fill in Spanish" first</string>
