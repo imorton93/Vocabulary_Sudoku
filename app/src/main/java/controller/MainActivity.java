@@ -3,18 +3,24 @@ package controller;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import Model.DBHelper;
@@ -544,6 +550,178 @@ public class MainActivity extends AppCompatActivity {
         //setting text color of prefilled cells
 
 
+            //long click function to bring up popup text
+            View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
+                @Override
+                public boolean onLongClick(View v){
+                    Button button = (Button) v;
+                    CharSequence buttonText = button.getText();
+
+                    // inflate the layout of the popup window
+                    LayoutInflater inflater = (LayoutInflater)
+                            getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.popwindow, null);
+
+
+                    int[] loc_int = new int[2];
+
+                    Rect location = new Rect();
+                    location.left = loc_int[0];
+                    location.top = loc_int[1];
+                    location.right = loc_int[0] + v.getWidth();
+                    location.bottom = loc_int[1] + v.getHeight();
+
+                    // create the popup window
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+                    ((TextView)popupWindow.getContentView().findViewById(R.id.poptext)).setText(buttonText);
+                    // show the popup window
+                    // which view you pass in doesn't matter, it is only used for the window tolken
+                    popupWindow.showAsDropDown(v, 0, 0);
+
+                    // dismiss the popup window when touched
+                    popupView.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            popupWindow.dismiss();
+                            return true;
+                        }
+                    });
+
+                    /*if(!InitializedGame){
+                        Toast need_init = Toast.makeText(MainActivity.this ,
+                                R.string.not_initialized,Toast.LENGTH_LONG);
+                        need_init.setGravity(Gravity.TOP, 0, 400);
+                        need_init.show();
+                        return true;
+                    }
+                    Button button = (Button) v;
+                    PopupMenu popup = new PopupMenu(MainActivity.this, (Button) v);
+
+                    popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
+
+                    MenuItem text = popup.getMenu().getItem(0);
+
+                    CharSequence buttonText = button.getText();
+                    Log.d(TAG, "buttonText length is " + buttonText.length() );
+                    if(buttonText.length() > 6){
+                        CharSequence sixText = buttonText.subSequence(0,6);
+                        CharSequence shortlist;
+                        if(fill_Eng){
+                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
+                                for(int i = 0; i < 9; i++){
+                                    if(span_wordsList[i].length() > 6){
+                                        shortlist = span_wordsList[i].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = span_wordsList[i];
+                                        }
+                                    }
+
+                                }
+                            }
+                            else{
+                                for(int j = 0; j < 9; j++){
+                                    if(eng_wordsList[j].length() > 6){
+                                        shortlist = eng_wordsList[j].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = eng_wordsList[j];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(fill_Span){
+                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
+                                for(int i = 0; i < 9; i++){
+                                    if(eng_wordsList[i].length() > 6){
+                                        shortlist = eng_wordsList[i].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = eng_wordsList[i];
+                                        }
+                                    }
+
+                                }
+                            }
+                            else{
+                                for(int j = 0; j < 9; j++){
+                                    if(span_wordsList[j].length() > 6){
+                                        shortlist = span_wordsList[j].subSequence(0,6);
+                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
+                                        if(sixText.equals(shortlist)){
+                                            Log.d(TAG, "passed comparison");
+                                            buttonText = span_wordsList[j];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    text.setTitle(buttonText);
+
+                    popup.show();*/
+
+                    return true;
+                }
+            };
+
+
+            //click function
+            View.OnClickListener listener = new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    if(!InitializedGame){
+                        Toast need_init = Toast.makeText(MainActivity.this ,
+                                R.string.not_initialized,Toast.LENGTH_LONG);
+                        need_init.setGravity(Gravity.TOP, 0, 400);
+                        need_init.show();
+                    }
+
+
+   /*     else if (mistakeCount >= 3){
+                    Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
+                }*/
+                    else {
+                        Button test = (Button) v;
+                        if(test.getCurrentTextColor() == Color.parseColor("#000000")){
+                            return;
+                        }
+
+                        else if (SelectedButton != null) {
+                            //if a button has already been selected change that button back to normal
+                            SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                        }
+                        SelectedButton = (Button) v;
+                        SelectedButton.setBackgroundResource(R.drawable.clicked_button);
+                        Log.d(TAG, "buttonText length is" );
+                    }
+                }
+            };
+
+
+
+
+
+// loop through the array, find the button with respective id and set the listener
+        for(int i=0; i<ids.length; i++){
+            Button gbutton = (Button) findViewById(ids[i]);
+            ((Button) gbutton).setOnClickListener(listener);
+        }
+
+            for(int i=0; i<ids.length; i++) {
+                Button button = (Button) findViewById(ids[i]);
+                button.setOnLongClickListener(longClickListener);
+            }
+
+
 
     } //End of OnCreate()
 
@@ -796,7 +974,7 @@ public class MainActivity extends AppCompatActivity {
                                     checkSudoku[x][y] = temp + "";
                                 }
                                 gridButton[x][y].setText(null);
-                               // gridButton[x][y].setOnClickListener(listener);
+
                             }
                         }
                         //Case for listen mode ends.
