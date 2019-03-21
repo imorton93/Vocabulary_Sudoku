@@ -88,7 +88,7 @@ public class Main12 extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main12x12);
+        setContentView(R.layout.activity_main12);
 
 
         //long click function to bring up popup text

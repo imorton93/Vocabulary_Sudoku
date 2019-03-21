@@ -83,7 +83,7 @@ public class Main4 extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4x4);
+        setContentView(R.layout.activity_main4);
 
 
 //long click function to bring up popup text

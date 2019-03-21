@@ -84,7 +84,7 @@ public class Main6 extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main6x6);
+        setContentView(R.layout.activity_main6);
 
 
 //long click function to bring up popup text
