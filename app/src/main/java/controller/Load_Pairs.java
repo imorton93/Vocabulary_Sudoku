@@ -35,16 +35,19 @@ public class Load_Pairs extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 100;
     private static final String WORDS_LIST = "wordslist";
     private static final String TAG = "LOAD_WORDS";
+    private static final String KEY_from_start = "from_start";
 
     ArrayList<WordsPairs> mPairs = new ArrayList<>();
     ArrayList<String> strings = null;
     private String message;
     Boolean loadMore = false;
+    Boolean from_start = false;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load_pairs);
+        from_start = getIntent().getBooleanExtra(KEY_from_start, false);
 
         if (savedInstanceState != null) {
             mPairs = savedInstanceState.getParcelableArrayList(WORDS_LIST);
@@ -90,13 +93,26 @@ public class Load_Pairs extends AppCompatActivity {
 
         //back to MainActivity
         Button back = (Button)findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Load_Pairs.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        if (!from_start) {
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Load_Pairs.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        else {
+            // Load_words is from the start page
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Load_Pairs.this, StartPage.class);
+                    startActivity(intent);
+                }
+            });
+
+        }
 
         //allow users to type in more words
         //more codes coming
