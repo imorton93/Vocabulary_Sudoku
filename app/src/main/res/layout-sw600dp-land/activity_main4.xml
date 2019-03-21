@@ -25,58 +25,87 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:maxLines="1"
             android:onClick="insertButtonOnClick"
             android:text="@string/B_1"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:maxLines="1"
             android:onClick="insertButtonOnClick"
             android:text="@string/B_2"
             android:textAllCaps="false"
-            android:textSize="14sp"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform"
             app:layout_column="1"
             app:layout_row="0" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:maxLines="1"
             android:onClick="insertButtonOnClick"
             android:text="@string/B_3"
             android:textAllCaps="false"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform"
             app:layout_column="0"
             app:layout_row="1" />
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:maxLines="1"
             android:onClick="insertButtonOnClick"
             android:text="@string/B_4"
             android:textAllCaps="false"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform"
             app:layout_column="1"
             app:layout_row="1" />
 
         <Button
             android:id="@+id/button10"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:maxLines="1"
             android:onClick="clearButtonOnClick"
             android:text="@string/clear_button"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform"
             app:layout_column="0"
             app:layout_row="5" />
 
         <Button
             android:id="@+id/fin_button"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
             android:longClickable="false"
+            android:maxLines="1"
             android:text="@string/fin_button"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform"
             app:layout_column="1"
             app:layout_row="5" />
 
