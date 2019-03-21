@@ -21,7 +21,7 @@ import Model.SudokuChecker;
 import Model.SudokuGenerator;
 import controller.MainActivity;
 
-public class Main4x4 extends AppCompatActivity {
+public class Main4 extends AppCompatActivity {
     private static final String KEY_InitializedGame = "initializedgame";
     private static final String KEY_Sudoku = "saved_Sudoku";
     private static final String KEY_prefilled_words = "prefilled_Words";
@@ -91,14 +91,14 @@ public class Main4x4 extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v){
                 if(!InitializedGame){
-                    Toast need_init = Toast.makeText(Main4x4.this ,
+                    Toast need_init = Toast.makeText(Main4.this ,
                             R.string.not_initialized,Toast.LENGTH_LONG);
                     need_init.setGravity(Gravity.TOP, 0, 400);
                     need_init.show();
                     return true;
                 }
                 Button button = (Button) v;
-                PopupMenu popup = new PopupMenu(Main4x4.this, (Button) v);
+                PopupMenu popup = new PopupMenu(Main4.this, (Button) v);
 
                 popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
 
@@ -177,7 +177,7 @@ public class Main4x4 extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 if(!InitializedGame){
-                    Toast need_init = Toast.makeText(Main4x4.this ,
+                    Toast need_init = Toast.makeText(Main4.this ,
                             R.string.not_initialized,Toast.LENGTH_LONG);
                     need_init.setGravity(Gravity.TOP, 0, 400);
                     need_init.show();
@@ -309,3 +309,4 @@ public class Main4x4 extends AppCompatActivity {
         }
     }
 }
+

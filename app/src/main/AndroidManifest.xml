@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main4x4"></activity>
+        <activity android:name=".Main12"></activity>
+        <activity android:name=".Main6" />
+        <activity android:name=".Main4" />
         <activity
             android:name="controller.StartPage"
             android:label="Start page">
@@ -32,15 +34,15 @@
         <activity
             android:name="controller.SetUpPage"
             android:label="Set Up Page"
-            android:parentActivityName="controller.StartPage"></activity>
+            android:parentActivityName="controller.StartPage" />
         <activity
             android:name="controller.QuickSetUp"
             android:label="Quick Set Up Page"
-            android:parentActivityName="controller.StartPage"></activity>
+            android:parentActivityName="controller.StartPage" />
         <activity
             android:name="controller.QuickNbyBActivity"
             android:launchMode="singleTop"
-            android:parentActivityName="controller.SetUpPage"></activity>
+            android:parentActivityName="controller.SetUpPage" />
         <activity
             android:name="controller.MainActivity"
             android:launchMode="singleTop"
@@ -55,20 +57,20 @@
         <activity
             android:name="controller.Display_Words"
             android:label="Display Word Pairs"
-            android:parentActivityName="controller.MainActivity"></activity>
+            android:parentActivityName="controller.MainActivity" />
         <activity
             android:name="controller.SudokuDisplay"
             android:label="Sudoku Correct Grid"
-            android:parentActivityName="controller.MainActivity"></activity>
+            android:parentActivityName="controller.MainActivity" />
         <activity
             android:name="controller.Words_Selection"
             android:label=""
             android:parentActivityName="controller.MainActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="controller.Load_Pairs"
             android:label=""
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
