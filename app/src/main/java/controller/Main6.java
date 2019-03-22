@@ -1,27 +1,22 @@
-package com.example.myapplication;
+package controller;
 
 import android.graphics.Color;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import java.util.Arrays;
-import java.util.Locale;
+import com.example.myapplication.R;
 
-import Model.DBHelper;
 import Model.SudokuChecker;
 import Model.SudokuGenerator;
-import controller.MainActivity;
 
-public class Main12 extends AppCompatActivity{
+public class Main6 extends AppCompatActivity {
     private static final String KEY_InitializedGame = "initializedgame";
     private static final String KEY_Sudoku = "saved_Sudoku";
     private static final String KEY_prefilled_words = "prefilled_Words";
@@ -42,18 +37,12 @@ public class Main12 extends AppCompatActivity{
             R.id.button3,
             R.id.button4,
             R.id.button5,
-            R.id.button6,
-            R.id.button7,
-            R.id.button8,
-            R.id.button9,
-            R.id.button10,
-            R.id.button11,
-            R.id.button12
+            R.id.button6
     };
 
-    private static final Button[][] gridButton = new Button[12][12];//buttons b11-b99
+    private static final Button[][] gridButton = new Button[6][6];//buttons b11-b99
     private static SudokuGenerator initialGame = new SudokuGenerator(); //Generate an instance of class SudokuGenerator.
-    String[][] Sudoku = new String[12][12];
+    String[][] Sudoku = new String[6][6];
     private static SudokuChecker resultCheck = new SudokuChecker();
     private boolean fill_Eng = false;
     private boolean fill_Span = false;
@@ -62,15 +51,14 @@ public class Main12 extends AppCompatActivity{
     private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
     private int mistakeCount = 0;
     private String msg;
-    String[] eng_wordsList = new String[12];
-    String[] span_wordsList = new String[12];
-    String[][] Sudoku_temp = new String[12][12];
-    String[][] Sudoku_user = new String[12][12];
-    String[] list = new String[12];
-    int[] preset = new int[144];
+    String[] eng_wordsList = new String[6];
+    String[] span_wordsList = new String[6];
+    String[][] Sudoku_temp = new String[6][6];
+    String[][] Sudoku_user = new String[6][6];
+    String[] list = new String[6];
+    int[] preset = new int[36];
 
-
-    //------------Part needs to be checked----------------------------
+    //-----------------------BLOCK NEEDS TO BE CHECKED------------------------------------
         /*DBHelper mDBHelper = new DBHelper(this);
         Menu menu;
         //Begin of variables for listen mode
@@ -85,25 +73,28 @@ public class Main12 extends AppCompatActivity{
         //End of variables for listen mode
         Button[] mainButtons = new Button[9];*/
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main12);
+        setContentView(R.layout.activity_main6);
 
 
-        //long click function to bring up popup text
+//long click function to bring up popup text
         View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v){
                 if(!InitializedGame){
-                    Toast need_init = Toast.makeText(Main12.this ,
+                    Toast need_init = Toast.makeText(Main6.this ,
                             R.string.not_initialized,Toast.LENGTH_LONG);
                     need_init.setGravity(Gravity.TOP, 0, 400);
                     need_init.show();
                     return true;
                 }
                 Button button = (Button) v;
-                PopupMenu popup = new PopupMenu(Main12.this, (Button) v);
+                PopupMenu popup = new PopupMenu(Main6.this, (Button) v);
 
                 popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
 
@@ -182,7 +173,7 @@ public class Main12 extends AppCompatActivity{
             @Override
             public void onClick(View v){
                 if(!InitializedGame){
-                    Toast need_init = Toast.makeText(Main12.this ,
+                    Toast need_init = Toast.makeText(Main6.this ,
                             R.string.not_initialized,Toast.LENGTH_LONG);
                     need_init.setGravity(Gravity.TOP, 0, 400);
                     need_init.show();
@@ -210,18 +201,12 @@ public class Main12 extends AppCompatActivity{
         };
 
 
-        int[] ids={R.id.b1_1, R.id.b1_2,R.id.b1_3, R.id.b1_4, R.id.b1_5,R.id.b1_6,R.id.b1_7, R.id.b1_8,R.id.b1_9, R.id.b1_10, R.id.b1_11,R.id.b1_12,
-                R.id.b2_1, R.id.b2_2,R.id.b2_3, R.id.b2_4, R.id.b2_5,R.id.b2_6,R.id.b2_7, R.id.b2_8,R.id.b2_9, R.id.b2_10, R.id.b2_11,R.id.b2_12,
-                R.id.b3_1, R.id.b3_2,R.id.b3_3, R.id.b3_4, R.id.b3_5,R.id.b3_6,R.id.b3_7, R.id.b3_8,R.id.b3_9, R.id.b2_10, R.id.b2_11,R.id.b2_12,
-                R.id.b4_1, R.id.b4_2,R.id.b4_3, R.id.b4_4, R.id.b4_5,R.id.b4_6,R.id.b4_7, R.id.b4_8,R.id.b4_9, R.id.b4_10, R.id.b4_11,R.id.b4_12,
-                R.id.b5_1, R.id.b5_2,R.id.b5_3, R.id.b5_4, R.id.b5_5,R.id.b5_6,R.id.b5_7, R.id.b5_8,R.id.b5_9, R.id.b5_10, R.id.b5_11,R.id.b5_12,
-                R.id.b6_1, R.id.b6_2,R.id.b6_3, R.id.b6_4, R.id.b6_5,R.id.b6_6,R.id.b6_7, R.id.b6_8,R.id.b6_9, R.id.b6_10, R.id.b6_11,R.id.b6_12,
-                R.id.b7_1, R.id.b7_2,R.id.b7_3, R.id.b7_4, R.id.b7_5,R.id.b7_6,R.id.b7_7, R.id.b7_8,R.id.b7_9, R.id.b7_10, R.id.b7_11,R.id.b7_12,
-                R.id.b8_1, R.id.b8_2,R.id.b8_3, R.id.b8_4, R.id.b8_5,R.id.b8_6,R.id.b8_7, R.id.b8_8,R.id.b8_9, R.id.b8_10, R.id.b8_11,R.id.b8_12,
-                R.id.b9_1, R.id.b9_2,R.id.b9_3, R.id.b9_4, R.id.b9_5,R.id.b9_6,R.id.b9_7, R.id.b9_8,R.id.b9_9, R.id.b9_10, R.id.b9_11,R.id.b9_12,
-                R.id.b10_1, R.id.b10_2,R.id.b10_3, R.id.b10_4, R.id.b10_5,R.id.b10_6,R.id.b10_7, R.id.b10_8,R.id.b10_9, R.id.b10_10, R.id.b10_11,R.id.b10_12,
-                R.id.b11_1, R.id.b11_2,R.id.b11_3, R.id.b11_4, R.id.b11_5,R.id.b11_6,R.id.b11_7, R.id.b11_8,R.id.b11_9, R.id.b11_10, R.id.b11_11,R.id.b11_12,
-                R.id.b12_1, R.id.b12_2,R.id.b12_3, R.id.b12_4, R.id.b12_5,R.id.b12_6,R.id.b12_7, R.id.b12_8,R.id.b12_9, R.id.b12_10, R.id.b12_11,R.id.b12_12};
+        int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,
+                R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,
+                R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,
+                R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,
+                R.id.b51, R.id.b52,R.id.b53, R.id.b54, R.id.b55,R.id.b56,
+                R.id.b61, R.id.b62,R.id.b63, R.id.b64, R.id.b65,R.id.b66};
 
 
 
@@ -235,14 +220,12 @@ public class Main12 extends AppCompatActivity{
             Button button = (Button) findViewById(ids[i]);
             button.setOnLongClickListener(longClickListener);
         }
-
-
     }//end of oncreate
 
     private Button SelectedButton; //button that user selects to insert
 
 
-    //---------------------------l_numbers, checkFilledWord, wordsSplit----------------------------------------
+    //-----------------------------------------wordsSplit, l_numbers, CheckFilledWord--------------------------------------
     /*public void insertButtonOnClick(View w) {
         //user hits button to change text of selectedbutton
         if (listen_mode) {

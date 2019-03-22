@@ -28,6 +28,7 @@ import com.example.myapplication.R;
 import Model.SudokuChecker;
 import Model.SudokuGenerator;
 import Model.WordsPairs;
+import Model.pop;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -556,118 +557,14 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onLongClick(View v){
                     Button button = (Button) v;
                     CharSequence buttonText = button.getText();
+                    int orientation = getResources().getConfiguration().orientation;
 
                     // inflate the layout of the popup window
                     LayoutInflater inflater = (LayoutInflater)
                             getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = inflater.inflate(R.layout.popwindow, null);
 
-
-                    int[] loc_int = new int[2];
-
-                    Rect location = new Rect();
-                    location.left = loc_int[0];
-                    location.top = loc_int[1];
-                    location.right = loc_int[0] + v.getWidth();
-                    location.bottom = loc_int[1] + v.getHeight();
-
-                    // create the popup window
-                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    boolean focusable = true; // lets taps outside the popup also dismiss it
-                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-                    ((TextView)popupWindow.getContentView().findViewById(R.id.poptext)).setText(buttonText);
-                    // show the popup window
-                    // which view you pass in doesn't matter, it is only used for the window tolken
-                    popupWindow.showAsDropDown(v, 0, 0);
-
-                    // dismiss the popup window when touched
-                    popupView.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            popupWindow.dismiss();
-                            return true;
-                        }
-                    });
-
-                    /*if(!InitializedGame){
-                        Toast need_init = Toast.makeText(MainActivity.this ,
-                                R.string.not_initialized,Toast.LENGTH_LONG);
-                        need_init.setGravity(Gravity.TOP, 0, 400);
-                        need_init.show();
-                        return true;
-                    }
-                    Button button = (Button) v;
-                    PopupMenu popup = new PopupMenu(MainActivity.this, (Button) v);
-
-                    popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
-
-                    MenuItem text = popup.getMenu().getItem(0);
-
-                    CharSequence buttonText = button.getText();
-                    Log.d(TAG, "buttonText length is " + buttonText.length() );
-                    if(buttonText.length() > 6){
-                        CharSequence sixText = buttonText.subSequence(0,6);
-                        CharSequence shortlist;
-                        if(fill_Eng){
-                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                                for(int i = 0; i < 9; i++){
-                                    if(span_wordsList[i].length() > 6){
-                                        shortlist = span_wordsList[i].subSequence(0,6);
-                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                        if(sixText.equals(shortlist)){
-                                            Log.d(TAG, "passed comparison");
-                                            buttonText = span_wordsList[i];
-                                        }
-                                    }
-
-                                }
-                            }
-                            else{
-                                for(int j = 0; j < 9; j++){
-                                    if(eng_wordsList[j].length() > 6){
-                                        shortlist = eng_wordsList[j].subSequence(0,6);
-                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                        if(sixText.equals(shortlist)){
-                                            Log.d(TAG, "passed comparison");
-                                            buttonText = eng_wordsList[j];
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if(fill_Span){
-                            if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                                for(int i = 0; i < 9; i++){
-                                    if(eng_wordsList[i].length() > 6){
-                                        shortlist = eng_wordsList[i].subSequence(0,6);
-                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                        if(sixText.equals(shortlist)){
-                                            Log.d(TAG, "passed comparison");
-                                            buttonText = eng_wordsList[i];
-                                        }
-                                    }
-
-                                }
-                            }
-                            else{
-                                for(int j = 0; j < 9; j++){
-                                    if(span_wordsList[j].length() > 6){
-                                        shortlist = span_wordsList[j].subSequence(0,6);
-                                        Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                        if(sixText.equals(shortlist)){
-                                            Log.d(TAG, "passed comparison");
-                                            buttonText = span_wordsList[j];
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    text.setTitle(buttonText);
-
-                    popup.show();*/
+                    pop window = new pop();
+                    window.createWindow(v, inflater, buttonText, fill_Span, fill_Eng, list, orientation);
 
                     return true;
                 }

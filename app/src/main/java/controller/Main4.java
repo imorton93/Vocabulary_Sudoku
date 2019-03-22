@@ -1,25 +1,20 @@
-package com.example.myapplication;
+package controller;
 
 import android.graphics.Color;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import java.util.Arrays;
-import java.util.Locale;
+import com.example.myapplication.R;
 
-import Model.DBHelper;
 import Model.SudokuChecker;
 import Model.SudokuGenerator;
-import controller.MainActivity;
 
 public class Main4 extends AppCompatActivity {
     private static final String KEY_InitializedGame = "initializedgame";
