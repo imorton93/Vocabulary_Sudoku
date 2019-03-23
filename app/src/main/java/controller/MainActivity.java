@@ -255,8 +255,14 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate(Bundle) called");
 
-        //set up size of grids
         gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
+
+        //based on grid size, to get differnt layout
+        if (gridSize != 9){
+            int layoutID = getResources().getIdentifier("activity_main"+ gridSize, "layout", getPackageName());
+            setContentView(layoutID);
+        }
+        //set up size of grids
         gridButton = new Button[gridSize][gridSize];//buttons b11-b99
         Button_ids = new Button[gridSize];
         Sudoku = new String[gridSize][gridSize];
@@ -277,11 +283,12 @@ public class MainActivity extends AppCompatActivity {
             Button_ids[x] = findViewById(ID);
         }
 
+
         //store words from String Resources
         //in case, order of String from String Resources may change
         //store in local variables
         //gameInitialization
-        int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
+  /*      int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
                 R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,R.id.b27, R.id.b28,R.id.b29,
                 R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,R.id.b37, R.id.b38,R.id.b39,
                 R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,R.id.b47, R.id.b48,R.id.b49,
@@ -300,6 +307,12 @@ public class MainActivity extends AppCompatActivity {
     for(int i=0; i<ids.length; i++) {
         Button button = (Button) findViewById(ids[i]);
         button.setOnLongClickListener(longClickListener);
+    }*/
+    for (int x = 0; x < gridSize; x++){
+        for (int y = 0; y < gridSize; y++){
+            gridButton[x][y].setOnClickListener(listener);
+            gridButton[x][y].setOnLongClickListener(longClickListener);
+        }
     }
 
     Intent prev_intent = getIntent();
@@ -735,17 +748,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 // loop through the array, find the button with respective id and set the listener
-        for(int i=0; i<ids.length; i++){
-            Button gbutton = (Button) findViewById(ids[i]);
-            ((Button) gbutton).setOnClickListener(listener);
-        }
-
-            for(int i=0; i<ids.length; i++) {
-                Button button = (Button) findViewById(ids[i]);
-                button.setOnLongClickListener(longClickListener);
+        for (int x = 0; x < gridSize; x++){
+            for (int y = 0; y < gridSize; y++){
+                gridButton[x][y].setOnClickListener(listener);
+                gridButton[x][y].setOnLongClickListener(longClickListener);
             }
-
-
+        }
 
     } //End of OnCreate()
 
