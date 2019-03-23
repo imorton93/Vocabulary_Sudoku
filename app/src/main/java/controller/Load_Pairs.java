@@ -1,31 +1,38 @@
-package controller;
+package Model;
 
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import Model.DBHelper;
-import com.example.myapplication.R;
-import Model.WordsPairs;
-import Model.listArrayAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import Model.DBHelper;
+import Model.WordsPairs;
+import Model.customGridAdapter;
+import com.example.myapplication.R;
+import controller.Words_Selection;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -35,34 +42,25 @@ public class Load_Pairs extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 100;
     private static final String WORDS_LIST = "wordslist";
     private static final String TAG = "LOAD_WORDS";
-    private static final String KEY_from_start = "from_start";
 
     ArrayList<WordsPairs> mPairs = new ArrayList<>();
     ArrayList<String> strings = null;
     private String message;
     Boolean loadMore = false;
-    Boolean from_start = false;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load_pairs);
-        from_start = getIntent().getBooleanExtra(KEY_from_start, false);
 
         if (savedInstanceState != null) {
             mPairs = savedInstanceState.getParcelableArrayList(WORDS_LIST);
         }
-
         //set up ListView
-        final ListView listView = (ListView)findViewById(R.id.words_eng_list);
+        GridView girdview = (GridView)findViewById(R.id.grid_load);
         ArrayList<WordsPairs> arrayList= new ArrayList<>();
         if (mPairs.isEmpty()){
-            for (int i = 0; i < 9; i++) {
-                WordsPairs list=new WordsPairs();
-                list.setENG("");
-                list.setSPAN("");
-                arrayList.add(list);
-            }
+            isLargeScreen(arrayList);
         }else{
             for (int i = 0; i < mPairs.size(); i++){
                 WordsPairs list=new WordsPairs();
@@ -71,7 +69,8 @@ public class Load_Pairs extends AppCompatActivity {
                 arrayList.add(list);
             }
         }
-        listView.setAdapter(new listArrayAdapter(this,arrayList));
+        girdview.setAdapter(new customGridAdapter(this,arrayList));
+
 
 
         final String msg;
@@ -93,26 +92,13 @@ public class Load_Pairs extends AppCompatActivity {
 
         //back to MainActivity
         Button back = (Button)findViewById(R.id.back);
-        if (!from_start) {
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Load_Pairs.this, MainActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
-        else {
-            // Load_words is from the start page
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Load_Pairs.this, StartPage.class);
-                    startActivity(intent);
-                }
-            });
-
-        }
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Load_Pairs.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //allow users to type in more words
         //more codes coming
@@ -131,8 +117,10 @@ public class Load_Pairs extends AppCompatActivity {
                     arrayList.add(list);
                 }
 
-                final ListView listView = (ListView)findViewById(R.id.words_eng_list);
-                listView.setAdapter(new listArrayAdapter(Load_Pairs.this,arrayList));
+                final GridView girdview = (GridView) findViewById(R.id.grid_load);
+                girdview.setAdapter(new customGridAdapter(Load_Pairs.this,arrayList));
+
+                isLargeScreen(arrayList);
             }
         });
 
@@ -173,22 +161,79 @@ public class Load_Pairs extends AppCompatActivity {
 
     }
 
+
+    private void isLargeScreen(ArrayList<WordsPairs> arrayList){
+        //Determine density
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int density = metrics.densityDpi;
+        Log.d(TAG, "metrics.densityDpi of this device is " + density);
+
+        if (density == DisplayMetrics.DENSITY_XHIGH)  {
+            // on a large screen device ...
+            int orientation = this.getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                for (int i = 0; i < 18; i++) {
+                    WordsPairs list=new WordsPairs();
+                    list.setENG("");
+                    list.setSPAN("");
+                    arrayList.add(list);
+                }
+            }else{
+                if ((getResources().getConfiguration().screenLayout &
+                        Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                        Configuration.SCREENLAYOUT_SIZE_XLARGE){
+                    for (int i = 0; i < 28; i++) {
+                        WordsPairs list=new WordsPairs();
+                        list.setENG("");
+                        list.setSPAN("");
+                        arrayList.add(list);
+                    }
+                }else{
+                    for (int i = 0; i < 14; i++) {
+                        WordsPairs list = new WordsPairs();
+                        list.setENG("");
+                        list.setSPAN("");
+                        arrayList.add(list);
+                    }
+                }
+            }
+        }else{
+            int orientation = this.getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                for (int i = 0; i < 6; i++) {
+                    WordsPairs list = new WordsPairs();
+                    list.setENG("");
+                    list.setSPAN("");
+                    arrayList.add(list);
+                }
+            }else{
+                for (int i = 0; i < 9; i++) {
+                    WordsPairs list = new WordsPairs();
+                    list.setENG("");
+                    list.setSPAN("");
+                    arrayList.add(list);
+                }
+            }
+        }
+    }
+
     //pass words that user select to Words_Selection
     private void setWordsList(String msg, ArrayList<WordsPairs> words) {
-        Intent data = new Intent(this,Words_Selection.class);
+        Intent data = new Intent(this, Words_Selection.class);
         ArrayList<String> lists = new ArrayList<>();
         for (int i = 0; i < words.size(); i++){
             String tmp = words.get(i).getENG() + "," + words.get(i).getSPAN();
             lists.add(tmp);
             Log.d(TAG, "TMP is    " + lists.get(i));
         }
+        //
         data.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
         data.putExtra(EXTRA_MESSAGE, "LOAD");
         //pass "ENG" or "SPAN" back
         data.putExtra("LANGUAGE", msg);
         //pass what user loaded
         data.putStringArrayListExtra("LOAD_WORDS_LIST", lists);
-        Log.d(TAG, "DATA is    " + data.getStringArrayListExtra("LOAD_WORDS_LIST"));
         startActivity(data);
         finish();
     }
@@ -257,6 +302,7 @@ public class Load_Pairs extends AppCompatActivity {
                     //ListView initial
                     //set up a new ListView
                     ArrayList<WordsPairs>arrayList= new ArrayList<>();
+                    ArrayList<WordsPairs>arrayList_sec= new ArrayList<>();
                     if (!loadMore){
                         mPairs.clear();
                     }
@@ -282,8 +328,9 @@ public class Load_Pairs extends AppCompatActivity {
                         }
                         mPairs.add(new WordsPairs(words[0],words[1]));
                     }
-                    ListView listView = (ListView)findViewById(R.id.words_eng_list);
-                    listView.setAdapter(new listArrayAdapter(this,arrayList));
+                    isLargeScreen(arrayList);
+                    GridView gridview = (GridView)findViewById(R.id.grid_load);
+                    gridview.setAdapter(new customGridAdapter(this,arrayList));
                 }else{
                     Toast.makeText(this, "Can't Open this type of file",
                             Toast.LENGTH_LONG).show();
@@ -346,7 +393,7 @@ public class Load_Pairs extends AppCompatActivity {
                         }
                     }
                 });
-                alertDialogBuilder.setNegativeButton(
+        alertDialogBuilder.setNegativeButton(
                 "No",
                 new DialogInterface.OnClickListener() {
                     @Override
