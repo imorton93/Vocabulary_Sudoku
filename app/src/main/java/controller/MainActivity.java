@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             KEY_filled_words_4, KEY_filled_words_5, KEY_filled_words_6, KEY_filled_words_7,
             KEY_filled_words_8 }; */
     private static final String TAG = "CMPT276-1191E1-Delta";
-    private static final int[] Button_ids = { //ID's for the 9 big buttons
+   /* private static final int[] Button_ids = { //ID's for the 9 big buttons
             R.id.button1,
             R.id.button2,
             R.id.button3,
@@ -82,12 +82,14 @@ public class MainActivity extends AppCompatActivity {
             R.id.button7,
             R.id.button8,
             R.id.button9,
-    };
+    };*/
+
 
     private int gridSize;
-    private static final Button[][] gridButton = new Button[9][9];//buttons b11-b99
+    private static Button[][] gridButton = null;//buttons b11-b99
+    private static Button[] Button_ids = null;
     private static SudokuGenerator initialGame = new SudokuGenerator(); //Generate an instance of class SudokuGenerator.
-    String[][] Sudoku = new String[9][9];
+    String[][] Sudoku;
     private static SudokuChecker resultCheck = new SudokuChecker();
     private boolean fill_Eng = false;
     private boolean fill_Span = false;
@@ -96,12 +98,12 @@ public class MainActivity extends AppCompatActivity {
     private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
     private boolean listen_mode_game_init = false; //Checks if the app has a game started in listen comprehension mode
     private int mistakeCount = 0;
-    String[][] Sudoku_temp = new String[9][9];
-    String[][] Sudoku_user = new String[9][9];
+    String[][] Sudoku_temp;
+    String[][] Sudoku_user;
     //WordsPairs object
     private ArrayList<WordsPairs> list = new ArrayList<>();
 
-    int[] preset = new int[81];
+    int[] preset;
     //initial database
     DBHelper mDBHelper = new DBHelper(this);
     Menu menu;
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     private final String[] l_numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}; //The string array for listen comprehension mode
     private int remain_nums = 0;
     private int l_number = 0; //a variable for listen mode functions
-    String[] assigned = new String[9]; //For listen mode
+    String[] assigned; //For listen mode
     Locale locSpanish = new Locale("spa", "ES");
     Locale locEnglish = new Locale("eng", "US");
     TextToSpeech span;
@@ -154,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 CharSequence shortlist;
                 if(fill_Eng){
                     if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                        for(int i = 0; i < 9; i++){
+                        for(int i = 0; i < gridSize; i++){
                             if(list.get(i).getSPAN().length() > 6){
                                 shortlist = list.get(i).getSPAN().subSequence(0,6);
                                 Log.d(TAG, "comparing " + sixText + " and " + shortlist);
@@ -167,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     else{
-                        for(int j = 0; j < 9; j++){
+                        for(int j = 0; j < gridSize; j++){
                             if(list.get(j).getENG().length() > 6){
                                 shortlist = list.get(j).getENG().subSequence(0,6);
                                 Log.d(TAG, "comparing " + sixText + " and " + shortlist);
@@ -181,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(fill_Span){
                     if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                        for(int i = 0; i < 9; i++){
+                        for(int i = 0; i < gridSize; i++){
                             if(list.get(i).getENG().length() > 6){
                                 shortlist = list.get(i).getENG().subSequence(0,6);
                                 Log.d(TAG, "comparing " + sixText + " and " + shortlist);
@@ -194,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     else{
-                        for(int j = 0; j < 9; j++){
+                        for(int j = 0; j < gridSize; j++){
                             if(list.get(j).getSPAN().length() > 6){
                                 shortlist = list.get(j).getSPAN().subSequence(0,6);
                                 Log.d(TAG, "comparing " + sixText + " and " + shortlist);
@@ -253,15 +255,28 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate(Bundle) called");
 
+        //set up size of grids
+        gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
+        gridButton = new Button[gridSize][gridSize];//buttons b11-b99
+        Button_ids = new Button[gridSize];
+        Sudoku = new String[gridSize][gridSize];
+        Sudoku_temp = new String[gridSize][gridSize];
+        Sudoku_user = new String[gridSize][gridSize];
+        preset = new int[(int)Math.pow(gridSize,2)];
+        assigned = new String[gridSize]; //For listen mode
         //initial gameGrid
         //show words in button
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
                 String buttonID = "b" + (x+1) + (y+1);
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 gridButton[x][y] = findViewById(resID);
             }
+            String wordButton = "button" + (x+1);
+            int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
+            Button_ids[x] = findViewById(ID);
         }
+
         //store words from String Resources
         //in case, order of String from String Resources may change
         //store in local variables
@@ -304,6 +319,7 @@ public class MainActivity extends AppCompatActivity {
             list = savedInstanceState.getParcelableArrayList(KEY_WORDS_LIST);
             preset = savedInstanceState.getIntArray(KEY_preset);
             listen_mode_game_init =  savedInstanceState.getBoolean(KEY_listen_game);
+            gridSize = savedInstanceState.getInt(KEY_GRID_SIZE);
       /*      if (listen_mode){
                 MenuItem listen_t = menu.findItem(R.id.listen);
                 listen_t.setTitle("Exit Listen Comprehension Mode");
@@ -321,14 +337,16 @@ public class MainActivity extends AppCompatActivity {
             } */
                 //
                 if (fill_Eng) {
-                    for (int i = 0; i < 9; i++) {
-                        mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(list.get(i).getENG());
+                    for (int i = 0; i < gridSize; i++) {
+                       // mButtons = findViewById(Button_ids[i]);
+                       // mButtons.setText(list.get(i).getENG());
+                        Button_ids[i].setText(list.get(i).getENG());
                     }
                 } else if (fill_Span) {
-                    for (int i = 0; i < 9; i++) {
-                        mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(list.get(i).getSPAN());
+                    for (int i = 0; i < gridSize; i++) {
+                      //  mButtons = findViewById(Button_ids[i]);
+                       // mButtons.setText(list.get(i).getSPAN());
+                        Button_ids[i].setText(list.get(i).getSPAN());
                     }
                 }
                 Sudoku_temp = (String[][]) savedInstanceState.getSerializable(KEY_prefilled_words);
@@ -355,8 +373,8 @@ public class MainActivity extends AppCompatActivity {
                     });
                     int temp_indx = -1;
                     if (fill_Eng){
-                        for (int x = 0; x < 9; x++) { //break point here
-                            for (int y = 0; y < 9; y++) {
+                        for (int x = 0; x < gridSize; x++) { //break point here
+                            for (int y = 0; y < gridSize; y++) {
                                 gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
                                 j += 5; //break point here
                                 if (Sudoku_temp[x][y] != null) {
@@ -380,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
                                         gridButton[x][y].setText(Sudoku_user[x][y]);
                                         String tmp = "";
                                         //if is wrong, puts word to be red
-                                        for (int i = 0; i < 9; i++) {
+                                        for (int i = 0; i < gridSize; i++) {
                                             if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
                                                 tmp = list.get(i).getSPAN();
                                             }
@@ -407,8 +425,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     else if (fill_Span){
-                        for (int x = 0; x < 9; x++) { //break point here
-                            for (int y = 0; y < 9; y++) {
+                        for (int x = 0; x < gridSize; x++) { //break point here
+                            for (int y = 0; y < gridSize; y++) {
                                 gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
                                 j += 5; //break point here
                                 if (Sudoku_temp[x][y] != null) {
@@ -431,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
                                         gridButton[x][y].setText(Sudoku_user[x][y]);
                                         String tmp = "";
                                         //if is wrong, puts word to be red
-                                        for (int i = 0; i < 9; i++) {
+                                        for (int i = 0; i < gridSize; i++) {
                                             if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
                                                 tmp = list.get(i).getSPAN();
                                             }
@@ -460,8 +478,8 @@ public class MainActivity extends AppCompatActivity {
                     restored_s = true;
                 } else {
                     //Restore state for normal mode
-                    for (int x = 0; x < 9; x++) { //break point here
-                        for (int y = 0; y < 9; y++) {
+                    for (int x = 0; x < gridSize; x++) { //break point here
+                        for (int y = 0; y < gridSize; y++) {
                             gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
                             j += 5; //break point here
                             if (Sudoku_temp[x][y] != null) {
@@ -475,7 +493,7 @@ public class MainActivity extends AppCompatActivity {
                                     gridButton[x][y].setText(Sudoku_user[x][y]);
                                     String tmp = "";
                                     //if is wrong, puts word to be red
-                                    for (int i = 0; i < 9; i++) {
+                                    for (int i = 0; i < gridSize; i++) {
                                         if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
                                             tmp = list.get(i).getSPAN();
                                         }
@@ -507,9 +525,9 @@ public class MainActivity extends AppCompatActivity {
             }
             int count = 0;
             if(preset != null) {
-                for (int i = 0; i < 9; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (preset[i*9 + j] == 1) {
+                for (int i = 0; i < gridSize; i++) {
+                    for (int j = 0; j < gridSize; j++) {
+                        if (preset[i*gridSize + j] == 1) {
                             count++;
                             gridButton[i][j].setTextColor(Color.parseColor("#000000"));
                             //System.out.println("blackened text" + count);
@@ -737,16 +755,16 @@ public class MainActivity extends AppCompatActivity {
         InitializedGame = true;
         Sudoku = initialGame.generateGrid(msg,list);
         Log.d(TAG, "restored_s is " + restored_s);
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                preset[i*9 + j] = 1;
+        for(int i = 0; i < gridSize; i++){
+            for(int j = 0; j < gridSize; j++){
+                preset[i*gridSize + j] = 1;
             }
         }
 
-        double remainingGrids = 81;
-        double remainingHoles = 51; //set up a number to determine how many words to hide
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+        double remainingGrids = Math.pow(gridSize,2);
+        double remainingHoles = 0; //set up a number to determine how many words to hide
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
                 if (Sudoku[x][y].length() > 6) {
                     CharSequence text = Sudoku[x][y].subSequence(0, 6) + "..";
@@ -765,7 +783,7 @@ public class MainActivity extends AppCompatActivity {
                     gridButton[x][y].setOnClickListener(listener);
                     gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
                     remainingHoles--;
-                    preset[x * 9 + y] = 0;
+                    preset[x * gridSize + y] = 0;
                 }
                 remainingGrids--;
             }
@@ -796,14 +814,14 @@ public class MainActivity extends AppCompatActivity {
         listen_mode_game_init = true; //User has initialized a game in listen mode
         l_number = 0;
         int indx_temp = -1;
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                preset[i*9 + j] = 1;
+        for(int i = 0; i < gridSize; i++){
+            for(int j = 0; j < gridSize; j++){
+                preset[i*gridSize + j] = 1;
             }
         }
         Sudoku = initialGame.generateGrid(msg,list);
-        double remainingGrids = 81;
-        double remainingHoles = 51; //set up a number to determine how many words to hide
+        double remainingGrids = Math.pow(gridSize,2);
+        double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
         span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -820,8 +838,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
                 double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
                 //gridButton[x][y].setOnClickListener(listener);
                 gridButton[x][y].setClickable(true);
@@ -847,7 +865,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    preset[x * 9 + y] = 0;
+                    preset[x * gridSize + y] = 0;
                     remainingHoles--;
                 } else {
                   //  switch (msg) {
@@ -855,7 +873,7 @@ public class MainActivity extends AppCompatActivity {
                     if (fill_Span) {
                         //If the cells aren't to be hidden, display them on the sudoku Board
                        // indx_temp = list.indexOf(Sudoku[x][y]);
-                        for (int i = 0; i < 9; i++){
+                        for (int i = 0; i < gridSize; i++){
                             if (( list.get(i).getENG()).equals(Sudoku[x][y])){
                                 indx_temp = i;
                                 break;
@@ -874,7 +892,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                     } else if (fill_Eng) {
                         //If the cells aren't to be hidden, display them on the sudoku Board
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < gridSize; i++) {
                             if ((list.get(i).getSPAN()).equals(Sudoku[x][y])) {
                                 indx_temp = i;
                                 break;
@@ -908,12 +926,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (InitializedGame) {
-                    String[][] checkSudoku = new String[9][9];
-                    String[][] originalSudoku = new String[9][9];
+                    String[][] checkSudoku = new String[gridSize][gridSize];
+                    String[][] originalSudoku = new String[gridSize][gridSize];
                     if (listen_mode_game_init) {
                         //convert the numbered cells to actual words when passing the array
-                        for (int x = 0; x < 9; x++) {
-                            for (int y = 0; y < 9; y++) {
+                        for (int x = 0; x < gridSize; x++) {
+                            for (int y = 0; y < gridSize; y++) {
                                 originalSudoku[x][y] = Sudoku[x][y];
                                 //pass words in grid to a Sting[][] Sudoku in order to check correctness
                                 CharSequence temp = gridButton[x][y].getText();
@@ -985,8 +1003,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                         //Case for listen mode ends.
                     } else {
-                        for (int x = 0; x < 9; x++) {
-                            for (int y = 0; y < 9; y++) {
+                        for (int x = 0; x < gridSize; x++) {
+                            for (int y = 0; y < gridSize; y++) {
                                 //pass words in grid to a Sting[][] Sudoku in order to check correctness
                                 CharSequence temp = gridButton[x][y].getText();
                                 checkSudoku[x][y] = temp + "";
@@ -1022,8 +1040,8 @@ public class MainActivity extends AppCompatActivity {
         //intent the 9*9 Grid Sudoku to a new page
         Intent intent = new Intent(MainActivity.this, SudokuDisplay.class);
         ArrayList<String> words = new ArrayList<String>();
-        for (int x = 0; x < 9; x++) {
-            words.addAll(Arrays.asList(originalSudoku[x]).subList(0, 9));
+        for (int x = 0; x < gridSize; x++) {
+            words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
         startActivity(intent);
@@ -1037,12 +1055,12 @@ public class MainActivity extends AppCompatActivity {
         String tmp = null;
         String str = null;
         //check which word should be right
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
                 if (gridButton[x][y] == SelectedButton) {
                     str = Sudoku[x][y];
                     //translate english to spanish, and vise versa
-                    for (int i = 0; i < 9; i++) {
+                    for (int i = 0; i < gridSize; i++) {
                         if (Sudoku[x][y].equals(list.get(i).getENG())) {
                             tmp = list.get(i).getSPAN();
                         }
@@ -1285,19 +1303,20 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putSerializable(KEY_Sudoku, Sudoku);
         savedInstanceState.putIntArray(KEY_preset, preset);
         //savedInstanceState.put(KEY_filled_words, gridButton);
+        savedInstanceState.putInt(KEY_GRID_SIZE, gridSize);
         int x = 0;
-        String[] stringA_p_temp = new String[9];
-        String[][] stringA_preset = new String[9][9]; //Array of preset words
-        String[] stringA_u_temp = new String[9];
-        String[][] stringA_user_filled = new String[9][9]; //Array of user-filled words
+        String[] stringA_p_temp = new String[gridSize];
+        String[][] stringA_preset = new String[gridSize][gridSize]; //Array of preset words
+        String[] stringA_u_temp = new String[gridSize];
+        String[][] stringA_user_filled = new String[gridSize][gridSize]; //Array of user-filled words
         CharSequence temp = "";
         Boolean temp_not_null = false;
         if (listen_mode_game_init) {
            //A game is already initialized in listen mode
             savedInstanceState.putStringArray(KEY_assigned, assigned);
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 x += 0; //for break point purpose
-                for (int j = 0; j < 9; j++) {
+                for (int j = 0; j < gridSize; j++) {
                     //savedInstanceState.putString(KEY_filled_words[i][j], gridButton[i][j].getText());
                     temp = gridButton[i][j].getText();
                     //temp_Color = gridButton[i][j].getCurrentTextColor();
@@ -1323,7 +1342,7 @@ public class MainActivity extends AppCompatActivity {
                 x += 5; //for break point purpose
             }
 
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 Log.d(TAG, "l-STRING PRESET are  " + Arrays.toString(stringA_preset[i]));
                 Log.d(TAG, "l-STRING USER FILLED are  " + Arrays.toString(stringA_user_filled[i]));
             }
@@ -1335,9 +1354,9 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             //Normal mode saveOnInstanceState
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 x += 0; //for break point purpose
-                for (int j = 0; j < 9; j++) {
+                for (int j = 0; j < gridSize; j++) {
                     //savedInstanceState.putString(KEY_filled_words[i][j], gridButton[i][j].getText());
                     temp = gridButton[i][j].getText();
                     //temp_Color = gridButton[i][j].getCurrentTextColor();
@@ -1362,7 +1381,7 @@ public class MainActivity extends AppCompatActivity {
                 x += 5; //for break point purpose
             }
 
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 Log.d(TAG, "STRING PRESET are  " + Arrays.toString(stringA_preset[i]));
                 Log.d(TAG, "STRING USER FILLED are  " + Arrays.toString(stringA_user_filled[i]));
             }
@@ -1388,7 +1407,7 @@ public class MainActivity extends AppCompatActivity {
             String msg = data.getStringExtra("LANGUAGE");
             list = data.getParcelableArrayListExtra("EXTRA_WORDS_LIST");
 
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 Log.d(TAG, "Words from selection ENG and SPAN are " + list.get(i).getENG() + "  " +list.get(i).getSPAN());
                 Log.d(TAG, "Words from selection LANGUAGE msg is " + msg);
             }
@@ -1396,15 +1415,14 @@ public class MainActivity extends AppCompatActivity {
             int i;
             switch (msg) {
                 case "SPAN":
-                    for (i = 0; i < 9; i++) {
-                        mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(list.get(i).getSPAN());
+                    for (i = 0; i < list.size(); i++) {
+                      Button_ids[i].setText(list.get(i).getSPAN());
                     }
                     break;
                 case "ENG":
-                    for (i = 0; i < 9; i++) {
-                        mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(list.get(i).getENG());
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getENG());
+
                     }
                     break;
             }

@@ -4,31 +4,35 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SudokuGenerator {
+    private int gridSize;
 
     public SudokuGenerator() {
 
     }
 
     public String[][] generateGrid(String msg, ArrayList<WordsPairs> mPairs){
+        this.gridSize = mPairs.size();
         int i = 0;
-        String[] wordsList = new String[9];
+        String[] wordsList = new String[gridSize];
         switch (msg) {
             case "SPAN":
-                for (i = 0; i < 9; i++) {
+                for (i = 0; i < mPairs.size(); i++) {
                     wordsList[i] = mPairs.get(i).getENG();
                 }
                 break;
             case "ENG":
-                for (i = 0; i < 9; i++) {
+                for (i = 0; i < mPairs.size(); i++) {
                     wordsList[i] = mPairs.get(i).getSPAN();
                 }
                 break;
         }
 
-        String[][] Sudoku = new String[9][9];
+
+        String[][] Sudoku = new String[gridSize][gridSize];
         nextGrid(Sudoku,0,0, wordsList);
         return Sudoku;
     }
+
 
     /*
      * Recursive method that place String in the grid.
@@ -55,8 +59,8 @@ public class SudokuGenerator {
         for(int i = 0;i < wordList.length;i++) {
             if(!isConflict(Sudoku,xPos, yPos, wordList[i])) {
                 Sudoku[xPos][yPos] = wordList[i];
-                if(xPos == 8) {
-                    if(yPos == 8)
+                if(xPos == gridSize-1) {
+                    if(yPos == gridSize-1)
                         return true; //all done
                     else {
                         X = 0;
@@ -108,11 +112,13 @@ public class SudokuGenerator {
     }
 
     private boolean isBoxConflict(final String[][] Sudoku, final int xPos, final int yPos, final String word) {
-        int xBox = xPos - xPos % 3;
-        int yBox = yPos -  yPos % 3;
+        int boxRow = (int)Math.sqrt(gridSize);
+        int boxCol = gridSize/boxRow;
+        int xBox = xPos - xPos % boxRow;
+        int yBox = yPos -  yPos % boxCol;
 
-        for (int x = xBox ; x < xBox + 3; x++) {
-            for (int y = yBox ; y < yBox + 3; y++) {
+        for (int x = xBox ; x < xBox + boxRow; x++) {
+            for (int y = yBox ; y < yBox + boxCol; y++) {
                 if ((x != xPos || y != yPos) && word.equals(Sudoku[x][y])) {
                     return true;
                 }
