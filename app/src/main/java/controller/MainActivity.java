@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_wordlist = "list";
     private static final String KEY_preset = "Preset";
     private static final String KEY_listen_game = "Game initialzied in listen mode";
+    private static final String KEY_GRID_SIZE = "grid_size";
+
     /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
         //The leftmost column
         private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             R.id.button9,
     };
 
+    private int gridSize;
     private static final Button[][] gridButton = new Button[9][9];//buttons b11-b99
     private static SudokuGenerator initialGame = new SudokuGenerator(); //Generate an instance of class SudokuGenerator.
     String[][] Sudoku = new String[9][9];
@@ -1430,19 +1433,19 @@ public class MainActivity extends AppCompatActivity {
                 myList.add(file.getName());
             }
         }
+        gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
         builder.setSingleChoiceItems(myList.toArray(new String[myList.size()]), -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent;
                 intent = new Intent(MainActivity.this, Words_Selection.class);
                 intent.putExtra("PICK_FILE", myList.get(which));
+                intent.putExtra(KEY_GRID_SIZE,gridSize);
                 intent.putExtra(EXTRA_MESSAGE, msg);
                 startActivityForResult(intent, 1);
+                dialog.dismiss();
             }
         });
-
-
-
 
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
