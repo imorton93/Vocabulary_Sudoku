@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     DBHelper mDBHelper = new DBHelper(this);
     Menu menu;
     //Begin of variables for listen mode
-    private final String[] l_numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}; //The string array for listen comprehension mode
+    private String[] l_numbers = null; //The string array for listen comprehension mode
     private int remain_nums = 0;
     private int l_number = 0; //a variable for listen mode functions
     String[] assigned; //For listen mode
@@ -269,19 +269,37 @@ public class MainActivity extends AppCompatActivity {
         Sudoku_temp = new String[gridSize][gridSize];
         Sudoku_user = new String[gridSize][gridSize];
         preset = new int[(int)Math.pow(gridSize,2)];
+        l_numbers = new String[gridSize];
+        for (int i = 0; i < gridSize; i++ ){
+            l_numbers[i] = String.valueOf(i);
+        }
         assigned = new String[gridSize]; //For listen mode
         //initial gameGrid
         //show words in button
-        for (int x = 0; x < gridSize; x++) {
-            for (int y = 0; y < gridSize; y++) {
-                String buttonID = "b" + (x+1) + (y+1);
-                int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-                gridButton[x][y] = findViewById(resID);
+        if (gridSize == 12){
+            for (int x = 0; x < gridSize; x++) {
+                for (int y = 0; y < gridSize; y++) {
+                    String buttonID = "b" + (x+1) + "_"+ (y+1);
+                    int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+                    gridButton[x][y] = findViewById(resID);
+                }
+                String wordButton = "button" + (x+1);
+                int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
+                Button_ids[x] = findViewById(ID);
             }
-            String wordButton = "button" + (x+1);
-            int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
-            Button_ids[x] = findViewById(ID);
+        }else{
+            for (int x = 0; x < gridSize; x++) {
+                for (int y = 0; y < gridSize; y++) {
+                    String buttonID = "b" + (x+1) + (y+1);
+                    int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+                    gridButton[x][y] = findViewById(resID);
+                }
+                String wordButton = "button" + (x+1);
+                int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
+                Button_ids[x] = findViewById(ID);
+            }
         }
+
 
 
         //store words from String Resources

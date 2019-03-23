@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.File;
@@ -15,12 +14,12 @@ import java.util.ArrayList;
 import com.example.myapplication.R;
 
 
-public class customListAdapter extends BaseAdapter {
+public class dialogListAdapter extends BaseAdapter {
     Context mContext;
     ArrayList<String> mList = new ArrayList<>();
     private LayoutInflater mInflater;
 
-    public customListAdapter(Context context, ArrayList<String> list){
+    public dialogListAdapter(Context context, ArrayList<String> list){
         this.mList = list;
         this.mContext = context;
         this.mInflater = LayoutInflater.from(mContext);

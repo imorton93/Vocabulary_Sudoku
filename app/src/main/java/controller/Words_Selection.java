@@ -136,8 +136,13 @@ public class Words_Selection extends AppCompatActivity {
                     tv[i] = new TextView(this);
                     tv[i].setText("");
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                    params.width = 145;
-                    params.height = 90;
+                    if(gridSize == 12){
+                        params.width = 145;
+                        params.height = 90;
+                    }else{
+                        params.width = 175;
+                        params.height = 90;
+                    }
                     tv[i].setLayoutParams(params);
                     tv[i].setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
                     tv[i].setBackgroundColor(Color.GRAY);

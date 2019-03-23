@@ -31,10 +31,8 @@ import java.util.ArrayList;
 
 import Model.WordsPairs;
 import View.customGridAdapter;
-import View.customListAdapter;
+import View.dialogListAdapter;
 import com.example.myapplication.R;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class Load_Pairs extends AppCompatActivity {
 
@@ -145,7 +143,7 @@ public class Load_Pairs extends AppCompatActivity {
                     }
                 }
                ListView dialog_listview = new ListView(Load_Pairs.this);
-               dialog_listview.setAdapter(new customListAdapter(Load_Pairs.this, myList));
+               dialog_listview.setAdapter(new dialogListAdapter(Load_Pairs.this, myList));
                builder.setView(dialog_listview);
                builder.setNegativeButton("CANCEL", null);
 
