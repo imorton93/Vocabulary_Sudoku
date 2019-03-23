@@ -25,7 +25,7 @@ import Model.WordsPairs;
 public class customGridAdapter extends BaseAdapter {
     public ArrayList<WordsPairs> words = new ArrayList<WordsPairs>();
     private LayoutInflater mInflater;
-    Context mContext;
+    private Context mContext;
 
     public customGridAdapter(Context context, ArrayList<WordsPairs> items) {
         this.mContext = context;

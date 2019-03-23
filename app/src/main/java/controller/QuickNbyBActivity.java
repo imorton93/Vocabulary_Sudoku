@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -1311,39 +1312,27 @@ public class QuickNbyBActivity extends AppCompatActivity {
         builder.setTitle("Choose a words list");
 
         // add a radio button list
-        String[] filename;
-        ArrayList<WordsPairs> list = mDBHelper.getImportedData();
-        if (mDBHelper.getImportedData().isEmpty()){
-            filename = new String[]{"Default"};
-        }else{
-            filename = new String[]{"Default", "Uploaded"};
+        final ArrayList<String> myList = new ArrayList<>();
+        myList.add("default");
+        File dir = new File(getFilesDir().getPath());
+        File[] aList = dir.listFiles();
+        if(aList != null){
+            for(File file: aList){
+                myList.add(file.getName());
+            }
         }
-
-        builder.setItems(filename, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(myList.toArray(new String[myList.size()]), -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // user checked an item
                 Intent intent;
-                switch (which) {
-                    case 0: //defalut_words_list
-                        intent = new Intent(QuickNbyBActivity.this, Words_Selection.class);
-                        intent.putExtra("PICK_FILE", true);
-                        intent.putExtra(EXTRA_MESSAGE, msg);
-                        startActivityForResult(intent, 1);
-                        Toast.makeText(QuickNbyBActivity.this,
-                                "You chose default words list", Toast.LENGTH_LONG).show();
-                        break;
-                    case 1: //uploaded_words_file
-                        intent = new Intent(QuickNbyBActivity.this, Words_Selection.class);
-                        intent.putExtra("PICK_FILE", false);
-                        intent.putExtra(EXTRA_MESSAGE, msg);
-                        startActivityForResult(intent, 1);
-                        Toast.makeText(QuickNbyBActivity.this,
-                                "You chose Uploaded words list", Toast.LENGTH_LONG).show();
-                        break;
-                }
+                intent = new Intent(QuickNbyBActivity.this, Words_Selection.class);
+                intent.putExtra("PICK_FILE", myList.get(which));
+                intent.putExtra(EXTRA_MESSAGE, msg);
+                startActivityForResult(intent, 1);
             }
         });
+
+
 
 
         // create and show the alert dialog

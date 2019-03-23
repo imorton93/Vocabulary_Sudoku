@@ -2,7 +2,6 @@ package controller;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -17,6 +16,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +29,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import Model.DBHelper;
 import Model.WordsPairs;
 import View.customGridAdapter;
+import View.customListAdapter;
 import com.example.myapplication.R;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
@@ -127,26 +127,35 @@ public class Load_Pairs extends AppCompatActivity {
         //Button to set up a Eng game with words that users type in
         //more codes coming
         //store data into database
-        Button back_fill_span = (Button) findViewById(R.id.back_fill_span);
-        back_fill_span.setOnClickListener(new View.OnClickListener() {
+        Button edit = (Button) findViewById(R.id.edit_file);
+        edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                message = "SPAN";
-                setWordsList(message,mPairs);
+               AlertDialog.Builder builder = new AlertDialog.Builder(Load_Pairs.this);
+               builder.setCancelable(false);
+               builder.setTitle("Words List");
+                // add a radio button list
+                final ArrayList<String> myList = new ArrayList<>();
+                myList.add("default");
+                File dir = new File(getFilesDir().getPath());
+                File[] aList = dir.listFiles();
+                if(aList != null){
+                    for(File file: aList){
+                        myList.add(file.getName());
+                    }
+                }
+               ListView dialog_listview = new ListView(Load_Pairs.this);
+               dialog_listview.setAdapter(new customListAdapter(Load_Pairs.this, myList));
+               builder.setView(dialog_listview);
+               builder.setNegativeButton("CANCEL", null);
+
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
-        //Button to set up a Span game with words that users type in
-        //more codes coming
-        //store data into database
-        Button back_fill_eng = (Button) findViewById(R.id.back_fill_eng);
-        back_fill_eng.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                message = "ENG";
-                setWordsList(message,mPairs);
-            }
-        });
+
 
         //Button save to save a file with uploaded words from users
         final Button save = (Button) findViewById(R.id.save);
@@ -216,26 +225,6 @@ public class Load_Pairs extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    //pass words that user select to Words_Selection
-    private void setWordsList(String msg, ArrayList<WordsPairs> words) {
-        Intent data = new Intent(this, Words_Selection.class);
-        ArrayList<String> lists = new ArrayList<>();
-        for (int i = 0; i < words.size(); i++){
-            String tmp = words.get(i).getENG() + "," + words.get(i).getSPAN();
-            lists.add(tmp);
-            Log.d(TAG, "TMP is    " + lists.get(i));
-        }
-        //
-        data.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-        data.putExtra(EXTRA_MESSAGE, "LOAD");
-        //pass "ENG" or "SPAN" back
-        data.putExtra("LANGUAGE", msg);
-        //pass what user loaded
-        data.putStringArrayListExtra("LOAD_WORDS_LIST", lists);
-        startActivity(data);
-        finish();
     }
 
     //read file

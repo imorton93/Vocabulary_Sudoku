@@ -55,20 +55,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/back_fill_span"
+            android:id="@+id/edit_file"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="START TO FILL SPANISH"
+            android:text="EDIT EXISTED LISTS"
             />
 
         <Button
-            android:id="@+id/back_fill_eng"
-            android:layout_width="fill_parent"
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="START TO FILL ENGLISH"
-            />
+            android:layout_gravity="center_horizontal"
+            android:text="LOAD MORE WORDS" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -84,12 +84,7 @@
             android:layout_gravity="center_horizontal"
             android:text="SAVE" />
 
-        <Button
-            android:id="@+id/more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="LOAD MORE WORDS" />
+
 
         <Button
             android:id="@+id/back"
