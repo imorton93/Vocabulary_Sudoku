@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import com.example.myapplication.R;
 
 import Model.DBHelper;
-import Model.GridAdapter;
+import View.GridAdapter;
 import Model.WordsPairs;
 
 import static android.app.PendingIntent.getActivity;

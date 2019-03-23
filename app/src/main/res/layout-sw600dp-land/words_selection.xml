@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignBaseline="@id/button_words"
+            android:id="@+id/tv_view"
+            android:textColor="@android:color/white"
+            android:textSize="19dp"
+            android:textColorHighlight="@android:color/primary_text_light"
+            />
+
+        <Button
+            android:id="@+id/button_words"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tv_view"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="830dp"
+            android:layout_alignStart="@id/tv_view"
+            android:layout_marginStart="830dp" />
+
+    </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:useDefaultMargins="true"
+        android:padding="3dp">
+
+        <Button
+            android:id="@+id/prev"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:text="@string/prev" />
+        <GridView
+            android:id="@+id/selection_view"
+            android:layout_width="824dp"
+            android:layout_height="270dp"
+            android:horizontalSpacing="0.0dip"
+            android:listSelector="@null"
+            android:numColumns="9"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="0.0dip">
+
+        </GridView>
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:text="@string/next" />
+
+    </GridLayout>
+
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="3dp"
+        android:id="@+id/grid_layout"
+        android:useDefaultMargins="true">
+
+
+    </GridLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="3dp">
+
+        <Button
+            android:id="@+id/undo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/undo"/>
+
+        <Button
+            android:id="@+id/start_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/start_game"/>
+
+
+
+    </GridLayout>
+
+</LinearLayout>

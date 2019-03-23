@@ -11,14 +11,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +26,8 @@ import java.util.ArrayList;
 
 import Model.DBHelper;
 import Model.WordsPairs;
-import Model.customGridAdapter;
+import View.customGridAdapter;
 import com.example.myapplication.R;
-
-import controller.MainActivity;
-import controller.Words_Selection;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 

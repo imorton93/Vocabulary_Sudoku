@@ -1,4 +1,4 @@
-package Model;
+package View;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
+
+import Model.WordsPairs;
 
 public class customGridAdapter extends BaseAdapter {
     public ArrayList<WordsPairs> words = new ArrayList<WordsPairs>();
