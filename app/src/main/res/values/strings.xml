@@ -10,6 +10,7 @@
     <string name="how_to_use">How To Use This App</string>
     <string name="load_new_words">Load New Word Pairs</string>
 
+    <string name="t_2by2grid">4 x 4 Grid</string>
     <string name="n_3by3grid">9 x 9 Grid</string>
     <string name="n_2by3grid">6 x 6 Grid</string>
     <string name="n_3by4grid">12 x 12 Grid</string>
