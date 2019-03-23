@@ -1,4 +1,4 @@
-package Model;
+package controller;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -32,6 +32,8 @@ import Model.DBHelper;
 import Model.WordsPairs;
 import Model.customGridAdapter;
 import com.example.myapplication.R;
+
+import controller.MainActivity;
 import controller.Words_Selection;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;

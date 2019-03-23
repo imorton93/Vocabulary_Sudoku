@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.example.myapplication.R;
+
 import java.util.ArrayList;
 
 public class customGridAdapter extends BaseAdapter {
@@ -45,7 +47,7 @@ public class customGridAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.list_item, parent, false);
+            convertView = mInflater.inflate(R.layout.grid_item, parent, false);
             holder.mPairs = words.get(position);
             holder.edit1 = (EditText) convertView.findViewById(R.id.item_edit1);
             holder.edit2 = (EditText) convertView.findViewById(R.id.item_edit2);

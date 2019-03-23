@@ -50,7 +50,7 @@
             android:layout_height="190dp"
             android:horizontalSpacing="0.0dip"
             android:listSelector="@null"
-            android:numColumns="10"
+            android:numColumns="9"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:stretchMode="columnWidth"
             android:verticalSpacing="0.0dip">
@@ -73,71 +73,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:useDefaultMargins="true"
+        android:id="@+id/grid_layout"
         android:padding="3dp">
 
 
-        <TextView
-            android:id="@+id/tv1"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@android:color/darker_gray"
-            />
-
-        <TextView
-            android:id="@+id/tv2"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@android:color/darker_gray"
-            />
-
-        <TextView
-            android:id="@+id/tv3"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@android:color/darker_gray"
-            />
-
-        <TextView
-            android:id="@+id/tv4"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@android:color/darker_gray"
-            />
-
-        <TextView
-            android:id="@+id/tv5"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@android:color/darker_gray"
-            />
-
-        <TextView
-            android:id="@+id/tv6"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@android:color/darker_gray"
-            />
-
-        <TextView
-            android:id="@+id/tv7"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@android:color/darker_gray"
-            />
-
-        <TextView
-            android:id="@+id/tv8"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@android:color/darker_gray"
-            />
-
-        <TextView
-            android:id="@+id/tv9"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@android:color/darker_gray"
-            />
 
     </GridLayout>
 

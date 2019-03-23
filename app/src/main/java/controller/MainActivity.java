@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import Model.DBHelper;
 import com.example.myapplication.R;
+
+import controller.Load_Pairs;
 import Model.SudokuChecker;
 import Model.SudokuGenerator;
 import Model.WordsPairs;

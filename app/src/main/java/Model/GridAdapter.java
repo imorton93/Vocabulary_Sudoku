@@ -1,12 +1,15 @@
 package Model;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,17 +68,32 @@ public class GridAdapter extends BaseAdapter {
         textView.setGravity(Gravity.CENTER);
 
         //Calculation of TextView Size - density independent.
-        Resources r = Resources.getSystem();
-        float px;
-        if (getCount() ==  81){
-             px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 45, r.getDisplayMetrics());
-        }else{
-             px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, r.getDisplayMetrics());
+        Display display = ((Activity)mContext).getWindowManager().getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+        Resources resources = mContext.getResources();
+
+        View gridview = (GridView) parent;
+        int  width = gridview.getWidth();
+        int  height = gridview.getHeight();
+        int orientation = mContext.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // In landscape
+            textView.setLayoutParams(new GridView.LayoutParams((int)width/9,(int)height/4));
+        } else {
+            // In portrait
+            textView.setLayoutParams(new GridView.LayoutParams((int)width/6,(int)height/6));
         }
-        textView.setLayoutParams(new GridView.LayoutParams((int)px, (int)px));
-       // textView.setLayoutParams(new GridView.LayoutParams(144, 144));
+
+        if (getCount() ==  81){
+            width = display.getWidth()/9;
+            height = display.getHeight()/9;
+            textView.setLayoutParams(new GridView.LayoutParams((int)width,(int)height));
+        }
+
         textView.setBackgroundResource(R.drawable.grid_items_border);
 
         return textView;
+
     }
 }

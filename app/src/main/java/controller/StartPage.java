@@ -11,6 +11,8 @@ import com.example.myapplication.R;
 
 import java.util.Set;
 
+import controller.Load_Pairs;
+
 public class StartPage extends AppCompatActivity {
     Boolean from_start = true;
     private static final String KEY_from_start = "from_start";

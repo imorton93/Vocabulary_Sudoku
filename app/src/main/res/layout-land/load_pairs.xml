@@ -34,15 +34,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:background="@android:color/background_light">
 
-        <ListView
-            android:id="@+id/words_eng_list"
+        <GridView
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:descendantFocusability="beforeDescendants">
-        </ListView>
+            android:layout_height="match_parent"
+            android:id="@+id/grid_load"
+            android:numColumns="1">
+
+        </GridView>
 
 
     </RelativeLayout>
@@ -64,7 +65,7 @@
             android:id="@+id/back_fill_eng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:layout_gravity="center"
+            android:layout_gravity="center"
             android:text="START TO FILL ENGLISH"
             />
 
@@ -79,7 +80,7 @@
             android:id="@+id/more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:layout_gravity="left"
+            android:layout_gravity="left"
             android:text="LOAD MORE WORDS" />
 
         <Button
