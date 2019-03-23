@@ -11,14 +11,19 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -340,63 +345,69 @@ public class Load_Pairs extends AppCompatActivity {
     //open database
     //save words into a table
     public void saveUploadedFile(final ArrayList<WordsPairs> words) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Do you want to save your loaded words?");
-        alertDialogBuilder.setPositiveButton(
-                "yes",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        //create a file located in internal storage
-                      /*  try {
-                            FileOutputStream fOut = openFileOutput("upload_wordspairs.txt",MODE_PRIVATE);
-                            for (int i = 0; i < strings.size(); i++){
-                                String tmp = strings.get(i) + "\n";
-                                fOut.write(tmp.getBytes());
-                            }
-                            fOut.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }*/
+        if (words.size() == 0){
+            Toast.makeText(Load_Pairs.this,
+                    "No words to save.", Toast.LENGTH_LONG).show();
+        }else{
+            final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_item, null);
 
-                        if (words.size() == 0){
-                            Toast.makeText(Load_Pairs.this,
-                                    "No words to save.", Toast.LENGTH_LONG).show();
+            final EditText editText = (EditText) dialogView.findViewById(R.id.edt_file);
+            Button save = (Button) dialogView.findViewById(R.id.buttonSave);
+            Button cancel = (Button) dialogView.findViewById(R.id.buttonCancel);
+            save.setText("SAVE");
+            cancel.setText("CANCEL");
+            dialogBuilder.setTitle("SAVE AS (0-9,a-z, A-Z)");
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogBuilder.dismiss();
+                }
+            });
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // DO SOMETHINGS
+                    String filename = editText.getText().toString();
+                    if (filename.equals("")){
+                        editText.setError("This field can not be blank");
+                    }else{
+                        //check if file already exists
+                        File file = new File(getApplicationContext().getFilesDir(),filename);
+                        if(file.exists()){
+                            editText.setError("This field already exists");
                         }else{
-                            //save to database
-                            //
-                            DBHelper mDB = new DBHelper(Load_Pairs.this);
-                            // mDB.onDestroy();
-                            for (int i = 0; i < words.size(); i++){
-                                if (!mDB.hasImported(new WordsPairs(words.get(i).getENG(),words.get(i).getSPAN(),0))){
-                                    mDB.importWord(new WordsPairs(words.get(i).getENG(),words.get(i).getSPAN(),0));
+                            //create a file located in internal storage
+                            try {
+                                FileOutputStream fOut = openFileOutput(filename, MODE_PRIVATE);
+                                for (int i = 0; i < strings.size(); i++){
+                                    String tmp = strings.get(i) + "\n";
+                                    fOut.write(tmp.getBytes());
                                 }
+                                fOut.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                             Toast.makeText(Load_Pairs.this,
-                                    "Your file is saved.", Toast.LENGTH_LONG).show();
-                            mDB.close();
-                        }
+                                    "Your file is successfully saved.", Toast.LENGTH_LONG).show();
 
-                        DBHelper mDB = new DBHelper(Load_Pairs.this);
-
-                        ArrayList<WordsPairs> arrayList = mDB.getImportedData();
-                        for (int i = 0; i < arrayList.size(); i++){
-                            Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
-                                    arrayList.get(i).getSPAN()+"  ");
+                            dialogBuilder.dismiss();
                         }
                     }
-                });
-        alertDialogBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+                }
+            });
+
+            dialogBuilder.setView(dialogView);
+            dialogBuilder.show();
+
+            Toast.makeText(Load_Pairs.this,
+                    "Your file is saved.", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     //store words while onDestroy

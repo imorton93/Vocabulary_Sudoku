@@ -68,10 +68,10 @@ public class Words_Selection extends AppCompatActivity {
     int[] pre_pos = new int[9];
     //show/hide wrong words from users
     Boolean isShown = false;
-    Boolean is_default;
     private int gridSize;
 
     DBHelper mDBHelper = new DBHelper(this);
+    private String filename;
 
 
     @SuppressLint("Assert")
@@ -176,27 +176,18 @@ public class Words_Selection extends AppCompatActivity {
             strings = getIntent().getStringArrayListExtra("LOAD_WORDS_LIST");
         }else{
             Uri uri;
-            is_default = getIntent().getBooleanExtra("PICK_FILE", true);
-            if (is_default){
+            filename = getIntent().getStringExtra("PICK_FILE");
+            if (filename.equals("default")){
                 //retrieve words from text file wordpairs
                 uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
-                try {
-                    strings = readTextFromUri(uri);
-                    for (int i = 0; i < strings.size(); i++){
-                        //   Log.d(TAG,"STRINGS FROM UPLOAD FILE ARE " + strings.get(i));
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }else{
                 //retrieve words from file uploaded by user
-                //uri = Uri.fromFile(getFileStreamPath("upload_wordspairs.txt"));
-                ArrayList<WordsPairs> arrayList = mDBHelper.getImportedData();
-                for (int i = 0; i < arrayList.size(); i++){
-                    strings.add(arrayList.get(i).getENG()+","+arrayList.get(i).getSPAN());
-                    //  Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
-                    //      arrayList.get(i).getSPAN()+"  ");
-                }
+                uri = Uri.fromFile(getFileStreamPath(filename));
+            }
+            try {
+                strings = readTextFromUri(uri);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         numPages = strings.size()/36 + 1;

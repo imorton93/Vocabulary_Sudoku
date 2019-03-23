@@ -7,25 +7,17 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class GridAdapter extends BaseAdapter {
     private Context mContext;
