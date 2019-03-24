@@ -32,19 +32,29 @@
             android:id="@+id/button1"
             android:layout_width="125dp"
             android:layout_height="70dp"
+            android:maxLines="1"
             android:onClick="insertButtonOnClick"
             android:text="@string/B_1"
             android:textAllCaps="false"
-            android:textSize="24sp" />
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize = "24sp"
+            app:autoSizeMinTextSize = "16sp"
+            app:autoSizeStepGranularity = "2sp"
+            app:layout_column="0"
+            app:layout_row="0" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="125dp"
             android:layout_height="70dp"
+            android:maxLines="1"
             android:onClick="insertButtonOnClick"
             android:text="@string/B_2"
             android:textAllCaps="false"
-            android:textSize="24sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize = "24sp"
+            app:autoSizeMinTextSize = "16sp"
+            app:autoSizeStepGranularity = "2sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -52,10 +62,14 @@
             android:id="@+id/button3"
             android:layout_width="125dp"
             android:layout_height="70dp"
+            android:maxLines="1"
             android:onClick="insertButtonOnClick"
             android:text="@string/B_3"
             android:textAllCaps="false"
-            android:textSize="24sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize = "24sp"
+            app:autoSizeMinTextSize = "16sp"
+            app:autoSizeStepGranularity = "2sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -63,10 +77,14 @@
             android:id="@+id/button4"
             android:layout_width="125dp"
             android:layout_height="70dp"
+            android:maxLines="1"
             android:onClick="insertButtonOnClick"
             android:text="@string/B_4"
             android:textAllCaps="false"
-            android:textSize="24sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize = "24sp"
+            app:autoSizeMinTextSize = "16sp"
+            app:autoSizeStepGranularity = "2sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -74,9 +92,13 @@
             android:id="@+id/button10"
             android:layout_width="125dp"
             android:layout_height="70dp"
+            android:maxLines="1"
             android:onClick="clearButtonOnClick"
             android:text="@string/clear_button"
-            android:textSize="24sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize = "24sp"
+            app:autoSizeMinTextSize = "16sp"
+            app:autoSizeStepGranularity = "2sp"
             app:layout_column="3"
             app:layout_row="0" />
 
@@ -85,8 +107,12 @@
             android:layout_width="125dp"
             android:layout_height="70dp"
             android:longClickable="false"
+            android:maxLines="1"
             android:text="@string/fin_button"
-            android:textSize="24sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize = "24sp"
+            app:autoSizeMinTextSize = "16sp"
+            app:autoSizeStepGranularity = "2sp"
             app:layout_column="3"
             app:layout_row="1" />
 

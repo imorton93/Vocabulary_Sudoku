@@ -2,7 +2,6 @@ package controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +9,8 @@ import android.widget.Button;
 import com.example.myapplication.R;
 
 import java.util.Set;
+
+import controller.Load_Pairs;
 
 public class StartPage extends AppCompatActivity {
     Boolean from_start = true;

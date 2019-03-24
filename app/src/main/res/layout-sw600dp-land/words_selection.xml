@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@color/colorAccent">
         <TextView
             android:layout_width="wrap_content"
@@ -25,9 +25,9 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_view"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="500dp"
+            android:layout_marginLeft="830dp"
             android:layout_alignStart="@id/tv_view"
-            android:layout_marginStart="500dp" />
+            android:layout_marginStart="830dp" />
 
     </RelativeLayout>
 
@@ -36,18 +36,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:useDefaultMargins="true"
-        android:padding="1dp">
+        android:padding="3dp">
 
         <Button
             android:id="@+id/prev"
-            android:layout_width="45dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:text="@string/prev" />
         <GridView
             android:id="@+id/selection_view"
-            android:layout_width="550dp"
-            android:layout_height="190dp"
+            android:layout_width="824dp"
+            android:layout_height="270dp"
             android:horizontalSpacing="0.0dip"
             android:listSelector="@null"
             android:numColumns="9"
@@ -59,7 +59,7 @@
 
         <Button
             android:id="@+id/next"
-            android:layout_width="45dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
             android:text="@string/next" />
@@ -67,15 +67,13 @@
     </GridLayout>
 
 
-
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:useDefaultMargins="true"
+        android:padding="3dp"
         android:id="@+id/grid_layout"
-        android:padding="3dp">
-
+        android:useDefaultMargins="true">
 
 
     </GridLayout>

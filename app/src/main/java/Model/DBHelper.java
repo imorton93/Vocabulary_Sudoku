@@ -32,7 +32,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME_WRONG + "( English TEXT, Spanish TEXT, wrongTotal INTEGER)");
-        db.execSQL("CREATE TABLE " + TABLE_NAME_IMPORT+ "( English TEXT, Spanish TEXT)");
         Log.d(TAG,"Created");
         Log.i("MYDB", "onCreate " + VERSION);
     }
@@ -42,7 +41,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_WRONG);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_IMPORT);
         Log.d(TAG,"deleted");
         Log.i("MYDB", "onUpgrade: old " + oldVersion + " new " + newVersion);
         onCreate(db);
@@ -53,15 +51,6 @@ public class DBHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    //save words that uploaded by users
-    public void importWord (WordsPairs mPairs) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(ENG,mPairs.getENG());
-        contentValues.put(SPAN,mPairs.getSPAN());
-        db.insert(TABLE_NAME_IMPORT,null,contentValues);
-        Log.d(TAG, "addData: Adding " + mPairs.getENG()+ mPairs.getSPAN() + " to " + TABLE_NAME_IMPORT);
-    }
 
     //keep track of words which users get wrong
     public void updateWrongWord (WordsPairs mPairs) {
@@ -102,19 +91,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return hasWord;
     }
 
-    public boolean hasImported(WordsPairs mPairs){
-        SQLiteDatabase db = this.getWritableDatabase();
-        boolean hasWord = false;
-        Cursor data = db.query(TABLE_NAME_IMPORT, new String[]{ENG, SPAN},  "English =? and Spanish =?",
-                new String[]{mPairs.getENG(), mPairs.getSPAN()},null,null,null);
-
-        if(data.getCount() > 0){
-            Log.d(TAG, "\"Already Exist!\"" + data.getCount());
-            hasWord = true;
-        }
-        data.close();
-        return hasWord;
-    }
 
     //return total number that user get wrong
     public int numWrong(WordsPairs mPairs){
@@ -144,30 +120,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onDestroy(){
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_WRONG);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_IMPORT);
         onCreate(db);
     }
 
     //fetch all data
-    public ArrayList<WordsPairs> getImportedData(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT  (English), (Spanish) FROM " + TABLE_NAME_IMPORT;
-        Cursor data = db.rawQuery(query, null);
-
-        ArrayList<WordsPairs> words = new ArrayList();
-        if (data.moveToFirst()) {
-            //Loop through the table rows
-            do {
-                WordsPairs mPairs = new WordsPairs();
-                mPairs.setENG(data.getString(0));
-                mPairs.setSPAN(data.getString(1));
-                words.add(mPairs);
-            } while (data.moveToNext());
-        }
-        data.close();
-        return words;
-    }
-
     public ArrayList<WordsPairs> getData(){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT  (English), (Spanish), (wrongTotal) FROM " + TABLE_NAME_WRONG;
