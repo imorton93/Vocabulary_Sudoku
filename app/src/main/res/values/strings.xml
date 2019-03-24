@@ -18,6 +18,16 @@
 
     <string name="not_checked">Please check "Fill in English" or "Fill in Spanish" first</string>
 
+    <string name="guide">
+Descriptions:\n
+Normal Game Mode: User picks words first, and program will generate sudoku for user.\n
+Quick Game Mode: Generates sudoku with random words for user to play with.\n
+To get new words for normal or quick game mode: Go to menu -> pick new words -> pick new English words or pick new Spanish words \n
+Black text in Sudoku: Pre-filled text, user may not change this text \n
+Green text in Sudoku: Text that user entered \n
+Red text in Sudoku: Wrong text for the cell (yes, this serves as a hint) \n
+</string>
+
     <string name="app_name">Sudoku - Delta</string>
     <string name="clear_button">Clear</string>
     <string name="not_initialized">You have not initialized the game, to initialize,
