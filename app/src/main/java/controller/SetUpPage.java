@@ -31,6 +31,7 @@ public class SetUpPage extends AppCompatActivity {
     Button nine_by_nine = null;
     Button two_by_three = null;
     Button three_by_four = null;
+    Button two_by_two = null;
 
 
     @Override
@@ -61,6 +62,30 @@ public class SetUpPage extends AppCompatActivity {
                 }
             }
         });
+
+        two_by_two = findViewById(R.id.t2by2);
+        if ( two_by_two != null) {
+            two_by_two.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Start activity for intent page with two by three layout
+                    if (fill_English || fill_Spanish) {
+                        Intent t2by2 = new Intent(SetUpPage.this, MainActivity.class);
+                        t2by2.putExtra(KEY_fill_Eng, fill_English);
+                        t2by2.putExtra(KEY_fill_Span, fill_Spanish);
+                        t2by2.putExtra(KEY_Listen, listen_mode);
+                        t2by2.putExtra(KEY_GRID_SIZE, 4);
+                        startActivity(t2by2);
+                    }
+                    else{
+                        Toast need_check = Toast.makeText(SetUpPage.this ,
+                                R.string.not_checked,Toast.LENGTH_LONG);
+                        need_check.setGravity(Gravity.TOP, 0, 400);
+                        need_check.show();
+                    }
+                }
+            });
+        }
 
         two_by_three = findViewById(R.id.t2by3);
         two_by_three.setOnClickListener(new View.OnClickListener() {
