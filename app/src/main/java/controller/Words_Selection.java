@@ -2,23 +2,21 @@ package controller;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import Model.DBHelper;
-import Model.GridAdapter;
-import com.example.myapplication.R;
-import Model.WordsPairs;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +24,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import com.example.myapplication.R;
+
+import Model.DBHelper;
+import View.GridAdapter;
+import Model.WordsPairs;
+
+import static android.app.PendingIntent.getActivity;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class Words_Selection extends AppCompatActivity {
@@ -38,6 +43,7 @@ public class Words_Selection extends AppCompatActivity {
     private static final String WORDS_COUNT = "Words_Count";
     private static final String GRID_PRE_POSITION = "Pre_Position";
     private static final String IS_SHOWN_FLAG = "isShowFlag";
+    private static final String KEY_GRID_SIZE = "grid_size";
 
     //data structure
     ArrayList<String> eng_wordsList = new ArrayList<>();
@@ -51,7 +57,7 @@ public class Words_Selection extends AppCompatActivity {
     private int numPages;
     private int pages = 1;
     private String selectedItem;
-    final TextView[] tv = new TextView[9];
+    TextView[] tv = null;
     private int wordsCount = 0;
     //words selected by users will go to MainActivity
     ArrayList<WordsPairs> wordpairs = new ArrayList<>();
@@ -60,10 +66,10 @@ public class Words_Selection extends AppCompatActivity {
     //English or Spanish
     private String message;
     //keep track of whether button show/hide is activated
-    int[] pre_pos = new int[9];
+    int[] pre_pos;
     //show/hide wrong words from users
     Boolean isShown = false;
-    Boolean is_default;
+    private int gridSize;
 
     DBHelper mDBHelper = new DBHelper(this);
 
@@ -74,19 +80,84 @@ public class Words_Selection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.words_selection);
 
+        //grid size
+        gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
+        tv = new TextView[gridSize];
+        pre_pos = new int[gridSize];
+
         //declare TextView[] for showing words
-        for (int x = 0; x < 9; x++) {
-            String tvID = "tv" + (x + 1);
-            int resID = getResources().getIdentifier(tvID, "id", getPackageName());
-            tv[x] = findViewById(resID);
+        //programmatically spawn textview according to different size of Sudoku
+        GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layout);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int density = metrics.densityDpi;
+        int  width = gridLayout.getWidth();
+        int  height = gridLayout.getHeight();
+        int row = (int)Math.sqrt(gridSize);
+        int col = gridSize/row;
+
+        int orientation = this.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            gridLayout.setColumnCount(col);
+            gridLayout.setRowCount(row);
+            for (int i = 0; i < gridSize; i++){
+                tv[i] = new TextView(this);
+                tv[i].setText("");
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.width = 225;
+                params.height = 95;
+                tv[i].setLayoutParams(params);
+                tv[i].setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                tv[i].setBackgroundColor(Color.GRAY);
+                tv[i].setTextColor(Color.WHITE);
+                gridLayout.addView(tv[i]);
+            }
+        }else{
+            if ((getResources().getConfiguration().screenLayout &
+                    Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                    Configuration.SCREENLAYOUT_SIZE_XLARGE){
+                gridLayout.setColumnCount(col);
+                gridLayout.setRowCount(row);
+                for (int i = 0; i < gridSize; i++){
+                    tv[i] = new TextView(this);
+                    tv[i].setText("");
+                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                    params.width = 225;
+                    params.height = 95;
+                    tv[i].setLayoutParams(params);
+                    tv[i].setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                    tv[i].setBackgroundColor(Color.GRAY);
+                    tv[i].setTextColor(Color.WHITE);
+                    gridLayout.addView(tv[i]);
+                }
+            }else{
+                gridLayout.setColumnCount(gridSize);
+                for (int i = 0; i < gridSize; i++) {
+                    tv[i] = new TextView(this);
+                    tv[i].setText("");
+                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                    if(gridSize == 12){
+                        params.width = 145;
+                        params.height = 90;
+                    }else{
+                        params.width = 175;
+                        params.height = 90;
+                    }
+                    tv[i].setLayoutParams(params);
+                    tv[i].setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                    tv[i].setBackgroundColor(Color.GRAY);
+                    tv[i].setTextColor(Color.WHITE);
+                    gridLayout.addView(tv[i]);
+                }
+            }
         }
 
         if (savedInstanceState != null) {
             pages = savedInstanceState.getInt(PAGE);
             Log.d(TAG, "PAGE IS  "+ pages);
             wordpairs = savedInstanceState.getParcelableArrayList(WORDSLIST);
-           // wordsList_eng = savedInstanceState.getStringArray(WORDSLIST_ENG);
-           // wordsList_span = savedInstanceState.getStringArray(WORDSLIST_SPAN);
+            // wordsList_eng = savedInstanceState.getStringArray(WORDSLIST_ENG);
+            // wordsList_span = savedInstanceState.getStringArray(WORDSLIST_SPAN);
             message = savedInstanceState.getString(MESSAGE_LANGUAGE);
             wordsCount = savedInstanceState.getInt(WORDS_COUNT);
             pre_pos = savedInstanceState.getIntArray(GRID_PRE_POSITION);
@@ -103,7 +174,7 @@ public class Words_Selection extends AppCompatActivity {
                 Log.d(TAG, "WORD LIST ENG IS "+wordpairs.get(i).getENG());
                 Log.d(TAG, "WORD LIST SPAN IS "+wordpairs.get(i).getSPAN());
                 //Log.d(TAG, "WORD LIST ENG IS "+wordsList_eng[i]);
-               // Log.d(TAG, "WORD LIST SPAN IS "+wordsList_span[i]);
+                // Log.d(TAG, "WORD LIST SPAN IS "+wordsList_span[i]);
             }
         }
         TextView textView = (TextView)findViewById(R.id.tv_view);
@@ -117,30 +188,21 @@ public class Words_Selection extends AppCompatActivity {
             strings = getIntent().getStringArrayListExtra("LOAD_WORDS_LIST");
         }else{
             Uri uri;
-            is_default = getIntent().getBooleanExtra("PICK_FILE", true);
-            if (is_default){
+            String filename = getIntent().getStringExtra("PICK_FILE");
+            if (filename.equals("default")){
                 //retrieve words from text file wordpairs
                 uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
-                try {
-                    strings = readTextFromUri(uri);
-                    for (int i = 0; i < strings.size(); i++){
-                     //   Log.d(TAG,"STRINGS FROM UPLOAD FILE ARE " + strings.get(i));
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }else{
                 //retrieve words from file uploaded by user
-                //uri = Uri.fromFile(getFileStreamPath("upload_wordspairs.txt"));
-                ArrayList<WordsPairs> arrayList = mDBHelper.getImportedData();
-                for (int i = 0; i < arrayList.size(); i++){
-                    strings.add(arrayList.get(i).getENG()+","+arrayList.get(i).getSPAN());
-                  //  Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
-                      //      arrayList.get(i).getSPAN()+"  ");
-                }
+                uri = Uri.fromFile(getFileStreamPath(filename));
+            }
+            try {
+                strings = readTextFromUri(uri);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        numPages = strings.size()/30 + 1;
+        numPages = strings.size()/36 + 1;
         setWordsList(strings,pages);
 
         final String msg;
@@ -157,7 +219,7 @@ public class Words_Selection extends AppCompatActivity {
                 break;
             case "LOAD":
 
-               break;
+                break;
         }
 
         selectWords();
@@ -172,8 +234,8 @@ public class Words_Selection extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (wordsCount < 9){
-                    Toast.makeText(Words_Selection.this, "You MUST select 9 words to start a new game.",
+                if (wordsCount < gridSize){
+                    Toast.makeText(Words_Selection.this, "You MUST select " +gridSize+" words to start a new game.",
                             Toast.LENGTH_LONG).show();
                 }else{
                     //setStartList(message, wordsList_eng,wordsList_span);
@@ -190,10 +252,10 @@ public class Words_Selection extends AppCompatActivity {
         assert strings != null;
 
         //if has 30 words to get a complete page
-        if (strings.size()-30*(pages-1) >= 30){
+        if (strings.size()-36*(pages-1) >= 36){
             int i = 0;
-            while (i + (pages - 1) * 30 < 30 * pages){
-                String[] words = strings.get(i+(pages-1)*30).split(",");
+            while (i + (pages - 1) * 36 < 36 * pages){
+                String[] words = strings.get(i+(pages-1)*36).split(",");
                 if (words.length < 2){
                     break;
                 }else{
@@ -221,7 +283,7 @@ public class Words_Selection extends AppCompatActivity {
             }
         }else{//display rest words if leaving less than 30 words
             int i = 0;
-            for (int k = (pages-1)*30; k < strings.size();k++){
+            for (int k = (pages-1)*36; k < strings.size();k++){
                 String[] words = strings.get(k).split(",");
                 if (words.length < 2){
                     break;
@@ -261,8 +323,8 @@ public class Words_Selection extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 //based on the position you have to get value
-                if (wordsCount >= 9){
-                    Toast.makeText(Words_Selection.this, "You already select 9 words. ",
+                if (wordsCount >= gridSize){
+                    Toast.makeText(Words_Selection.this, "You already select " + gridSize + " words. ",
                             Toast.LENGTH_LONG).show();
                 }else{
                     //get Gridview ID
@@ -285,7 +347,7 @@ public class Words_Selection extends AppCompatActivity {
                         }
                         tv[wordsCount].setGravity(Gravity.CENTER);
                         //keep track of position in which words are selected
-                        pre_pos[wordsCount] = position + (pages-1) * 30;
+                        pre_pos[wordsCount] = position + (pages-1) * 36;
                         wordsCount++;
                         TextView tv = (TextView) gridView.getChildAt(position);
                         tv.setText("");
@@ -313,14 +375,14 @@ public class Words_Selection extends AppCompatActivity {
                     wordpairs.remove(wordsCount);
                     //wordsList_eng[wordsCount] = null;
                     //wordsList_span[wordsCount] = null;
-                    int current_page = pre_pos[wordsCount]/30 + 1;
-                    int current_pos = pre_pos[wordsCount] - (pages -1) * 30;
+                    int current_page = pre_pos[wordsCount]/36 + 1;
+                    int current_pos = pre_pos[wordsCount] - (pages -1) * 36;
                     TextView undo_tv = (TextView) gridView.getChildAt(current_pos);
                     if (pages == current_page){
                         eng_wordsList_gridview.set(current_pos,tmp);
                         span_wordsList_gridview.set(current_pos, tmp);
                         if (isShown){
-                            if (lookForWrongWords(pre_pos[wordsCount] - (pages -1) * 30) ){
+                            if (lookForWrongWords(pre_pos[wordsCount] - (pages -1) * 36) ){
                                 if (tmp.contains(".wrong")){
                                     undo_tv.setText(tmp.replace(tmp.substring(tmp.length()-6), ""));
                                     undo_tv.setTextColor(Color.RED);
@@ -508,17 +570,10 @@ public class Words_Selection extends AppCompatActivity {
     //pass words that user select to MainActivity
     private void setStartList(String msg, ArrayList<WordsPairs> words) {
         Intent data = new Intent();
-        String[] lists = new String[9];
-       /* for (int i = 0; i < eng.length; i++){
-            String tmp = eng[i] + "-" + span[i];
-            lists[i] = tmp;
-            Log.d(TAG, "TMP is    " + lists[i]);
-        }*/
-
         data.putExtra("LANGUAGE", msg);
         //data.putExtra("EXTRA_WORDS_LIST", lists);
-        data.putExtra("EXTRA_WORDS_LIST", words);
-        for (int i = 0; i < 9; i++) {
+        data.putParcelableArrayListExtra("EXTRA_WORDS_LIST", words);
+        for (int i = 0; i < gridSize; i++) {
             Log.d(TAG, "Words ing selection ENG and SPAN are " + words.get(i).getENG() + "  " +words.get(i).getSPAN());
             Log.d(TAG, "Words in selection LANGUAGE msg is " + msg);
         }

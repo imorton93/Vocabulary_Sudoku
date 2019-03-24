@@ -1,26 +1,33 @@
-package Model;
+package View;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
+import Model.WordsPairs;
 
-public class listArrayAdapter extends BaseAdapter {
+public class customGridAdapter extends BaseAdapter {
     public ArrayList<WordsPairs> words = new ArrayList<WordsPairs>();
     private LayoutInflater mInflater;
-    Context mContext;
+    private Context mContext;
 
-    public listArrayAdapter(Context context, ArrayList<WordsPairs> items) {
+    public customGridAdapter(Context context, ArrayList<WordsPairs> items) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.words = items;
@@ -42,7 +49,7 @@ public class listArrayAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.list_item, parent, false);
+            convertView = mInflater.inflate(R.layout.grid_item, parent, false);
             holder.mPairs = words.get(position);
             holder.edit1 = (EditText) convertView.findViewById(R.id.item_edit1);
             holder.edit2 = (EditText) convertView.findViewById(R.id.item_edit2);
@@ -59,7 +66,45 @@ public class listArrayAdapter extends BaseAdapter {
 
         setupItem(holder, position);
 
+        setupItemView(convertView, parent);
+
+
         return convertView;
+    }
+
+    private void setupItemView(View convertView, ViewGroup parent) {
+        //Calculation of TextView Size - density independent.
+        Display display = ((Activity)mContext).getWindowManager().getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+        Resources resources = mContext.getResources();
+
+        int  height = ((GridView) parent).getHeight();
+        int orientation = mContext.getResources().getConfiguration().orientation;
+        if ( metrics.densityDpi == DisplayMetrics.DENSITY_XHIGH) {
+            // on a large screen device ...
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                // In landscape
+                convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)height/9));
+            } else {
+                // In portrait
+                if ((mContext.getResources().getConfiguration().screenLayout &
+                        Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                        Configuration.SCREENLAYOUT_SIZE_XLARGE){
+                    convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)height/14));
+                }else{
+                    convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)height/14));
+                }
+            }
+        }else {
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                // In landscape
+                convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)height/6));
+            } else {
+                convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height / 9));
+            }
+        }
+
     }
 
 
