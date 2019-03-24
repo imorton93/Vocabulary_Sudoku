@@ -300,8 +300,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
-
         //store words from String Resources
         //in case, order of String from String Resources may change
         //store in local variables

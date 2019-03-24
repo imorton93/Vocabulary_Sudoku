@@ -40,8 +40,6 @@ public class SetUpPage extends AppCompatActivity {
 
         setContentView(R.layout.setuppage);
 
-
-
         nine_by_nine = findViewById(R.id.n3by3);
         nine_by_nine.setOnClickListener(new View.OnClickListener() {
             @Override
