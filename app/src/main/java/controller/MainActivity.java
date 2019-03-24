@@ -35,6 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Random;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -271,8 +272,25 @@ public class MainActivity extends AppCompatActivity {
         preset = new int[(int)Math.pow(gridSize,2)];
         l_numbers = new String[gridSize];
         for (int i = 0; i < gridSize; i++ ){
-            l_numbers[i] = String.valueOf(i);
+            //Initialize the array l_number to be {"1", "2", ... "gridSize"}
+            l_numbers[i] = String.valueOf(i+1);
         }
+       /* //Randomize the numbers in l_numbers[i]
+        final int min = 0;
+        final int max = gridSize-1;
+        final int random1 = new Random().nextInt((max - min) + 1) + min;
+        final int random2 = new Random().nextInt((max - min) + 1) + min;
+        final int random3 = new Random().nextInt((max - min) + 1) + min;
+        final int random4 = new Random().nextInt((max - min) + 1) + min;
+        String temp = null;
+        temp = l_numbers[random1];
+        l_numbers[random1] = l_numbers[random2];
+        l_numbers[random2] = temp;
+        temp = l_numbers[random3];
+        l_numbers[random3] = l_numbers[random4];
+        l_numbers[random4] = temp;
+        //End of randomize numbers*/
+
         assigned = new String[gridSize]; //For listen mode
         //initial gameGrid
         //show words in button
@@ -862,6 +880,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //Randomize the numbers in l_numbers[i]
+        final int min = 0;
+        final int max = gridSize-1;
+        String temp = null;
+        for (int j = 0; j < gridSize/4; j++){
+            final int random1 = new Random().nextInt((max - min) + 1) + min;
+            final int random2 = new Random().nextInt((max - min) + 1) + min;
+            temp = l_numbers[random1];
+            l_numbers[random1] = l_numbers[random2];
+            l_numbers[random2] = temp;
+        }
+        //End of randomize numbers
+
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
