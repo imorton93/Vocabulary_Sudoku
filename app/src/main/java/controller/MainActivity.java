@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
         gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
 
-        //based on grid size, to get differnt layout
+        //based on grid size, to get different layout
         if (gridSize != 9){
             int layoutID = getResources().getIdentifier("activity_main"+ gridSize, "layout", getPackageName());
             setContentView(layoutID);
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
         preset = new int[(int)Math.pow(gridSize,2)];
         l_numbers = new String[gridSize];
         for (int i = 0; i < gridSize; i++ ){
-            l_numbers[i] = String.valueOf(i);
+            l_numbers[i] = String.valueOf(i+1);
         }
         assigned = new String[gridSize]; //For listen mode
         //initial gameGrid
@@ -299,8 +299,6 @@ public class MainActivity extends AppCompatActivity {
                 Button_ids[x] = findViewById(ID);
             }
         }
-
-
 
         //store words from String Resources
         //in case, order of String from String Resources may change
