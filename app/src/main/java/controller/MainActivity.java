@@ -1348,6 +1348,7 @@ public class MainActivity extends AppCompatActivity {
                 if (InitializedGame) {
                     Intent display_w = new Intent(this, Display_Words.class);
                     display_w.putParcelableArrayListExtra(KEY_wordlist, list);
+                    display_w.putExtra(KEY_GRID_SIZE, gridSize);
                     display_w.putExtra(KEY_fill_Span, fill_Span);
                     display_w.putExtra(KEY_fill_Eng, fill_Eng);
                     display_w.putExtra(KEY_InitializedGame, InitializedGame);
