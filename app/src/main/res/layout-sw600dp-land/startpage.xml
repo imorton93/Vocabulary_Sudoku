@@ -36,8 +36,8 @@
 
     <Button
         android:id="@+id/quick_game"
-        android:layout_width="290dp"
-        android:layout_height="120dp"
+        android:layout_width="260dp"
+        android:layout_height="85dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="28dp"
@@ -52,42 +52,44 @@
 
     <Button
         android:id="@+id/start_game1"
-        android:layout_width="290dp"
-        android:layout_height="120dp"
+        android:layout_width="260dp"
+        android:layout_height="85dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="124dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/s_game"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <Button
         android:id="@+id/guide"
-        android:layout_width="290dp"
-        android:layout_height="120dp"
+        android:layout_width="260dp"
+        android:layout_height="85dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="328dp"
+        android:layout_marginTop="220dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/how_to_use"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/load"
         android:layout_width="290dp"
-        android:layout_height="85dp"
+        android:layout_height="82dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="472dp"
+        android:layout_marginTop="328dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/load_new_words"

@@ -35,6 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Random;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -271,8 +272,25 @@ public class MainActivity extends AppCompatActivity {
         preset = new int[(int)Math.pow(gridSize,2)];
         l_numbers = new String[gridSize];
         for (int i = 0; i < gridSize; i++ ){
-            l_numbers[i] = String.valueOf(i);
+            //Initialize the array l_number to be {"1", "2", ... "gridSize"}
+            l_numbers[i] = String.valueOf(i+1);
         }
+       /* //Randomize the numbers in l_numbers[i]
+        final int min = 0;
+        final int max = gridSize-1;
+        final int random1 = new Random().nextInt((max - min) + 1) + min;
+        final int random2 = new Random().nextInt((max - min) + 1) + min;
+        final int random3 = new Random().nextInt((max - min) + 1) + min;
+        final int random4 = new Random().nextInt((max - min) + 1) + min;
+        String temp = null;
+        temp = l_numbers[random1];
+        l_numbers[random1] = l_numbers[random2];
+        l_numbers[random2] = temp;
+        temp = l_numbers[random3];
+        l_numbers[random3] = l_numbers[random4];
+        l_numbers[random4] = temp;
+        //End of randomize numbers*/
+
         assigned = new String[gridSize]; //For listen mode
         //initial gameGrid
         //show words in button
@@ -299,8 +317,6 @@ public class MainActivity extends AppCompatActivity {
                 Button_ids[x] = findViewById(ID);
             }
         }
-
-
 
         //store words from String Resources
         //in case, order of String from String Resources may change
@@ -864,6 +880,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //Randomize the numbers in l_numbers[i]
+        final int min = 0;
+        final int max = gridSize-1;
+        String temp = null;
+        for (int j = 0; j < gridSize/4; j++){
+            final int random1 = new Random().nextInt((max - min) + 1) + min;
+            final int random2 = new Random().nextInt((max - min) + 1) + min;
+            temp = l_numbers[random1];
+            l_numbers[random1] = l_numbers[random2];
+            l_numbers[random2] = temp;
+        }
+        //End of randomize numbers
+
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
@@ -1207,10 +1236,92 @@ public class MainActivity extends AppCompatActivity {
             case R.id.fill_Span:
                 fill_Span = true;
                 fill_Eng = false;
+                String msg = "SPAN";
                 Toast result1 = Toast.makeText(MainActivity.this,
                         "User chooses to fill in Spanish", Toast.LENGTH_LONG);
                 result1.setGravity(Gravity.TOP, 0, 400);
                 result1.show();
+                if (!InitializedGame || mistakeCount >= 3) {
+                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
+                    */
+                    Log.d(TAG, "User chooses to fill in Spanish");
+                    //Start a new game with the same nine words. The sudoku will be pre-filled in English
+                    //After choosing "fill in Spanish", start a new game with Spanish
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getSPAN());
+                    }
+                    if (listen_mode){
+                        getListenGameGrid(msg);
+                    }
+                    else{
+                        getGameGrid(msg);
+                    }
+                } else {
+                    //Temporary Toast
+                    Toast fin = Toast.makeText(MainActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
+                    fin.setGravity(Gravity.TOP, 0, 400);
+                    fin.show();
+                }
+                return true;
+
+            case R.id.fill_Eng:
+                //The big buttons will display English
+                fill_Eng = true;
+                fill_Span = false;
+                msg = "ENG";
+                Toast result2 = Toast.makeText(MainActivity.this,
+                        "User chooses to fill in English", Toast.LENGTH_LONG);
+                result2.setGravity(Gravity.TOP, 0, 400);
+                result2.show();
+                if (!InitializedGame || mistakeCount >= 3) {
+                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
+                    */
+                    Log.d(TAG, "User chooses to fill in English");
+                    //Uses preset word pairs to setup the game
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getENG());
+                    }
+                    if (listen_mode){
+                        getListenGameGrid(msg);
+                    }
+                    else{
+                        getGameGrid(msg);
+                    }
+                } else {
+                    //Temporary Toast
+                    Toast.makeText(MainActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
+                }
+                return true;
+
+            case R.id.new_pick_eng:
+                fill_Eng = true;
+                fill_Span = false;
+                Toast result3 = Toast.makeText(MainActivity.this,
+                        "User chooses to pick new English words", Toast.LENGTH_LONG);
+                result3.setGravity(Gravity.TOP, 0, 400);
+                result3.show();
+                if (!InitializedGame || mistakeCount >= 3) {
+                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
+                    */
+                    Log.d(TAG, "User chooses to fill in English");
+                    //allow user to pick a word list
+                    pickAFile("ENG");
+                } else {
+                    //Temporary Toast
+                    Toast.makeText(MainActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
+                }
+                return true;
+
+            case R.id.new_pick_span:
+                fill_Span = true;
+                fill_Eng = false;
+                Toast result4 = Toast.makeText(MainActivity.this,
+                        "User chooses to pick new Spanish words", Toast.LENGTH_LONG);
+                result4.setGravity(Gravity.TOP, 0, 400);
+                result4.show();
                 if (!InitializedGame || mistakeCount >= 3) {
                     /* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
@@ -1225,29 +1336,6 @@ public class MainActivity extends AppCompatActivity {
                     fin.show();
                 }
                 return true;
-
-            case R.id.fill_Eng:
-                //The 9 buttons will display English
-                //mButton1.setText(R.string.eng_1);
-                fill_Eng = true;
-                fill_Span = false;
-                Toast result2 = Toast.makeText(MainActivity.this,
-                        "User chooses to fill in English", Toast.LENGTH_LONG);
-                result2.setGravity(Gravity.TOP, 0, 400);
-                result2.show();
-                if (!InitializedGame || mistakeCount >= 3) {
-                    /* If the game has not been initialized, and there had been more than 3 mistakes,
-                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    */
-                    Log.d(TAG, "User chooses to fill in English");
-                    //allow user to pick a word list
-                    pickAFile("ENG");
-                } else {
-                    //Temporary Toast
-                    Toast.makeText(MainActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
-                }
-                return true;
-
             case R.id.display_words:
                 Log.d(TAG, "User chooses to see word pairs");
 
@@ -1448,7 +1536,6 @@ public class MainActivity extends AppCompatActivity {
                 case "ENG":
                     for (i = 0; i < list.size(); i++) {
                         Button_ids[i].setText(list.get(i).getENG());
-
                     }
                     break;
             }
