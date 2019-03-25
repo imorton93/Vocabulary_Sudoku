@@ -9,12 +9,10 @@
 
     <GridView
         android:id="@+id/sudoku_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:columnWidth="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
         android:horizontalSpacing="0.0dip"
         android:gravity="center"
-        android:numColumns="9"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp">

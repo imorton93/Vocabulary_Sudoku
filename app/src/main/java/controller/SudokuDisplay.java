@@ -14,6 +14,8 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class SudokuDisplay extends AppCompatActivity {
 
+    private static final String KEY_GRID_SIZE = "grid_size";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,8 @@ public class SudokuDisplay extends AppCompatActivity {
 
         final GridView gridView = (GridView)findViewById(R.id.sudoku_view);
         gridView.setAdapter(new GridAdapter(list,this));
-
+        int gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
+        gridView.setNumColumns(gridSize);
 
     }
 }

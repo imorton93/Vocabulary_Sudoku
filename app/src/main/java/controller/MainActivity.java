@@ -787,7 +787,6 @@ public class MainActivity extends AppCompatActivity {
 
         double remainingGrids = Math.pow(gridSize,2);
         double remainingHoles = 2; //set up a number to determine how many words to hide
-        numHolesRemaining = (int)remainingHoles;
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
@@ -847,7 +846,6 @@ public class MainActivity extends AppCompatActivity {
         Sudoku = initialGame.generateGrid(msg,list);
         double remainingGrids = Math.pow(gridSize,2);
         double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
-        numHolesRemaining = (int)remainingHoles;
         span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -1052,25 +1050,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     //check sudoku correctness
-    public void checkAnswer(String[][] Sudoku, String[][] originalSudoku) {
+    public void checkAnswer(String[][] Sudoku, final String[][] originalSudoku) {
         final String fin_msg;
-        if (numHolesRemaining == 0){
-            if (resultCheck.sudokuCheck(Sudoku, list)){
-                fin_msg = "Congratulation! Sudoku is correct!";
-            }else {
-                fin_msg = "Sudoku is incorrect, try again!";
-            }
-        }else{
-            fin_msg = "You have not finished your puzzle, Do you want to play a new gmae? ";
+        if (resultCheck.sudokuCheck(Sudoku, list)){
+            fin_msg = "Congratulation! Sudoku is correct!";
+        }else {
+            fin_msg = "Sudoku is incorrect, try again!";
         }
-
-
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(fin_msg);
 
         // add a radio button list
-        String[] fin_list = {"NEW GAME", "REPLAY"};
+        String[] fin_list = {"NEW GAME", "REPLAY", "Display"};
         builder.setCancelable(false);
         builder.setNegativeButton("CANCEL", null);
         builder.setItems(fin_list, new DialogInterface.OnClickListener() {
@@ -1096,6 +1088,16 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         break;
+                    case 2:
+                        intent = new Intent(MainActivity.this, SudokuDisplay.class);
+                        ArrayList<String> words = new ArrayList<String>();
+                        for (int x = 0; x < gridSize; x++) {
+                            words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
+                        }
+                        intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
+
+                        intent.putExtra(KEY_GRID_SIZE, gridSize);
+                        startActivity(intent);
                 }
                 dialog.dismiss();
             }
@@ -1171,7 +1173,6 @@ public class MainActivity extends AppCompatActivity {
                         //if it's right, makes it green
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                     }
-                    numHolesRemaining--;
                     //set the Selected Buttons Text as text from input button
                 }
             }
@@ -1206,7 +1207,6 @@ public class MainActivity extends AppCompatActivity {
                     SelectedButton.setText(buttonText);
                     SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                 }
-                numHolesRemaining--;
                 //set the Selected Buttons Text as text from input button
             }
         }
