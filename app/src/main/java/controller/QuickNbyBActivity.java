@@ -19,9 +19,11 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Random;
 
 import Model.DBHelper;
 import Model.SudokuChecker;
@@ -46,6 +48,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
     private static final String KEY_wordlist = "list";
     private static final String KEY_preset = "Preset";
     private static final String KEY_listen_game = "Game initialzied in listen mode";
+    private static final String KEY_GRID_SIZE = "grid_size";
     /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
         //The leftmost column
         private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
@@ -61,21 +64,11 @@ public class QuickNbyBActivity extends AppCompatActivity {
             KEY_filled_words_4, KEY_filled_words_5, KEY_filled_words_6, KEY_filled_words_7,
             KEY_filled_words_8 }; */
     private static final String TAG = "CMPT276-1191E1-Delta";
-    private static final int[] Button_ids = { //ID's for the 9 big buttons
-            R.id.button1,
-            R.id.button2,
-            R.id.button3,
-            R.id.button4,
-            R.id.button5,
-            R.id.button6,
-            R.id.button7,
-            R.id.button8,
-            R.id.button9,
-    };
-
-    private static final Button[][] gridButton = new Button[9][9];//buttons b11-b99
+    private int gridSize;
+    private static Button[][] gridButton = null;//buttons b11-b99
+    private static Button[] Button_ids = null;
     private static SudokuGenerator initialGame = new SudokuGenerator(); //Generate an instance of class SudokuGenerator.
-    String[][] Sudoku = new String[9][9];
+    String[][] Sudoku;
     private static SudokuChecker resultCheck = new SudokuChecker();
     private boolean fill_Eng = false;
     private boolean fill_Span = false;
@@ -84,20 +77,20 @@ public class QuickNbyBActivity extends AppCompatActivity {
     private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
     private boolean listen_mode_game_init = false; //Checks if the app has a game started in listen comprehension mode
     private int mistakeCount = 0;
-    String[][] Sudoku_temp = new String[9][9];
-    String[][] Sudoku_user = new String[9][9];
+    String[][] Sudoku_temp;
+    String[][] Sudoku_user;
     //WordsPairs object
     private ArrayList<WordsPairs> list = new ArrayList<>();
 
-    int[] preset = new int[81];
+    int[] preset;
     //initial database
     DBHelper mDBHelper = new DBHelper(this);
     Menu menu;
     //Begin of variables for listen mode
-    private final String[] l_numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}; //The string array for listen comprehension mode
+    private String[] l_numbers = null; //The string array for listen comprehension mode
     private int remain_nums = 0;
     private int l_number = 0; //a variable for listen mode functions
-    String[] assigned = new String[9]; //For listen mode
+    String[] assigned; //For listen mode
     Locale locSpanish = new Locale("spa", "ES");
     Locale locEnglish = new Locale("eng", "US");
     TextToSpeech span;
@@ -244,8 +237,53 @@ public class QuickNbyBActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d(TAG, "onCreate(Bundle) called");
+        gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
 
+        //based on grid size, to get differnt layout
+        if (gridSize != 9){
+            int layoutID = getResources().getIdentifier("activity_main"+ gridSize, "layout", getPackageName());
+            setContentView(layoutID);
+        }
+        //set up size of grids
+        gridButton = new Button[gridSize][gridSize];//buttons b11-b99
+        Button_ids = new Button[gridSize];
+        Sudoku = new String[gridSize][gridSize];
+        Sudoku_temp = new String[gridSize][gridSize];
+        Sudoku_user = new String[gridSize][gridSize];
+        preset = new int[(int)Math.pow(gridSize,2)];
+        l_numbers = new String[gridSize];
+        for (int i = 0; i < gridSize; i++ ){
+            l_numbers[i] = String.valueOf(i+1);
+        }
+        assigned = new String[gridSize]; //For listen mode
         //initial gameGrid
+        //show words in button
+        if (gridSize == 12){
+            for (int x = 0; x < gridSize; x++) {
+                for (int y = 0; y < gridSize; y++) {
+                    String buttonID = "b" + (x+1) + "_"+ (y+1);
+                    int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+                    gridButton[x][y] = findViewById(resID);
+                }
+                String wordButton = "button" + (x+1);
+                int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
+                Button_ids[x] = findViewById(ID);
+            }
+        }else{
+            for (int x = 0; x < gridSize; x++) {
+                for (int y = 0; y < gridSize; y++) {
+                    String buttonID = "b" + (x+1) + (y+1);
+                    int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+                    gridButton[x][y] = findViewById(resID);
+                }
+                String wordButton = "button" + (x+1);
+                int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
+                Button_ids[x] = findViewById(ID);
+            }
+        }
+
+
+/*        //initial gameGrid
         //show words in button
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
@@ -253,12 +291,12 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 gridButton[x][y] = findViewById(resID);
             }
-        }
+        }*/
         //store words from String Resources
         //in case, order of String from String Resources may change
         //store in local variables
         //gameInitialization
-        int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
+/*        int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
                 R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,R.id.b27, R.id.b28,R.id.b29,
                 R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,R.id.b37, R.id.b38,R.id.b39,
                 R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,R.id.b47, R.id.b48,R.id.b49,
@@ -277,6 +315,13 @@ public class QuickNbyBActivity extends AppCompatActivity {
     for(int i=0; i<ids.length; i++) {
         Button button = (Button) findViewById(ids[i]);
         button.setOnLongClickListener(longClickListener);
+    }*/
+
+    for (int x = 0; x < gridSize; x++){
+        for (int y = 0; y < gridSize; y++){
+            gridButton[x][y].setOnClickListener(listener);
+            gridButton[x][y].setOnLongClickListener(longClickListener);
+        }
     }
 
     Intent prev_intent = getIntent();
@@ -288,100 +333,198 @@ public class QuickNbyBActivity extends AppCompatActivity {
     span_words = getResources().getStringArray(R.array.Span_words);
     eng_words = getResources().getStringArray(R.array.Eng_words);
 
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < gridSize; i++) { //Set up list
         list.add(new WordsPairs(eng_words[i], span_words[i]));
        // list.get(i).setENG(eng_words[i]);
        // list.get(i).setSPAN(span_words[i]);
     }
 
-    if ((savedInstanceState != null)) {
-        //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
-        // so user does not need to restart game.
-        Button mButtons;
-        InitializedGame = savedInstanceState.getBoolean(KEY_InitializedGame);
-        fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
-        fill_Span = savedInstanceState.getBoolean(KEY_fill_Span);
-        listen_mode = savedInstanceState.getBoolean(KEY_Listen);
-        list = savedInstanceState.getParcelableArrayList(KEY_WORDS_LIST);
-        preset = savedInstanceState.getIntArray(KEY_preset);
-        listen_mode_game_init =  savedInstanceState.getBoolean(KEY_listen_game);
-  /*      if (listen_mode){
-            MenuItem listen_t = menu.findItem(R.id.listen);
-            listen_t.setTitle("Exit Listen Comprehension Mode");
-            int xxxxx = 0;
-        } */
-        if (InitializedGame) {
-            //If a game has been initialized
-            int j = 0;  //For breakpoint purpose
-            Log.i(TAG, "loads the words user filled in before");
-        /* for (int i = 0; i < 9; i++) {
-            Sudoku_temp[i] = savedInstanceState.getStringArray(KEY_filled_words[i]); //break point here
-            j = 1; //for break point purpose
-            //BUG: at least after the screen is turned and turned back, the words (wrong) are preserved
-            //Problem: sudoku [i] is the same for all i
-        } */
-            //
-            if (fill_Eng) {
-                for (int i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(list.get(i).getENG());
+        if ((savedInstanceState != null)) {
+            //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
+            // so user does not need to restart game.
+            Button mButtons;
+            InitializedGame = savedInstanceState.getBoolean(KEY_InitializedGame);
+            fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
+            fill_Span = savedInstanceState.getBoolean(KEY_fill_Span);
+            listen_mode = savedInstanceState.getBoolean(KEY_Listen);
+            list = savedInstanceState.getParcelableArrayList(KEY_WORDS_LIST);
+            preset = savedInstanceState.getIntArray(KEY_preset);
+            listen_mode_game_init =  savedInstanceState.getBoolean(KEY_listen_game);
+            gridSize = savedInstanceState.getInt(KEY_GRID_SIZE);
+      /*      if (listen_mode){
+                MenuItem listen_t = menu.findItem(R.id.listen);
+                listen_t.setTitle("Exit Listen Comprehension Mode");
+                int xxxxx = 0;
+            } */
+            if (InitializedGame) {
+                //If a game has been initialized
+                int j = 0;  //For breakpoint purpose
+                Log.i(TAG, "loads the words user filled in before");
+            /* for (int i = 0; i < 9; i++) {
+                Sudoku_temp[i] = savedInstanceState.getStringArray(KEY_filled_words[i]); //break point here
+                j = 1; //for break point purpose
+                //BUG: at least after the screen is turned and turned back, the words (wrong) are preserved
+                //Problem: sudoku [i] is the same for all i
+            } */
+                //
+                if (fill_Eng) {
+                    for (int i = 0; i < gridSize; i++) {
+                        // mButtons = findViewById(Button_ids[i]);
+                        // mButtons.setText(list.get(i).getENG());
+                        Button_ids[i].setText(list.get(i).getENG());
+                    }
+                } else if (fill_Span) {
+                    for (int i = 0; i < gridSize; i++) {
+                        //  mButtons = findViewById(Button_ids[i]);
+                        // mButtons.setText(list.get(i).getSPAN());
+                        Button_ids[i].setText(list.get(i).getSPAN());
+                    }
                 }
-            } else if (fill_Span) {
-                for (int i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(list.get(i).getSPAN());
-                }
-            }
-            Sudoku_temp = (String[][]) savedInstanceState.getSerializable(KEY_prefilled_words);
-            Sudoku_user = (String[][]) savedInstanceState.getSerializable(KEY_userfilled_words);
-            Sudoku = (String[][]) savedInstanceState.getSerializable(KEY_Sudoku);
-            // The arrays in Sudoku_temp has the columns of the original sudoku from right to left (should be from left to right)
-            if (listen_mode_game_init) { //If there is a game initialized in listen mode
-                assigned = savedInstanceState.getStringArray(KEY_assigned);
-                span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        if (status != TextToSpeech.ERROR) {
-                            span.setLanguage(locSpanish);
+                Sudoku_temp = (String[][]) savedInstanceState.getSerializable(KEY_prefilled_words);
+                Sudoku_user = (String[][]) savedInstanceState.getSerializable(KEY_userfilled_words);
+                Sudoku = (String[][]) savedInstanceState.getSerializable(KEY_Sudoku);
+                // The arrays in Sudoku_temp has the columns of the original sudoku from right to left (should be from left to right)
+                if (listen_mode_game_init) { //If there is a game initialized in listen mode
+                    assigned = savedInstanceState.getStringArray(KEY_assigned);
+                    span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                        @Override
+                        public void onInit(int status) {
+                            if (status != TextToSpeech.ERROR) {
+                                span.setLanguage(locSpanish);
+                            }
+                        }
+                    });
+                    eng = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                        @Override
+                        public void onInit(int status) {
+                            if (status != TextToSpeech.ERROR) {
+                                eng.setLanguage(locEnglish);
+                            }
+                        }
+                    });
+                    int temp_indx = -1;
+                    if (fill_Eng){
+                        for (int x = 0; x < gridSize; x++) { //break point here
+                            for (int y = 0; y < gridSize; y++) {
+                                gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
+                                j += 5; //break point here
+                                if (Sudoku_temp[x][y] != null) {
+                                    //This cell (gridbutton) is pre-filled.
+                                    gridButton[x][y].setTextColor(Color.parseColor("#000000"));
+                                    temp_indx =  Arrays.asList(l_numbers).indexOf(Sudoku_temp[x][y]);
+                                    // final String tospeak = assigned[temp_indx];
+                                    final String tospeak = list.get(temp_indx).getSPAN();
+                                    gridButton[x][y].setOnClickListener(new View.OnClickListener() {
+                                        //Whenever user clicks on the numbered cells, a sound occurs
+                                        //The sound is the pronunciation of Spanish words
+                                        public void onClick(View view) {
+                                            span.speak(tospeak,TextToSpeech.QUEUE_FLUSH,null);
+                                        }
+                                    });
+                                }
+                                else {
+                                    //This cell is user-fillable.
+                                    gridButton[x][y].setClickable(true);
+                                    if (Sudoku_user[x][y] != null) {
+                                        gridButton[x][y].setText(Sudoku_user[x][y]);
+                                        String tmp = "";
+                                        //if is wrong, puts word to be red
+                                        for (int i = 0; i < gridSize; i++) {
+                                            if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
+                                                tmp = list.get(i).getSPAN();
+                                            }
+                                            if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
+                                                tmp = list.get(i).getENG();
+                                            }
+                                        }
+                                        if (tmp.equals(Sudoku[x][y])) {
+                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
+                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                        } else {
+                                            //if it's right, makes it green
+                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
+                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                        }
+                                        //Set the button to clikable and the text to user's text color
+                                    } else {
+                                        gridButton[x][y].setText(null);
+                                    }
+                                }
+                            }
                         }
                     }
-                });
-                eng = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        if (status != TextToSpeech.ERROR) {
-                            eng.setLanguage(locEnglish);
+                    else if (fill_Span){
+                        for (int x = 0; x < gridSize; x++) { //break point here
+                            for (int y = 0; y < gridSize; y++) {
+                                gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
+                                j += 5; //break point here
+                                if (Sudoku_temp[x][y] != null) {
+                                    //This cell (gridbutton) is pre-filled.
+                                    gridButton[x][y].setTextColor(Color.parseColor("#000000"));
+                                    temp_indx =  Arrays.asList(l_numbers).indexOf(Sudoku_temp[x][y]);
+                                    // final String tospeak = assigned[temp_indx];
+                                    final String tospeak = list.get(temp_indx).getENG();
+                                    gridButton[x][y].setOnClickListener(new View.OnClickListener() {
+                                        //Whenever user clicks on the numbered cells, a sound occurs.
+                                        //The sound is the pronunciation of English words
+                                        public void onClick(View view) {
+                                            eng.speak(tospeak,TextToSpeech.QUEUE_FLUSH,null);
+                                        }
+                                    });
+                                } else {
+                                    //This cell is user-fillable
+                                    gridButton[x][y].setClickable(true);
+                                    if (Sudoku_user[x][y] != null) {
+                                        gridButton[x][y].setText(Sudoku_user[x][y]);
+                                        String tmp = "";
+                                        //if is wrong, puts word to be red
+                                        for (int i = 0; i < gridSize; i++) {
+                                            if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
+                                                tmp = list.get(i).getSPAN();
+                                            }
+                                            if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
+                                                tmp = list.get(i).getENG();
+                                            }
+                                        }
+                                        if (tmp.equals(Sudoku[x][y])) {
+                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
+                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                        } else {
+                                            //if it's right, makes it green
+                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
+                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                        }
+                                        //Set the button to clikable and the text to user's text color
+                                    } else {
+                                        gridButton[x][y].setText(null);
+                                    }
+                                }
+                            }
                         }
                     }
-                });
-                int temp_indx = -1;
-                if (fill_Eng){
-                    for (int x = 0; x < 9; x++) { //break point here
-                        for (int y = 0; y < 9; y++) {
+                    restored_s = true;
+                } else {
+                    //Restore state for normal mode
+                    for (int x = 0; x < gridSize; x++) { //break point here
+                        for (int y = 0; y < gridSize; y++) {
                             gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
                             j += 5; //break point here
                             if (Sudoku_temp[x][y] != null) {
-                                //This cell (gridbutton) is pre-filled.
+                                gridButton[x][y].setClickable(false);
                                 gridButton[x][y].setTextColor(Color.parseColor("#000000"));
-                                temp_indx =  Arrays.asList(l_numbers).indexOf(Sudoku_temp[x][y]);
-                               // final String tospeak = assigned[temp_indx];
-                                final String tospeak = list.get(temp_indx).getSPAN();
-                                gridButton[x][y].setOnClickListener(new View.OnClickListener() {
-                                    //Whenever user clicks on the numbered cells, a sound occurs
-                                    //The sound is the pronunciation of Spanish words
-                                    public void onClick(View view) {
-                                        span.speak(tospeak,TextToSpeech.QUEUE_FLUSH,null);
-                                    }
-                                });
+                                //Sudoku 'memorizes' the pre-set words
                             }
                             else {
-                                //This cell is user-fillable.
                                 gridButton[x][y].setClickable(true);
                                 if (Sudoku_user[x][y] != null) {
                                     gridButton[x][y].setText(Sudoku_user[x][y]);
                                     String tmp = "";
                                     //if is wrong, puts word to be red
-                                    for (int i = 0; i < 9; i++) {
+                                    for (int i = 0; i < gridSize; i++) {
                                         if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
                                             tmp = list.get(i).getSPAN();
                                         }
@@ -406,119 +549,24 @@ public class QuickNbyBActivity extends AppCompatActivity {
                             }
                         }
                     }
-                }
-                else if (fill_Span){
-                    for (int x = 0; x < 9; x++) { //break point here
-                        for (int y = 0; y < 9; y++) {
-                            gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
-                            j += 5; //break point here
-                            if (Sudoku_temp[x][y] != null) {
-                                //This cell (gridbutton) is pre-filled.
-                                gridButton[x][y].setTextColor(Color.parseColor("#000000"));
-                                temp_indx =  Arrays.asList(l_numbers).indexOf(Sudoku_temp[x][y]);
-                               // final String tospeak = assigned[temp_indx];
-                                final String tospeak = list.get(temp_indx).getENG();
-                                gridButton[x][y].setOnClickListener(new View.OnClickListener() {
-                                    //Whenever user clicks on the numbered cells, a sound occurs.
-                                    //The sound is the pronunciation of English words
-                                    public void onClick(View view) {
-                                        eng.speak(tospeak,TextToSpeech.QUEUE_FLUSH,null);
-                                    }
-                                });
-                            } else {
-                                //This cell is user-fillable
-                                gridButton[x][y].setClickable(true);
-                                if (Sudoku_user[x][y] != null) {
-                                    gridButton[x][y].setText(Sudoku_user[x][y]);
-                                    String tmp = "";
-                                    //if is wrong, puts word to be red
-                                    for (int i = 0; i < 9; i++) {
-                                        if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
-                                            tmp = list.get(i).getSPAN();
-                                        }
-                                        if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
-                                            tmp = list.get(i).getENG();
-                                        }
-                                    }
-                                    if (tmp.equals(Sudoku[x][y])) {
-                                        Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                        Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                        gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
-                                    } else {
-                                        //if it's right, makes it green
-                                        Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                        Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                        gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
-                                    }
-                                    //Set the button to clikable and the text to user's text color
-                                } else {
-                                    gridButton[x][y].setText(null);
-                                }
-                            }
-                        }
-                    }
-                }
-                restored_s = true;
-            } else {
-                //Restore state for normal mode
-                for (int x = 0; x < 9; x++) { //break point here
-                    for (int y = 0; y < 9; y++) {
-                        gridButton[x][y].setText(Sudoku_temp[x][y]); //No problem here.
-                        j += 5; //break point here
-                        if (Sudoku_temp[x][y] != null) {
-                            gridButton[x][y].setClickable(false);
-                            gridButton[x][y].setTextColor(Color.parseColor("#000000"));
-                            //Sudoku 'memorizes' the pre-set words
-                        }
-                        else {
-                            gridButton[x][y].setClickable(true);
-                            if (Sudoku_user[x][y] != null) {
-                                gridButton[x][y].setText(Sudoku_user[x][y]);
-                                String tmp = "";
-                                //if is wrong, puts word to be red
-                                for (int i = 0; i < 9; i++) {
-                                    if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
-                                        tmp = list.get(i).getSPAN();
-                                    }
-                                    if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
-                                        tmp = list.get(i).getENG();
-                                    }
-                                }
-                                if (tmp.equals(Sudoku[x][y])) {
-                                    Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                    Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                    gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
-                                } else {
-                                    //if it's right, makes it green
-                                    Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                    Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                    gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
-                                }
-                                //Set the button to clikable and the text to user's text color
-                            } else {
-                                gridButton[x][y].setText(null);
-                            }
-                        }
-                    }
-                }
 
-                restored_s = true;
-                //InitializedGame = true;
+                    restored_s = true;
+                    //InitializedGame = true;
+                }
             }
-        }
-        int count = 0;
-        if(preset != null) {
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
-                    if (preset[i*9 + j] == 1) {
-                        count++;
-                        gridButton[i][j].setTextColor(Color.parseColor("#000000"));
-                        //System.out.println("blackened text" + count);
+            int count = 0;
+            if(preset != null) {
+                for (int i = 0; i < gridSize; i++) {
+                    for (int j = 0; j < gridSize; j++) {
+                        if (preset[i*gridSize + j] == 1) {
+                            count++;
+                            gridButton[i][j].setTextColor(Color.parseColor("#000000"));
+                            //System.out.println("blackened text" + count);
+                        }
                     }
                 }
             }
         }
-    }
     else {
         Toast tip_popup = Toast.makeText(this, "Word will be magnified if you press the cell it is in for a long time.",Toast.LENGTH_LONG);
         tip_popup.setGravity(Gravity.TOP, 0, 500);
@@ -576,32 +624,16 @@ public class QuickNbyBActivity extends AppCompatActivity {
         InitializedGame = true;
         Sudoku = initialGame.generateGrid(msg,list);
         Log.d(TAG, "restored_s is " + restored_s);
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                preset[i*9 + j] = 1;
+        for(int i = 0; i < gridSize; i++){
+            for(int j = 0; j < gridSize; j++){
+                preset[i*gridSize + j] = 1;
             }
         }
-        Button mButtons;
-        int i = 0;
-        switch (msg) {
-            case "SPAN":
-                for (i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(list.get(i).getSPAN());
-                }
-                break;
-            case "ENG":
-                for (i = 0; i < 9; i++) {
-                    mButtons = findViewById(Button_ids[i]);
-                    mButtons.setText(list.get(i).getENG());
-                }
-                break;
-        }
 
-        double remainingGrids = 81;
-        double remainingHoles = 51; //set up a number to determine how many words to hide
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+        double remainingGrids = Math.pow(gridSize,2);
+        double remainingHoles = 0; //set up a number to determine how many words to hide
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
                 if (Sudoku[x][y].length() > 6) {
                     CharSequence text = Sudoku[x][y].subSequence(0, 6) + "..";
@@ -620,7 +652,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     gridButton[x][y].setOnClickListener(listener);
                     gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
                     remainingHoles--;
-                    preset[x * 9 + y] = 0;
+                    preset[x * gridSize + y] = 0;
                 }
                 remainingGrids--;
             }
@@ -651,32 +683,14 @@ public class QuickNbyBActivity extends AppCompatActivity {
         listen_mode_game_init = true; //User has initialized a game in listen mode
         l_number = 0;
         int indx_temp = -1;
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                preset[i*9 + j] = 1;
+        for(int i = 0; i < gridSize; i++){
+            for(int j = 0; j < gridSize; j++){
+                preset[i*gridSize + j] = 1;
             }
         }
-
-        Button mButtons;
-        int indx = 0;
-        switch (msg) {
-            case "SPAN":
-                for (indx = 0; indx < 9; indx++) {
-                    mButtons = findViewById(Button_ids[indx]);
-                    mButtons.setText(list.get(indx).getSPAN());
-                }
-                break;
-            case "ENG":
-                for (indx = 0; indx < 9; indx++) {
-                    mButtons = findViewById(Button_ids[indx]);
-                    mButtons.setText(list.get(indx).getENG());
-                }
-                break;
-        }
-
         Sudoku = initialGame.generateGrid(msg,list);
-        double remainingGrids = 81;
-        double remainingHoles = 51; //set up a number to determine how many words to hide
+        double remainingGrids = Math.pow(gridSize,2);
+        double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
         span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -693,8 +707,21 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 }
             }
         });
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+        //Randomize the numbers in l_numbers[i]
+        final int min = 0;
+        final int max = gridSize-1;
+        String temp = null;
+        for (int j = 0; j < gridSize/4; j++){
+            final int random1 = new Random().nextInt((max - min) + 1) + min;
+            final int random2 = new Random().nextInt((max - min) + 1) + min;
+            temp = l_numbers[random1];
+            l_numbers[random1] = l_numbers[random2];
+            l_numbers[random2] = temp;
+        }
+        //End of randomize numbers
+
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
                 double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
                 //gridButton[x][y].setOnClickListener(listener);
                 gridButton[x][y].setClickable(true);
@@ -720,15 +747,15 @@ public class QuickNbyBActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    preset[x * 9 + y] = 0;
+                    preset[x * gridSize + y] = 0;
                     remainingHoles--;
                 } else {
-                  //  switch (msg) {
-                   //     case "SPAN":
+                    //  switch (msg) {
+                    //     case "SPAN":
                     if (fill_Span) {
                         //If the cells aren't to be hidden, display them on the sudoku Board
-                       // indx_temp = list.indexOf(Sudoku[x][y]);
-                        for (int i = 0; i < 9; i++){
+                        // indx_temp = list.indexOf(Sudoku[x][y]);
+                        for (int i = 0; i < gridSize; i++){
                             if (( list.get(i).getENG()).equals(Sudoku[x][y])){
                                 indx_temp = i;
                                 break;
@@ -747,7 +774,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                         });
                     } else if (fill_Eng) {
                         //If the cells aren't to be hidden, display them on the sudoku Board
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < gridSize; i++) {
                             if ((list.get(i).getSPAN()).equals(Sudoku[x][y])) {
                                 indx_temp = i;
                                 break;
@@ -764,7 +791,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                                 span.speak(Sudoku[temp_x][temp_y], TextToSpeech.QUEUE_FLUSH, null);
                             }
                         });
-                        }
+                    }
                 }
                 gridButton[x][y].setOnLongClickListener(longClickListener);
                 remainingGrids--;
@@ -781,12 +808,12 @@ public class QuickNbyBActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (InitializedGame) {
-                    String[][] checkSudoku = new String[9][9];
-                    String[][] originalSudoku = new String[9][9];
+                    String[][] checkSudoku = new String[gridSize][gridSize];
+                    String[][] originalSudoku = new String[gridSize][gridSize];
                     if (listen_mode_game_init) {
                         //convert the numbered cells to actual words when passing the array
-                        for (int x = 0; x < 9; x++) {
-                            for (int y = 0; y < 9; y++) {
+                        for (int x = 0; x < gridSize; x++) {
+                            for (int y = 0; y < gridSize; y++) {
                                 originalSudoku[x][y] = Sudoku[x][y];
                                 //pass words in grid to a Sting[][] Sudoku in order to check correctness
                                 CharSequence temp = gridButton[x][y].getText();
@@ -799,7 +826,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                                     else if (fill_Eng){
                                         checkSudoku[x][y] = list.get(indx_temp).getSPAN();
                                     }
-                                   // gridButton[x][y].setClickable(false);
+                                    // gridButton[x][y].setClickable(false);
                                     //gridButton[x][y].setOnClickListener(listener); //INCorrect way to set listener
                                     gridButton[x][y].setOnClickListener(new View.OnClickListener(){
                                         @Override
@@ -812,7 +839,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                                             }
                                             else {
                                                 Button test = (Button) v;
-                                            if (SelectedButton != null) {
+                                                if (SelectedButton != null) {
                                                     //if a button has already been selected change that button back to normal
                                                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
                                                 }
@@ -822,8 +849,8 @@ public class QuickNbyBActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-                                   // gridButton[x][y].setOnClickListener(listener); //This line casuses bug??? Nope, it does make no sound appear, but button also becomes unclickable
-                                  //  gridButton[x][y].setClickable(true);
+                                    // gridButton[x][y].setOnClickListener(listener); //This line casuses bug??? Nope, it does make no sound appear, but button also becomes unclickable
+                                    //  gridButton[x][y].setClickable(true);
                                     //gridButton[x][y].setOnClickListener(null);
                                     /*
                                     gridButton[x][y].setOnClickListener(new View.OnClickListener() {
@@ -853,13 +880,13 @@ public class QuickNbyBActivity extends AppCompatActivity {
                                     checkSudoku[x][y] = temp + "";
                                 }
                                 gridButton[x][y].setText(null);
-                               // gridButton[x][y].setOnClickListener(listener);
+
                             }
                         }
                         //Case for listen mode ends.
                     } else {
-                        for (int x = 0; x < 9; x++) {
-                            for (int y = 0; y < 9; y++) {
+                        for (int x = 0; x < gridSize; x++) {
+                            for (int y = 0; y < gridSize; y++) {
                                 //pass words in grid to a Sting[][] Sudoku in order to check correctness
                                 CharSequence temp = gridButton[x][y].getText();
                                 checkSudoku[x][y] = temp + "";
@@ -895,8 +922,8 @@ public class QuickNbyBActivity extends AppCompatActivity {
         //intent the 9*9 Grid Sudoku to a new page
         Intent intent = new Intent(QuickNbyBActivity.this, SudokuDisplay.class);
         ArrayList<String> words = new ArrayList<String>();
-        for (int x = 0; x < 9; x++) {
-            words.addAll(Arrays.asList(originalSudoku[x]).subList(0, 9));
+        for (int x = 0; x < gridSize; x++) {
+            words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
         startActivity(intent);
@@ -910,12 +937,12 @@ public class QuickNbyBActivity extends AppCompatActivity {
         String tmp = null;
         String str = null;
         //check which word should be right
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
                 if (gridButton[x][y] == SelectedButton) {
                     str = Sudoku[x][y];
                     //translate english to spanish, and vise versa
-                    for (int i = 0; i < 9; i++) {
+                    for (int i = 0; i < gridSize; i++) {
                         if (Sudoku[x][y].equals(list.get(i).getENG())) {
                             tmp = list.get(i).getSPAN();
                         }
@@ -1048,6 +1075,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     Log.d(TAG, "User chooses to fill in Spanish");
                     //Start a new game with the same nine words. The sudoku will be pre-filled in English
                      //After choosing "fill in Spanish", start a new game with Spanish
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getSPAN());
+                    }
                     if (listen_mode){
                         getListenGameGrid(msg);
                     }
@@ -1063,7 +1093,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 return true;
 
             case R.id.fill_Eng:
-                //The 9 buttons will display English
+                //The big buttons will display English
                 //mButton1.setText(R.string.eng_1);
                 fill_Eng = true;
                 fill_Span = false;
@@ -1078,6 +1108,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     */
                     Log.d(TAG, "User chooses to fill in English");
                     //Uses preset wordpairs to setup the game
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getENG());
+                    }
                     if (listen_mode){
                         getListenGameGrid(msg);
                     }
@@ -1087,6 +1120,69 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 } else {
                     //Temporary Toast
                     Toast.makeText(QuickNbyBActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
+                }
+                return true;
+
+            case R.id.new_pick_eng:
+                fill_Eng = true;
+                fill_Span = false;
+                msg = "ENG";
+                Toast result3 = Toast.makeText(QuickNbyBActivity.this,
+                        "User chooses to fill in English", Toast.LENGTH_LONG);
+                result3.setGravity(Gravity.TOP, 0, 400);
+                result3.show();
+                if (!InitializedGame || mistakeCount >= 3) {
+                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
+                    */
+                    //call random function ***
+                    Log.d(TAG, "User chooses to fill in English");
+                    //Uses preset wordpairs to setup the game
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getENG());
+                    }
+                    if (listen_mode){
+                        getListenGameGrid(msg);
+                    }
+                    else{
+                        getGameGrid(msg);
+                    }
+                } else {
+                    //Temporary Toast
+                    Toast.makeText(QuickNbyBActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
+                }
+                return true;
+
+            case R.id.new_pick_span:
+                fill_Span = true;
+                fill_Eng = false;
+                msg = "SPAN";
+                Toast result4 = Toast.makeText(QuickNbyBActivity.this,
+                        "User chooses to fill in Spanish", Toast.LENGTH_LONG);
+                result4.setGravity(Gravity.TOP, 0, 400);
+                result4.show();
+                if (!InitializedGame || mistakeCount >= 3) {
+                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
+                    */
+                    //Call the random function to update the list ********
+                    Log.d(TAG, "User chooses to fill in Spanish");
+                    //Start a new game with the same nine words. The sudoku will be pre-filled in English
+                    //After choosing "fill in Spanish", start a new game with Spanish
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getSPAN());
+                    }
+                    if (listen_mode){
+                        getListenGameGrid(msg);
+                    }
+                    else{
+                        getGameGrid(msg);
+                    }
+                } else {
+                    //Temporary Toast
+                    Toast fin = Toast.makeText(QuickNbyBActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
+                    fin.setGravity(Gravity.TOP, 0, 400);
+                    fin.show();
                 }
                 return true;
 
@@ -1157,6 +1253,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
         return super.onPrepareOptionsMenu(menu);
     }
+
     //After the grids are created, save the words
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -1172,19 +1269,20 @@ public class QuickNbyBActivity extends AppCompatActivity {
         savedInstanceState.putSerializable(KEY_Sudoku, Sudoku);
         savedInstanceState.putIntArray(KEY_preset, preset);
         //savedInstanceState.put(KEY_filled_words, gridButton);
+        savedInstanceState.putInt(KEY_GRID_SIZE, gridSize);
         int x = 0;
-        String[] stringA_p_temp = new String[9];
-        String[][] stringA_preset = new String[9][9]; //Array of preset words
-        String[] stringA_u_temp = new String[9];
-        String[][] stringA_user_filled = new String[9][9]; //Array of user-filled words
+        String[] stringA_p_temp = new String[gridSize];
+        String[][] stringA_preset = new String[gridSize][gridSize]; //Array of preset words
+        String[] stringA_u_temp = new String[gridSize];
+        String[][] stringA_user_filled = new String[gridSize][gridSize]; //Array of user-filled words
         CharSequence temp = "";
         Boolean temp_not_null = false;
         if (listen_mode_game_init) {
-           //A game is already initialized in listen mode
+            //A game is already initialized in listen mode
             savedInstanceState.putStringArray(KEY_assigned, assigned);
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 x += 0; //for break point purpose
-                for (int j = 0; j < 9; j++) {
+                for (int j = 0; j < gridSize; j++) {
                     //savedInstanceState.putString(KEY_filled_words[i][j], gridButton[i][j].getText());
                     temp = gridButton[i][j].getText();
                     //temp_Color = gridButton[i][j].getCurrentTextColor();
@@ -1210,7 +1308,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 x += 5; //for break point purpose
             }
 
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 Log.d(TAG, "l-STRING PRESET are  " + Arrays.toString(stringA_preset[i]));
                 Log.d(TAG, "l-STRING USER FILLED are  " + Arrays.toString(stringA_user_filled[i]));
             }
@@ -1222,9 +1320,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
 
         } else {
             //Normal mode saveOnInstanceState
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 x += 0; //for break point purpose
-                for (int j = 0; j < 9; j++) {
+                for (int j = 0; j < gridSize; j++) {
                     //savedInstanceState.putString(KEY_filled_words[i][j], gridButton[i][j].getText());
                     temp = gridButton[i][j].getText();
                     //temp_Color = gridButton[i][j].getCurrentTextColor();
@@ -1249,7 +1347,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 x += 5; //for break point purpose
             }
 
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 Log.d(TAG, "STRING PRESET are  " + Arrays.toString(stringA_preset[i]));
                 Log.d(TAG, "STRING USER FILLED are  " + Arrays.toString(stringA_user_filled[i]));
             }
@@ -1262,7 +1360,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != QuickNbyBActivity.RESULT_OK) {
+        if (resultCode != MainActivity.RESULT_OK) {
             return;
         }
 
@@ -1275,26 +1373,24 @@ public class QuickNbyBActivity extends AppCompatActivity {
             String msg = data.getStringExtra("LANGUAGE");
             list = data.getParcelableArrayListExtra("EXTRA_WORDS_LIST");
 
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < gridSize; i++) {
                 Log.d(TAG, "Words from selection ENG and SPAN are " + list.get(i).getENG() + "  " +list.get(i).getSPAN());
                 Log.d(TAG, "Words from selection LANGUAGE msg is " + msg);
             }
-            Button mButtons;
+            /*Button mButtons;
             int i;
             switch (msg) {
                 case "SPAN":
-                    for (i = 0; i < 9; i++) {
-                        mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(list.get(i).getSPAN());
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getSPAN());
                     }
                     break;
                 case "ENG":
-                    for (i = 0; i < 9; i++) {
-                        mButtons = findViewById(Button_ids[i]);
-                        mButtons.setText(list.get(i).getENG());
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getENG());
                     }
                     break;
-            }
+            }*/
             if (listen_mode) {
                 //Initialize the game in listen mode
                 getListenGameGrid(msg);
@@ -1311,39 +1407,27 @@ public class QuickNbyBActivity extends AppCompatActivity {
         builder.setTitle("Choose a words list");
 
         // add a radio button list
-        String[] filename;
-        ArrayList<WordsPairs> list = mDBHelper.getImportedData();
-        if (mDBHelper.getImportedData().isEmpty()){
-            filename = new String[]{"Default"};
-        }else{
-            filename = new String[]{"Default", "Uploaded"};
+        final ArrayList<String> myList = new ArrayList<>();
+        myList.add("default");
+        File dir = new File(getFilesDir().getPath());
+        File[] aList = dir.listFiles();
+        if(aList != null){
+            for(File file: aList){
+                myList.add(file.getName());
+            }
         }
-
-        builder.setItems(filename, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(myList.toArray(new String[myList.size()]), -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // user checked an item
                 Intent intent;
-                switch (which) {
-                    case 0: //defalut_words_list
-                        intent = new Intent(QuickNbyBActivity.this, Words_Selection.class);
-                        intent.putExtra("PICK_FILE", true);
-                        intent.putExtra(EXTRA_MESSAGE, msg);
-                        startActivityForResult(intent, 1);
-                        Toast.makeText(QuickNbyBActivity.this,
-                                "You chose default words list", Toast.LENGTH_LONG).show();
-                        break;
-                    case 1: //uploaded_words_file
-                        intent = new Intent(QuickNbyBActivity.this, Words_Selection.class);
-                        intent.putExtra("PICK_FILE", false);
-                        intent.putExtra(EXTRA_MESSAGE, msg);
-                        startActivityForResult(intent, 1);
-                        Toast.makeText(QuickNbyBActivity.this,
-                                "You chose Uploaded words list", Toast.LENGTH_LONG).show();
-                        break;
-                }
+                intent = new Intent(QuickNbyBActivity.this, Words_Selection.class);
+                intent.putExtra("PICK_FILE", myList.get(which));
+                intent.putExtra(EXTRA_MESSAGE, msg);
+                startActivityForResult(intent, 1);
             }
         });
+
+
 
 
         // create and show the alert dialog

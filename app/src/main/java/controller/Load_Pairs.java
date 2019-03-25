@@ -2,32 +2,37 @@ package controller;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import Model.DBHelper;
-import com.example.myapplication.R;
-import Model.WordsPairs;
-import Model.listArrayAdapter;
-
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import Model.WordsPairs;
+import View.customGridAdapter;
+import View.dialogListAdapter;
+import com.example.myapplication.R;
 
 public class Load_Pairs extends AppCompatActivity {
 
@@ -35,34 +40,25 @@ public class Load_Pairs extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 100;
     private static final String WORDS_LIST = "wordslist";
     private static final String TAG = "LOAD_WORDS";
-    private static final String KEY_from_start = "from_start";
 
     ArrayList<WordsPairs> mPairs = new ArrayList<>();
     ArrayList<String> strings = null;
     private String message;
     Boolean loadMore = false;
-    Boolean from_start = false;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load_pairs);
-        from_start = getIntent().getBooleanExtra(KEY_from_start, false);
 
         if (savedInstanceState != null) {
             mPairs = savedInstanceState.getParcelableArrayList(WORDS_LIST);
         }
-
         //set up ListView
-        final ListView listView = (ListView)findViewById(R.id.words_eng_list);
+        GridView girdview = (GridView)findViewById(R.id.grid_load);
         ArrayList<WordsPairs> arrayList= new ArrayList<>();
         if (mPairs.isEmpty()){
-            for (int i = 0; i < 9; i++) {
-                WordsPairs list=new WordsPairs();
-                list.setENG("");
-                list.setSPAN("");
-                arrayList.add(list);
-            }
+            isLargeScreen(arrayList);
         }else{
             for (int i = 0; i < mPairs.size(); i++){
                 WordsPairs list=new WordsPairs();
@@ -71,7 +67,8 @@ public class Load_Pairs extends AppCompatActivity {
                 arrayList.add(list);
             }
         }
-        listView.setAdapter(new listArrayAdapter(this,arrayList));
+        girdview.setAdapter(new customGridAdapter(this,arrayList));
+
 
 
         final String msg;
@@ -93,26 +90,13 @@ public class Load_Pairs extends AppCompatActivity {
 
         //back to MainActivity
         Button back = (Button)findViewById(R.id.back);
-        if (!from_start) {
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Load_Pairs.this, MainActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
-        else {
-            // Load_words is from the start page
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Load_Pairs.this, StartPage.class);
-                    startActivity(intent);
-                }
-            });
-
-        }
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Load_Pairs.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //allow users to type in more words
         //more codes coming
@@ -131,34 +115,45 @@ public class Load_Pairs extends AppCompatActivity {
                     arrayList.add(list);
                 }
 
-                final ListView listView = (ListView)findViewById(R.id.words_eng_list);
-                listView.setAdapter(new listArrayAdapter(Load_Pairs.this,arrayList));
+                final GridView girdview = (GridView) findViewById(R.id.grid_load);
+                girdview.setAdapter(new customGridAdapter(Load_Pairs.this,arrayList));
+
+                isLargeScreen(arrayList);
             }
         });
 
         //Button to set up a Eng game with words that users type in
         //more codes coming
         //store data into database
-        Button back_fill_span = (Button) findViewById(R.id.back_fill_span);
-        back_fill_span.setOnClickListener(new View.OnClickListener() {
+        Button edit = (Button) findViewById(R.id.edit_file);
+        edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                message = "SPAN";
-                setWordsList(message,mPairs);
+               AlertDialog.Builder builder = new AlertDialog.Builder(Load_Pairs.this);
+               builder.setCancelable(false);
+               builder.setTitle("Words List");
+                // add a radio button list
+                final ArrayList<String> myList = new ArrayList<>();
+                myList.add("default");
+                File dir = new File(getFilesDir().getPath());
+                File[] aList = dir.listFiles();
+                if(aList != null){
+                    for(File file: aList){
+                        myList.add(file.getName());
+                    }
+                }
+               ListView dialog_listview = new ListView(Load_Pairs.this);
+               dialog_listview.setAdapter(new dialogListAdapter(Load_Pairs.this, myList));
+               builder.setView(dialog_listview);
+               builder.setNegativeButton("CANCEL", null);
+
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
-        //Button to set up a Span game with words that users type in
-        //more codes coming
-        //store data into database
-        Button back_fill_eng = (Button) findViewById(R.id.back_fill_eng);
-        back_fill_eng.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                message = "ENG";
-                setWordsList(message,mPairs);
-            }
-        });
+
 
         //Button save to save a file with uploaded words from users
         final Button save = (Button) findViewById(R.id.save);
@@ -173,24 +168,61 @@ public class Load_Pairs extends AppCompatActivity {
 
     }
 
-    //pass words that user select to Words_Selection
-    private void setWordsList(String msg, ArrayList<WordsPairs> words) {
-        Intent data = new Intent(this,Words_Selection.class);
-        ArrayList<String> lists = new ArrayList<>();
-        for (int i = 0; i < words.size(); i++){
-            String tmp = words.get(i).getENG() + "," + words.get(i).getSPAN();
-            lists.add(tmp);
-            Log.d(TAG, "TMP is    " + lists.get(i));
+
+    private void isLargeScreen(ArrayList<WordsPairs> arrayList){
+        //Determine density
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int density = metrics.densityDpi;
+        Log.d(TAG, "metrics.densityDpi of this device is " + density);
+
+        if (density == DisplayMetrics.DENSITY_XHIGH)  {
+            // on a large screen device ...
+            int orientation = this.getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                for (int i = 0; i < 18; i++) {
+                    WordsPairs list=new WordsPairs();
+                    list.setENG("");
+                    list.setSPAN("");
+                    arrayList.add(list);
+                }
+            }else{
+                if ((getResources().getConfiguration().screenLayout &
+                        Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                        Configuration.SCREENLAYOUT_SIZE_XLARGE){
+                    for (int i = 0; i < 28; i++) {
+                        WordsPairs list=new WordsPairs();
+                        list.setENG("");
+                        list.setSPAN("");
+                        arrayList.add(list);
+                    }
+                }else{
+                    for (int i = 0; i < 14; i++) {
+                        WordsPairs list = new WordsPairs();
+                        list.setENG("");
+                        list.setSPAN("");
+                        arrayList.add(list);
+                    }
+                }
+            }
+        }else{
+            int orientation = this.getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                for (int i = 0; i < 6; i++) {
+                    WordsPairs list = new WordsPairs();
+                    list.setENG("");
+                    list.setSPAN("");
+                    arrayList.add(list);
+                }
+            }else{
+                for (int i = 0; i < 9; i++) {
+                    WordsPairs list = new WordsPairs();
+                    list.setENG("");
+                    list.setSPAN("");
+                    arrayList.add(list);
+                }
+            }
         }
-        data.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-        data.putExtra(EXTRA_MESSAGE, "LOAD");
-        //pass "ENG" or "SPAN" back
-        data.putExtra("LANGUAGE", msg);
-        //pass what user loaded
-        data.putStringArrayListExtra("LOAD_WORDS_LIST", lists);
-        Log.d(TAG, "DATA is    " + data.getStringArrayListExtra("LOAD_WORDS_LIST"));
-        startActivity(data);
-        finish();
     }
 
     //read file
@@ -257,6 +289,7 @@ public class Load_Pairs extends AppCompatActivity {
                     //ListView initial
                     //set up a new ListView
                     ArrayList<WordsPairs>arrayList= new ArrayList<>();
+                    ArrayList<WordsPairs>arrayList_sec= new ArrayList<>();
                     if (!loadMore){
                         mPairs.clear();
                     }
@@ -282,8 +315,9 @@ public class Load_Pairs extends AppCompatActivity {
                         }
                         mPairs.add(new WordsPairs(words[0],words[1]));
                     }
-                    ListView listView = (ListView)findViewById(R.id.words_eng_list);
-                    listView.setAdapter(new listArrayAdapter(this,arrayList));
+                    isLargeScreen(arrayList);
+                    GridView gridview = (GridView)findViewById(R.id.grid_load);
+                    gridview.setAdapter(new customGridAdapter(this,arrayList));
                 }else{
                     Toast.makeText(this, "Can't Open this type of file",
                             Toast.LENGTH_LONG).show();
@@ -298,63 +332,69 @@ public class Load_Pairs extends AppCompatActivity {
     //open database
     //save words into a table
     public void saveUploadedFile(final ArrayList<WordsPairs> words) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Do you want to save your loaded words?");
-        alertDialogBuilder.setPositiveButton(
-                "yes",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        //create a file located in internal storage
-                      /*  try {
-                            FileOutputStream fOut = openFileOutput("upload_wordspairs.txt",MODE_PRIVATE);
-                            for (int i = 0; i < strings.size(); i++){
-                                String tmp = strings.get(i) + "\n";
-                                fOut.write(tmp.getBytes());
-                            }
-                            fOut.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }*/
+        if (words.size() == 0){
+            Toast.makeText(Load_Pairs.this,
+                    "No words to save.", Toast.LENGTH_LONG).show();
+        }else{
+            final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_item, null);
 
-                        if (words.size() == 0){
-                            Toast.makeText(Load_Pairs.this,
-                                    "No words to save.", Toast.LENGTH_LONG).show();
+            final EditText editText = (EditText) dialogView.findViewById(R.id.edt_file);
+            Button save = (Button) dialogView.findViewById(R.id.buttonSave);
+            Button cancel = (Button) dialogView.findViewById(R.id.buttonCancel);
+            save.setText("SAVE");
+            cancel.setText("CANCEL");
+            dialogBuilder.setTitle("SAVE AS (0-9,a-z, A-Z)");
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogBuilder.dismiss();
+                }
+            });
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // DO SOMETHINGS
+                    String filename = editText.getText().toString();
+                    if (filename.equals("")){
+                        editText.setError("This field can not be blank");
+                    }else{
+                        //check if file already exists
+                        File file = new File(getApplicationContext().getFilesDir(),filename);
+                        if(file.exists()){
+                            editText.setError("This field already exists");
                         }else{
-                            //save to database
-                            //
-                            DBHelper mDB = new DBHelper(Load_Pairs.this);
-                            // mDB.onDestroy();
-                            for (int i = 0; i < words.size(); i++){
-                                if (!mDB.hasImported(new WordsPairs(words.get(i).getENG(),words.get(i).getSPAN(),0))){
-                                    mDB.importWord(new WordsPairs(words.get(i).getENG(),words.get(i).getSPAN(),0));
+                            //create a file located in internal storage
+                            try {
+                                FileOutputStream fOut = openFileOutput(filename, MODE_PRIVATE);
+                                for (int i = 0; i < strings.size(); i++){
+                                    String tmp = strings.get(i) + "\n";
+                                    fOut.write(tmp.getBytes());
                                 }
+                                fOut.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                             Toast.makeText(Load_Pairs.this,
-                                    "Your file is saved.", Toast.LENGTH_LONG).show();
-                            mDB.close();
-                        }
+                                    "Your file is successfully saved.", Toast.LENGTH_LONG).show();
 
-                        DBHelper mDB = new DBHelper(Load_Pairs.this);
-
-                        ArrayList<WordsPairs> arrayList = mDB.getImportedData();
-                        for (int i = 0; i < arrayList.size(); i++){
-                            Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
-                                    arrayList.get(i).getSPAN()+"  ");
+                            dialogBuilder.dismiss();
                         }
                     }
-                });
-                alertDialogBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+                }
+            });
+
+            dialogBuilder.setView(dialogView);
+            dialogBuilder.show();
+
+            Toast.makeText(Load_Pairs.this,
+                    "Your file is saved.", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     //store words while onDestroy
