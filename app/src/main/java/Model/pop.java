@@ -23,10 +23,28 @@ public class pop {
         return;
     }
 
-    public void createWindow(View v,LayoutInflater inflater, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int orientation) {
+    public void createWindow(View v,LayoutInflater inflater, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int orientation, int puzzle) {
+
         if(buttontext != null) {
+            int length;
+            //9x9 grid puzzle = 0
+            //6x6 grid puzzle = 1
+            //12x12 grid puzzle = 2
+            if(puzzle == 0){
+                // code for 9x9 grid
+                length = 9;
+            }
+            else if(puzzle == 1){
+                // code for 6x6 grid
+                length = 6;
+            }
+            else{
+                //code for 12x12 grid
+                length = 12;
+            }
+
             if(buttontext.length() > 6){
-                buttontext = getFullText((Button) v, buttontext,fill_span, fill_eng, list);
+                buttontext = getFullText((Button) v, buttontext,fill_span, fill_eng, list, length);
             }
             int yoff = 0;
             if(orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -36,10 +54,11 @@ public class pop {
                     yoff = yoff - 400;
                 }
             }
+            int[] location = new int[2];
+            v.getLocationOnScreen(location);
 
 
             View popupView = inflater.inflate(R.layout.popwindow, null);
-
 
 
             // create the popup window
@@ -63,15 +82,26 @@ public class pop {
             });
         }
     }
+    private void cell_layout_changes(View v, int orientation){
+        int yoff = 0;
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+            int[] location = new int[2];
+            v.getLocationOnScreen(location);
+            if(location[1] >= 900){
+                yoff = yoff - 400;
+            }
+        }
+    }
 
-    private CharSequence getFullText(Button v, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list){
+
+    private CharSequence getFullText(Button v, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int Length){
 
             CharSequence sixText = buttontext.subSequence(0,6);
             CharSequence shortlist;
             CharSequence fullText = buttontext;
             if(fill_eng){
                 if(v.getCurrentTextColor() == Color.parseColor("#000000")){
-                    for(int i = 0; i < 9; i++){
+                    for(int i = 0; i < Length; i++){
                         if(list.get(i).getSPAN().length() > 6){
                             shortlist = list.get(i).getSPAN().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -82,7 +112,7 @@ public class pop {
                     }
                 }
                 else{
-                    for(int j = 0; j < 9; j++){
+                    for(int j = 0; j < Length; j++){
                         if(list.get(j).getENG().length() > 6){
                             shortlist = list.get(j).getENG().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -94,7 +124,7 @@ public class pop {
             }
             if(fill_span){
                 if(v.getCurrentTextColor() == Color.parseColor("#000000")){
-                    for(int i = 0; i < 9; i++){
+                    for(int i = 0; i < Length; i++){
                         if(list.get(i).getENG().length() > 6){
                             shortlist = list.get(i).getENG().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -105,7 +135,7 @@ public class pop {
                     }
                 }
                 else{
-                    for(int j = 0; j < 9; j++){
+                    for(int j = 0; j < Length; j++){
                         if(list.get(j).getSPAN().length() > 6){
                             shortlist = list.get(j).getSPAN().subSequence(0,6);
                             if(sixText.equals(shortlist)){

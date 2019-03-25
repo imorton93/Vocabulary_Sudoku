@@ -1,9 +1,12 @@
 package controller;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -386,12 +389,14 @@ public class MainActivity extends AppCompatActivity {
                                         if (tmp.equals(Sudoku[x][y])) {
                                             Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                             Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
+                                            gridButton[x][y].setTypeface(null, Typeface.BOLD);
                                         } else {
                                             //if it's right, makes it green
                                             Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                             Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
                                             gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                            gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                         }
                                         //Set the button to clikable and the text to user's text color
                                     } else {
@@ -437,12 +442,14 @@ public class MainActivity extends AppCompatActivity {
                                         if (tmp.equals(Sudoku[x][y])) {
                                             Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                             Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
+                                            gridButton[x][y].setTypeface(null, Typeface.BOLD);
                                         } else {
                                             //if it's right, makes it green
                                             Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                             Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
                                             gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                            gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                         }
                                         //Set the button to clikable and the text to user's text color
                                     } else {
@@ -481,12 +488,14 @@ public class MainActivity extends AppCompatActivity {
                                     if (tmp.equals(Sudoku[x][y])) {
                                         Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                         Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                        gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                        gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
+                                        gridButton[x][y].setTypeface(null, Typeface.BOLD);
                                     } else {
                                         //if it's right, makes it green
                                         Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                         Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
                                         gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                        gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                     }
                                     //Set the button to clikable and the text to user's text color
                                 } else {
@@ -558,13 +567,13 @@ public class MainActivity extends AppCompatActivity {
                     Button button = (Button) v;
                     CharSequence buttonText = button.getText();
                     int orientation = getResources().getConfiguration().orientation;
-
+                    //Configuration config = MainActivity.getResources().getConfiguration();
                     // inflate the layout of the popup window
                     LayoutInflater inflater = (LayoutInflater)
                             getSystemService(LAYOUT_INFLATER_SERVICE);
 
                     pop window = new pop();
-                    window.createWindow(v, inflater, buttonText, fill_Span, fill_Eng, list, orientation);
+                    window.createWindow(v, inflater, buttonText, fill_Span, fill_Eng, list, orientation, 0);
 
                     return true;
                 }
@@ -978,11 +987,13 @@ public class MainActivity extends AppCompatActivity {
                     SelectedButton.setText(buttonText);
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
-                        SelectedButton.setTextColor(Color.parseColor("#FFFFC0CB"));
+                        SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
+                        SelectedButton.setTypeface(null, Typeface.BOLD);
                         mistakeCount++;
                     } else {
                         //if it's right, makes it green
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+                        SelectedButton.setTypeface(null, Typeface.NORMAL);
                     }
                     //set the Selected Buttons Text as text from input button
                 }
@@ -1005,7 +1016,8 @@ public class MainActivity extends AppCompatActivity {
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);
-                    SelectedButton.setTextColor(Color.parseColor("#FFFFC0CB"));
+                    SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
+                    SelectedButton.setTypeface(null, Typeface.BOLD);
                     mistakeCount++;
                     //allow user to keep track of what they get wrong
                     //ask user whether they want to save to My words
@@ -1017,6 +1029,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     SelectedButton.setText(buttonText);
                     SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+                    SelectedButton.setTypeface(null, Typeface.NORMAL);
                 }
                 //set the Selected Buttons Text as text from input button
             }
