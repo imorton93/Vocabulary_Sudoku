@@ -37,8 +37,6 @@ public class Words_Selection extends AppCompatActivity {
     private static final String TAG = "Words-Selection";
     private static final String PAGE = "Pages";
     private static final String WORDSLIST = "WORDSPAIRS";
-    private static final String WORDSLIST_ENG = "wordsList_eng";
-    private static final String WORDSLIST_SPAN = "wordsList_span";
     private static final String MESSAGE_LANGUAGE = "Message_Language";
     private static final String WORDS_COUNT = "Words_Count";
     private static final String GRID_PRE_POSITION = "Pre_Position";
@@ -90,9 +88,9 @@ public class Words_Selection extends AppCompatActivity {
         GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layout);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int density = metrics.densityDpi;
+      /*  int density = metrics.densityDpi;
         int  width = gridLayout.getWidth();
-        int  height = gridLayout.getHeight();
+        int  height = gridLayout.getHeight();*/
         int row = (int)Math.sqrt(gridSize);
         int col = gridSize/row;
 

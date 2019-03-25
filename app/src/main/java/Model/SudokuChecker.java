@@ -22,7 +22,7 @@ public class SudokuChecker {
         }
 
 
-        return (checkRow(Sudoku,eng_list,span_list) && checkCol(Sudoku,eng_list,span_list) && checkBox(Sudoku,eng_list,span_list));
+        return (checkBox(Sudoku,eng_list,span_list));
     }
 
     private boolean checkRow(String[][] Sudoku, String[] eng_list, String[] span_list) {
@@ -86,14 +86,16 @@ public class SudokuChecker {
                 for (int xBox = 0; xBox < gridSize; xBox++){
                     for (int yBox = xBox + 1 ; yBox < gridSize; yBox++){
                         for (int i = 0; i < gridSize; i++) {
-                            if (Sudoku[x+xBox%boxRow][y+xBox/boxCol].equals(eng_list[i]) ||
-                                    Sudoku[x+xBox%boxRow][y+xBox/boxCol].equals(span_list[i])){
+                            if (Sudoku[x+xBox%boxRow][y+xBox/boxRow].equals("")){
+                                return false;
+                            }
+                            if (Sudoku[x+xBox%boxRow][y+xBox/boxRow].equals(eng_list[i]) ||
+                                    Sudoku[x+xBox%boxRow][y+xBox/boxRow].equals(span_list[i])){
                                 eng = eng_list[i];
                                 span = span_list[i];
                             }
                         }
-                        if (Sudoku[x+xBox%boxRow][y+xBox/boxCol].equals(Sudoku[x+yBox%boxRow][y+yBox/boxCol]) ||
-                                Sudoku[x+yBox%boxRow][y+yBox/boxCol].equals(eng) || Sudoku[x+yBox%boxRow][y+yBox/boxCol].equals(span)){
+                        if (Sudoku[x+yBox%boxRow][y+yBox/boxRow].equals(eng) || Sudoku[x+yBox%boxRow][y+yBox/boxRow].equals(span)){
                             return false;
                         }
                     }

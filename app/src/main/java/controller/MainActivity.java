@@ -35,6 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Random;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
     private boolean listen_mode_game_init = false; //Checks if the app has a game started in listen comprehension mode
     private int mistakeCount = 0;
+    private int numHolesRemaining = 0;
     String[][] Sudoku_temp;
     String[][] Sudoku_user;
     //WordsPairs object
@@ -256,49 +258,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate(Bundle) called");
 
         gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
-
-        //based on grid size, to get different layout
-        if (gridSize != 9){
-            int layoutID = getResources().getIdentifier("activity_main"+ gridSize, "layout", getPackageName());
-            setContentView(layoutID);
-        }
-        //set up size of grids
-        gridButton = new Button[gridSize][gridSize];//buttons b11-b99
-        Button_ids = new Button[gridSize];
-        Sudoku = new String[gridSize][gridSize];
-        Sudoku_temp = new String[gridSize][gridSize];
-        Sudoku_user = new String[gridSize][gridSize];
-        preset = new int[(int)Math.pow(gridSize,2)];
-        l_numbers = new String[gridSize];
-        for (int i = 0; i < gridSize; i++ ){
-            l_numbers[i] = String.valueOf(i+1);
-        }
-        assigned = new String[gridSize]; //For listen mode
-        //initial gameGrid
-        //show words in button
-        if (gridSize == 12){
-            for (int x = 0; x < gridSize; x++) {
-                for (int y = 0; y < gridSize; y++) {
-                    String buttonID = "b" + (x+1) + "_"+ (y+1);
-                    int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-                    gridButton[x][y] = findViewById(resID);
-                }
-                String wordButton = "button" + (x+1);
-                int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
-                Button_ids[x] = findViewById(ID);
-            }
-        }else{
-            for (int x = 0; x < gridSize; x++) {
-                for (int y = 0; y < gridSize; y++) {
-                    String buttonID = "b" + (x+1) + (y+1);
-                    int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-                    gridButton[x][y] = findViewById(resID);
-                }
-                String wordButton = "button" + (x+1);
-                int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
-                Button_ids[x] = findViewById(ID);
-            }
-        }
+        initialGrids(gridSize);
 
         //store words from String Resources
         //in case, order of String from String Resources may change
@@ -759,10 +719,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-
-
-
-
 // loop through the array, find the button with respective id and set the listener
         for (int x = 0; x < gridSize; x++){
             for (int y = 0; y < gridSize; y++){
@@ -772,6 +728,50 @@ public class MainActivity extends AppCompatActivity {
         }
 
     } //End of OnCreate()
+
+    public void initialGrids(int gridSize){
+        //based on grid size, to get different layout
+        if (gridSize != 9){
+            int layoutID = getResources().getIdentifier("activity_main"+ gridSize, "layout", getPackageName());
+            setContentView(layoutID);
+        }
+        //set up size of grids
+        gridButton = new Button[gridSize][gridSize];//buttons b11-b99
+        Button_ids = new Button[gridSize];
+        Sudoku = new String[gridSize][gridSize];
+        Sudoku_temp = new String[gridSize][gridSize];
+        Sudoku_user = new String[gridSize][gridSize];
+        preset = new int[(int)Math.pow(gridSize,2)];
+        l_numbers = new String[gridSize];
+        for (int i = 0; i < gridSize; i++ ){
+            l_numbers[i] = String.valueOf(i+1);
+        }
+        assigned = new String[gridSize]; //For listen mode
+        //initial gameGrid
+        //show words in button
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
+                String buttonID;
+                if (gridSize == 12){
+                    buttonID = "b" + (x+1) + "_"+ (y+1);
+                }else {
+                    buttonID = "b" + (x+1) + (y+1);
+                }
+                int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+                gridButton[x][y] = findViewById(resID);
+            }
+            String wordButton = "button" + (x+1);
+            int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
+            Button_ids[x] = findViewById(ID);
+        }
+
+        for (int x = 0; x < gridSize; x++){
+            for (int y = 0; y < gridSize; y++){
+                gridButton[x][y].setOnClickListener(listener);
+                gridButton[x][y].setOnLongClickListener(longClickListener);
+            }
+        }
+    }
 
     //grid cell initialization
     public void getGameGrid(String msg) {
@@ -786,7 +786,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = 0; //set up a number to determine how many words to hide
+        double remainingHoles = 2; //set up a number to determine how many words to hide
+        numHolesRemaining = (int)remainingHoles;
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
@@ -846,6 +847,7 @@ public class MainActivity extends AppCompatActivity {
         Sudoku = initialGame.generateGrid(msg,list);
         double remainingGrids = Math.pow(gridSize,2);
         double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
+        numHolesRemaining = (int)remainingHoles;
         span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -1051,24 +1053,58 @@ public class MainActivity extends AppCompatActivity {
 
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, String[][] originalSudoku) {
-        String msg;
-        if (resultCheck.sudokuCheck(Sudoku, list)){
-            msg = "Congratulation! Sudoku is correct!";
-        }else {
-            msg = "Sudoku is incorrect, try again!";
+        final String fin_msg;
+        if (numHolesRemaining == 0){
+            if (resultCheck.sudokuCheck(Sudoku, list)){
+                fin_msg = "Congratulation! Sudoku is correct!";
+            }else {
+                fin_msg = "Sudoku is incorrect, try again!";
+            }
+        }else{
+            fin_msg = "You have not finished your puzzle, Do you want to play a new gmae? ";
         }
-        Toast result = Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG);
-        result.setGravity(Gravity.TOP, 0, 400);
-        result.show();
-        //only for test
-        //intent the 9*9 Grid Sudoku to a new page
-        Intent intent = new Intent(MainActivity.this, SudokuDisplay.class);
-        ArrayList<String> words = new ArrayList<String>();
-        for (int x = 0; x < gridSize; x++) {
-            words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
-        }
-        intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
-        startActivity(intent);
+
+
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(fin_msg);
+
+        // add a radio button list
+        String[] fin_list = {"NEW GAME", "REPLAY"};
+        builder.setCancelable(false);
+        builder.setNegativeButton("CANCEL", null);
+        builder.setItems(fin_list, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent;
+                switch (which){
+                    case 0:
+                        intent = new Intent(MainActivity.this, SetUpPage.class);
+                        startActivity(intent);
+                       break;
+                    case 1:
+                        if (fill_Eng){
+                            getGameGrid("ENG");
+                            for (int i = 0; i < list.size(); i++){
+                                Button_ids[i].setText(list.get(i).getENG());
+
+                            }
+                        }else {
+                            getGameGrid("SPAN");
+                            for (int i = 0; i < list.size(); i++){
+                                Button_ids[i].setText(list.get(i).getSPAN());
+                            }
+                        }
+                        break;
+                }
+                dialog.dismiss();
+            }
+        });
+
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
@@ -1135,6 +1171,7 @@ public class MainActivity extends AppCompatActivity {
                         //if it's right, makes it green
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                     }
+                    numHolesRemaining--;
                     //set the Selected Buttons Text as text from input button
                 }
             }
@@ -1169,6 +1206,7 @@ public class MainActivity extends AppCompatActivity {
                     SelectedButton.setText(buttonText);
                     SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                 }
+                numHolesRemaining--;
                 //set the Selected Buttons Text as text from input button
             }
         }
@@ -1435,7 +1473,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Words from selection ENG and SPAN are " + list.get(i).getENG() + "  " +list.get(i).getSPAN());
                 Log.d(TAG, "Words from selection LANGUAGE msg is " + msg);
             }
-            Button mButtons;
             int i;
             switch (msg) {
                 case "SPAN":
@@ -1492,7 +1529,6 @@ public class MainActivity extends AppCompatActivity {
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
 
     //To make debugger display tags

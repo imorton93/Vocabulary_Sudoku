@@ -120,20 +120,18 @@ public class Display_Words extends AppCompatActivity {
 
 
     public void addMyWords(String eng, String span) {
-        final String finalEng = eng;
-        final String finalSpan = span;
         //initial Database
         //store wrong word that made by user
         //check if there is same word inside Database
-        if (mDBHelper.hasWord(new WordsPairs(finalEng, finalSpan, 1))){
+        if (mDBHelper.hasWord(new WordsPairs(eng, span, 1))){
             //update Total number of wrong words
-            int num = mDBHelper.numWrong(new WordsPairs(finalEng, finalSpan, 1));
+            int num = mDBHelper.numWrong(new WordsPairs(eng, span, 1));
             num++;
             //update database
-            mDBHelper.updateWrongNum(new WordsPairs(finalEng, finalSpan,num));
+            mDBHelper.updateWrongNum(new WordsPairs(eng, span,num));
         }else{
             //insert word to database
-            mDBHelper.updateWrongWord(new WordsPairs(finalEng, finalSpan,1));
+            mDBHelper.updateWrongWord(new WordsPairs(eng, span,1));
         }
         ArrayList<WordsPairs> arrayList = mDBHelper.getData();
         for (int i = 0; i < arrayList.size(); i++){
