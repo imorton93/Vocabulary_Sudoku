@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ public class QuickSetUp extends AppCompatActivity {
     private static final String KEY_fill_Eng = "fill_Eng";
     private static final String KEY_fill_Span = "fill_Span";
     private static final String KEY_Listen = "Listen_Mode";
+    private static final String KEY_GRID_SIZE = "grid_size";
 
     Boolean listen_mode = false;
     Boolean fill_English = false;
@@ -28,6 +30,7 @@ public class QuickSetUp extends AppCompatActivity {
     Button nine_by_nine = null;
     Button two_by_three = null;
     Button three_by_four = null;
+    Button two_by_two = null;
 
 
     @Override
@@ -56,11 +59,50 @@ public class QuickSetUp extends AppCompatActivity {
             }
         });
 
+
+        two_by_two = findViewById(R.id.t2by2);
+        if ( two_by_two != null) {
+            two_by_two.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Start activity for intent page with two by three layout
+                    if (fill_English || fill_Spanish) {
+                        Intent t2by2 = new Intent(QuickSetUp.this, QuickNbyBActivity.class);
+                        t2by2.putExtra(KEY_fill_Eng, fill_English);
+                        t2by2.putExtra(KEY_fill_Span, fill_Spanish);
+                        t2by2.putExtra(KEY_Listen, listen_mode);
+                        t2by2.putExtra(KEY_GRID_SIZE, 4);
+                        startActivity(t2by2);
+                    }
+                    else{
+                        Toast need_check = Toast.makeText(QuickSetUp.this ,
+                                R.string.not_checked,Toast.LENGTH_LONG);
+                        need_check.setGravity(Gravity.TOP, 0, 400);
+                        need_check.show();
+                    }
+                }
+            });
+        }
+
         two_by_three = findViewById(R.id.t2by3);
         two_by_three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Start activity for intent page with two by three layout
+                if (fill_English || fill_Spanish) {
+                    Intent t2by3 = new Intent(QuickSetUp.this, QuickNbyBActivity.class);
+                    t2by3.putExtra(KEY_fill_Eng, fill_English);
+                    t2by3.putExtra(KEY_fill_Span, fill_Spanish);
+                    t2by3.putExtra(KEY_Listen, listen_mode);
+                    t2by3.putExtra(KEY_GRID_SIZE, 6);
+                    startActivity(t2by3);
+                }
+                else{
+                    Toast need_check = Toast.makeText(QuickSetUp.this ,
+                            R.string.not_checked,Toast.LENGTH_LONG);
+                    need_check.setGravity(Gravity.TOP, 0, 400);
+                    need_check.show();
+                }
             }
         });
 
@@ -70,6 +112,22 @@ public class QuickSetUp extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     //Start activity for intent page with three by four layout
+                    //Determine density
+                    DisplayMetrics metrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                    int density = metrics.densityDpi;
+
+                    if (density == DisplayMetrics.DENSITY_XHIGH) {
+                        three_by_four.setVisibility(View.VISIBLE);
+                        Intent t3by4 = new Intent(QuickSetUp.this, QuickNbyBActivity.class);
+                        t3by4.putExtra(KEY_fill_Eng, fill_English);
+                        t3by4.putExtra(KEY_fill_Span, fill_Spanish);
+                        t3by4.putExtra(KEY_Listen, listen_mode);
+                        t3by4.putExtra(KEY_GRID_SIZE, 12);
+                        startActivity(t3by4);
+                    }else {
+                        three_by_four.setVisibility(View.GONE);
+                    }
                 }
             });
         }

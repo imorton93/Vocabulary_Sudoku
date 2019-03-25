@@ -47,7 +47,9 @@ public class StartPage extends AppCompatActivity {
         guide.setOnClickListener( new View.OnClickListener()
         {
             public void onClick(View view) {
-            //Do Guide
+                //Do Guide, create a new layout for guide page.
+                Intent guide = new Intent (StartPage.this, Guide.class);
+                startActivity(guide);
 
             }
 

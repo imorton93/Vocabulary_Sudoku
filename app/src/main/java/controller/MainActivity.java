@@ -35,7 +35,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Random;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
     private boolean listen_mode_game_init = false; //Checks if the app has a game started in listen comprehension mode
     private int mistakeCount = 0;
-    private int numHolesRemaining = 0;
     String[][] Sudoku_temp;
     String[][] Sudoku_user;
     //WordsPairs object
@@ -719,6 +717,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+
+
+
+
 // loop through the array, find the button with respective id and set the listener
         for (int x = 0; x < gridSize; x++){
             for (int y = 0; y < gridSize; y++){
@@ -786,7 +788,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = 2; //set up a number to determine how many words to hide
+        double remainingHoles = 0; //set up a number to determine how many words to hide
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
@@ -862,6 +864,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //Randomize the numbers in l_numbers[i]
+        final int min = 0;
+        final int max = gridSize-1;
+        String temp = null;
+        for (int j = 0; j < gridSize/4; j++){
+            final int random1 = new Random().nextInt((max - min) + 1) + min;
+            final int random2 = new Random().nextInt((max - min) + 1) + min;
+            temp = l_numbers[random1];
+            l_numbers[random1] = l_numbers[random2];
+            l_numbers[random2] = temp;
+        }
+        //End of randomize numbers
+
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
@@ -1263,14 +1278,42 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.fill_Eng:
-                //The 9 buttons will display English
-                //mButton1.setText(R.string.eng_1);
+                //The big buttons will display English
                 fill_Eng = true;
                 fill_Span = false;
+                msg = "ENG";
                 Toast result2 = Toast.makeText(MainActivity.this,
                         "User chooses to fill in English", Toast.LENGTH_LONG);
                 result2.setGravity(Gravity.TOP, 0, 400);
                 result2.show();
+                if (!InitializedGame || mistakeCount >= 3) {
+                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
+                    */
+                    Log.d(TAG, "User chooses to fill in English");
+                    //Uses preset word pairs to setup the game
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getENG());
+                    }
+                    if (listen_mode){
+                        getListenGameGrid(msg);
+                    }
+                    else{
+                        getGameGrid(msg);
+                    }
+                } else {
+                    //Temporary Toast
+                    Toast.makeText(MainActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
+                }
+                return true;
+
+            case R.id.new_pick_eng:
+                fill_Eng = true;
+                fill_Span = false;
+                Toast result3 = Toast.makeText(MainActivity.this,
+                        "User chooses to pick new English words", Toast.LENGTH_LONG);
+                result3.setGravity(Gravity.TOP, 0, 400);
+                result3.show();
                 if (!InitializedGame || mistakeCount >= 3) {
                     /* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
@@ -1284,6 +1327,27 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
 
+            case R.id.new_pick_span:
+                fill_Span = true;
+                fill_Eng = false;
+                Toast result4 = Toast.makeText(MainActivity.this,
+                        "User chooses to pick new Spanish words", Toast.LENGTH_LONG);
+                result4.setGravity(Gravity.TOP, 0, 400);
+                result4.show();
+                if (!InitializedGame || mistakeCount >= 3) {
+                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
+                    */
+                    Log.d(TAG, "User chooses to fill in Spanish");
+                    //allow user to pick a word list
+                    pickAFile("SPAN");
+                } else {
+                    //Temporary Toast
+                    Toast fin = Toast.makeText(MainActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
+                    fin.setGravity(Gravity.TOP, 0, 400);
+                    fin.show();
+                }
+                return true;
             case R.id.display_words:
                 Log.d(TAG, "User chooses to see word pairs");
 
@@ -1473,6 +1537,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Words from selection ENG and SPAN are " + list.get(i).getENG() + "  " +list.get(i).getSPAN());
                 Log.d(TAG, "Words from selection LANGUAGE msg is " + msg);
             }
+            Button mButtons;
             int i;
             switch (msg) {
                 case "SPAN":
@@ -1529,6 +1594,7 @@ public class MainActivity extends AppCompatActivity {
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();
+
     }
 
     //To make debugger display tags

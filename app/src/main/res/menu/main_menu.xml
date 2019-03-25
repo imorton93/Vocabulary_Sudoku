@@ -15,6 +15,26 @@
         />
 
     <item
+        android:id="@+id/pick_new"
+        android:title="Pick New Words"
+        app:showAsAction="never" >
+        <menu>
+            <item
+                android:id="@+id/new_pick_eng"
+                android:title="Pick New English Words"
+                app:showAsAction="never"
+                />
+            <item
+                android:id="@+id/new_pick_span"
+                android:title="Pick New Spanish Words"
+                app:showAsAction="never"
+                />
+            </menu>
+
+
+    </item>
+
+    <item
         android:id="@+id/display_words"
         android:title="Display Word Pairs"
         app:showAsAction="never"
