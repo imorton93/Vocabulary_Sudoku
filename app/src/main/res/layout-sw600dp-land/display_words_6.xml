@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="672dp"
+        android:layout_width="842dp"
         android:layout_height="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -43,16 +43,16 @@
 
     <TextView
         android:id="@+id/words_view"
-        android:layout_width="661dp"
+        android:layout_width="747dp"
         android:layout_height="88dp"
-        android:layout_marginEnd="192dp"
-        android:layout_marginRight="192dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginRight="132dp"
         android:text="@string/tip_dictionary"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279" />
+        app:layout_constraintVertical_bias="0.251" />
 
     <TextView
         android:id="@+id/translation"
@@ -160,10 +160,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.418"
+        app:layout_constraintHorizontal_bias="0.395"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.909" />
+        app:layout_constraintVertical_bias="0.96" />
 
 
     <!--<ListView-->
