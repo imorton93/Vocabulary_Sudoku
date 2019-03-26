@@ -882,11 +882,11 @@ public class MainActivity extends AppCompatActivity {
         });
         //Randomize the numbers in l_numbers[i]
         final int min = 0;
-        final int max = gridSize-1;
+        final int max = gridSize;
         String temp = null;
         for (int j = 0; j < gridSize/4; j++){
-            final int random1 = new Random().nextInt((max - min) + 1) + min;
-            final int random2 = new Random().nextInt((max - min) + 1) + min;
+            final int random1 = new Random().nextInt(max); //Gives a random number between 0 ... gridSize -1
+            final int random2 = new Random().nextInt(max);
             temp = l_numbers[random1];
             l_numbers[random1] = l_numbers[random2];
             l_numbers[random2] = temp;

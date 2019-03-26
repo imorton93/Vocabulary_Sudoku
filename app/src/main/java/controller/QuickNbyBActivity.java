@@ -902,6 +902,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 }
                 fill_Span = false;
                 fill_Eng = false;
+                //Generate a new game immediately ,with the same parameters
             }
         });
     }
@@ -1039,7 +1040,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
     }
 
-
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -1047,11 +1048,12 @@ public class QuickNbyBActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_menu, menu);
         this.menu = menu;
         return true;
-    }
+    } */
 
     //reinit_dialog Reinit_warn = new reinit_dialog(MainActivity.this);
 
-    @Override
+
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //Button mButton1 = (Button) findViewById(R.id.button1);
         // menu = this.menu;
@@ -1069,9 +1071,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 result1.setGravity(Gravity.TOP, 0, 400);
                 result1.show();
                 if (!InitializedGame || mistakeCount >= 3) {
-                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    */
+                    *//*
                     Log.d(TAG, "User chooses to fill in Spanish");
                     //Start a new game with the same nine words. The sudoku will be pre-filled in English
                      //After choosing "fill in Spanish", start a new game with Spanish
@@ -1103,9 +1105,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 result2.setGravity(Gravity.TOP, 0, 400);
                 result2.show();
                 if (!InitializedGame || mistakeCount >= 3) {
-                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    */
+                    *//*
                     Log.d(TAG, "User chooses to fill in English");
                     //Uses preset wordpairs to setup the game
                     for (i = 0; i < list.size(); i++) {
@@ -1132,9 +1134,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 result3.setGravity(Gravity.TOP, 0, 400);
                 result3.show();
                 if (!InitializedGame || mistakeCount >= 3) {
-                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    */
+                    *//*
                     //call random function ***
                     Log.d(TAG, "User chooses to fill in English");
                     //Uses preset wordpairs to setup the game
@@ -1162,9 +1164,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 result4.setGravity(Gravity.TOP, 0, 400);
                 result4.show();
                 if (!InitializedGame || mistakeCount >= 3) {
-                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    */
+                    *//*
                     //Call the random function to update the list ********
                     Log.d(TAG, "User chooses to fill in Spanish");
                     //Start a new game with the same nine words. The sudoku will be pre-filled in English
@@ -1189,11 +1191,11 @@ public class QuickNbyBActivity extends AppCompatActivity {
             case R.id.display_words:
                 Log.d(TAG, "User chooses to see word pairs");
 
-                /*
+                *//*
                 //Displays the warning dialog before displaying the word pairs translation
                 reinit_dialog Reinit_warn = new reinit_dialog(this);
                 Reinit_warn.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                Reinit_warn.show();  */
+                Reinit_warn.show();  *//*
 
                 if (InitializedGame) {
                     Intent display_w = new Intent(this, Display_Words.class);
@@ -1213,8 +1215,8 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 return true;
 
             case R.id.load_wordpairs:
-                /*intent = new Intent(QuickNbyBActivity.this, Load_Pairs.class);
-                startActivityForResult(intent, 1); */
+                *//*intent = new Intent(QuickNbyBActivity.this, Load_Pairs.class);
+                startActivityForResult(intent, 1); *//*
                 //Do nothing
                 return true;
 
@@ -1243,8 +1245,10 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
+
+    /*
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(listen_mode){
@@ -1254,6 +1258,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
         return super.onPrepareOptionsMenu(menu);
     }
+    */
 
     //After the grids are created, save the words
     @Override
