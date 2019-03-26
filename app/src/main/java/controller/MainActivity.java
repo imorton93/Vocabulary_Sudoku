@@ -1532,6 +1532,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
+        //list filename of words list that are saved by users
         builder.setSingleChoiceItems(myList.toArray(new String[myList.size()]), -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -1544,15 +1545,20 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("BACK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent;
-                intent = new Intent(MainActivity.this, SetUpPage.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
+        if (list.isEmpty()){
+            builder.setNegativeButton("BACK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent;
+                    intent = new Intent(MainActivity.this, SetUpPage.class);
+                    startActivity(intent);
+                    dialog.dismiss();
+                }
+            });
+        }else{
+            builder.setNegativeButton("CANCEL", null);
+        }
+
 
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
