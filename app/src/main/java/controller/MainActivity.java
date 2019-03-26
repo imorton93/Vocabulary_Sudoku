@@ -35,6 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Random;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
     String[][] Sudoku_user;
     //WordsPairs object
     private ArrayList<WordsPairs> list = new ArrayList<>();
+    private String msg;
 
     int[] preset;
     //initial database
@@ -1073,55 +1075,16 @@ public class MainActivity extends AppCompatActivity {
             fin_msg = "Sudoku is incorrect, try again!";
         }
         // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(fin_msg);
+        Intent intent;
+        intent = new Intent(MainActivity.this, SudokuDisplay.class);
+        ArrayList<String> words = new ArrayList<String>();
+        for (int x = 0; x < gridSize; x++) {
+            words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
+        }
+        intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
 
-        // add a radio button list
-        String[] fin_list = {"NEW GAME", "REPLAY", "Display"};
-        builder.setCancelable(false);
-        builder.setNegativeButton("CANCEL", null);
-        builder.setItems(fin_list, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent;
-                switch (which){
-                    case 0:
-                        intent = new Intent(MainActivity.this, SetUpPage.class);
-                        startActivity(intent);
-                       break;
-                    case 1:
-                        if (fill_Eng){
-                            getGameGrid("ENG");
-                            for (int i = 0; i < list.size(); i++){
-                                Button_ids[i].setText(list.get(i).getENG());
-
-                            }
-                        }else {
-                            getGameGrid("SPAN");
-                            for (int i = 0; i < list.size(); i++){
-                                Button_ids[i].setText(list.get(i).getSPAN());
-                            }
-                        }
-                        break;
-                    case 2:
-                        intent = new Intent(MainActivity.this, SudokuDisplay.class);
-                        ArrayList<String> words = new ArrayList<String>();
-                        for (int x = 0; x < gridSize; x++) {
-                            words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
-                        }
-                        intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
-
-                        intent.putExtra(KEY_GRID_SIZE, gridSize);
-                        startActivity(intent);
-                }
-                dialog.dismiss();
-            }
-        });
-
-
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        intent.putExtra(KEY_GRID_SIZE, gridSize);
+        startActivity(intent);
     }
 
 
