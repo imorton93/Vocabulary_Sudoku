@@ -65,9 +65,8 @@ public class GridAdapter extends BaseAdapter {
         display.getMetrics(metrics);
         Resources resources = mContext.getResources();
 
-        View gridview = (GridView) parent;
-        int  width = gridview.getWidth();
-        int  height = gridview.getHeight();
+        int  width = ((GridView) parent).getWidth();
+        int  height = ((GridView) parent).getHeight();
         int orientation = mContext.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // In landscape
