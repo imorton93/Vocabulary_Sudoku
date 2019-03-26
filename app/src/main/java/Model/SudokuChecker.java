@@ -22,7 +22,7 @@ public class SudokuChecker {
         }*/
 
 
-        return (checkBox(Sudoku,mPairs));
+        return (checkCol(Sudoku,mPairs) && checkRow(Sudoku,mPairs) && checkBox(Sudoku,mPairs));
     }
 
     private boolean checkRow(String[][] Sudoku, ArrayList<WordsPairs> mPairs) {

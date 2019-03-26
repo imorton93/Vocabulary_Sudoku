@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -305,6 +306,7 @@ public class Words_Selection extends AppCompatActivity {
 
     }
 
+
     public void selectWords(){
         //gridview show words in the database
         //allow user to use
@@ -326,16 +328,36 @@ public class Words_Selection extends AppCompatActivity {
                     if (!isConflict(selectedItem) && !selectedItem.equals("")){
                         //show which words selected by user in Textview
                         Log.d(TAG, "SELECTED ITEM IS "+ selectedItem);
+                        if (message.equals("ENG")){
+                            Log.d(TAG,"STR STR STR STR span IS  "+ span_wordsList.get(position));
+                        }else{
+                            Log.d(TAG,"STR STR STR STR eng  IS  "+ eng_wordsList.get(position));
+                        }
                         if (selectedItem.contains(".wrong")){
                             String str = selectedItem.replace(selectedItem.substring(selectedItem.length()-6), "");
                             Log.d(TAG,"STR STR STR STR IS  "+ str);
+                            if (message.equals("ENG")){
+                                Log.d(TAG,"STR STR STR STR span IS  "+ span_wordsList.get(position));
+                            }else{
+                                Log.d(TAG,"STR STR STR STR eng  IS  "+ eng_wordsList.get(position));
+                            }
                             tv[wordsCount].setText(str);
-                            wordsList(message,str);
+                            //store what user choose
+                            if (message.equals("ENG")){
+                                wordpairs.add(new WordsPairs(str, span_wordsList.get(position)));
+                            }else{
+                                wordpairs.add(new WordsPairs(eng_wordsList.get(position), str));
+                            }
                         }else{
                             tv[wordsCount].setText(selectedItem);
-                            wordsList(message,selectedItem);
-                        }
 
+                            //store what user choose
+                            if (message.equals("ENG")){
+                                wordpairs.add(new WordsPairs(selectedItem, span_wordsList.get(position)));
+                            }else{
+                                wordpairs.add(new WordsPairs(eng_wordsList.get(position), selectedItem));
+                            }
+                        }
                         tv[wordsCount].setGravity(Gravity.CENTER);
                         //keep track of position in which words are selected
                         pre_pos[wordsCount] = position + (pages-1) * 36;
@@ -350,6 +372,7 @@ public class Words_Selection extends AppCompatActivity {
                 }
             }
         });
+
 
         //UNDO button can delete last word selected by user
         final Button undo = (Button) findViewById(R.id.undo);
@@ -486,8 +509,8 @@ public class Words_Selection extends AppCompatActivity {
                         button.setText("Hide My words");
                         for (int i = 0; i < span_wordsList.size(); i++){
                             if (lookForWrongWords(i)){
-                                TextView tv = (TextView) gridView.getChildAt(i);
-                                tv.setTextColor(Color.RED);
+                                final TextView textview = (TextView) gridView.getChildAt(i);
+                                textview.setTextColor(Color.RED);
                                 count++;
                             }
                         }
@@ -543,34 +566,6 @@ public class Words_Selection extends AppCompatActivity {
         return false;
     }
 
-    //store what user choose
-    public void wordsList(String msg, String item){
-        switch (msg) {
-            case "SPAN":
-                String eng = null;
-                //wordsList_span[wordsCount] = item;
-                for (int i = 0; i < span_wordsList.size(); i++) {
-                    if (item.equals(span_wordsList.get(i))) {
-                        //wordsList_eng[wordsCount] = eng_wordsList.get(i);
-                        eng = eng_wordsList.get(i);
-                    }
-                }
-                wordpairs.add(new WordsPairs(eng, item));
-                break;
-            case "ENG":
-                String span = null;
-                //wordsList_eng[wordsCount] = item;
-                for (int i = 0; i < eng_wordsList.size(); i++) {
-                    if (item.equals(eng_wordsList.get(i))) {
-                        //wordsList_span[wordsCount] = span_wordsList.get(i);
-                        span = span_wordsList.get(i);
-                    }
-                }
-                wordpairs.add(new WordsPairs(item, span));
-                break;
-        }
-
-    }
 
     //pass words that user select to MainActivity
     private void setStartList(String msg, ArrayList<WordsPairs> words) {
