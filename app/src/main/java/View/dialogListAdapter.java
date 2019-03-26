@@ -15,8 +15,8 @@ import com.example.myapplication.R;
 
 
 public class dialogListAdapter extends BaseAdapter {
-    Context mContext;
-    ArrayList<String> mList = new ArrayList<>();
+    private Context mContext;
+    private ArrayList<String> mList = new ArrayList<>();
     private LayoutInflater mInflater;
 
     public dialogListAdapter(Context context, ArrayList<String> list){

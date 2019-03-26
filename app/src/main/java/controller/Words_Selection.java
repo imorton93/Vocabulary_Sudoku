@@ -37,8 +37,6 @@ public class Words_Selection extends AppCompatActivity {
     private static final String TAG = "Words-Selection";
     private static final String PAGE = "Pages";
     private static final String WORDSLIST = "WORDSPAIRS";
-    private static final String WORDSLIST_ENG = "wordsList_eng";
-    private static final String WORDSLIST_SPAN = "wordsList_span";
     private static final String MESSAGE_LANGUAGE = "Message_Language";
     private static final String WORDS_COUNT = "Words_Count";
     private static final String GRID_PRE_POSITION = "Pre_Position";
@@ -82,6 +80,7 @@ public class Words_Selection extends AppCompatActivity {
 
         //grid size
         gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
+        message = getIntent().getStringExtra(EXTRA_MESSAGE);
         tv = new TextView[gridSize];
         pre_pos = new int[gridSize];
 
@@ -90,9 +89,9 @@ public class Words_Selection extends AppCompatActivity {
         GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layout);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int density = metrics.densityDpi;
+      /*  int density = metrics.densityDpi;
         int  width = gridLayout.getWidth();
-        int  height = gridLayout.getHeight();
+        int  height = gridLayout.getHeight();*/
         int row = (int)Math.sqrt(gridSize);
         int col = gridSize/row;
 
@@ -182,25 +181,19 @@ public class Words_Selection extends AppCompatActivity {
 
         //EXTRA_MESSAGE from Load_Pairs
         //words from users loading
-        message = getIntent().getStringExtra(EXTRA_MESSAGE);
-        if (message.equals("LOAD")){
-            message = getIntent().getStringExtra("LANGUAGE");
-            strings = getIntent().getStringArrayListExtra("LOAD_WORDS_LIST");
+        Uri uri;
+        String filename = getIntent().getStringExtra("PICK_FILE");
+        if (filename.equals("default")){
+            //retrieve words from text file wordpairs
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
         }else{
-            Uri uri;
-            String filename = getIntent().getStringExtra("PICK_FILE");
-            if (filename.equals("default")){
-                //retrieve words from text file wordpairs
-                uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
-            }else{
-                //retrieve words from file uploaded by user
-                uri = Uri.fromFile(getFileStreamPath(filename));
-            }
-            try {
-                strings = readTextFromUri(uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //retrieve words from file uploaded by user
+            uri = Uri.fromFile(getFileStreamPath(filename));
+        }
+        try {
+            strings = readTextFromUri(uri);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         numPages = strings.size()/36 + 1;
         setWordsList(strings,pages);
@@ -216,9 +209,6 @@ public class Words_Selection extends AppCompatActivity {
                 msg = "Select English words";
                 textView.setText(msg);
                 gridView.setAdapter(new GridAdapter(eng_wordsList_gridview, this));
-                break;
-            case "LOAD":
-
                 break;
         }
 
@@ -290,8 +280,8 @@ public class Words_Selection extends AppCompatActivity {
                 }else{
                     eng_wordsList.add(words[0]);
                     span_wordsList.add(words[1]);
-                    eng_wordsList_gridview.add(eng_wordsList.get(i));
-                    span_wordsList_gridview.add(span_wordsList.get(i));
+                    eng_wordsList_gridview.add(words[0]);
+                    span_wordsList_gridview.add(words[1]);
                     if (isShown) {
                         if (lookForWrongWords(i)){
                             eng_wordsList_gridview.set(i, words[0]+".wrong");
@@ -345,6 +335,7 @@ public class Words_Selection extends AppCompatActivity {
                             tv[wordsCount].setText(selectedItem);
                             wordsList(message,selectedItem);
                         }
+
                         tv[wordsCount].setGravity(Gravity.CENTER);
                         //keep track of position in which words are selected
                         pre_pos[wordsCount] = position + (pages-1) * 36;
@@ -371,6 +362,12 @@ public class Words_Selection extends AppCompatActivity {
                 }else{
                     wordsCount--;
                     String tmp = tv[wordsCount].getText().toString();
+                    String tmp_translate;
+                    if(message.equals("ENG")){
+                        tmp_translate = wordpairs.get(wordsCount).getENG();
+                    }else{
+                        tmp_translate = wordpairs.get(wordsCount).getSPAN();
+                    }
                     tv[wordsCount].setText("");
                     wordpairs.remove(wordsCount);
                     //wordsList_eng[wordsCount] = null;
@@ -379,8 +376,14 @@ public class Words_Selection extends AppCompatActivity {
                     int current_pos = pre_pos[wordsCount] - (pages -1) * 36;
                     TextView undo_tv = (TextView) gridView.getChildAt(current_pos);
                     if (pages == current_page){
+                        if(message.equals("SPAN")){
+                            span_wordsList_gridview.set(current_pos, tmp);
+                            eng_wordsList_gridview.set(current_pos, tmp_translate);
+                        }else{
+                            span_wordsList_gridview.set(current_pos, tmp_translate);
+                            eng_wordsList_gridview.set(current_pos, tmp);
+                        }
                         eng_wordsList_gridview.set(current_pos,tmp);
-                        span_wordsList_gridview.set(current_pos, tmp);
                         if (isShown){
                             if (lookForWrongWords(pre_pos[wordsCount] - (pages -1) * 36) ){
                                 if (tmp.contains(".wrong")){
@@ -526,6 +529,7 @@ public class Words_Selection extends AppCompatActivity {
             }
         }
         return false;
+
     }
 
     //make sure every word only collected once
@@ -565,6 +569,7 @@ public class Words_Selection extends AppCompatActivity {
                 wordpairs.add(new WordsPairs(item, span));
                 break;
         }
+
     }
 
     //pass words that user select to MainActivity
