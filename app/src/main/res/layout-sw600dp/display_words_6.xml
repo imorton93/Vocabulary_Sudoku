@@ -11,8 +11,8 @@
         android:layout_width="230dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="256dp"
-        android:layout_marginRight="256dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginRight="184dp"
         android:layout_marginBottom="8dp"
         android:text="@string/title_dw"
         android:textSize="30sp"
@@ -20,12 +20,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.034" />
+        app:layout_constraintVertical_bias="0.01" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="660dp"
-        android:layout_height="95dp"
+        android:layout_width="540dp"
+        android:layout_height="77dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -44,16 +44,16 @@
 
     <TextView
         android:id="@+id/words_view"
-        android:layout_width="651dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp"
+        android:layout_width="559dp"
+        android:layout_height="95dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:text="@string/tip_dictionary"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.231" />
+        app:layout_constraintVertical_bias="0.217" />
 
     <TextView
         android:id="@+id/translation"
@@ -81,73 +81,73 @@
         android:id="@+id/w_b2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="356dp"
-        android:layout_marginRight="356dp"
+        android:layout_marginEnd="276dp"
+        android:layout_marginRight="276dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.553" />
+        app:layout_constraintVertical_bias="0.542" />
 
     <Button
         android:id="@+id/w_b1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="464dp"
-        android:layout_marginRight="464dp"
+        android:layout_marginEnd="384dp"
+        android:layout_marginRight="384dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.553" />
+        app:layout_constraintVertical_bias="0.542" />
 
     <Button
         android:id="@+id/w_b3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="244dp"
-        android:layout_marginRight="244dp"
+        android:layout_marginEnd="168dp"
+        android:layout_marginRight="168dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.553" />
+        app:layout_constraintVertical_bias="0.542" />
 
     <Button
         android:id="@+id/w_b4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="464dp"
-        android:layout_marginRight="464dp"
+        android:layout_marginEnd="384dp"
+        android:layout_marginRight="384dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintVertical_bias="0.64" />
 
     <Button
         android:id="@+id/w_b5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="356dp"
-        android:layout_marginRight="356dp"
+        android:layout_marginEnd="276dp"
+        android:layout_marginRight="276dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintVertical_bias="0.64" />
 
     <Button
         android:id="@+id/w_b6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="244dp"
-        android:layout_marginRight="244dp"
+        android:layout_marginEnd="168dp"
+        android:layout_marginRight="168dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintVertical_bias="0.64" />
 
     <Button
         android:id="@+id/save_button"
@@ -161,10 +161,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.613"
+        app:layout_constraintHorizontal_bias="0.675"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.783" />
+        app:layout_constraintVertical_bias="0.757" />
 
 
     <!--<ListView-->
