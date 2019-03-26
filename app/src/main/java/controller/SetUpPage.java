@@ -120,14 +120,23 @@ public class SetUpPage extends AppCompatActivity {
 
                     if (density == DisplayMetrics.DENSITY_XHIGH) {
                         three_by_four.setVisibility(View.VISIBLE);
+                    }else {
+                        three_by_four.setVisibility(View.GONE);
+                    }
+
+                    if (fill_English || fill_Spanish) {
                         Intent t3by4 = new Intent(SetUpPage.this, MainActivity.class);
                         t3by4.putExtra(KEY_fill_Eng, fill_English);
                         t3by4.putExtra(KEY_fill_Span, fill_Spanish);
                         t3by4.putExtra(KEY_Listen, listen_mode);
                         t3by4.putExtra(KEY_GRID_SIZE, 12);
                         startActivity(t3by4);
-                    }else {
-                        three_by_four.setVisibility(View.GONE);
+                    }
+                    else{
+                        Toast need_check = Toast.makeText(SetUpPage.this ,
+                                R.string.not_checked,Toast.LENGTH_LONG);
+                        need_check.setGravity(Gravity.TOP, 0, 400);
+                        need_check.show();
                     }
                 }
             });
