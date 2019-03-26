@@ -11,8 +11,8 @@
         android:layout_width="233dp"
         android:layout_height="51dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="264dp"
-        android:layout_marginRight="264dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginRight="184dp"
         android:layout_marginBottom="8dp"
         android:text="@string/title_dw"
         android:textSize="30sp"
@@ -20,11 +20,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.039" />
+        app:layout_constraintVertical_bias="0.043" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="598dp"
+        android:layout_width="583dp"
         android:layout_height="95dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -45,15 +45,15 @@
     <TextView
         android:id="@+id/words_view"
         android:layout_width="564dp"
-        android:layout_height="167dp"
-        android:layout_marginEnd="112dp"
-        android:layout_marginRight="112dp"
+        android:layout_height="128dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="@string/tip_dictionary"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.297" />
+        app:layout_constraintVertical_bias="0.277" />
 
     <TextView
         android:id="@+id/translation"
@@ -81,49 +81,49 @@
         android:id="@+id/w_b2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="364dp"
-        android:layout_marginRight="364dp"
+        android:layout_marginEnd="292dp"
+        android:layout_marginRight="292dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606" />
+        app:layout_constraintVertical_bias="0.605" />
 
     <Button
         android:id="@+id/w_b1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="528dp"
-        android:layout_marginRight="528dp"
+        android:layout_marginEnd="452dp"
+        android:layout_marginRight="452dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606" />
+        app:layout_constraintVertical_bias="0.605" />
 
     <Button
         android:id="@+id/w_b3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="204dp"
-        android:layout_marginRight="204dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginRight="124dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606" />
+        app:layout_constraintVertical_bias="0.605" />
 
     <Button
         android:id="@+id/w_b4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="364dp"
-        android:layout_marginRight="364dp"
+        android:layout_marginEnd="292dp"
+        android:layout_marginRight="292dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.723" />
+        app:layout_constraintVertical_bias="0.73" />
 
     <Button
         android:id="@+id/save_button"
