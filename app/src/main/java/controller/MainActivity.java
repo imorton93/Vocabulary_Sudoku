@@ -790,7 +790,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = Math.pow(gridSize,2)*2/3; //set up a number to determine how many words to hide
+        double remainingHoles = remainingGrids*2/3;  //set up a number to determine how many words to hide
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
