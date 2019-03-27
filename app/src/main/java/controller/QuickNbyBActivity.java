@@ -3,6 +3,7 @@ package controller;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -10,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,6 +36,7 @@ import Model.DBHelper;
 import Model.SudokuChecker;
 import Model.SudokuGenerator;
 import Model.WordsPairs;
+import Model.pop;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -130,75 +133,19 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 need_init.show();
                 return true;
             }
-            Button button = (Button) v;
-            PopupMenu popup = new PopupMenu(QuickNbyBActivity.this, (Button) v);
-
-            popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
-
-            MenuItem text = popup.getMenu().getItem(0);
-
-            CharSequence buttonText = button.getText();
-            Log.d(TAG, "buttonText length is " + buttonText.length() );
-            if(buttonText.length() > 6){
-                CharSequence sixText = buttonText.subSequence(0,6);
-                CharSequence shortlist;
-                if(fill_Eng){
-                    if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                        for(int i = 0; i < 9; i++){
-                            if(list.get(i).getSPAN().length() > 6){
-                                shortlist = list.get(i).getSPAN().subSequence(0,6);
-                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                if(sixText.equals(shortlist)){
-                                    Log.d(TAG, "passed comparison");
-                                    buttonText = list.get(i).getSPAN();
-                                }
-                            }
-
-                        }
-                    }
-                    else{
-                        for(int j = 0; j < 9; j++){
-                            if(list.get(j).getENG().length() > 6){
-                                shortlist = list.get(j).getENG().subSequence(0,6);
-                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                if(sixText.equals(shortlist)){
-                                    Log.d(TAG, "passed comparison");
-                                    buttonText = list.get(j).getENG();
-                                }
-                            }
-                        }
-                    }
-                }
-                if(fill_Span){
-                    if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                        for(int i = 0; i < 9; i++){
-                            if(list.get(i).getENG().length() > 6){
-                                shortlist = list.get(i).getENG().subSequence(0,6);
-                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                if(sixText.equals(shortlist)){
-                                    Log.d(TAG, "passed comparison");
-                                    buttonText = list.get(i).getENG();
-                                }
-                            }
-
-                        }
-                    }
-                    else{
-                        for(int j = 0; j < 9; j++){
-                            if(list.get(j).getSPAN().length() > 6){
-                                shortlist = list.get(j).getSPAN().subSequence(0,6);
-                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                if(sixText.equals(shortlist)){
-                                    Log.d(TAG, "passed comparison");
-                                    buttonText = list.get(j).getSPAN();
-                                }
-                            }
-                        }
-                    }
-                }
+            else if(gridSize == 4){
+                return true;
             }
-            text.setTitle(buttonText);
-            popup.show();
+
+            Button button = (Button) v;
+            pop window = new pop();
+            // inflate the layout of the popup window
+            LayoutInflater inflater = (LayoutInflater)
+                    getSystemService(LAYOUT_INFLATER_SERVICE);
+            CharSequence buttonText = button.getText();
+            int orientation = getResources().getConfiguration().orientation;
+            window.createWindow(v,inflater,buttonText,fill_Span, fill_Eng,list,orientation,gridSize);
+
 
             return true;
         }
@@ -977,7 +924,8 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     SelectedButton.setText(buttonText);
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
-                        SelectedButton.setTextColor(Color.parseColor("#FFFFC0CB"));
+                        SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
+                        SelectedButton.setTypeface(null, Typeface.BOLD);
                         mistakeCount++;
                     } else {
                         //if it's right, makes it green
@@ -1004,7 +952,8 @@ public class QuickNbyBActivity extends AppCompatActivity {
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);
-                    SelectedButton.setTextColor(Color.parseColor("#FFFFC0CB"));
+                    SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
+                    SelectedButton.setTypeface(null, Typeface.BOLD);
                     mistakeCount++;
                     //allow user to keep track of what they get wrong
                     //ask user whether they want to save to My words

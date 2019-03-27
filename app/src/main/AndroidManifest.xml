@@ -17,9 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main12"></activity>
-        <activity android:name=".Main6" />
-        <activity android:name=".Main4" />
+        <activity android:name="controller.Main12"></activity>
+        <activity android:name="controller.Main6" />
+        <activity android:name="controller.Main4" />
         <activity
             android:name="controller.StartPage"
             android:label="Start page">
