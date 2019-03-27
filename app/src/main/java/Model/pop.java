@@ -51,7 +51,7 @@ public class pop {
                 int[] location = new int[2];
                 v.getLocationOnScreen(location);
                 if(location[1] >= 900){
-                    yoff = yoff - 400;
+                    yoff = yoff - 200;
                 }
             }
             int[] location = new int[2];
