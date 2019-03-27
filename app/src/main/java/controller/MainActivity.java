@@ -147,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
                 need_init.show();
                 return true;
             }
+            else if(gridSize == 4){
+                return true;
+            }
 
             Button button = (Button) v;
             pop window = new pop();
