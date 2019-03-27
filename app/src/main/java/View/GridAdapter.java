@@ -65,9 +65,8 @@ public class GridAdapter extends BaseAdapter {
         display.getMetrics(metrics);
         Resources resources = mContext.getResources();
 
-        View gridview = (GridView) parent;
-        int  width = gridview.getWidth();
-        int  height = gridview.getHeight();
+        int  width = ((GridView) parent).getWidth();
+        int  height = ((GridView) parent).getHeight();
         int orientation = mContext.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // In landscape
@@ -77,11 +76,6 @@ public class GridAdapter extends BaseAdapter {
             textView.setLayoutParams(new GridView.LayoutParams((int)width/6,(int)height/6));
         }
 
-        if (getCount() ==  81){
-            width = display.getWidth()/9;
-            height = display.getHeight()/9;
-            textView.setLayoutParams(new GridView.LayoutParams((int)width,(int)height));
-        }
 
         textView.setBackgroundResource(R.drawable.grid_items_border);
 

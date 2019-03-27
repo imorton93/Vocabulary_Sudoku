@@ -10,11 +10,11 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
+    //DBHelper is the Data Base Helper
     private static final String TAG = "CMPT276-1191E1-Delta";
 
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "wordPairs.db";
-    private static final String TABLE_NAME_IMPORT = "wordsImport";
     private static final String TABLE_NAME_WRONG = "WrongWords";
 
     //private static final String ID = "id";
@@ -129,7 +129,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String query = "SELECT  (English), (Spanish), (wrongTotal) FROM " + TABLE_NAME_WRONG;
         Cursor data = db.rawQuery(query, null);
 
-        ArrayList<WordsPairs> words = new ArrayList();
+        ArrayList<WordsPairs> words = new ArrayList<>();
         if (data.moveToFirst()) {
             //Loop through the table rows
             do {

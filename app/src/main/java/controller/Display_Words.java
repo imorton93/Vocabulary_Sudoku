@@ -24,6 +24,7 @@ public class Display_Words extends AppCompatActivity {
     private static final String KEY_fill_Span = "fill_Span";
     private static final String KEY_InitializedGame = "initializedgame";
     private static final String KEY_wordlist = "list";
+    private static final String KEY_GRID_SIZE = "grid_size";
     private static final int[] W_Button_ids = { //ID's for the 9 big buttons in the word pairs page
             R.id.w_b1,
             R.id.w_b2,
@@ -34,9 +35,13 @@ public class Display_Words extends AppCompatActivity {
             R.id.w_b7,
             R.id.w_b8,
             R.id.w_b9,
+            R.id.w_b10,
+            R.id.w_b11,
+            R.id.w_b12,
     };
     boolean InitializedGame = false;
     private DBHelper mDBHelper = new DBHelper(this);
+    private int gridSize = 9;
     private Boolean fill_Span = false;
     private Boolean fill_Eng = false;
     private String temp_b =""; //To store the string on the button
@@ -57,7 +62,20 @@ public class Display_Words extends AppCompatActivity {
         fill_Eng = intent.getBooleanExtra(KEY_fill_Eng, false); //Return false if value not initialized
         fill_Span = intent.getBooleanExtra(KEY_fill_Span, false); //Return false if value not initialized
         InitializedGame = intent.getBooleanExtra(KEY_InitializedGame, false);
-        setContentView(R.layout.display_words);
+        gridSize = intent.getIntExtra(KEY_GRID_SIZE, 9);
+
+        if (gridSize == 9) {
+            setContentView(R.layout.display_words);
+        }
+        else if (gridSize == 4) {
+            setContentView(R.layout.display_words_4);
+        }
+        else if (gridSize == 6){
+            setContentView(R.layout.display_words_6);
+        }
+        else{
+            setContentView(R.layout.display_words_12);
+        }
 
         final TextView wordstextview = findViewById(R.id.translation);
         Button save_button = findViewById(R.id.save_button);
@@ -120,20 +138,18 @@ public class Display_Words extends AppCompatActivity {
 
 
     public void addMyWords(String eng, String span) {
-        final String finalEng = eng;
-        final String finalSpan = span;
         //initial Database
         //store wrong word that made by user
         //check if there is same word inside Database
-        if (mDBHelper.hasWord(new WordsPairs(finalEng, finalSpan, 1))){
+        if (mDBHelper.hasWord(new WordsPairs(eng, span, 1))){
             //update Total number of wrong words
-            int num = mDBHelper.numWrong(new WordsPairs(finalEng, finalSpan, 1));
+            int num = mDBHelper.numWrong(new WordsPairs(eng, span, 1));
             num++;
             //update database
-            mDBHelper.updateWrongNum(new WordsPairs(finalEng, finalSpan,num));
+            mDBHelper.updateWrongNum(new WordsPairs(eng, span,num));
         }else{
             //insert word to database
-            mDBHelper.updateWrongWord(new WordsPairs(finalEng, finalSpan,1));
+            mDBHelper.updateWrongWord(new WordsPairs(eng, span,1));
         }
         ArrayList<WordsPairs> arrayList = mDBHelper.getData();
         for (int i = 0; i < arrayList.size(); i++){

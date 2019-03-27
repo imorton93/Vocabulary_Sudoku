@@ -3,6 +3,7 @@ package controller;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
@@ -19,7 +20,11 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -282,41 +287,6 @@ public class QuickNbyBActivity extends AppCompatActivity {
             }
         }
 
-
-/*        //initial gameGrid
-        //show words in button
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
-                String buttonID = "b" + (x+1) + (y+1);
-                int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-                gridButton[x][y] = findViewById(resID);
-            }
-        }*/
-        //store words from String Resources
-        //in case, order of String from String Resources may change
-        //store in local variables
-        //gameInitialization
-/*        int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
-                R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,R.id.b27, R.id.b28,R.id.b29,
-                R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,R.id.b37, R.id.b38,R.id.b39,
-                R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,R.id.b47, R.id.b48,R.id.b49,
-                R.id.b51, R.id.b52,R.id.b53, R.id.b54, R.id.b55,R.id.b56,R.id.b57, R.id.b58,R.id.b59,
-                R.id.b61, R.id.b62,R.id.b63, R.id.b64, R.id.b65,R.id.b66,R.id.b67, R.id.b68,R.id.b69,
-                R.id.b71, R.id.b72,R.id.b73, R.id.b74, R.id.b75,R.id.b76,R.id.b77, R.id.b78,R.id.b79,
-                R.id.b81, R.id.b82,R.id.b83, R.id.b84, R.id.b85,R.id.b86,R.id.b87, R.id.b88,R.id.b89,
-                R.id.b91, R.id.b92,R.id.b93, R.id.b94, R.id.b95,R.id.b96,R.id.b97, R.id.b98,R.id.b99};
-
-// loop through the array, find the button with respective id and set the listener
-    for(int i=0; i<ids.length; i++){
-        Button gbutton = (Button) findViewById(ids[i]);
-        ((Button) gbutton).setOnClickListener(listener);
-    }
-
-    for(int i=0; i<ids.length; i++) {
-        Button button = (Button) findViewById(ids[i]);
-        button.setOnLongClickListener(longClickListener);
-    }*/
-
     for (int x = 0; x < gridSize; x++){
         for (int y = 0; y < gridSize; y++){
             gridButton[x][y].setOnClickListener(listener);
@@ -333,11 +303,12 @@ public class QuickNbyBActivity extends AppCompatActivity {
     span_words = getResources().getStringArray(R.array.Span_words);
     eng_words = getResources().getStringArray(R.array.Eng_words);
 
+    /*
     for (int i = 0; i < gridSize; i++) { //Set up list
         list.add(new WordsPairs(eng_words[i], span_words[i]));
-       // list.get(i).setENG(eng_words[i]);
-       // list.get(i).setSPAN(span_words[i]);
-    }
+    } */
+
+    list =  generateRandomList(gridSize);
 
         if ((savedInstanceState != null)) {
             //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
@@ -568,6 +539,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
             }
         }
     else {
+        int i;
         Toast tip_popup = Toast.makeText(this, "Word will be magnified if you press the cell it is in for a long time.",Toast.LENGTH_LONG);
         tip_popup.setGravity(Gravity.TOP, 0, 500);
         tip_popup.show();
@@ -583,6 +555,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 */
                 Log.d(TAG, "User chooses to fill in English");
             String msg = "ENG";
+            for (i = 0; i < list.size(); i++) {
+                Button_ids[i].setText(list.get(i).getENG());
+            }
             if (listen_mode){
                 getListenGameGrid(msg);
             }
@@ -602,6 +577,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 */
              Log.d(TAG, "User chooses to fill in Spanish");
             String msg = "SPAN";
+            for (i = 0; i < list.size(); i++) {
+                Button_ids[i].setText(list.get(i).getSPAN());
+            }
             if (listen_mode){
                 getListenGameGrid(msg);
             }
@@ -631,7 +609,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
 
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = 0; //set up a number to determine how many words to hide
+        double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
@@ -900,8 +878,20 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     InitializedGame = false;
                     listen_mode_game_init = false;
                 }
-                fill_Span = false;
-                fill_Eng = false;
+                //Generate a new game immediately ,with the same parameters
+                String msg;
+                if (fill_Eng){
+                    msg = "ENG";
+                }
+                else{
+                    msg = "SPAN";
+                }
+                if (listen_mode){
+                    getListenGameGrid(msg);
+                }
+                else{
+                    getGameGrid(msg);
+                }
             }
         });
     }
@@ -1039,7 +1029,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
     }
 
-
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -1047,11 +1037,12 @@ public class QuickNbyBActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_menu, menu);
         this.menu = menu;
         return true;
-    }
+    } */
 
     //reinit_dialog Reinit_warn = new reinit_dialog(MainActivity.this);
 
-    @Override
+
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //Button mButton1 = (Button) findViewById(R.id.button1);
         // menu = this.menu;
@@ -1069,9 +1060,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 result1.setGravity(Gravity.TOP, 0, 400);
                 result1.show();
                 if (!InitializedGame || mistakeCount >= 3) {
-                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    */
+                    *//*
                     Log.d(TAG, "User chooses to fill in Spanish");
                     //Start a new game with the same nine words. The sudoku will be pre-filled in English
                      //After choosing "fill in Spanish", start a new game with Spanish
@@ -1103,9 +1094,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 result2.setGravity(Gravity.TOP, 0, 400);
                 result2.show();
                 if (!InitializedGame || mistakeCount >= 3) {
-                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    */
+                    *//*
                     Log.d(TAG, "User chooses to fill in English");
                     //Uses preset wordpairs to setup the game
                     for (i = 0; i < list.size(); i++) {
@@ -1132,9 +1123,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 result3.setGravity(Gravity.TOP, 0, 400);
                 result3.show();
                 if (!InitializedGame || mistakeCount >= 3) {
-                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    */
+                    *//*
                     //call random function ***
                     Log.d(TAG, "User chooses to fill in English");
                     //Uses preset wordpairs to setup the game
@@ -1162,9 +1153,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 result4.setGravity(Gravity.TOP, 0, 400);
                 result4.show();
                 if (!InitializedGame || mistakeCount >= 3) {
-                    /* If the game has not been initialized, and there had been more than 3 mistakes,
+                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    */
+                    *//*
                     //Call the random function to update the list ********
                     Log.d(TAG, "User chooses to fill in Spanish");
                     //Start a new game with the same nine words. The sudoku will be pre-filled in English
@@ -1189,15 +1180,16 @@ public class QuickNbyBActivity extends AppCompatActivity {
             case R.id.display_words:
                 Log.d(TAG, "User chooses to see word pairs");
 
-                /*
+                *//*
                 //Displays the warning dialog before displaying the word pairs translation
                 reinit_dialog Reinit_warn = new reinit_dialog(this);
                 Reinit_warn.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                Reinit_warn.show();  */
+                Reinit_warn.show();  *//*
 
                 if (InitializedGame) {
                     Intent display_w = new Intent(this, Display_Words.class);
                     display_w.putParcelableArrayListExtra(KEY_wordlist, list);
+                    display_w.putExtra(KEY_GRID_SIZE, gridSize);
                     display_w.putExtra(KEY_fill_Span, fill_Span);
                     display_w.putExtra(KEY_fill_Eng, fill_Eng);
                     display_w.putExtra(KEY_InitializedGame, InitializedGame);
@@ -1212,8 +1204,8 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 return true;
 
             case R.id.load_wordpairs:
-                /*intent = new Intent(QuickNbyBActivity.this, Load_Pairs.class);
-                startActivityForResult(intent, 1); */
+                *//*intent = new Intent(QuickNbyBActivity.this, Load_Pairs.class);
+                startActivityForResult(intent, 1); *//*
                 //Do nothing
                 return true;
 
@@ -1242,8 +1234,10 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
+
+    /*
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(listen_mode){
@@ -1253,6 +1247,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
         return super.onPrepareOptionsMenu(menu);
     }
+    */
 
     //After the grids are created, save the words
     @Override
@@ -1426,14 +1421,69 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
-
-
-
-
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();
 
+    }
+    ArrayList<String> readTextFromUri(Uri uri) throws IOException {
+        ArrayList<String> strings = new ArrayList<>();
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String eachline = null;
+        try{
+            eachline = bufferedReader.readLine();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        while (eachline != null){
+            strings.add(eachline);
+            try {
+                eachline = bufferedReader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return strings;
+    }
+
+    int getRandomInteger(int size){
+        Random r = new Random();
+        return r.nextInt(size);
+    }
+
+    void swap(ArrayList<String> strings, int a, int b){
+        String tmp = strings.get(a);
+        strings.set(a, strings.get(b-1));
+        strings.set(b-1, tmp);
+    }
+
+    ArrayList<WordsPairs> generateRandomList(int gridsize){
+        ArrayList<WordsPairs> wordpairs = new ArrayList<>();
+        ArrayList<String> strings = new ArrayList<>();
+        Uri uri = null;
+        uri = uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
+        try{
+            strings = readTextFromUri(uri);
+        }	catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int rand_int;
+        int pos;
+        int curr = 0;
+        while(curr < gridsize){
+            rand_int = getRandomInteger(strings.size() - curr);
+            pos = strings.get(rand_int).indexOf(",");
+            WordsPairs tmp = new WordsPairs();
+            tmp.setENG(strings.get(rand_int).substring(0, pos));
+          //  tmp.setSPAN(strings.get(rand_int).substring(pos+1, strings.get(rand_int).length()));
+            tmp.setSPAN(strings.get(rand_int).substring(pos+1));
+            wordpairs.add(tmp);
+            swap(strings, rand_int, strings.size() - curr);
+            curr++;
+        }
+        return wordpairs;
     }
 
     //To make debugger display tags
