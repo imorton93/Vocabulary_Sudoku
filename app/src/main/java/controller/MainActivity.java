@@ -147,77 +147,18 @@ public class MainActivity extends AppCompatActivity {
                 need_init.show();
                 return true;
             }
+
             Button button = (Button) v;
-            PopupMenu popup = new PopupMenu(MainActivity.this, (Button) v);
-
-            popup.getMenuInflater().inflate(R.menu.popup_text, popup.getMenu());
-
-            MenuItem text = popup.getMenu().getItem(0);
-
+            pop window = new pop();
+            // inflate the layout of the popup window
+            LayoutInflater inflater = (LayoutInflater)
+                    getSystemService(LAYOUT_INFLATER_SERVICE);
             CharSequence buttonText = button.getText();
-            Log.d(TAG, "buttonText length is " + buttonText.length() );
-            if(buttonText.length() > 6){
-                CharSequence sixText = buttonText.subSequence(0,6);
-                CharSequence shortlist;
-                if(fill_Eng){
-                    if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                        for(int i = 0; i < gridSize; i++){
-                            if(list.get(i).getSPAN().length() > 6){
-                                shortlist = list.get(i).getSPAN().subSequence(0,6);
-                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                if(sixText.equals(shortlist)){
-                                    Log.d(TAG, "passed comparison");
-                                    buttonText = list.get(i).getSPAN();
-                                }
-                            }
+            int orientation = getResources().getConfiguration().orientation;
+            window.createWindow(v,inflater,buttonText,fill_Span, fill_Eng,list,orientation,gridSize);
 
-                        }
-                    }
-                    else{
-                        for(int j = 0; j < gridSize; j++){
-                            if(list.get(j).getENG().length() > 6){
-                                shortlist = list.get(j).getENG().subSequence(0,6);
-                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                if(sixText.equals(shortlist)){
-                                    Log.d(TAG, "passed comparison");
-                                    buttonText = list.get(j).getENG();
-                                }
-                            }
-                        }
-                    }
-                }
-                if(fill_Span){
-                    if(button.getCurrentTextColor() == Color.parseColor("#000000")){
-                        for(int i = 0; i < gridSize; i++){
-                            if(list.get(i).getENG().length() > 6){
-                                shortlist = list.get(i).getENG().subSequence(0,6);
-                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                if(sixText.equals(shortlist)){
-                                    Log.d(TAG, "passed comparison");
-                                    buttonText = list.get(i).getENG();
-                                }
-                            }
 
-                        }
-                    }
-                    else{
-                        for(int j = 0; j < gridSize; j++){
-                            if(list.get(j).getSPAN().length() > 6){
-                                shortlist = list.get(j).getSPAN().subSequence(0,6);
-                                Log.d(TAG, "comparing " + sixText + " and " + shortlist);
-                                if(sixText.equals(shortlist)){
-                                    Log.d(TAG, "passed comparison");
-                                    buttonText = list.get(j).getSPAN();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            text.setTitle(buttonText);
-            popup.show();
 
-            return true;
         }
     };
 
@@ -322,30 +263,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //store words from String Resources
-        //in case, order of String from String Resources may change
-        //store in local variables
-        //gameInitialization
-  /*      int[] ids={R.id.b11, R.id.b12,R.id.b13, R.id.b14, R.id.b15,R.id.b16,R.id.b17, R.id.b18,R.id.b19,
-                R.id.b21, R.id.b22,R.id.b23, R.id.b24, R.id.b25,R.id.b26,R.id.b27, R.id.b28,R.id.b29,
-                R.id.b31, R.id.b32,R.id.b33, R.id.b34, R.id.b35,R.id.b36,R.id.b37, R.id.b38,R.id.b39,
-                R.id.b41, R.id.b42,R.id.b43, R.id.b44, R.id.b45,R.id.b46,R.id.b47, R.id.b48,R.id.b49,
-                R.id.b51, R.id.b52,R.id.b53, R.id.b54, R.id.b55,R.id.b56,R.id.b57, R.id.b58,R.id.b59,
-                R.id.b61, R.id.b62,R.id.b63, R.id.b64, R.id.b65,R.id.b66,R.id.b67, R.id.b68,R.id.b69,
-                R.id.b71, R.id.b72,R.id.b73, R.id.b74, R.id.b75,R.id.b76,R.id.b77, R.id.b78,R.id.b79,
-                R.id.b81, R.id.b82,R.id.b83, R.id.b84, R.id.b85,R.id.b86,R.id.b87, R.id.b88,R.id.b89,
-                R.id.b91, R.id.b92,R.id.b93, R.id.b94, R.id.b95,R.id.b96,R.id.b97, R.id.b98,R.id.b99};
 
-// loop through the array, find the button with respective id and set the listener
-    for(int i=0; i<ids.length; i++){
-        Button gbutton = (Button) findViewById(ids[i]);
-        ((Button) gbutton).setOnClickListener(listener);
-    }
-
-    for(int i=0; i<ids.length; i++) {
-        Button button = (Button) findViewById(ids[i]);
-        button.setOnLongClickListener(longClickListener);
-    }*/
     for (int x = 0; x < gridSize; x++){
         for (int y = 0; y < gridSize; y++){
             gridButton[x][y].setOnClickListener(listener);

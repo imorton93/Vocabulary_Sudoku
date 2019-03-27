@@ -23,18 +23,18 @@ public class pop {
         return;
     }
 
-    public void createWindow(View v,LayoutInflater inflater, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int orientation, int puzzle) {
+    public void createWindow(View v,LayoutInflater inflater, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int orientation, int gridsize) {
 
         if(buttontext != null) {
             int length;
             //9x9 grid puzzle = 0
             //6x6 grid puzzle = 1
             //12x12 grid puzzle = 2
-            if(puzzle == 0){
+            if(gridsize == 9){
                 // code for 9x9 grid
                 length = 9;
             }
-            else if(puzzle == 1){
+            else if(gridsize == 6){
                 // code for 6x6 grid
                 length = 6;
             }
