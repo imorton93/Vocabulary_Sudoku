@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
+    //DBHelper is the Data Base Helper
     private static final String TAG = "CMPT276-1191E1-Delta";
 
     private static final int VERSION = 1;
