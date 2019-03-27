@@ -790,7 +790,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = Math.pow(gridSize,2)*2/3; //set up a number to determine how many words to hide
+        double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
@@ -1224,25 +1224,31 @@ public class MainActivity extends AppCompatActivity {
                 fill_Span = true;
                 fill_Eng = false;
                 String msg = "SPAN";
-                Toast result1 = Toast.makeText(MainActivity.this,
-                        "You will start a new game with same Spanish words", Toast.LENGTH_LONG);
-                result1.setGravity(Gravity.TOP, 0, 400);
-                result1.show();
+                if (!list.isEmpty()){
+                    Toast result1 = Toast.makeText(MainActivity.this,
+                            "You will start a new game with same Spanish words", Toast.LENGTH_LONG);
+                    result1.setGravity(Gravity.TOP, 0, 400);
+                    result1.show();
                  /* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                     */
-                Log.d(TAG, "User chooses to fill in Spanish");
-                //Start a new game with the same nine words. The sudoku will be pre-filled in English
-                //After choosing "fill in Spanish", start a new game with Spanish
-                for (i = 0; i < list.size(); i++) {
-                    Button_ids[i].setText(list.get(i).getSPAN());
+                    Log.d(TAG, "User chooses to fill in Spanish");
+                    //Start a new game with the same nine words. The sudoku will be pre-filled in English
+                    //After choosing "fill in Spanish", start a new game with Spanish
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getSPAN());
+                    }
+                    if (listen_mode){
+                        getListenGameGrid(msg);
+                    }
+                    else{
+                        getGameGrid(msg);
+                    }
+                }else{
+                    Toast.makeText(MainActivity.this,
+                            "You MUST select words to play", Toast.LENGTH_LONG);
                 }
-                if (listen_mode){
-                    getListenGameGrid(msg);
-                }
-                else{
-                    getGameGrid(msg);
-                }
+
                 return true;
 
 
@@ -1251,24 +1257,30 @@ public class MainActivity extends AppCompatActivity {
                 fill_Eng = true;
                 fill_Span = false;
                 msg = "ENG";
-                Toast result2 = Toast.makeText(MainActivity.this,
-                        "You will start a new game with same English words", Toast.LENGTH_LONG);
-                result2.setGravity(Gravity.TOP, 0, 400);
-                result2.show();
+                if (!list.isEmpty()){
+                    Toast result2 = Toast.makeText(MainActivity.this,
+                            "You will start a new game with same English words", Toast.LENGTH_LONG);
+                    result2.setGravity(Gravity.TOP, 0, 400);
+                    result2.show();
                  /* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                     */
-                Log.d(TAG, "User chooses to fill in English");
-                //Uses preset word pairs to setup the game
-                for (i = 0; i < list.size(); i++) {
-                    Button_ids[i].setText(list.get(i).getENG());
+                    Log.d(TAG, "User chooses to fill in English");
+                    //Uses preset word pairs to setup the game
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getENG());
+                    }
+                    if (listen_mode){
+                        getListenGameGrid(msg);
+                    }
+                    else{
+                        getGameGrid(msg);
+                    }
+                }else{
+                    Toast.makeText(MainActivity.this,
+                            "You MUST select words to play", Toast.LENGTH_LONG);
                 }
-                if (listen_mode){
-                    getListenGameGrid(msg);
-                }
-                else{
-                    getGameGrid(msg);
-                }
+
                 return true;
 
             case R.id.new_pick_eng:

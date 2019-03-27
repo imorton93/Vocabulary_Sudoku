@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -110,6 +111,9 @@ public class Words_Selection extends AppCompatActivity {
                 tv[i].setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
                 tv[i].setBackgroundColor(Color.GRAY);
                 tv[i].setTextColor(Color.WHITE);
+                if ( metrics.densityDpi == DisplayMetrics.DENSITY_XHIGH) {
+                    tv[i].setTextSize(20);
+                }
                 gridLayout.addView(tv[i]);
             }
         }else{
@@ -128,6 +132,7 @@ public class Words_Selection extends AppCompatActivity {
                     tv[i].setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
                     tv[i].setBackgroundColor(Color.GRAY);
                     tv[i].setTextColor(Color.WHITE);
+                    tv[i].setTextSize(20);
                     gridLayout.addView(tv[i]);
                 }
             }else{
@@ -147,6 +152,9 @@ public class Words_Selection extends AppCompatActivity {
                     tv[i].setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
                     tv[i].setBackgroundColor(Color.GRAY);
                     tv[i].setTextColor(Color.WHITE);
+                    if ( metrics.densityDpi == DisplayMetrics.DENSITY_XHIGH) {
+                        tv[i].setTextSize(17);
+                    }
                     gridLayout.addView(tv[i]);
                 }
             }
@@ -215,6 +223,9 @@ public class Words_Selection extends AppCompatActivity {
 
         selectWords();
         intentStartGame();
+
+
+
     }
 
 
@@ -453,18 +464,20 @@ public class Words_Selection extends AppCompatActivity {
                             gridView.setAdapter(new GridAdapter(eng_wordsList_gridview, Words_Selection.this));
                             break;
                     }
-                }else{
-                    next.setEnabled(false);
+                    if (pages == numPages){
+                        next.setEnabled(false);
+                    }
                 }
             }
         });
 
+        if(pages <= 1){
+            prev.setEnabled(false);
+        }
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pages <= 1){
-                    prev.setEnabled(false);
-                }else {
+                if (pages >= 1){
                     next.setEnabled(true);
                     eng_wordsList.clear();
                     span_wordsList.clear();
@@ -479,6 +492,9 @@ public class Words_Selection extends AppCompatActivity {
                         case "ENG":
                             gridView.setAdapter(new GridAdapter(eng_wordsList_gridview, Words_Selection.this));
                             break;
+                    }
+                    if(pages <= 1){
+                        prev.setEnabled(false);
                     }
                 }
             }
