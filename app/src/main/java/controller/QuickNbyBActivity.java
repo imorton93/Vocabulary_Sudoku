@@ -1426,6 +1426,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
     ArrayList<String> readTextFromUri(Uri uri) throws IOException {
         ArrayList<String> strings = new ArrayList<>();
         InputStream inputStream = getContentResolver().openInputStream(uri);

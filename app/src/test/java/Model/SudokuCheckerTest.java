@@ -27,21 +27,26 @@ public class SudokuCheckerTest {
                 {"a","b", "c"},
                 {"c", "d","e"},
                 {"b","a","c"}};
-        //A sudoku with correct inputs
-       // assertFalse( sudoku_check.sudokuCheck(sudoku2,list));
-        assertTrue( sudoku_check.sudokuCheck(sudoku2,list));
+        //A sudoku with incorrect inputs
+        assertFalse( sudoku_check.sudokuCheck(sudoku2,list));
+      //  assertTrue( sudoku_check.sudokuCheck(sudoku2,list));
 
 
-        String [][] sudoku3 = {{"a","b"}, {"C", "D"}};
+        String [][] sudoku3 = {
+                {"a","b"},
+                {"C", "D"}};
         //A sudoku with correct inputs
         ArrayList<WordsPairs> list2 = new ArrayList<>();
         for (int i = 0; i < 2; i++) { //Set up list
             list2.add(new WordsPairs(e[i], s[i]));
         }
         assertTrue( sudoku_check.sudokuCheck(sudoku3,list2));
-        String [][] sudoku4 = {{"a","b"}, {"A", "B"}};
-      //  assertFalse( sudoku_check.sudokuCheck(sudoku4,list2));
-        assertTrue( sudoku_check.sudokuCheck(sudoku4,list2));
+        String [][] sudoku4 = {
+                {"a","b"},
+                {"A", "B"}};
+        //A sudoku with incorrect inputs
+        assertFalse( sudoku_check.sudokuCheck(sudoku4,list2));
+      //  assertTrue( sudoku_check.sudokuCheck(sudoku4,list2));
 
         String [][] sudoku5 = {{"a"}};
         //A sudoku with correct inputs
