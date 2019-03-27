@@ -2,8 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Main4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:tag="cell_land"
     tools:context="controller.MainActivity">
 
     <android.support.v7.widget.GridLayout
@@ -35,10 +37,10 @@
             android:onClick="insertButtonOnClick"
             android:text="@string/B_1"
             android:textAllCaps="false"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "18sp"
-            app:autoSizeMinTextSize = "12sp"
-            app:autoSizeStepGranularity = "2sp"/>
+            app:autoSizeMaxTextSize="18sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform" />
 
         <Button
             android:id="@+id/button2"
@@ -48,10 +50,10 @@
             android:onClick="insertButtonOnClick"
             android:text="@string/B_2"
             android:textAllCaps="false"
+            app:autoSizeMaxTextSize="18sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "18sp"
-            app:autoSizeMinTextSize = "12sp"
-            app:autoSizeStepGranularity = "2sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -63,12 +65,12 @@
             android:onClick="insertButtonOnClick"
             android:text="@string/B_3"
             android:textAllCaps="false"
-            app:layout_column="0"
-            app:layout_row="1"
+            app:autoSizeMaxTextSize="18sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "18sp"
-            app:autoSizeMinTextSize = "12sp"
-            app:autoSizeStepGranularity = "2sp"/>
+            app:layout_column="0"
+            app:layout_row="1" />
 
         <Button
             android:id="@+id/button4"
@@ -78,12 +80,12 @@
             android:onClick="insertButtonOnClick"
             android:text="@string/B_4"
             android:textAllCaps="false"
-            app:layout_column="1"
-            app:layout_row="1"
+            app:autoSizeMaxTextSize="18sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "18sp"
-            app:autoSizeMinTextSize = "12sp"
-            app:autoSizeStepGranularity = "2sp"/>
+            app:layout_column="1"
+            app:layout_row="1" />
 
         <Button
             android:id="@+id/button10"
@@ -92,12 +94,12 @@
             android:maxLines="1"
             android:onClick="clearButtonOnClick"
             android:text="@string/clear_button"
-            app:layout_column="0"
-            app:layout_row="5"
+            app:autoSizeMaxTextSize="18sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "18sp"
-            app:autoSizeMinTextSize = "12sp"
-            app:autoSizeStepGranularity = "2sp"/>
+            app:layout_column="0"
+            app:layout_row="5" />
 
         <Button
             android:id="@+id/fin_button"
@@ -106,12 +108,12 @@
             android:longClickable="false"
             android:maxLines="1"
             android:text="@string/fin_button"
-            app:layout_column="1"
-            app:layout_row="5"
+            app:autoSizeMaxTextSize="18sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "18sp"
-            app:autoSizeMinTextSize = "12sp"
-            app:autoSizeStepGranularity = "2sp"/>
+            app:layout_column="1"
+            app:layout_row="5" />
 
 
     </android.support.v7.widget.GridLayout>

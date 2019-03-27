@@ -2,8 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Main4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:tag="720_port"
     tools:context="controller.MainActivity">
 
     <android.support.v7.widget.GridLayout
@@ -35,10 +37,10 @@
             android:onClick="insertButtonOnClick"
             android:text="@string/B_1"
             android:textAllCaps="false"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "28sp"
-            app:autoSizeMinTextSize = "20sp"
-            app:autoSizeStepGranularity = "2sp" />
+            app:autoSizeMaxTextSize="28sp"
+            app:autoSizeMinTextSize="20sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform" />
 
         <Button
             android:id="@+id/button2"
@@ -48,10 +50,10 @@
             android:onClick="insertButtonOnClick"
             android:text="@string/B_2"
             android:textAllCaps="false"
+            app:autoSizeMaxTextSize="28sp"
+            app:autoSizeMinTextSize="20sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "28sp"
-            app:autoSizeMinTextSize = "20sp"
-            app:autoSizeStepGranularity = "2sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -63,10 +65,10 @@
             android:onClick="insertButtonOnClick"
             android:text="@string/B_3"
             android:textAllCaps="false"
+            app:autoSizeMaxTextSize="28sp"
+            app:autoSizeMinTextSize="20sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "28sp"
-            app:autoSizeMinTextSize = "20sp"
-            app:autoSizeStepGranularity = "2sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -78,10 +80,10 @@
             android:onClick="insertButtonOnClick"
             android:text="@string/B_4"
             android:textAllCaps="false"
+            app:autoSizeMaxTextSize="28sp"
+            app:autoSizeMinTextSize="20sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "28sp"
-            app:autoSizeMinTextSize = "20sp"
-            app:autoSizeStepGranularity = "2sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -92,10 +94,10 @@
             android:maxLines="1"
             android:onClick="clearButtonOnClick"
             android:text="@string/clear_button"
+            app:autoSizeMaxTextSize="28sp"
+            app:autoSizeMinTextSize="20sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "28sp"
-            app:autoSizeMinTextSize = "20sp"
-            app:autoSizeStepGranularity = "2sp"
             app:layout_column="3"
             app:layout_row="0" />
 
@@ -106,10 +108,10 @@
             android:longClickable="false"
             android:maxLines="1"
             android:text="@string/fin_button"
+            app:autoSizeMaxTextSize="28sp"
+            app:autoSizeMinTextSize="20sp"
+            app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize = "28sp"
-            app:autoSizeMinTextSize = "20sp"
-            app:autoSizeStepGranularity = "2sp"
             app:layout_column="3"
             app:layout_row="1" />
 
