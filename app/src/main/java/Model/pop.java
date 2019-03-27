@@ -82,17 +82,7 @@ public class pop {
             });
         }
     }
-    private void cell_layout_changes(View v, int orientation){
-        int yoff = 0;
-        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
-            int[] location = new int[2];
-            v.getLocationOnScreen(location);
-            if(location[1] >= 900){
-                yoff = yoff - 400;
-            }
-        }
-    }
-
+    
 
     private CharSequence getFullText(Button v, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int Length){
 
