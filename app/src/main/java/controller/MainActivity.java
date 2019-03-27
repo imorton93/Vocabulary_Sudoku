@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             window.createWindow(v,inflater,buttonText,fill_Span, fill_Eng,list,orientation,gridSize);
 
 
-
+            return true;
         }
     };
 
