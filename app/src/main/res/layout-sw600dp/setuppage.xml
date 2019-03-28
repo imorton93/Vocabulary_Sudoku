@@ -8,43 +8,45 @@
 
     <!--page version 2, has 3 buttons that goes to different layouts and 2 check boxes for Fill in English and Spanish-->
 
-    <Button
+    <CheckBox
         android:id="@+id/t2by2"
-        android:layout_width="260dp"
-        android:layout_height="90dp"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="424dp"
+        android:layout_marginTop="468dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:buttonTint="@android:color/holo_green_dark"
         android:text="@string/t_2by2grid"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <CheckBox
         android:id="@+id/n3by3"
-        android:layout_width="260dp"
-        android:layout_height="90dp"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
 
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="316dp"
+        android:layout_marginTop="408dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:buttonTint="@android:color/holo_green_dark"
         android:text="@string/n_3by3grid"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <CheckBox
         android:id="@+id/t2by3"
-        android:layout_width="260dp"
-        android:layout_height="90dp"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
 
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -52,26 +54,28 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/n_2by3grid"
+        android:buttonTint="@android:color/holo_green_dark"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <CheckBox
         android:id="@+id/t3by4"
-        android:layout_width="260dp"
-        android:layout_height="90dp"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
 
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="656dp"
+        android:layout_marginTop="588dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:buttonTint="@android:color/holo_green_dark"
         android:text="@string/n_3by4grid"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,7 +85,7 @@
         android:layout_height="81dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="228dp"
+        android:layout_marginTop="216dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="?attr/colorButtonNormal"
@@ -104,6 +108,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Fill in English"
+        android:buttonTint="@android:color/holo_red_light"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.471"
@@ -121,10 +126,79 @@
         android:layout_marginRight="8dp"
         android:checked="false"
         android:text="Fill in Spanish"
+        android:buttonTint="@android:color/holo_red_light"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="500dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/fill_title"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="467dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="344dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/grid_title"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cannot_start"
+        android:layout_width="382dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="76dp"
+        android:text="@string/cannot_start"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="295dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="76dp"
+        android:text="@string/g_start_title"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
