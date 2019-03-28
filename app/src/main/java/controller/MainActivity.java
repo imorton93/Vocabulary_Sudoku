@@ -934,19 +934,42 @@ public class MainActivity extends AppCompatActivity {
                     Button button = (Button) w;
                     // text of input button is extracted
                     CharSequence buttonText = button.getText();
-                    if(buttonText.length() > 6){
-                        buttonText = buttonText.subSequence(0,6)+"..";
-                        System.out.println("Constrained to six letters");
+                    String eng = null;
+                    String span = null;
+                    if (fill_Span){
+                        span = buttonText.toString();
+                        for (int i = 0; i < list.size(); i++){
+                            if (span.equals(list.get(i).getSPAN())){
+                                eng = list.get(i).getENG();
+                            }
+                        }
+                    }else{
+                        eng = buttonText.toString();
+                        for (int i = 0; i < list.size(); i++){
+                            if (eng.equals(list.get(i).getENG())){
+                                span = list.get(i).getSPAN();
+                            }
+                        }
                     }
                     Log.d(TAG, "buttonText length is" + buttonText.length());
-                    SelectedButton.setText(buttonText);
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
+                        if(buttonText.length() > 6){
+                            buttonText = buttonText.subSequence(0,6)+"..";
+                            System.out.println("Constrained to six letters");
+                        }
+                        SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                         SelectedButton.setTypeface(null, Typeface.BOLD);
                         mistakeCount++;
+                      //  addMyWords(eng,span);
                     } else {
                         //if it's right, makes it green
+                        if(buttonText.length() > 6){
+                            buttonText = buttonText.subSequence(0,6)+"..";
+                            System.out.println("Constrained to six letters");
+                        }
+                        SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                         SelectedButton.setTypeface(null, Typeface.NORMAL);
                     }
@@ -1237,7 +1260,11 @@ public class MainActivity extends AppCompatActivity {
                             stringA_p_temp[j] = temp + "";
                             stringA_u_temp[j] = null;
                         } else { //The word on gridButton is user-filled
-                            stringA_u_temp[j] = temp + "";
+                            if (gridButton[i][j].getCurrentTextColor() == Color.parseColor("#FFB00000")){
+                                stringA_u_temp[j] = temp + "-red";
+                            }else{
+                                stringA_u_temp[j] = temp + "";
+                            }
                             stringA_p_temp[j] = null;
                         }
                     } else { //temp == null
