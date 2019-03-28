@@ -520,6 +520,8 @@ public class Words_Selection extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                     }else{
                         isShown = true;
+                        Toast.makeText(Words_Selection.this, "That words got wrong in your previous game will " +
+                                "show in RED COLOR", Toast.LENGTH_LONG).show();
                         int count = 0;
                         Button button = (Button)findViewById(R.id.button_words);
                         button.setText("Hide Difficult Words");

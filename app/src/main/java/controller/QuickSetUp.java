@@ -35,7 +35,7 @@ public class QuickSetUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setuppage_old);
+     //   setContentView(R.layout.setuppage_old);
 
         nine_by_nine = findViewById(R.id.n3by3);
         nine_by_nine.setOnClickListener(new View.OnClickListener() {
