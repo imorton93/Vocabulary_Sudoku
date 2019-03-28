@@ -101,7 +101,7 @@ public class pop {
             CharSequence fullText = buttontext;
             if(fill_eng){
                 if(v.getCurrentTextColor() == Color.parseColor("#000000")){
-                    for(int i = 0; i < Length; i++){
+                    for(int i = 0; i < list.size(); i++){
                         if(list.get(i).getSPAN().length() > 6){
                             shortlist = list.get(i).getSPAN().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -112,7 +112,7 @@ public class pop {
                     }
                 }
                 else{
-                    for(int j = 0; j < Length; j++){
+                    for(int j = 0; j < list.size(); j++){
                         if(list.get(j).getENG().length() > 6){
                             shortlist = list.get(j).getENG().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -124,7 +124,7 @@ public class pop {
             }
             if(fill_span){
                 if(v.getCurrentTextColor() == Color.parseColor("#000000")){
-                    for(int i = 0; i < Length; i++){
+                    for(int i = 0; i < list.size(); i++){
                         if(list.get(i).getENG().length() > 6){
                             shortlist = list.get(i).getENG().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -135,7 +135,7 @@ public class pop {
                     }
                 }
                 else{
-                    for(int j = 0; j < Length; j++){
+                    for(int j = 0; j < list.size(); j++){
                         if(list.get(j).getSPAN().length() > 6){
                             shortlist = list.get(j).getSPAN().subSequence(0,6);
                             if(sixText.equals(shortlist)){

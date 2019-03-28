@@ -81,7 +81,7 @@ public class Load_Pairs extends AppCompatActivity {
         msg = "Type words into cells";
         textView.setText(msg);
         Button button_load = (Button)findViewById(R.id.button_load);
-        button_load.setText("Load Words from a Chapter of Book");
+        button_load.setText("Load Words List");
         button_load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

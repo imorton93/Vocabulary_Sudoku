@@ -505,9 +505,9 @@ public class Words_Selection extends AppCompatActivity {
         Button button = (Button)findViewById(R.id.button_words);
         String bmsg = null;
         if (isShown){
-            bmsg = "Hide My words";
+            bmsg = "Hide Difficult Words";
         }else{
-            bmsg = "Show My words";
+            bmsg = "Show Difficult Words";
         }
         button.setText(bmsg);
         button.setOnClickListener(new View.OnClickListener() {
@@ -516,13 +516,13 @@ public class Words_Selection extends AppCompatActivity {
                 if (!isShown){
                     if (mDBHelper.getData().isEmpty()) {
                         isShown = false;
-                        Toast.makeText(Words_Selection.this, "You DON'T have any words in My WORDS",
+                        Toast.makeText(Words_Selection.this, "You DON'T have any words in this words list",
                                 Toast.LENGTH_LONG).show();
                     }else{
                         isShown = true;
                         int count = 0;
                         Button button = (Button)findViewById(R.id.button_words);
-                        button.setText("Hide My words");
+                        button.setText("Hide Difficult Words");
                         for (int i = 0; i < span_wordsList.size(); i++){
                             if (lookForWrongWords(i)){
                                 final TextView textview = (TextView) gridView.getChildAt(i);
@@ -535,13 +535,13 @@ public class Words_Selection extends AppCompatActivity {
                             Toast.makeText(Words_Selection.this, "You DON'T have any words in this words list",
                                     Toast.LENGTH_LONG).show();
                             Button b = (Button)findViewById(R.id.button_words);
-                            b.setText("Show My words");
+                            b.setText("Show Difficult Words");
                         }
                     }
                 }else{
                     isShown = false;
                     Button button = (Button)findViewById(R.id.button_words);
-                    button.setText("Show My words");
+                    button.setText("Show Difficult Words");
                     for (int i = 0; i < span_wordsList.size(); i++){
                         TextView tv = (TextView) gridView.getChildAt(i);
                         tv.setTextColor(Color.parseColor("#FF008577"));
