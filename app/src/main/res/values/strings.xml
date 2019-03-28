@@ -10,6 +10,11 @@
     <string name="how_to_use">How To Use This App</string>
     <string name="load_new_words">Load New Word Pairs</string>
 
+    <string name="fill_title">Choose The Language To Fill The Sudoku In</string>
+    <string name="grid_title">Choose The Grids Layout For The Sudoku</string>
+    <string name="cannot_start">You Cannot Start The Game Until You Have Chosen
+        The Language to Fill The Sudoku In and The Grids Layout For The Sudoku</string>
+    <string name="g_start_title">Start My Game Now!</string>
     <string name="t_2by2grid">4 x 4 Grid</string>
     <string name="n_3by3grid">9 x 9 Grid</string>
     <string name="n_2by3grid">6 x 6 Grid</string>

@@ -2,7 +2,6 @@ package controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -36,7 +35,7 @@ public class QuickSetUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setuppage);
+        setContentView(R.layout.setuppage_old);
 
         nine_by_nine = findViewById(R.id.n3by3);
         nine_by_nine.setOnClickListener(new View.OnClickListener() {
