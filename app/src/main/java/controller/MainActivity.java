@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.speech.tts.TextToSpeech;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -148,18 +149,30 @@ public class MainActivity extends AppCompatActivity {
                 need_init.show();
                 return true;
             }
-            else if(gridSize == 4){
+
+            Object tag;
+            //if statements to distinguish between different gridsizes, and get the tag
+            //tag determines if the device is cell, sw600dp, and sw720dp
+            if(gridSize == 4){
                 return true;
             }
-
-            Button button = (Button) v;
+            else if(gridSize == 6){
+                tag = findViewById(R.id.Main6).getTag();
+            }
+            else if(gridSize == 9){
+                tag = findViewById(R.id.Main9).getTag();
+            }
+            else{
+                tag = findViewById(R.id.Main12).getTag();
+            }
             pop window = new pop();
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater)
                     getSystemService(LAYOUT_INFLATER_SERVICE);
-            CharSequence buttonText = button.getText();
+            //get whether the device is in portrait or landscape
             int orientation = getResources().getConfiguration().orientation;
-            window.createWindow(v,inflater,buttonText,fill_Span, fill_Eng,list,orientation,gridSize);
+
+            window.createWindow(v,inflater,fill_Span, fill_Eng,list,orientation,gridSize,tag);
 
 
             return true;
@@ -494,24 +507,7 @@ public class MainActivity extends AppCompatActivity {
         //setting text color of prefilled cells
 
 
-            //long click function to bring up popup text
-            View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
-                @Override
-                public boolean onLongClick(View v){
-                    Button button = (Button) v;
-                    CharSequence buttonText = button.getText();
-                    int orientation = getResources().getConfiguration().orientation;
-                    //Configuration config = MainActivity.getResources().getConfiguration();
-                    // inflate the layout of the popup window
-                    LayoutInflater inflater = (LayoutInflater)
-                            getSystemService(LAYOUT_INFLATER_SERVICE);
 
-                    pop window = new pop();
-                    window.createWindow(v, inflater, buttonText, fill_Span, fill_Eng, list, orientation, 0);
-
-                    return true;
-                }
-            };
 
 
             //click function

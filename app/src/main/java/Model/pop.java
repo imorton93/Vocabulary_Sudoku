@@ -3,6 +3,8 @@ package Model;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.support.constraint.ConstraintLayout;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,9 +25,13 @@ public class pop {
         return;
     }
 
-    public void createWindow(View v,LayoutInflater inflater, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int orientation, int gridsize) {
+    public void createWindow(View v,LayoutInflater inflater, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int orientation, int gridsize, Object tag) {
 
-        if(buttontext != null) {
+        //get the text from the button selected
+        Button button = (Button) v;
+        CharSequence buttontext = button.getText();
+        //check if text is empty
+        if(buttontext != "") {
             int length;
             //9x9 grid puzzle = 0
             //6x6 grid puzzle = 1
@@ -62,14 +68,19 @@ public class pop {
 
 
             // create the popup window
+            //make sure it wraps the text content
             int width = LinearLayout.LayoutParams.WRAP_CONTENT;
             int height = LinearLayout.LayoutParams.WRAP_CONTENT;
             boolean focusable = true; // lets taps outside the popup also dismiss it
             final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
+
             ((TextView) popupWindow.getContentView().findViewById(R.id.poptext)).setText(buttontext);
+            adjustTextSize(tag,popupWindow);
+
             // show the popup window
-            // which view you pass in doesn't matter, it is only used for the window tolken
+            // show as drop down drops down the window from the view v
+            // the y position of the window changes if the grid button is lower on the puzzle
             popupWindow.showAsDropDown(v, 0, yoff);
             //popupWindow.showAtLocation(v,0,0,0);
 
@@ -82,7 +93,7 @@ public class pop {
             });
         }
     }
-    
+
 
     private CharSequence getFullText(Button v, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int Length){
 
@@ -136,5 +147,20 @@ public class pop {
                 }
             }
             return fullText;
+    }
+
+    private void adjustTextSize(Object tag, PopupWindow popupWindow){
+
+        if(tag.equals("720")){
+            ((TextView) popupWindow.getContentView().findViewById(R.id.poptext)).setTextSize(40f);
+        }
+        else if(tag.equals("600")){
+            ((TextView) popupWindow.getContentView().findViewById(R.id.poptext)).setTextSize(34f);
+        }
+        else{
+            ((TextView) popupWindow.getContentView().findViewById(R.id.poptext)).setTextSize(24f);
+        }
+
+        return;
     }
 }

@@ -2,11 +2,13 @@ package controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -133,18 +136,28 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 need_init.show();
                 return true;
             }
-            else if(gridSize == 4){
+            Object tag;
+            if(gridSize == 4){
                 return true;
             }
+            else if(gridSize == 6){
+                tag = findViewById(R.id.Main6).getTag();
+            }
+            else if(gridSize == 9){
+                tag = findViewById(R.id.Main9).getTag();
+            }
+            else{
+                tag = findViewById(R.id.Main12).getTag();
+            }
 
-            Button button = (Button) v;
             pop window = new pop();
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater)
                     getSystemService(LAYOUT_INFLATER_SERVICE);
-            CharSequence buttonText = button.getText();
+
             int orientation = getResources().getConfiguration().orientation;
-            window.createWindow(v,inflater,buttonText,fill_Span, fill_Eng,list,orientation,gridSize);
+            //window.adjustTextSize(tag);
+            window.createWindow(v,inflater,fill_Span, fill_Eng,list,orientation,gridSize,tag);
 
 
             return true;
