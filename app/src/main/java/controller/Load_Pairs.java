@@ -386,7 +386,7 @@ public class Load_Pairs extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             Toast.makeText(Load_Pairs.this,
-                                    "Your file is successfully saved.", Toast.LENGTH_LONG).show();
+                                    "Your file " + filename + " is successfully saved.", Toast.LENGTH_LONG).show();
 
                             dialogBuilder.dismiss();
                         }
@@ -396,9 +396,6 @@ public class Load_Pairs extends AppCompatActivity {
 
             dialogBuilder.setView(dialogView);
             dialogBuilder.show();
-
-            Toast.makeText(Load_Pairs.this,
-                    "Your file is saved.", Toast.LENGTH_LONG).show();
         }
 
     }

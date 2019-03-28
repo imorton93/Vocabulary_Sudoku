@@ -321,16 +321,16 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         }
                                         if (tmp.equals(Sudoku[x][y])) {
+                                            //if it's right, makes it green
+                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
+                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                            gridButton[x][y].setTypeface(null, Typeface.NORMAL);
+                                        } else {
                                             Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                             Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
                                             gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
                                             gridButton[x][y].setTypeface(null, Typeface.BOLD);
-                                        } else {
-                                            //if it's right, makes it green
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
-                                            gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                         }
                                         //Set the button to clikable and the text to user's text color
                                     } else {
@@ -374,16 +374,16 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         }
                                         if (tmp.equals(Sudoku[x][y])) {
+                                            //if it's right, makes it green
+                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
+                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                            gridButton[x][y].setTypeface(null, Typeface.NORMAL);
+                                        } else {
                                             Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                             Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
                                             gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
                                             gridButton[x][y].setTypeface(null, Typeface.BOLD);
-                                        } else {
-                                            //if it's right, makes it green
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
-                                            gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                         }
                                         //Set the button to clikable and the text to user's text color
                                     } else {
@@ -422,14 +422,14 @@ public class MainActivity extends AppCompatActivity {
                                     if (tmp.equals(Sudoku[x][y])) {
                                         Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                         Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                        gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
-                                        gridButton[x][y].setTypeface(null, Typeface.BOLD);
+                                        gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                        gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                     } else {
                                         //if it's right, makes it green
                                         Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
                                         Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                        gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
-                                        gridButton[x][y].setTypeface(null, Typeface.NORMAL);
+                                        gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
+                                        gridButton[x][y].setTypeface(null, Typeface.BOLD);
                                     }
                                     //Set the button to clikable and the text to user's text color
                                 } else {
