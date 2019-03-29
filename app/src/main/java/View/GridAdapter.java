@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -81,6 +82,14 @@ public class GridAdapter extends BaseAdapter {
         } else {
             // In portrait
             textView.setLayoutParams(new GridView.LayoutParams((int)width/6,(int)height/6));
+        }
+
+        String context = mContext.toString();
+        if (context.contains("SudokuDisplay")){
+            int numCol = (int)Math.sqrt(getCount());
+            width = display.getWidth()/numCol;
+            height = display.getHeight()/numCol;
+            textView.setLayoutParams(new GridView.LayoutParams((int)width,(int)height));
         }
 
         if ( metrics.densityDpi == DisplayMetrics.DENSITY_XHIGH) {

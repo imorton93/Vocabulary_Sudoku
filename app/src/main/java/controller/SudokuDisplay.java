@@ -1,9 +1,11 @@
 package controller;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import View.GridAdapter;
 import com.example.myapplication.R;
@@ -27,9 +29,10 @@ public class SudokuDisplay extends AppCompatActivity {
        // textView.setText(Text);
 
         final GridView gridView = (GridView)findViewById(R.id.sudoku_view);
-       // gridView.setAdapter(new GridAdapter(list,this));
+        gridView.setAdapter(new GridAdapter(list,this));
         int gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
         gridView.setNumColumns(gridSize);
+
 
     }
 }
