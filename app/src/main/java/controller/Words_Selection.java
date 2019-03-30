@@ -86,14 +86,81 @@ public class Words_Selection extends AppCompatActivity {
         tv = new TextView[gridSize];
         pre_pos = new int[gridSize];
 
+        textViewSpawn();
+
+
+        if (savedInstanceState != null) {
+            pages = savedInstanceState.getInt(PAGE);
+            Log.d(TAG, "PAGE IS  "+ pages);
+            wordpairs = savedInstanceState.getParcelableArrayList(WORDSLIST);
+            // wordsList_eng = savedInstanceState.getStringArray(WORDSLIST_ENG);
+            // wordsList_span = savedInstanceState.getStringArray(WORDSLIST_SPAN);
+            message = savedInstanceState.getString(MESSAGE_LANGUAGE);
+            wordsCount = savedInstanceState.getInt(WORDS_COUNT);
+            pre_pos = savedInstanceState.getIntArray(GRID_PRE_POSITION);
+            isShown = savedInstanceState.getBoolean(IS_SHOWN_FLAG);
+            //re-fill TextView with selected words
+            for (int i = 0; i < wordsCount; i++){
+                if (message.equals("SPAN")){
+                    //tv[i].setText(wordsList_span[i]);
+                    tv[i].setText(wordpairs.get(i).getSPAN());
+                }else{
+                    //tv[i].setText(wordsList_eng[i]);
+                    tv[i].setText(wordpairs.get(i).getENG());
+                }
+                Log.d(TAG, "WORD LIST ENG IS "+wordpairs.get(i).getENG());
+                Log.d(TAG, "WORD LIST SPAN IS "+wordpairs.get(i).getSPAN());
+                //Log.d(TAG, "WORD LIST ENG IS "+wordsList_eng[i]);
+                // Log.d(TAG, "WORD LIST SPAN IS "+wordsList_span[i]);
+            }
+        }
+        TextView textView = (TextView)findViewById(R.id.tv_view);
+        final GridView gridView = (GridView)findViewById(R.id.selection_view);
+
+        //EXTRA_MESSAGE from Load_Pairs
+        //words from users loading
+        Uri uri;
+        String filename = getIntent().getStringExtra("PICK_FILE");
+        if (filename.equals("default")){
+            //retrieve words from text file wordpairs
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
+        }else{
+            //retrieve words from file uploaded by user
+            uri = Uri.fromFile(getFileStreamPath(filename));
+        }
+        try {
+            strings = readTextFromUri(uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        numPages = strings.size()/36 + 1;
+        setWordsList(strings,pages);
+
+        final String msg;
+        switch (message) {
+            case "SPAN":
+                msg = "Select Spanish words ";
+                textView.setText(msg);
+                gridView.setAdapter(new GridAdapter(span_wordsList_gridview, this));
+                break;
+            case "ENG":
+                msg = "Select English words";
+                textView.setText(msg);
+                gridView.setAdapter(new GridAdapter(eng_wordsList_gridview, this));
+                break;
+        }
+
+        selectWords();
+        intentStartGame();
+    }
+
+
+    public void textViewSpawn(){
         //declare TextView[] for showing words
         //programmatically spawn textview according to different size of Sudoku
         GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layout);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-      /*  int density = metrics.densityDpi;
-        int  width = gridLayout.getWidth();
-        int  height = gridLayout.getHeight();*/
         int row = (int)Math.sqrt(gridSize);
         int col = gridSize/row;
 
@@ -159,75 +226,7 @@ public class Words_Selection extends AppCompatActivity {
                 }
             }
         }
-
-        if (savedInstanceState != null) {
-            pages = savedInstanceState.getInt(PAGE);
-            Log.d(TAG, "PAGE IS  "+ pages);
-            wordpairs = savedInstanceState.getParcelableArrayList(WORDSLIST);
-            // wordsList_eng = savedInstanceState.getStringArray(WORDSLIST_ENG);
-            // wordsList_span = savedInstanceState.getStringArray(WORDSLIST_SPAN);
-            message = savedInstanceState.getString(MESSAGE_LANGUAGE);
-            wordsCount = savedInstanceState.getInt(WORDS_COUNT);
-            pre_pos = savedInstanceState.getIntArray(GRID_PRE_POSITION);
-            isShown = savedInstanceState.getBoolean(IS_SHOWN_FLAG);
-            //re-fill TextView with selected words
-            for (int i = 0; i < wordsCount; i++){
-                if (message.equals("SPAN")){
-                    //tv[i].setText(wordsList_span[i]);
-                    tv[i].setText(wordpairs.get(i).getSPAN());
-                }else{
-                    //tv[i].setText(wordsList_eng[i]);
-                    tv[i].setText(wordpairs.get(i).getENG());
-                }
-                Log.d(TAG, "WORD LIST ENG IS "+wordpairs.get(i).getENG());
-                Log.d(TAG, "WORD LIST SPAN IS "+wordpairs.get(i).getSPAN());
-                //Log.d(TAG, "WORD LIST ENG IS "+wordsList_eng[i]);
-                // Log.d(TAG, "WORD LIST SPAN IS "+wordsList_span[i]);
-            }
-        }
-        TextView textView = (TextView)findViewById(R.id.tv_view);
-        final GridView gridView = (GridView)findViewById(R.id.selection_view);
-
-        //EXTRA_MESSAGE from Load_Pairs
-        //words from users loading
-        Uri uri;
-        String filename = getIntent().getStringExtra("PICK_FILE");
-        if (filename.equals("default")){
-            //retrieve words from text file wordpairs
-            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wordpairs);
-        }else{
-            //retrieve words from file uploaded by user
-            uri = Uri.fromFile(getFileStreamPath(filename));
-        }
-        try {
-            strings = readTextFromUri(uri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        numPages = strings.size()/36 + 1;
-        setWordsList(strings,pages);
-
-        final String msg;
-        switch (message) {
-            case "SPAN":
-                msg = "Select Spanish words ";
-                textView.setText(msg);
-                gridView.setAdapter(new GridAdapter(span_wordsList_gridview, this));
-                break;
-            case "ENG":
-                msg = "Select English words";
-                textView.setText(msg);
-                gridView.setAdapter(new GridAdapter(eng_wordsList_gridview, this));
-                break;
-        }
-
-        selectWords();
-        intentStartGame();
-
-
-
     }
-
 
     public void intentStartGame(){
         //back to MainActivity

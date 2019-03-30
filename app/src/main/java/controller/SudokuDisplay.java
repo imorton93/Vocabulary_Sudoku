@@ -33,7 +33,6 @@ public class SudokuDisplay extends AppCompatActivity {
         int gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
         gridView.setNumColumns(gridSize);
 
-
     }
 }
 
