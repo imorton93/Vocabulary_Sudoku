@@ -962,7 +962,7 @@ public class MainActivity extends AppCompatActivity {
                         SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                         SelectedButton.setTypeface(null, Typeface.BOLD);
                         mistakeCount++;
-                      //  addMyWords(eng,span);
+                        addMyWords(eng,span);
                     } else {
                         //if it's right, makes it green
                         if(buttonText.length() > 6){
