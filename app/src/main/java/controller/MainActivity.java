@@ -617,7 +617,7 @@ public class MainActivity extends AppCompatActivity {
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
-                if (Sudoku[x][y].length() > 6) {
+                if (Sudoku[x][y].length() > 6 || gridSize != 4) {
                     CharSequence text = Sudoku[x][y].subSequence(0, 6) + "..";
                     gridButton[x][y].setText(text);
                 } else {
@@ -962,7 +962,7 @@ public class MainActivity extends AppCompatActivity {
                     Button button = (Button) w;
                     // text of input button is extracted
                     CharSequence buttonText = button.getText();
-                    if(buttonText.length() > 6){
+                    if(buttonText.length() > 6 || gridSize != 4){
                         buttonText = buttonText.subSequence(0,6)+"..";
                         System.out.println("Constrained to six letters");
                     }
@@ -995,7 +995,7 @@ public class MainActivity extends AppCompatActivity {
                 //if is wrong, puts word to be red
                 if (!checkFilledWord(buttonText.toString())) {
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                    if(buttonText.length() > 6){
+                    if(buttonText.length() > 6 || gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);
@@ -1007,7 +1007,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //if it's right, makes it green
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                    if(buttonText.length() > 6){
+                    if(buttonText.length() > 6 || gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);
