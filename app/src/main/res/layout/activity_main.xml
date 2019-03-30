@@ -8,11 +8,6 @@
     android:tag="cell"
     tools:context="controller.MainActivity">
 
-    <Chronometer
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp" />
-
     <android.support.v7.widget.GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

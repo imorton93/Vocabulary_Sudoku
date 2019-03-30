@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.SystemClock;
 import android.speech.tts.TextToSpeech;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
@@ -63,32 +65,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_listen_game = "Game initialzied in listen mode";
     private static final String KEY_GRID_SIZE = "grid_size";
 
-    /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
-        //The leftmost column
-        private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
-        private static final String KEY_filled_words_2 = "col_2"; //The words that the user has filled
-        private static final String KEY_filled_words_3 = "col_3"; //The words that the user has filled
-        private static final String KEY_filled_words_4 = "col_4"; //The words that the user has filled
-        private static final String KEY_filled_words_5 = "col_5"; //The words that the user has filled
-        private static final String KEY_filled_words_6 = "col_6"; //The words that the user has filled
-        private static final String KEY_filled_words_7 = "col_7"; //The words that the user has filled
-        private static final String KEY_filled_words_8 = "col_8"; //The words that the user has filled */
-/*    private String[] KEY_filled_words =
-            {KEY_filled_words_0, KEY_filled_words_1, KEY_filled_words_2, KEY_filled_words_3,
-            KEY_filled_words_4, KEY_filled_words_5, KEY_filled_words_6, KEY_filled_words_7,
-            KEY_filled_words_8 }; */
+
     private static final String TAG = "CMPT276-1191E1-Delta";
-   /* private static final int[] Button_ids = { //ID's for the 9 big buttons
-            R.id.button1,
-            R.id.button2,
-            R.id.button3,
-            R.id.button4,
-            R.id.button5,
-            R.id.button6,
-            R.id.button7,
-            R.id.button8,
-            R.id.button9,
-    };*/
+
 
 
     private int gridSize;
@@ -109,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     //WordsPairs object
     private ArrayList<WordsPairs> list = new ArrayList<>();
     private String msg;
+    private Chronometer timer = (Chronometer) findViewById(R.id.Timer);
 
     int[] preset;
     //initial database
@@ -124,19 +104,7 @@ public class MainActivity extends AppCompatActivity {
     TextToSpeech span;
     TextToSpeech eng;
     //End of variables for listen mode
-    /*
-    Button[] mainButtons = { //This Button array is actually for TestCases
-            findViewById(Button_ids[0]),
-            findViewById(Button_ids[1]),
-            findViewById(Button_ids[2]),
-            findViewById(Button_ids[3]),
-            findViewById(Button_ids[4]),
-            findViewById(Button_ids[5]),
-            findViewById(Button_ids[6]),
-            findViewById(Button_ids[7]),
-            findViewById(Button_ids[8]),
 
-    }; */
 
 
     View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
@@ -617,7 +585,7 @@ public class MainActivity extends AppCompatActivity {
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
-                if (Sudoku[x][y].length() > 6 || gridSize != 4) {
+                if (Sudoku[x][y].length() > 6 && gridSize != 4) {
                     CharSequence text = Sudoku[x][y].subSequence(0, 6) + "..";
                     gridButton[x][y].setText(text);
                 } else {
@@ -638,25 +606,12 @@ public class MainActivity extends AppCompatActivity {
                 remainingGrids--;
             }
         }
+
+
     }
 
     //Initialize the grid cells for listening comprehension mode
-    /*
-        Pseudo-code:
-        l_number = 1
-        for all grid cells:
-            if the grid cell is a pre-filled cell:
-                if sudoku[x][y] not in list_of_words:
-                //    assign l_number to sudoku[x][y]
-                    list_of_words.append(sudoku[x][y])
-                    gridButton[x][y].setText(string(l_number));
-                    l_number ++;
-                if sudoku[x][y] in list_of_words:
-                    gridButton[x][y].setText(string(l_number));
 
-        remain_nums = 9 - number //number = number of words that are assigned a number
-
-    */
 
     public void getListenGameGrid(String msg) {
         Log.d(TAG, "Game in listen mode is initialized.");
@@ -790,6 +745,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (InitializedGame) {
+                    //stop timer
+                    timer.stop();
                     String[][] checkSudoku = new String[gridSize][gridSize];
                     String[][] originalSudoku = new String[gridSize][gridSize];
                     if (listen_mode_game_init) {
@@ -834,28 +791,7 @@ public class MainActivity extends AppCompatActivity {
                                    // gridButton[x][y].setOnClickListener(listener); //This line casuses bug??? Nope, it does make no sound appear, but button also becomes unclickable
                                   //  gridButton[x][y].setClickable(true);
                                     //gridButton[x][y].setOnClickListener(null);
-                                    /*
-                                    gridButton[x][y].setOnClickListener(new View.OnClickListener() {
-                                        //user hits one of the grid blocks to insert a word
-                                        public void onClick(View v) {
-                                            if (!InitializedGame) {
-                                                Toast.makeText(MainActivity.this,
-                                                        R.string.not_initialized, Toast.LENGTH_LONG).show();
-                                            }
-                                   /*     else if (mistakeCount >= 3){
-                                            Toast.makeText(MainActivity.this,"You have lost your game", Toast.LENGTH_LONG).show();
-                                        }*/ /*
-                                            else {
-                                                if (SelectedButton != null) {
-                                                    //if a button has already been selected change that button back to normal
-                                                    SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                                                }
-                                                SelectedButton = (Button) v;
-                                                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
-                                                //SelectedButton.setText("clicked");
-                                            }
-                                        }
-                                    }); */
+
                                     // gridButton[x][y].setOnClickListener(gridButtonOnClick());
                                     int hhh = 0; //For breakpoint purpose
                                 } else {
@@ -962,7 +898,7 @@ public class MainActivity extends AppCompatActivity {
                     Button button = (Button) w;
                     // text of input button is extracted
                     CharSequence buttonText = button.getText();
-                    if(buttonText.length() > 6 || gridSize != 4){
+                    if(buttonText.length() > 6 && gridSize != 4){
                         buttonText = buttonText.subSequence(0,6)+"..";
                         System.out.println("Constrained to six letters");
                     }
@@ -995,7 +931,7 @@ public class MainActivity extends AppCompatActivity {
                 //if is wrong, puts word to be red
                 if (!checkFilledWord(buttonText.toString())) {
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                    if(buttonText.length() > 6 || gridSize != 4){
+                    if(buttonText.length() > 6 && gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);
@@ -1007,7 +943,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //if it's right, makes it green
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                    if(buttonText.length() > 6 || gridSize != 4){
+                    if(buttonText.length() > 6 && gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);
