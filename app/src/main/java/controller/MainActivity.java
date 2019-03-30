@@ -584,7 +584,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = remainingGrids*2/3;  //set up a number to determine how many words to hide
+        double remainingHoles = remainingGrids*3/5;  //set up a number to determine how many words to hide
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
@@ -643,7 +643,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Sudoku = initialGame.generateGrid(msg,list);
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
+        double remainingHoles = remainingGrids*3/5; //set up a number to determine how many words to hide
         span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -1351,7 +1351,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
                     arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
         }
-        Toast.makeText(MainActivity.this, "Any hardly recognized word will be saved",
+        Toast.makeText(MainActivity.this, "Any hardly recognized word will be recorded",
                 Toast.LENGTH_LONG).show();
     }
 

@@ -344,26 +344,17 @@ public class QuickNbyBActivity extends AppCompatActivity {
                                     //This cell is user-fillable.
                                     gridButton[x][y].setClickable(true);
                                     if (Sudoku_user[x][y] != null) {
-                                        gridButton[x][y].setText(Sudoku_user[x][y]);
-                                        String tmp = "";
-                                        //if is wrong, puts word to be red
-                                        for (int i = 0; i < gridSize; i++) {
-                                            if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
-                                                tmp = list.get(i).getSPAN();
-                                            }
-                                            if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
-                                                tmp = list.get(i).getENG();
-                                            }
-                                        }
-                                        if (tmp.equals(Sudoku[x][y])) {
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
-                                        } else {
+                                        if (Sudoku_user[x][y].contains("-red")){
+                                            String str = Sudoku_user[x][y];
+                                            str = str.replace(str.substring(str.length()-4), "");
+                                            gridButton[x][y].setText(str);
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
+                                            gridButton[x][y].setTypeface(null, Typeface.BOLD);
+                                        }else{
+                                            gridButton[x][y].setText(Sudoku_user[x][y]);
                                             //if it's right, makes it green
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                            gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                         }
                                         //Set the button to clikable and the text to user's text color
                                     } else {
@@ -395,26 +386,17 @@ public class QuickNbyBActivity extends AppCompatActivity {
                                     //This cell is user-fillable
                                     gridButton[x][y].setClickable(true);
                                     if (Sudoku_user[x][y] != null) {
-                                        gridButton[x][y].setText(Sudoku_user[x][y]);
-                                        String tmp = "";
-                                        //if is wrong, puts word to be red
-                                        for (int i = 0; i < gridSize; i++) {
-                                            if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
-                                                tmp = list.get(i).getSPAN();
-                                            }
-                                            if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
-                                                tmp = list.get(i).getENG();
-                                            }
-                                        }
-                                        if (tmp.equals(Sudoku[x][y])) {
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
-                                        } else {
+                                        if (Sudoku_user[x][y].contains("-red")){
+                                            String str = Sudoku_user[x][y];
+                                            str = str.replace(str.substring(str.length()-4), "");
+                                            gridButton[x][y].setText(str);
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
+                                            gridButton[x][y].setTypeface(null, Typeface.BOLD);
+                                        }else{
+                                            gridButton[x][y].setText(Sudoku_user[x][y]);
                                             //if it's right, makes it green
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                            gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                         }
                                         //Set the button to clikable and the text to user's text color
                                     } else {
@@ -439,26 +421,17 @@ public class QuickNbyBActivity extends AppCompatActivity {
                             else {
                                 gridButton[x][y].setClickable(true);
                                 if (Sudoku_user[x][y] != null) {
-                                    gridButton[x][y].setText(Sudoku_user[x][y]);
-                                    String tmp = "";
-                                    //if is wrong, puts word to be red
-                                    for (int i = 0; i < gridSize; i++) {
-                                        if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
-                                            tmp = list.get(i).getSPAN();
-                                        }
-                                        if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
-                                            tmp = list.get(i).getENG();
-                                        }
-                                    }
-                                    if (tmp.equals(Sudoku[x][y])) {
-                                        Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                        Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                        gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
-                                    } else {
+                                    if (Sudoku_user[x][y].contains("-red")){
+                                        String str = Sudoku_user[x][y];
+                                        str = str.replace(str.substring(str.length()-4), "");
+                                        gridButton[x][y].setText(str);
+                                        gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
+                                        gridButton[x][y].setTypeface(null, Typeface.BOLD);
+                                    }else{
+                                        gridButton[x][y].setText(Sudoku_user[x][y]);
                                         //if it's right, makes it green
-                                        Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                        Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                        gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                        gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
+                                        gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                     }
                                     //Set the button to clikable and the text to user's text color
                                 } else {
@@ -556,7 +529,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
 
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
+        double remainingHoles = remainingGrids*3/5; //set up a number to determine how many words to hide
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
@@ -568,8 +541,8 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     gridButton[x][y].setText(Sudoku[x][y]);
                 }
                 gridButton[x][y].setTextColor(Color.parseColor("#000000"));
-                gridButton[x][y].setClickable(false);
                 gridButton[x][y].setOnClickListener(null);
+                gridButton[x][y].setClickable(false);
                 double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
                 if (Math.random() <= makingHole) {
                     gridButton[x][y].setText(null);
@@ -615,7 +588,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
         Sudoku = initialGame.generateGrid(msg,list);
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
+        double remainingHoles = remainingGrids*3/5; //set up a number to determine how many words to hide
         span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -911,24 +884,49 @@ public class QuickNbyBActivity extends AppCompatActivity {
             //track the button that user selects
             if (SelectedButton != null) {
                 CharSequence cellText = SelectedButton.getText();
+
                 if (!(Arrays.asList(l_numbers).contains(cellText))) {
                     //If selected grid isn't a number, update the cell.
                     Button button = (Button) w;
                     // text of input button is extracted
                     CharSequence buttonText = button.getText();
-                    if(buttonText.length() > 6){
-                        buttonText = buttonText.subSequence(0,6)+"..";
-                        System.out.println("Constrained to six letters");
+                    String eng = null;
+                    String span = null;
+                    if (fill_Span){
+                        span = buttonText.toString();
+                        for (int i = 0; i < list.size(); i++){
+                            if (span.equals(list.get(i).getSPAN())){
+                                eng = list.get(i).getENG();
+                            }
+                        }
+                    }else{
+                        eng = buttonText.toString();
+                        for (int i = 0; i < list.size(); i++){
+                            if (eng.equals(list.get(i).getENG())){
+                                span = list.get(i).getSPAN();
+                            }
+                        }
                     }
-                    Log.d(TAG, "buttonText length is" + buttonText.length());
-                    SelectedButton.setText(buttonText);
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
+                        if(buttonText.length() > 6){
+                            buttonText = buttonText.subSequence(0,6)+"..";
+                            System.out.println("Constrained to six letters");
+                        }
+                        Log.d(TAG, "buttonText length is" + buttonText.length());
+                        SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                         SelectedButton.setTypeface(null, Typeface.BOLD);
                         mistakeCount++;
+                        addMyWords(eng, span);
                     } else {
                         //if it's right, makes it green
+                        if(buttonText.length() > 6){
+                            buttonText = buttonText.subSequence(0,6)+"..";
+                            System.out.println("Constrained to six letters");
+                        }
+                        Log.d(TAG, "buttonText length is" + buttonText.length());
+                        SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                     }
                     //set the Selected Buttons Text as text from input button
@@ -940,6 +938,23 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 Button button = (Button) w;
                 // text of input button is extracted
                 CharSequence buttonText = button.getText();
+                String eng = null;
+                String span = null;
+                if (fill_Span){
+                    span = buttonText.toString();
+                    for (int i = 0; i < list.size(); i++){
+                        if (span.equals(list.get(i).getSPAN())){
+                            eng = list.get(i).getENG();
+                        }
+                    }
+                }else{
+                    eng = buttonText.toString();
+                    for (int i = 0; i < list.size(); i++){
+                        if (eng.equals(list.get(i).getENG())){
+                            span = list.get(i).getSPAN();
+                        }
+                    }
+                }
                 /* when inserting a new word into puzzle, check if right or wrong
                  *  if it's right, make it green
                  * *if wrong, put word to be red
@@ -955,6 +970,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                     SelectedButton.setTypeface(null, Typeface.BOLD);
                     mistakeCount++;
+                    addMyWords(eng, span);
                     //allow user to keep track of what they get wrong
                     //ask user whether they want to save to My words
                 } else {
@@ -1239,7 +1255,11 @@ public class QuickNbyBActivity extends AppCompatActivity {
                             stringA_p_temp[j] = temp + "";
                             stringA_u_temp[j] = null;
                         } else { //The word on gridButton is user-filled
-                            stringA_u_temp[j] = temp + "";
+                            if (gridButton[i][j].getCurrentTextColor() == Color.parseColor("#FFB00000")){
+                                stringA_u_temp[j] = temp + "-red";
+                            }else{
+                                stringA_u_temp[j] = temp + "";
+                            }
                             stringA_p_temp[j] = null;
                         }
                     } else { //temp == null
@@ -1276,7 +1296,11 @@ public class QuickNbyBActivity extends AppCompatActivity {
                             stringA_p_temp[j] = temp + "";
                             stringA_u_temp[j] = null;
                         } else { //The word on gridButton is user-filled
-                            stringA_u_temp[j] = temp + "";
+                            if (gridButton[i][j].getCurrentTextColor() == Color.parseColor("#FFB00000")){
+                                stringA_u_temp[j] = temp + "-red";
+                            }else{
+                                stringA_u_temp[j] = temp + "";
+                            }
                             stringA_p_temp[j] = null;
                         }
                     } else { //temp == null
@@ -1300,6 +1324,29 @@ public class QuickNbyBActivity extends AppCompatActivity {
             savedInstanceState.putSerializable(KEY_userfilled_words, stringA_user_filled);
             x = 8;
         }
+    }
+
+    public void addMyWords(String eng, String span) {
+        //initial Database
+        //store wrong word that made by user
+        //check if there is same word inside Database
+        if (mDBHelper.hasWord(new WordsPairs(eng, span))){
+            //update Total number of wrong words
+            int num = mDBHelper.numWrong(new WordsPairs(eng, span));
+            num++;
+            //update database
+            mDBHelper.updateWrongNum(new WordsPairs(eng, span,num));
+        }else{
+            //insert word to database
+            mDBHelper.updateWrongWord(new WordsPairs(eng, span,1));
+        }
+        ArrayList<WordsPairs> arrayList = mDBHelper.getData();
+        for (int i = 0; i < arrayList.size(); i++){
+            Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
+                    arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
+        }
+        Toast.makeText(QuickNbyBActivity.this, "Any hardly recognized word will be recorded",
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -1345,36 +1392,6 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
     }
 
-    public void pickAFile(final String msg){
-        // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose a words list");
-
-        // add a radio button list
-        final ArrayList<String> myList = new ArrayList<>();
-        myList.add("default");
-        File dir = new File(getFilesDir().getPath());
-        File[] aList = dir.listFiles();
-        if(aList != null){
-            for(File file: aList){
-                myList.add(file.getName());
-            }
-        }
-        builder.setSingleChoiceItems(myList.toArray(new String[myList.size()]), -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent;
-                intent = new Intent(QuickNbyBActivity.this, Words_Selection.class);
-                intent.putExtra("PICK_FILE", myList.get(which));
-                intent.putExtra(EXTRA_MESSAGE, msg);
-                startActivityForResult(intent, 1);
-            }
-        });
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-    }
 
     ArrayList<String> readTextFromUri(Uri uri) throws IOException {
         ArrayList<String> strings = new ArrayList<>();
