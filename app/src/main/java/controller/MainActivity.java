@@ -309,27 +309,16 @@ public class MainActivity extends AppCompatActivity {
                                     //This cell is user-fillable.
                                     gridButton[x][y].setClickable(true);
                                     if (Sudoku_user[x][y] != null) {
-                                        gridButton[x][y].setText(Sudoku_user[x][y]);
-                                        String tmp = "";
-                                        //if is wrong, puts word to be red
-                                        for (int i = 0; i < gridSize; i++) {
-                                            if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
-                                                tmp = list.get(i).getSPAN();
-                                            }
-                                            if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
-                                                tmp = list.get(i).getENG();
-                                            }
-                                        }
-                                        if (tmp.equals(Sudoku[x][y])) {
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                        if (Sudoku_user[x][y].contains("-red")){
+                                            String str = Sudoku_user[x][y];
+                                            str = str.replace(str.substring(str.length()-4), "");
+                                            gridButton[x][y].setText(str);
                                             gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
                                             gridButton[x][y].setTypeface(null, Typeface.BOLD);
-                                        } else {
+                                        }else{
+                                            gridButton[x][y].setText(Sudoku_user[x][y]);
                                             //if it's right, makes it green
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
                                             gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                         }
                                         //Set the button to clikable and the text to user's text color
@@ -362,27 +351,16 @@ public class MainActivity extends AppCompatActivity {
                                     //This cell is user-fillable
                                     gridButton[x][y].setClickable(true);
                                     if (Sudoku_user[x][y] != null) {
-                                        gridButton[x][y].setText(Sudoku_user[x][y]);
-                                        String tmp = "";
-                                        //if is wrong, puts word to be red
-                                        for (int i = 0; i < gridSize; i++) {
-                                            if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
-                                                tmp = list.get(i).getSPAN();
-                                            }
-                                            if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
-                                                tmp = list.get(i).getENG();
-                                            }
-                                        }
-                                        if (tmp.equals(Sudoku[x][y])) {
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                        if (Sudoku_user[x][y].contains("-red")){
+                                            String str = Sudoku_user[x][y];
+                                            str = str.replace(str.substring(str.length()-4), "");
+                                            gridButton[x][y].setText(str);
                                             gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
                                             gridButton[x][y].setTypeface(null, Typeface.BOLD);
-                                        } else {
+                                        }else{
+                                            gridButton[x][y].setText(Sudoku_user[x][y]);
                                             //if it's right, makes it green
-                                            Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                            Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                            gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                            gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
                                             gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                         }
                                         //Set the button to clikable and the text to user's text color
@@ -408,27 +386,16 @@ public class MainActivity extends AppCompatActivity {
                             else {
                                 gridButton[x][y].setClickable(true);
                                 if (Sudoku_user[x][y] != null) {
-                                    gridButton[x][y].setText(Sudoku_user[x][y]);
-                                    String tmp = "";
-                                    //if is wrong, puts word to be red
-                                    for (int i = 0; i < gridSize; i++) {
-                                        if (gridButton[x][y].getText().equals(list.get(i).getENG())) {
-                                            tmp = list.get(i).getSPAN();
-                                        }
-                                        if (gridButton[x][y].getText().equals(list.get(i).getSPAN())) {
-                                            tmp = list.get(i).getENG();
-                                        }
-                                    }
-                                    if (tmp.equals(Sudoku[x][y])) {
-                                        Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                        Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
+                                    if (Sudoku_user[x][y].contains("-red")){
+                                        String str = Sudoku_user[x][y];
+                                        str = str.replace(str.substring(str.length()-4), "");
+                                        gridButton[x][y].setText(str);
                                         gridButton[x][y].setTextColor(Color.parseColor("#FFB00000"));
                                         gridButton[x][y].setTypeface(null, Typeface.BOLD);
-                                    } else {
+                                    }else{
+                                        gridButton[x][y].setText(Sudoku_user[x][y]);
                                         //if it's right, makes it green
-                                        Log.d(TAG, " SUDOKU[X][Y] is " + Sudoku[x][y]);
-                                        Log.d(TAG, " GRIDBUTTON[X][Y] is " + tmp);
-                                        gridButton[x][y].setTextColor(Color.parseColor("#FFFFC0CB"));
+                                        gridButton[x][y].setTextColor(Color.parseColor("#FF008577"));
                                         gridButton[x][y].setTypeface(null, Typeface.NORMAL);
                                     }
                                     //Set the button to clikable and the text to user's text color
@@ -617,7 +584,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = remainingGrids*2/3;  //set up a number to determine how many words to hide
+        double remainingHoles = remainingGrids*3/5;  //set up a number to determine how many words to hide
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
@@ -628,8 +595,8 @@ public class MainActivity extends AppCompatActivity {
                     gridButton[x][y].setText(Sudoku[x][y]);
                 }
                 gridButton[x][y].setTextColor(Color.parseColor("#000000"));
-                gridButton[x][y].setClickable(false);
                 gridButton[x][y].setOnClickListener(null);
+                gridButton[x][y].setClickable(false);
                 double makingHole = remainingHoles / remainingGrids;  //randomly hide some words
                 if (Math.random() <= makingHole) {
                     gridButton[x][y].setText(null);
@@ -676,7 +643,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Sudoku = initialGame.generateGrid(msg,list);
         double remainingGrids = Math.pow(gridSize,2);
-        double remainingHoles = remainingGrids*2/3; //set up a number to determine how many words to hide
+        double remainingHoles = remainingGrids*3/5; //set up a number to determine how many words to hide
         span = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -942,6 +909,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.d(TAG, "SUDOKU[X][Y] is " + str);
         Log.d(TAG, "tmp is " + tmp);
+        Log.d(TAG, "buttonText is " + buttonText);
         return buttonText.equals(tmp) && !buttonText.equals("");
     }
 
@@ -966,19 +934,42 @@ public class MainActivity extends AppCompatActivity {
                     Button button = (Button) w;
                     // text of input button is extracted
                     CharSequence buttonText = button.getText();
-                    if(buttonText.length() > 6){
-                        buttonText = buttonText.subSequence(0,6)+"..";
-                        System.out.println("Constrained to six letters");
+                    String eng = null;
+                    String span = null;
+                    if (fill_Span){
+                        span = buttonText.toString();
+                        for (int i = 0; i < list.size(); i++){
+                            if (span.equals(list.get(i).getSPAN())){
+                                eng = list.get(i).getENG();
+                            }
+                        }
+                    }else{
+                        eng = buttonText.toString();
+                        for (int i = 0; i < list.size(); i++){
+                            if (eng.equals(list.get(i).getENG())){
+                                span = list.get(i).getSPAN();
+                            }
+                        }
                     }
                     Log.d(TAG, "buttonText length is" + buttonText.length());
-                    SelectedButton.setText(buttonText);
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
+                        if(buttonText.length() > 6){
+                            buttonText = buttonText.subSequence(0,6)+"..";
+                            System.out.println("Constrained to six letters");
+                        }
+                        SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                         SelectedButton.setTypeface(null, Typeface.BOLD);
                         mistakeCount++;
+                        addMyWords(eng,span);
                     } else {
                         //if it's right, makes it green
+                        if(buttonText.length() > 6){
+                            buttonText = buttonText.subSequence(0,6)+"..";
+                            System.out.println("Constrained to six letters");
+                        }
+                        SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                         SelectedButton.setTypeface(null, Typeface.NORMAL);
                     }
@@ -997,6 +988,23 @@ public class MainActivity extends AppCompatActivity {
                  */
                 //track the button that user selects
                 //if is wrong, puts word to be red
+                String eng = null;
+                String span = null;
+                if (fill_Span){
+                    span = buttonText.toString();
+                    for (int i = 0; i < list.size(); i++){
+                        if (span.equals(list.get(i).getSPAN())){
+                            eng = list.get(i).getENG();
+                        }
+                    }
+                }else{
+                    eng = buttonText.toString();
+                    for (int i = 0; i < list.size(); i++){
+                        if (eng.equals(list.get(i).getENG())){
+                            span = list.get(i).getSPAN();
+                        }
+                    }
+                }
                 if (!checkFilledWord(buttonText.toString())) {
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
                     if(buttonText.length() > 6){
@@ -1006,6 +1014,7 @@ public class MainActivity extends AppCompatActivity {
                     SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                     SelectedButton.setTypeface(null, Typeface.BOLD);
                     mistakeCount++;
+                    addMyWords(eng,span);
                     //allow user to keep track of what they get wrong
                     //ask user whether they want to save to My words
                 } else {
@@ -1055,25 +1064,31 @@ public class MainActivity extends AppCompatActivity {
                 fill_Span = true;
                 fill_Eng = false;
                 String msg = "SPAN";
-                Toast result1 = Toast.makeText(MainActivity.this,
-                        "You will start a new game with same Spanish words", Toast.LENGTH_LONG);
-                result1.setGravity(Gravity.TOP, 0, 400);
-                result1.show();
+                if (!list.isEmpty()){
+                    Toast result1 = Toast.makeText(MainActivity.this,
+                            "You will start a new game with same Spanish words", Toast.LENGTH_LONG);
+                    result1.setGravity(Gravity.TOP, 0, 400);
+                    result1.show();
                  /* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                     */
-                Log.d(TAG, "User chooses to fill in Spanish");
-                //Start a new game with the same nine words. The sudoku will be pre-filled in English
-                //After choosing "fill in Spanish", start a new game with Spanish
-                for (i = 0; i < list.size(); i++) {
-                    Button_ids[i].setText(list.get(i).getSPAN());
+                    Log.d(TAG, "User chooses to fill in Spanish");
+                    //Start a new game with the same nine words. The sudoku will be pre-filled in English
+                    //After choosing "fill in Spanish", start a new game with Spanish
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getSPAN());
+                    }
+                    if (listen_mode){
+                        getListenGameGrid(msg);
+                    }
+                    else{
+                        getGameGrid(msg);
+                    }
+                }else{
+                    Toast.makeText(MainActivity.this,
+                            "You MUST select words to play", Toast.LENGTH_LONG);
                 }
-                if (listen_mode){
-                    getListenGameGrid(msg);
-                }
-                else{
-                    getGameGrid(msg);
-                }
+
                 return true;
 
 
@@ -1082,24 +1097,30 @@ public class MainActivity extends AppCompatActivity {
                 fill_Eng = true;
                 fill_Span = false;
                 msg = "ENG";
-                Toast result2 = Toast.makeText(MainActivity.this,
-                        "You will start a new game with same English words", Toast.LENGTH_LONG);
-                result2.setGravity(Gravity.TOP, 0, 400);
-                result2.show();
+                if (!list.isEmpty()){
+                    Toast result2 = Toast.makeText(MainActivity.this,
+                            "You will start a new game with same English words", Toast.LENGTH_LONG);
+                    result2.setGravity(Gravity.TOP, 0, 400);
+                    result2.show();
                  /* If the game has not been initialized, and there had been more than 3 mistakes,
                     A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                     */
-                Log.d(TAG, "User chooses to fill in English");
-                //Uses preset word pairs to setup the game
-                for (i = 0; i < list.size(); i++) {
-                    Button_ids[i].setText(list.get(i).getENG());
+                    Log.d(TAG, "User chooses to fill in English");
+                    //Uses preset word pairs to setup the game
+                    for (i = 0; i < list.size(); i++) {
+                        Button_ids[i].setText(list.get(i).getENG());
+                    }
+                    if (listen_mode){
+                        getListenGameGrid(msg);
+                    }
+                    else{
+                        getGameGrid(msg);
+                    }
+                }else{
+                    Toast.makeText(MainActivity.this,
+                            "You MUST select words to play", Toast.LENGTH_LONG);
                 }
-                if (listen_mode){
-                    getListenGameGrid(msg);
-                }
-                else{
-                    getGameGrid(msg);
-                }
+
                 return true;
 
             case R.id.new_pick_eng:
@@ -1239,7 +1260,11 @@ public class MainActivity extends AppCompatActivity {
                             stringA_p_temp[j] = temp + "";
                             stringA_u_temp[j] = null;
                         } else { //The word on gridButton is user-filled
-                            stringA_u_temp[j] = temp + "";
+                            if (gridButton[i][j].getCurrentTextColor() == Color.parseColor("#FFB00000")){
+                                stringA_u_temp[j] = temp + "-red";
+                            }else{
+                                stringA_u_temp[j] = temp + "";
+                            }
                             stringA_p_temp[j] = null;
                         }
                     } else { //temp == null
@@ -1272,11 +1297,16 @@ public class MainActivity extends AppCompatActivity {
                     //temp_Color = gridButton[i][j].getCurrentTextColor();
                     temp_not_null = (temp == null || temp == "");
                     if (!temp_not_null) {
+                        Log.d(TAG, "gridButton[i][j].isClickable() is " + gridButton[i][j].isClickable());
                         if (!(gridButton[i][j].isClickable())) { //the word on gridButton is pre-set
                             stringA_p_temp[j] = temp + "";
                             stringA_u_temp[j] = null;
                         } else { //The word on gridButton is user-filled
-                            stringA_u_temp[j] = temp + "";
+                            if (gridButton[i][j].getCurrentTextColor() == Color.parseColor("#FFB00000")){
+                                stringA_u_temp[j] = temp + "-red";
+                            }else{
+                                stringA_u_temp[j] = temp + "";
+                            }
                             stringA_p_temp[j] = null;
                         }
                     } else { //temp == null
@@ -1300,6 +1330,29 @@ public class MainActivity extends AppCompatActivity {
             savedInstanceState.putSerializable(KEY_userfilled_words, stringA_user_filled);
             x = 8;
         }
+    }
+
+    public void addMyWords(String eng, String span) {
+        //initial Database
+        //store wrong word that made by user
+        //check if there is same word inside Database
+        if (mDBHelper.hasWord(new WordsPairs(eng, span))){
+            //update Total number of wrong words
+            int num = mDBHelper.numWrong(new WordsPairs(eng, span));
+            num++;
+            //update database
+            mDBHelper.updateWrongNum(new WordsPairs(eng, span,num));
+        }else{
+            //insert word to database
+            mDBHelper.updateWrongWord(new WordsPairs(eng, span,1));
+        }
+        ArrayList<WordsPairs> arrayList = mDBHelper.getData();
+        for (int i = 0; i < arrayList.size(); i++){
+            Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
+                    arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
+        }
+        Toast.makeText(MainActivity.this, "Any hardly recognized word will be recorded",
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -1363,6 +1416,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
+        //list filename of words list that are saved by users
         builder.setSingleChoiceItems(myList.toArray(new String[myList.size()]), -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -1375,15 +1429,20 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("BACK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent;
-                intent = new Intent(MainActivity.this, SetUpPage.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
+        if (list.isEmpty()){
+            builder.setNegativeButton("BACK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent;
+                    intent = new Intent(MainActivity.this, SetUpPage.class);
+                    startActivity(intent);
+                    dialog.dismiss();
+                }
+            });
+        }else{
+            builder.setNegativeButton("CANCEL", null);
+        }
+
 
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
