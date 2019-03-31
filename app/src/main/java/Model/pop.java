@@ -33,26 +33,23 @@ public class pop {
         //check if text is empty
         if(buttontext != "") {
             int length;
-            //9x9 grid puzzle = 0
-            //6x6 grid puzzle = 1
-            //12x12 grid puzzle = 2
+            // changes the size of variable length depending on gridsize
+            // it changes how getFullText will work
             if(gridsize == 9){
-                // code for 9x9 grid
                 length = 9;
             }
             else if(gridsize == 6){
-                // code for 6x6 grid
                 length = 6;
             }
             else{
-                //code for 12x12 grid
                 length = 12;
             }
-
+            //if the text is longer than 6 characters, it calls getFullText to find full word to display
             if(buttontext.length() > 6){
                 buttontext = getFullText((Button) v, buttontext,fill_span, fill_eng, list, length);
             }
             int yoff = 0;
+            //see if the device is in landscape orientation
             if(orientation == Configuration.ORIENTATION_LANDSCAPE){
                 int[] location = new int[2];
                 v.getLocationOnScreen(location);
@@ -100,7 +97,9 @@ public class pop {
             CharSequence sixText = buttontext.subSequence(0,6);
             CharSequence shortlist;
             CharSequence fullText = buttontext;
+            //fill english mode
             if(fill_eng){
+                //if the grid text color is black, the grid spot is a prefilled word
                 if(v.getCurrentTextColor() == Color.parseColor("#000000")){
                     for(int i = 0; i < Length; i++){
                         if(list.get(i).getSPAN().length() > 6){
@@ -123,7 +122,9 @@ public class pop {
                     }
                 }
             }
+            //fill in spanish mode
             if(fill_span){
+                //if text is black, means that it is a prefilled grid spot
                 if(v.getCurrentTextColor() == Color.parseColor("#000000")){
                     for(int i = 0; i < Length; i++){
                         if(list.get(i).getENG().length() > 6){
