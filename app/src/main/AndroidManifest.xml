@@ -36,10 +36,6 @@
             android:name="controller.Guide"
             android:parentActivityName="controller.StartPage" />
         <activity
-            android:name="controller.QuickSetUp"
-            android:label="Quick Set Up Page"
-            android:parentActivityName="controller.StartPage" />
-        <activity
             android:name="controller.QuickNbyBActivity"
             android:launchMode="singleTop"
             android:parentActivityName="controller.SetUpPage" />

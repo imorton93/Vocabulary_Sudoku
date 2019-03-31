@@ -43,9 +43,6 @@ public class StartPage extends AppCompatActivity {
         {
             public void onClick(View view) {
                 //Do stuff for Quick Start game
-               /* Intent q_start = new Intent(StartPage.this, QuickSetUp.class );
-                startActivity(q_start);
-                */
                //Generate a random game for user
                 final int fill = new Random().nextInt(2); //return 0 or 1
                 //Determine whether game starts mode in fill english or spanish
