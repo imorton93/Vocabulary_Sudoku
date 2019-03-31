@@ -827,14 +827,14 @@ public class MainActivity extends AppCompatActivity {
 
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, final String[][] originalSudoku) {
-        final String fin_msg;
+        //final String fin_msg;
         Boolean resultmsg;
         if (resultCheck.sudokuCheck(Sudoku, list)){
             resultmsg = true;
-            fin_msg = "Congratulation! Sudoku is correct!";
+            //fin_msg = "Congratulation! Sudoku is correct!";
         }else {
             resultmsg = false;
-            fin_msg = "Sudoku is incorrect, try again!";
+            //fin_msg = "Sudoku is incorrect, try again!";
         }
         /*Toast result = Toast.makeText(MainActivity.this, fin_msg, Toast.LENGTH_LONG);
         result.setGravity(Gravity.TOP, 0, 400);

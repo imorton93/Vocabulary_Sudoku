@@ -859,14 +859,14 @@ public class QuickNbyBActivity extends AppCompatActivity {
 
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, String[][] originalSudoku) {
-        String msg;
+        //String msg;
         Boolean resultmsg;
         if (resultCheck.sudokuCheck(Sudoku, list)){
             resultmsg = true;
-            msg = "Congratulation! Sudoku is correct!";
+            //msg = "Congratulation! Sudoku is correct!";
         }else {
             resultmsg = false;
-            msg = "Sudoku is incorrect, try again!";
+            //msg = "Sudoku is incorrect, try again!";
         }
         /*Toast result = Toast.makeText(QuickNbyBActivity.this, msg, Toast.LENGTH_LONG);
         result.setGravity(Gravity.TOP, 0, 400);
@@ -879,6 +879,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
             words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
+        //boolean of whether sudoku is correct or not is passed to next activity
         intent.putExtra("result",resultmsg);
         startActivity(intent);
     }
