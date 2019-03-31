@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_preset = "Preset";
     private static final String KEY_listen_game = "Game initialzied in listen mode";
     private static final String KEY_GRID_SIZE = "grid_size";
+    private static final String RESULT_MSG = "result_msg";
 
 
     private static final String TAG = "CMPT276-1191E1-Delta";
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     //WordsPairs object
     private ArrayList<WordsPairs> list = new ArrayList<>();
     private String msg;
-    private Chronometer timer = (Chronometer) findViewById(R.id.Timer);
+
 
     int[] preset;
     //initial database
@@ -745,8 +746,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (InitializedGame) {
-                    //stop timer
-                    timer.stop();
+
                     String[][] checkSudoku = new String[gridSize][gridSize];
                     String[][] originalSudoku = new String[gridSize][gridSize];
                     if (listen_mode_game_init) {
@@ -828,14 +828,17 @@ public class MainActivity extends AppCompatActivity {
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, final String[][] originalSudoku) {
         final String fin_msg;
+        Boolean resultmsg;
         if (resultCheck.sudokuCheck(Sudoku, list)){
+            resultmsg = true;
             fin_msg = "Congratulation! Sudoku is correct!";
         }else {
+            resultmsg = false;
             fin_msg = "Sudoku is incorrect, try again!";
         }
-        Toast result = Toast.makeText(MainActivity.this, fin_msg, Toast.LENGTH_LONG);
+        /*Toast result = Toast.makeText(MainActivity.this, fin_msg, Toast.LENGTH_LONG);
         result.setGravity(Gravity.TOP, 0, 400);
-        result.show();
+        result.show();*/
         // setup the alert builder
         Intent intent;
         intent = new Intent(MainActivity.this, SudokuDisplay.class);
@@ -845,6 +848,7 @@ public class MainActivity extends AppCompatActivity {
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
         intent.putExtra(KEY_GRID_SIZE, gridSize);
+        intent.putExtra("result",resultmsg);
         startActivity(intent);
     }
 

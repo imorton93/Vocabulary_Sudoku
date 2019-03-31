@@ -860,14 +860,17 @@ public class QuickNbyBActivity extends AppCompatActivity {
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, String[][] originalSudoku) {
         String msg;
+        Boolean resultmsg;
         if (resultCheck.sudokuCheck(Sudoku, list)){
+            resultmsg = true;
             msg = "Congratulation! Sudoku is correct!";
         }else {
+            resultmsg = false;
             msg = "Sudoku is incorrect, try again!";
         }
-        Toast result = Toast.makeText(QuickNbyBActivity.this, msg, Toast.LENGTH_LONG);
+        /*Toast result = Toast.makeText(QuickNbyBActivity.this, msg, Toast.LENGTH_LONG);
         result.setGravity(Gravity.TOP, 0, 400);
-        result.show();
+        result.show();*/
         //only for test
         //intent the 9*9 Grid Sudoku to a new page
         Intent intent = new Intent(QuickNbyBActivity.this, SudokuDisplay.class);
@@ -876,6 +879,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
             words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
+        intent.putExtra("result",resultmsg);
         startActivity(intent);
     }
 

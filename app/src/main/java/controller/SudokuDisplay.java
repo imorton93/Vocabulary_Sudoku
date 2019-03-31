@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import View.GridAdapter;
 import com.example.myapplication.R;
@@ -15,6 +16,8 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 public class SudokuDisplay extends AppCompatActivity {
 
     private static final String KEY_GRID_SIZE = "grid_size";
+
+    public TextView Result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,18 @@ public class SudokuDisplay extends AppCompatActivity {
        // gridView.setAdapter(new GridAdapter(list,this));
         int gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
         gridView.setNumColumns(gridSize);
+
+        Boolean result = getIntent().getExtras().getBoolean("result");
+
+        Result  = (TextView)findViewById(R.id.sResult);
+        if(result){
+            Result.setText(getString(R.string.s_correct));
+
+        }
+        else{
+            Result.setText(getString(R.string.s_incorrect));
+        }
+
 
     }
 }
