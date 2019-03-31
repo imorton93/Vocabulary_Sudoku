@@ -7,17 +7,12 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -27,14 +22,11 @@ import java.util.ArrayList;
 public class GridAdapter extends BaseAdapter {
     private Context mContext;
     ArrayList<String> sudoku = new ArrayList<String>();
-    private LayoutInflater mInflater;
-
 
     // Constructor
     public GridAdapter(ArrayList<String> list, Context c) {
         this.mContext = c;
         this.sudoku = list;
-        mInflater = LayoutInflater.from(mContext);
     }
 
     @Override
@@ -84,22 +76,10 @@ public class GridAdapter extends BaseAdapter {
             textView.setLayoutParams(new GridView.LayoutParams((int)width/6,(int)height/6));
         }
 
-        String context = mContext.toString();
-        if (context.contains("SudokuDisplay")){
-            int numCol = (int)Math.sqrt(getCount());
-            width = display.getWidth()/numCol;
-            height = display.getHeight()/numCol;
-            textView.setLayoutParams(new GridView.LayoutParams((int)width,(int)height));
-        }
-
-        if ( metrics.densityDpi == DisplayMetrics.DENSITY_XHIGH) {
-            textView.setTextSize(20);
-        }
 
         textView.setBackgroundResource(R.drawable.grid_items_border);
 
         return textView;
 
     }
-
 }
