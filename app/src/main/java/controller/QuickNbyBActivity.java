@@ -133,9 +133,20 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 need_init.show();
                 return true;
             }
-            else if(gridSize == 4){
+            Object tag;
+            if(gridSize == 4){
                 return true;
             }
+            else if(gridSize == 6){
+                tag = findViewById(R.id.Main6).getTag();
+            }
+            else if(gridSize == 9){
+                tag = findViewById(R.id.Main9).getTag();
+            }
+            else{
+                tag = findViewById(R.id.Main12).getTag();
+            }
+
 
             Button button = (Button) v;
             pop window = new pop();
@@ -144,7 +155,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     getSystemService(LAYOUT_INFLATER_SERVICE);
             CharSequence buttonText = button.getText();
             int orientation = getResources().getConfiguration().orientation;
-            window.createWindow(v,inflater,buttonText,fill_Span, fill_Eng,list,orientation,gridSize);
+            window.createWindow(v,inflater,fill_Span, fill_Eng,list,orientation,gridSize, tag);
 
 
             return true;
@@ -533,7 +544,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
-                if (Sudoku[x][y].length() > 6) {
+                if (Sudoku[x][y].length() > 6 && gridSize != 4) {
                     CharSequence text = Sudoku[x][y].subSequence(0, 6) + "..";
                     gridButton[x][y].setText(text);
 
@@ -819,23 +830,29 @@ public class QuickNbyBActivity extends AppCompatActivity {
 
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, String[][] originalSudoku) {
-        String msg;
+        //String msg;
+        Boolean resultmsg;
         if (resultCheck.sudokuCheck(Sudoku, list)){
-            msg = "Congratulation! Sudoku is correct!";
+            resultmsg = true;
+            //msg = "Congratulation! Sudoku is correct!";
         }else {
-            msg = "Sudoku is incorrect, try again!";
+            resultmsg = false;
+            //msg = "Sudoku is incorrect, try again!";
         }
-        Toast result = Toast.makeText(QuickNbyBActivity.this, msg, Toast.LENGTH_LONG);
+        /*Toast result = Toast.makeText(QuickNbyBActivity.this, msg, Toast.LENGTH_LONG);
         result.setGravity(Gravity.TOP, 0, 400);
-        result.show();
+        result.show();*/
         //only for test
         //intent the 9*9 Grid Sudoku to a new page
+
         Intent intent = new Intent(QuickNbyBActivity.this, SudokuDisplay.class);
         ArrayList<String> words = new ArrayList<String>();
         for (int x = 0; x < gridSize; x++) {
             words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
+        //boolean of whether sudoku is correct or not is passed to next activity
+        intent.putExtra("result",resultmsg);
         startActivity(intent);
     }
 
@@ -909,7 +926,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     }
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
-                        if(buttonText.length() > 6){
+                        if(buttonText.length() > 6 && gridSize != 4){
                             buttonText = buttonText.subSequence(0,6)+"..";
                             System.out.println("Constrained to six letters");
                         }
@@ -921,7 +938,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                         addMyWords(eng, span);
                     } else {
                         //if it's right, makes it green
-                        if(buttonText.length() > 6){
+                        if(buttonText.length() > 6 && gridSize != 4){
                             buttonText = buttonText.subSequence(0,6)+"..";
                             System.out.println("Constrained to six letters");
                         }
@@ -963,7 +980,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 //if is wrong, puts word to be red
                 if (!checkFilledWord(buttonText.toString())) {
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                    if(buttonText.length() > 6){
+                    if(buttonText.length() > 6 && gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);
@@ -976,7 +993,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 } else {
                     //if it's right, makes it green
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                    if(buttonText.length() > 6){
+                    if(buttonText.length() > 6 && gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);
