@@ -18,6 +18,8 @@ public class SudokuDisplay extends AppCompatActivity {
 
     private static final String KEY_GRID_SIZE = "grid_size";
 
+    public TextView Result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,18 @@ public class SudokuDisplay extends AppCompatActivity {
         gridView.setAdapter(new GridAdapter(list,SudokuDisplay.this));
         int gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
         gridView.setNumColumns((int)Math.sqrt(list.size()));
+
+        Boolean result = getIntent().getExtras().getBoolean("result");
+
+        Result  = (TextView)findViewById(R.id.sResult);
+        if(result){
+            Result.setText(getString(R.string.s_correct));
+
+        }
+        else{
+            Result.setText(getString(R.string.s_incorrect));
+        }
+
 
     }
 }
