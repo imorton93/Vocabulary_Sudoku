@@ -1,7 +1,5 @@
 <resources>
 
-    <string name="s_correct">Congratulations! The Sudoku is Correct!</string>
-    <string name="s_incorrect">The Sudoku is Incorrect, try again.</string>
     <string name="s_game">Start Game</string>
     <string name="q_game">Quick Game Mode</string>
     <string name="s_game1">Start Game in 9x9 Grid</string>
