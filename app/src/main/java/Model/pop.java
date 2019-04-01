@@ -104,7 +104,7 @@ public class pop {
             if(fill_eng){
                 //if the grid text color is black, the grid spot is a prefilled word
                 if(v.getCurrentTextColor() == Color.parseColor("#000000")){
-                    for(int i = 0; i < Length); i++){
+                    for(int i = 0; i < Length; i++){
                         if(list.get(i).getSPAN().length() > 6){
                             shortlist = list.get(i).getSPAN().subSequence(0,6);
                             if(sixText.equals(shortlist)){
