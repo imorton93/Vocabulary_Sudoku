@@ -85,6 +85,7 @@ public class GridAdapter extends BaseAdapter {
         }
 
         String context = mContext.toString();
+        Log.d("GRIDAPDAPTER", "mCONTEXT IS" +context);
         if (context.contains("SudokuDisplay")){
             int numCol = (int)Math.sqrt(getCount());
             width = display.getWidth()/numCol;

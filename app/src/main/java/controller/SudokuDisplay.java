@@ -29,9 +29,9 @@ public class SudokuDisplay extends AppCompatActivity {
        // textView.setText(Text);
 
         final GridView gridView = (GridView)findViewById(R.id.sudoku_view);
-        gridView.setAdapter(new GridAdapter(list,this));
+        gridView.setAdapter(new GridAdapter(list,SudokuDisplay.this));
         int gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
-        gridView.setNumColumns(gridSize);
+        gridView.setNumColumns((int)Math.sqrt(list.size()));
 
     }
 }
