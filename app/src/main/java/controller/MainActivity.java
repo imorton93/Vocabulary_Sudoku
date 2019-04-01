@@ -584,7 +584,7 @@ public class MainActivity extends AppCompatActivity {
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 //Adjust the text based on the length of the word
-                if (Sudoku[x][y].length() > 6) {
+                if (Sudoku[x][y].length() > 6 && gridSize != 4) {
                     CharSequence text = Sudoku[x][y].subSequence(0, 6) + "..";
                     gridButton[x][y].setText(text);
                 } else {
