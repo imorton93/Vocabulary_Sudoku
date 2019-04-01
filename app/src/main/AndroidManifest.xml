@@ -17,6 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="controller.Main12"></activity>
+        <activity android:name="controller.Main6" />
+        <activity android:name="controller.Main4" />
         <activity
             android:name="controller.StartPage"
             android:label="Start page">
@@ -34,10 +37,6 @@
             android:parentActivityName="controller.StartPage" />
         <activity
             android:name="controller.Guide"
-            android:parentActivityName="controller.StartPage" />
-        <activity
-            android:name="controller.QuickSetUp"
-            android:label="Quick Set Up Page"
             android:parentActivityName="controller.StartPage" />
         <activity
             android:name="controller.QuickNbyBActivity"
@@ -65,7 +64,7 @@
         <activity
             android:name="controller.Words_Selection"
             android:label=""
-            android:parentActivityName="controller.SetUpPage"
+            android:parentActivityName="controller.MainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="controller.Load_Pairs"
