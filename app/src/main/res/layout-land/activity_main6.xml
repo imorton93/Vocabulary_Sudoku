@@ -5,7 +5,7 @@
     android:id="@+id/Main6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:tag="cell_land"
+    android:tag="cell"
     tools:context="controller.MainActivity">
 
     <android.support.v7.widget.GridLayout

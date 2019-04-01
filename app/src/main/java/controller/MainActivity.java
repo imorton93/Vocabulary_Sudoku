@@ -148,18 +148,31 @@ public class MainActivity extends AppCompatActivity {
                 need_init.show();
                 return true;
             }
-            else if(gridSize == 4){
+
+            Object tag;
+            //if statements to distinguish between different gridsizes, and get the tag
+            //tag determines if the device is cell, sw600dp, and sw720dp
+            if(gridSize == 4){
                 return true;
             }
-
-            Button button = (Button) v;
+            else if(gridSize == 6){
+                tag = findViewById(R.id.Main6).getTag();
+            }
+            else if(gridSize == 9){
+                tag = findViewById(R.id.Main9).getTag();
+            }
+            else{
+                tag = findViewById(R.id.Main12).getTag();
+            }
             pop window = new pop();
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater)
                     getSystemService(LAYOUT_INFLATER_SERVICE);
-            CharSequence buttonText = button.getText();
+            //get whether the device is in portrait or landscape
             int orientation = getResources().getConfiguration().orientation;
-            window.createWindow(v,inflater,buttonText,fill_Span, fill_Eng,list,orientation,gridSize);
+
+            window.createWindow(v,inflater,fill_Span, fill_Eng,list,orientation,gridSize,tag);
+
 
 
             return true;
@@ -461,24 +474,7 @@ public class MainActivity extends AppCompatActivity {
         //setting text color of prefilled cells
 
 
-            //long click function to bring up popup text
-            View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
-                @Override
-                public boolean onLongClick(View v){
-                    Button button = (Button) v;
-                    CharSequence buttonText = button.getText();
-                    int orientation = getResources().getConfiguration().orientation;
-                    //Configuration config = MainActivity.getResources().getConfiguration();
-                    // inflate the layout of the popup window
-                    LayoutInflater inflater = (LayoutInflater)
-                            getSystemService(LAYOUT_INFLATER_SERVICE);
 
-                    pop window = new pop();
-                    window.createWindow(v, inflater, buttonText, fill_Span, fill_Eng, list, orientation, 0);
-
-                    return true;
-                }
-            };
 
 
             //click function
@@ -862,16 +858,20 @@ public class MainActivity extends AppCompatActivity {
 
     //check sudoku correctness
     public void checkAnswer(String[][] Sudoku, final String[][] originalSudoku) {
-        final String fin_msg;
+        //final String fin_msg;
+        Boolean resultmsg;
         if (resultCheck.sudokuCheck(Sudoku, list)){
-            fin_msg = "Congratulation! Sudoku is correct!";
+            resultmsg = true;
+            //fin_msg = "Congratulation! Sudoku is correct!";
         }else {
-            fin_msg = "Sudoku is incorrect, try again!";
+            resultmsg = false;
+            //fin_msg = "Sudoku is incorrect, try again!";
         }
-        Toast result = Toast.makeText(MainActivity.this, fin_msg, Toast.LENGTH_LONG);
+        /*Toast result = Toast.makeText(MainActivity.this, fin_msg, Toast.LENGTH_LONG);
         result.setGravity(Gravity.TOP, 0, 400);
-        result.show();
+        result.show();*/
         // setup the alert builder
+
         Intent intent;
         intent = new Intent(MainActivity.this, SudokuDisplay.class);
         ArrayList<String> words = new ArrayList<String>();
@@ -880,6 +880,7 @@ public class MainActivity extends AppCompatActivity {
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
         intent.putExtra(KEY_GRID_SIZE, gridSize);
+        intent.putExtra("result",resultmsg);
         startActivity(intent);
     }
 
@@ -954,7 +955,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "buttonText length is" + buttonText.length());
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
-                        if(buttonText.length() > 6){
+                        if(buttonText.length() > 6 && gridSize != 4){
                             buttonText = buttonText.subSequence(0,6)+"..";
                             System.out.println("Constrained to six letters");
                         }
@@ -965,7 +966,7 @@ public class MainActivity extends AppCompatActivity {
                         addMyWords(eng,span);
                     } else {
                         //if it's right, makes it green
-                        if(buttonText.length() > 6){
+                        if(buttonText.length() > 6 && gridSize != 4){
                             buttonText = buttonText.subSequence(0,6)+"..";
                             System.out.println("Constrained to six letters");
                         }
@@ -1007,7 +1008,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (!checkFilledWord(buttonText.toString())) {
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                    if(buttonText.length() > 6){
+                    if(buttonText.length() > 6 && gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);
@@ -1020,7 +1021,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //if it's right, makes it green
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
-                    if(buttonText.length() > 6){
+                    if(buttonText.length() > 6 && gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
                     SelectedButton.setText(buttonText);

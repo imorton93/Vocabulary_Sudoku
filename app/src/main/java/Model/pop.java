@@ -23,13 +23,14 @@ public class pop {
         return;
     }
 
-    public void createWindow(View v,LayoutInflater inflater, CharSequence buttontext, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int orientation, int gridsize) {
+    public void createWindow(View v,LayoutInflater inflater, boolean fill_span, boolean fill_eng, ArrayList<WordsPairs> list, int orientation, int gridsize, Object tag) {
 
-        if(buttontext != null) {
+        Button button = (Button) v;
+        CharSequence buttontext = button.getText();
+        //check to see if empty
+        if(buttontext != "") {
             int length;
-            //9x9 grid puzzle = 0
-            //6x6 grid puzzle = 1
-            //12x12 grid puzzle = 2
+            //adjust length based on gridsize
             if(gridsize == 9){
                 // code for 9x9 grid
                 length = 9;
@@ -42,11 +43,12 @@ public class pop {
                 //code for 12x12 grid
                 length = 12;
             }
-
+            //if the text is longer than 6 characters, it calls getFullText to find full word to display
             if(buttontext.length() > 6){
                 buttontext = getFullText((Button) v, buttontext,fill_span, fill_eng, list, length);
             }
             int yoff = 0;
+            //see if the device is in landscape orientation
             if(orientation == Configuration.ORIENTATION_LANDSCAPE){
                 int[] location = new int[2];
                 v.getLocationOnScreen(location);
@@ -68,8 +70,8 @@ public class pop {
             final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
             ((TextView) popupWindow.getContentView().findViewById(R.id.poptext)).setText(buttontext);
-            // show the popup window
-            // which view you pass in doesn't matter, it is only used for the window tolken
+            // show as drop down drops down the window from the view v
+            // the y position of the window changes if the grid button is lower on the puzzle
             popupWindow.showAsDropDown(v, 0, yoff);
             //popupWindow.showAtLocation(v,0,0,0);
 
@@ -100,8 +102,9 @@ public class pop {
             CharSequence shortlist;
             CharSequence fullText = buttontext;
             if(fill_eng){
+                //if the grid text color is black, the grid spot is a prefilled word
                 if(v.getCurrentTextColor() == Color.parseColor("#000000")){
-                    for(int i = 0; i < list.size(); i++){
+                    for(int i = 0; i < Length); i++){
                         if(list.get(i).getSPAN().length() > 6){
                             shortlist = list.get(i).getSPAN().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -112,7 +115,7 @@ public class pop {
                     }
                 }
                 else{
-                    for(int j = 0; j < list.size(); j++){
+                    for(int j = 0; j < Length; j++){
                         if(list.get(j).getENG().length() > 6){
                             shortlist = list.get(j).getENG().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -123,8 +126,9 @@ public class pop {
                 }
             }
             if(fill_span){
+                //if the grid text color is black, the grid spot is a prefilled word
                 if(v.getCurrentTextColor() == Color.parseColor("#000000")){
-                    for(int i = 0; i < list.size(); i++){
+                    for(int i = 0; i < Length; i++){
                         if(list.get(i).getENG().length() > 6){
                             shortlist = list.get(i).getENG().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -135,7 +139,7 @@ public class pop {
                     }
                 }
                 else{
-                    for(int j = 0; j < list.size(); j++){
+                    for(int j = 0; j < Length; j++){
                         if(list.get(j).getSPAN().length() > 6){
                             shortlist = list.get(j).getSPAN().subSequence(0,6);
                             if(sixText.equals(shortlist)){
@@ -147,4 +151,20 @@ public class pop {
             }
             return fullText;
     }
+
+    private void adjustTextSize(Object tag, PopupWindow popupWindow){
+
+        if(tag.equals("720")){
+            ((TextView) popupWindow.getContentView().findViewById(R.id.poptext)).setTextSize(40f);
+        }
+        else if(tag.equals("600")){
+            ((TextView) popupWindow.getContentView().findViewById(R.id.poptext)).setTextSize(34f);
+        }
+        else{
+            ((TextView) popupWindow.getContentView().findViewById(R.id.poptext)).setTextSize(24f);
+        }
+
+        return;
+    }
+
 }
