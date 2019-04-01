@@ -5,7 +5,7 @@
     android:id="@+id/Main4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:tag="600"
+    android:tag="600_land"
     tools:context="controller.MainActivity">
 
     <android.support.v7.widget.GridLayout
@@ -134,7 +134,8 @@
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/b32"
@@ -144,6 +145,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -155,6 +157,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -166,6 +169,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
             app:layout_column="1"
             app:layout_row="1" />
 
