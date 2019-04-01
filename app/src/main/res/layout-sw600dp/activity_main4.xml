@@ -5,7 +5,7 @@
     android:id="@+id/Main4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:tag="600_port"
+    android:tag="600"
     tools:context="controller.MainActivity">
 
     <android.support.v7.widget.GridLayout
@@ -142,7 +142,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp" />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/b32"
@@ -152,7 +152,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -164,7 +164,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -176,7 +176,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -203,7 +203,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp" />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/b34"
@@ -213,7 +213,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -225,7 +225,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -237,7 +237,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -264,7 +264,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp" />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/b14"
@@ -274,7 +274,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -286,7 +286,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -298,7 +298,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -327,7 +327,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="0" />
 
@@ -341,7 +341,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -355,7 +355,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -369,7 +369,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_column="1"
             app:layout_row="1" />
 
