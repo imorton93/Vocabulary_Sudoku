@@ -1352,8 +1352,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
                     arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
         }
-        Toast.makeText(MainActivity.this, "Any hardly recognized word will be recorded",
-                Toast.LENGTH_LONG).show();
     }
 
     @Override
