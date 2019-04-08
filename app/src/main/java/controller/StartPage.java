@@ -73,7 +73,7 @@ public class StartPage extends AppCompatActivity {
                     g_Sizes_indx = new Random().nextInt(10);
                 }
 
-                Intent quick_game = new Intent(StartPage.this, QuickNbyBActivity.class);
+                Intent quick_game = new Intent(StartPage.this, QuickNbyNActivity.class);
                 quick_game.putExtra(KEY_fill_Eng, fill_English);
                 quick_game.putExtra(KEY_fill_Span, fill_Spanish);
                 quick_game.putExtra(KEY_Listen, listen_mode);

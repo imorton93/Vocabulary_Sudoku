@@ -36,7 +36,7 @@
             android:name="controller.Guide"
             android:parentActivityName="controller.StartPage" />
         <activity
-            android:name="controller.QuickNbyBActivity"
+            android:name="controller.QuickNbyNActivity"
             android:launchMode="singleTop"
             android:parentActivityName="controller.SetUpPage" />
         <activity
