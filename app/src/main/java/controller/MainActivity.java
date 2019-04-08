@@ -973,6 +973,7 @@ public class MainActivity extends AppCompatActivity {
                         SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                         SelectedButton.setTypeface(null, Typeface.NORMAL);
+                        //mistakeCount--;
                     }
                     //set the Selected Buttons Text as text from input button
                 }
@@ -1027,6 +1028,8 @@ public class MainActivity extends AppCompatActivity {
                     SelectedButton.setText(buttonText);
                     SelectedButton.setTextColor(Color.parseColor("#FF008577"));
                     SelectedButton.setTypeface(null, Typeface.NORMAL);
+                    takeMyWords(eng,span);
+                    //allow user to keep track of what they get correct
                 }
                 //set the Selected Buttons Text as text from input button
             }
@@ -1346,6 +1349,27 @@ public class MainActivity extends AppCompatActivity {
         }else{
             //insert word to database
             mDBHelper.updateWrongWord(new WordsPairs(eng, span,1));
+        }
+        ArrayList<WordsPairs> arrayList = mDBHelper.getData();
+        for (int i = 0; i < arrayList.size(); i++){
+            Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
+                    arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
+        }
+    }
+
+    public void takeMyWords(String eng, String span) {
+        //initial Database
+        //store correct word that made by user
+        //check if there is same word inside Database
+        if (mDBHelper.hasWord(new WordsPairs(eng, span))){
+            //update Total number of wrong words
+            int num = mDBHelper.numWrong(new WordsPairs(eng, span));
+            num--;
+            //update database
+            mDBHelper.updateWrongNum(new WordsPairs(eng, span,num));
+        }else{
+            //insert word to database
+            mDBHelper.updateWrongWord(new WordsPairs(eng, span,-1));
         }
         ArrayList<WordsPairs> arrayList = mDBHelper.getData();
         for (int i = 0; i < arrayList.size(); i++){
