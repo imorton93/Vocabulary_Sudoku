@@ -901,7 +901,6 @@ public class QuickNbyBActivity extends AppCompatActivity {
             //track the button that user selects
             if (SelectedButton != null) {
                 CharSequence cellText = SelectedButton.getText();
-
                 if (!(Arrays.asList(l_numbers).contains(cellText))) {
                     //If selected grid isn't a number, update the cell.
                     Button button = (Button) w;
@@ -924,27 +923,28 @@ public class QuickNbyBActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    Log.d(TAG, "buttonText length is" + buttonText.length());
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
                         if(buttonText.length() > 6 && gridSize != 4){
                             buttonText = buttonText.subSequence(0,6)+"..";
                             System.out.println("Constrained to six letters");
                         }
-                        Log.d(TAG, "buttonText length is" + buttonText.length());
                         SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                         SelectedButton.setTypeface(null, Typeface.BOLD);
                         mistakeCount++;
-                        addMyWords(eng, span);
+                        addMyWords(eng,span);
                     } else {
                         //if it's right, makes it green
                         if(buttonText.length() > 6 && gridSize != 4){
                             buttonText = buttonText.subSequence(0,6)+"..";
                             System.out.println("Constrained to six letters");
                         }
-                        Log.d(TAG, "buttonText length is" + buttonText.length());
                         SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+                        SelectedButton.setTypeface(null, Typeface.NORMAL);
+                        //mistakeCount--;
                     }
                     //set the Selected Buttons Text as text from input button
                 }
@@ -955,6 +955,12 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 Button button = (Button) w;
                 // text of input button is extracted
                 CharSequence buttonText = button.getText();
+                /* when inserting a new word into puzzle, check if right or wrong
+                 *  if it's right, make it green
+                 * *if wrong, put word to be red
+                 */
+                //track the button that user selects
+                //if is wrong, puts word to be red
                 String eng = null;
                 String span = null;
                 if (fill_Span){
@@ -972,12 +978,6 @@ public class QuickNbyBActivity extends AppCompatActivity {
                         }
                     }
                 }
-                /* when inserting a new word into puzzle, check if right or wrong
-                 *  if it's right, make it green
-                 * *if wrong, put word to be red
-                 */
-                //track the button that user selects
-                //if is wrong, puts word to be red
                 if (!checkFilledWord(buttonText.toString())) {
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
                     if(buttonText.length() > 6 && gridSize != 4){
@@ -987,7 +987,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                     SelectedButton.setTypeface(null, Typeface.BOLD);
                     mistakeCount++;
-                    addMyWords(eng, span);
+                    addMyWords(eng,span);
                     //allow user to keep track of what they get wrong
                     //ask user whether they want to save to My words
                 } else {
@@ -998,6 +998,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     }
                     SelectedButton.setText(buttonText);
                     SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+                    SelectedButton.setTypeface(null, Typeface.NORMAL);
+                    takeMyWords(eng,span);
+                    //allow user to keep track of what they get correct
                 }
                 //set the Selected Buttons Text as text from input button
             }
@@ -1364,6 +1367,26 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
     }
 
+    public void takeMyWords(String eng, String span) {
+        //initial Database
+        //store correct word that made by user
+        //check if there is same word inside Database
+        if (mDBHelper.hasWord(new WordsPairs(eng, span))){
+            //update Total number of wrong words
+            int num = mDBHelper.numWrong(new WordsPairs(eng, span));
+            num--;
+            //update database
+            mDBHelper.updateWrongNum(new WordsPairs(eng, span,num));
+        }else{
+            //insert word to database
+            mDBHelper.updateWrongWord(new WordsPairs(eng, span,-1));
+        }
+        ArrayList<WordsPairs> arrayList = mDBHelper.getData();
+        for (int i = 0; i < arrayList.size(); i++){
+            Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
+                    arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != MainActivity.RESULT_OK) {
