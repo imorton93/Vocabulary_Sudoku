@@ -36,7 +36,8 @@
     Black text in Sudoku: Pre-filled text, user may not change this text \n
     Green text in Sudoku: Correct text that user entered \n
     Red text in Sudoku: Wrong text for the cell (yes, this serves as a hint) \n
-    The number of times the user enters words wrong will be recorded by the app. \n
+    The number of times the user enters words wrong or correct will be recorded by the app. \n
+    The words that the user needs more practice more will appear in the front of the selecting words page. \n
 
 </string>
 
