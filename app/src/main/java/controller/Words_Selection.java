@@ -556,17 +556,32 @@ public class Words_Selection extends AppCompatActivity {
     public boolean lookForWrongWords(int i){
         ArrayList<WordsPairs> arrayList = mDBHelper.getData();
         if (message.equals("SPAN")){
-            for (int j = 0; j < arrayList.size(); j++){
-                if (arrayList.get(j).getSPAN().equals(span_wordsList.get(i))){
-                    return true;
+           /* if (arrayList.get(i).getTotal() > 0){
+                return true;
+            } */
+
+            for (int j = 0; j < arrayList.size(); j++) {
+                if (arrayList.get(j).getSPAN().equals(span_wordsList.get(i))) {
+                    if (arrayList.get(j).getTotal() > 0) {
+                        return true;
+                    }
                 }
             }
         }else{
+            /*
+            if (arrayList.get(i).getTotal() > 0){
+                return true;
+            }
+            */
+
             for (int j = 0; j < arrayList.size(); j++){
-                if (arrayList.get(j).getENG().equals(eng_wordsList.get(i))){
-                    return true;
+                if (arrayList.get(j).getENG().equals(eng_wordsList.get(i))) {
+                    if (arrayList.get(j).getTotal() > 0) {
+                        return true;
+                    }
                 }
             }
+
         }
         return false;
 
