@@ -8,6 +8,22 @@
     android:tag="720"
     tools:context="controller.MainActivity">
 
+    <Chronometer
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:format="%s"
+        android:textSize="46sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gridLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/square9"
+        app:layout_constraintVertical_bias="0.37" />
+
     <android.support.v7.widget.GridLayout
         android:id="@+id/square2"
         android:layout_width="wrap_content"
@@ -1124,6 +1140,7 @@
     </android.support.v7.widget.GridLayout>
 
     <android.support.v7.widget.GridLayout
+        android:id="@+id/gridLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
