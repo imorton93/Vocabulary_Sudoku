@@ -41,7 +41,7 @@ import Model.pop;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 
-public class QuickNbyBActivity extends AppCompatActivity {
+public class QuickNbyNActivity extends AppCompatActivity {
     private static final String KEY_InitializedGame = "initializedgame";
     private static final String KEY_Sudoku = "saved_Sudoku";
     private static final String KEY_prefilled_words = "prefilled_Words";
@@ -127,7 +127,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         @Override
         public boolean onLongClick(View v){
             if(!InitializedGame){
-                Toast need_init = Toast.makeText(QuickNbyBActivity.this ,
+                Toast need_init = Toast.makeText(QuickNbyNActivity.this ,
                         R.string.not_initialized,Toast.LENGTH_LONG);
                 need_init.setGravity(Gravity.TOP, 0, 400);
                 need_init.show();
@@ -167,7 +167,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         @Override
         public void onClick(View v){
             if(!InitializedGame){
-                Toast need_init = Toast.makeText(QuickNbyBActivity.this ,
+                Toast need_init = Toast.makeText(QuickNbyNActivity.this ,
                         R.string.not_initialized,Toast.LENGTH_LONG);
                 need_init.setGravity(Gravity.TOP, 0, 400);
                 need_init.show();
@@ -477,7 +477,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate - savedInstanceState is null");
         if (fill_Eng){
             fill_Span = false;
-            Toast result2 = Toast.makeText(QuickNbyBActivity.this,
+            Toast result2 = Toast.makeText(QuickNbyNActivity.this,
                     "User chooses to fill in English", Toast.LENGTH_LONG);
             result2.setGravity(Gravity.TOP, 0, 400);
             result2.show();
@@ -499,7 +499,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
         else if (fill_Span){
             fill_Eng = false;
-            Toast result1 = Toast.makeText(QuickNbyBActivity.this,
+            Toast result1 = Toast.makeText(QuickNbyNActivity.this,
                     "User chooses to fill in Spanish", Toast.LENGTH_LONG);
             result1.setGravity(Gravity.TOP, 0, 400);
             result1.show();
@@ -639,7 +639,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v){
                             if(!InitializedGame){
-                                Toast need_init = Toast.makeText(QuickNbyBActivity.this ,
+                                Toast need_init = Toast.makeText(QuickNbyNActivity.this ,
                                         R.string.not_initialized,Toast.LENGTH_LONG);
                                 need_init.setGravity(Gravity.TOP, 0, 400);
                                 need_init.show();
@@ -741,7 +741,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(View v){
                                             if(!InitializedGame){
-                                                Toast need_init = Toast.makeText(QuickNbyBActivity.this ,
+                                                Toast need_init = Toast.makeText(QuickNbyNActivity.this ,
                                                         R.string.not_initialized,Toast.LENGTH_LONG);
                                                 need_init.setGravity(Gravity.TOP, 0, 400);
                                                 need_init.show();
@@ -839,13 +839,13 @@ public class QuickNbyBActivity extends AppCompatActivity {
             resultmsg = false;
             //msg = "Sudoku is incorrect, try again!";
         }
-        /*Toast result = Toast.makeText(QuickNbyBActivity.this, msg, Toast.LENGTH_LONG);
+        /*Toast result = Toast.makeText(QuickNbyNActivity.this, msg, Toast.LENGTH_LONG);
         result.setGravity(Gravity.TOP, 0, 400);
         result.show();*/
         //only for test
         //intent the 9*9 Grid Sudoku to a new page
 
-        Intent intent = new Intent(QuickNbyBActivity.this, SudokuDisplay.class);
+        Intent intent = new Intent(QuickNbyNActivity.this, SudokuDisplay.class);
         ArrayList<String> words = new ArrayList<String>();
         for (int x = 0; x < gridSize; x++) {
             words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
@@ -901,7 +901,6 @@ public class QuickNbyBActivity extends AppCompatActivity {
             //track the button that user selects
             if (SelectedButton != null) {
                 CharSequence cellText = SelectedButton.getText();
-
                 if (!(Arrays.asList(l_numbers).contains(cellText))) {
                     //If selected grid isn't a number, update the cell.
                     Button button = (Button) w;
@@ -924,27 +923,28 @@ public class QuickNbyBActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    Log.d(TAG, "buttonText length is" + buttonText.length());
                     //if is wrong, puts word to be red
                     if (!checkFilledWord(buttonText.toString())) {
                         if(buttonText.length() > 6 && gridSize != 4){
                             buttonText = buttonText.subSequence(0,6)+"..";
                             System.out.println("Constrained to six letters");
                         }
-                        Log.d(TAG, "buttonText length is" + buttonText.length());
                         SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                         SelectedButton.setTypeface(null, Typeface.BOLD);
                         mistakeCount++;
-                        addMyWords(eng, span);
+                        addMyWords(eng,span);
                     } else {
                         //if it's right, makes it green
                         if(buttonText.length() > 6 && gridSize != 4){
                             buttonText = buttonText.subSequence(0,6)+"..";
                             System.out.println("Constrained to six letters");
                         }
-                        Log.d(TAG, "buttonText length is" + buttonText.length());
                         SelectedButton.setText(buttonText);
                         SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+                        SelectedButton.setTypeface(null, Typeface.NORMAL);
+                        //mistakeCount--;
                     }
                     //set the Selected Buttons Text as text from input button
                 }
@@ -955,6 +955,12 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 Button button = (Button) w;
                 // text of input button is extracted
                 CharSequence buttonText = button.getText();
+                /* when inserting a new word into puzzle, check if right or wrong
+                 *  if it's right, make it green
+                 * *if wrong, put word to be red
+                 */
+                //track the button that user selects
+                //if is wrong, puts word to be red
                 String eng = null;
                 String span = null;
                 if (fill_Span){
@@ -972,12 +978,6 @@ public class QuickNbyBActivity extends AppCompatActivity {
                         }
                     }
                 }
-                /* when inserting a new word into puzzle, check if right or wrong
-                 *  if it's right, make it green
-                 * *if wrong, put word to be red
-                 */
-                //track the button that user selects
-                //if is wrong, puts word to be red
                 if (!checkFilledWord(buttonText.toString())) {
                     SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
                     if(buttonText.length() > 6 && gridSize != 4){
@@ -987,7 +987,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     SelectedButton.setTextColor(Color.parseColor("#FFB00000"));
                     SelectedButton.setTypeface(null, Typeface.BOLD);
                     mistakeCount++;
-                    addMyWords(eng, span);
+                    addMyWords(eng,span);
                     //allow user to keep track of what they get wrong
                     //ask user whether they want to save to My words
                 } else {
@@ -998,6 +998,9 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     }
                     SelectedButton.setText(buttonText);
                     SelectedButton.setTextColor(Color.parseColor("#FF008577"));
+                    SelectedButton.setTypeface(null, Typeface.NORMAL);
+                    takeMyWords(eng,span);
+                    //allow user to keep track of what they get correct
                 }
                 //set the Selected Buttons Text as text from input button
             }
@@ -1037,7 +1040,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 fill_Span = true;
                 fill_Eng = false;
                 String msg = "SPAN";
-                Toast result1 = Toast.makeText(QuickNbyBActivity.this,
+                Toast result1 = Toast.makeText(QuickNbyNActivity.this,
                         "User chooses to fill in Spanish", Toast.LENGTH_LONG);
                 result1.setGravity(Gravity.TOP, 0, 400);
                 result1.show();
@@ -1059,7 +1062,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     }
                 } else {
                     //Temporary Toast
-                    Toast fin = Toast.makeText(QuickNbyBActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
+                    Toast fin = Toast.makeText(QuickNbyNActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
                     fin.setGravity(Gravity.TOP, 0, 400);
                     fin.show();
                 }
@@ -1071,7 +1074,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 fill_Eng = true;
                 fill_Span = false;
                 msg = "ENG";
-                Toast result2 = Toast.makeText(QuickNbyBActivity.this,
+                Toast result2 = Toast.makeText(QuickNbyNActivity.this,
                         "User chooses to fill in English", Toast.LENGTH_LONG);
                 result2.setGravity(Gravity.TOP, 0, 400);
                 result2.show();
@@ -1092,7 +1095,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     }
                 } else {
                     //Temporary Toast
-                    Toast.makeText(QuickNbyBActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuickNbyNActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
                 }
                 return true;
 
@@ -1100,7 +1103,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 fill_Eng = true;
                 fill_Span = false;
                 msg = "ENG";
-                Toast result3 = Toast.makeText(QuickNbyBActivity.this,
+                Toast result3 = Toast.makeText(QuickNbyNActivity.this,
                         "User chooses to fill in English", Toast.LENGTH_LONG);
                 result3.setGravity(Gravity.TOP, 0, 400);
                 result3.show();
@@ -1122,7 +1125,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     }
                 } else {
                     //Temporary Toast
-                    Toast.makeText(QuickNbyBActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuickNbyNActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
                 }
                 return true;
 
@@ -1130,7 +1133,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 fill_Span = true;
                 fill_Eng = false;
                 msg = "SPAN";
-                Toast result4 = Toast.makeText(QuickNbyBActivity.this,
+                Toast result4 = Toast.makeText(QuickNbyNActivity.this,
                         "User chooses to fill in Spanish", Toast.LENGTH_LONG);
                 result4.setGravity(Gravity.TOP, 0, 400);
                 result4.show();
@@ -1153,7 +1156,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     }
                 } else {
                     //Temporary Toast
-                    Toast fin = Toast.makeText(QuickNbyBActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
+                    Toast fin = Toast.makeText(QuickNbyNActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
                     fin.setGravity(Gravity.TOP, 0, 400);
                     fin.show();
                 }
@@ -1186,7 +1189,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 return true;
 
             case R.id.load_wordpairs:
-                *//*intent = new Intent(QuickNbyBActivity.this, Load_Pairs.class);
+                *//*intent = new Intent(QuickNbyNActivity.this, Load_Pairs.class);
                 startActivityForResult(intent, 1); *//*
                 //Do nothing
                 return true;
@@ -1196,7 +1199,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                 if (listen_mode) { //App already in listen mode. User clicks this option to exit listen mode.
                     listen_mode = false;
                     item.setTitle("Listen Comprehension Mode");
-                    Toast listen = Toast.makeText(QuickNbyBActivity.this,
+                    Toast listen = Toast.makeText(QuickNbyNActivity.this,
                             "Exiting Listen Comprehension Mode" ,Toast.LENGTH_LONG);
                     listen.setGravity(Gravity.TOP, 0, 400);
                     listen.show();
@@ -1205,7 +1208,7 @@ public class QuickNbyBActivity extends AppCompatActivity {
                     listen_mode = true;
                     // MenuItem listen = menu.findItem(R.id.listen);
                     item.setTitle("Exit Listen Comprehension Mode");
-                    Toast listen = Toast.makeText(QuickNbyBActivity.this,
+                    Toast listen = Toast.makeText(QuickNbyNActivity.this,
                             "Entering Listen Comprehension Mode, " +
                                     "please now choose a language to fill the sudoku in", Toast.LENGTH_LONG);
                     //I could make a dialog here
@@ -1364,6 +1367,26 @@ public class QuickNbyBActivity extends AppCompatActivity {
         }
     }
 
+    public void takeMyWords(String eng, String span) {
+        //initial Database
+        //store correct word that made by user
+        //check if there is same word inside Database
+        if (mDBHelper.hasWord(new WordsPairs(eng, span))){
+            //update Total number of wrong words
+            int num = mDBHelper.numWrong(new WordsPairs(eng, span));
+            num--;
+            //update database
+            mDBHelper.updateWrongNum(new WordsPairs(eng, span,num));
+        }else{
+            //insert word to database
+            mDBHelper.updateWrongWord(new WordsPairs(eng, span,-1));
+        }
+        ArrayList<WordsPairs> arrayList = mDBHelper.getData();
+        for (int i = 0; i < arrayList.size(); i++){
+            Log.d(TAG, "mDBHELPER database has  " + arrayList.get(i).getENG()+"   "+
+                    arrayList.get(i).getSPAN()+"  "+arrayList.get(i).getTotal());
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != MainActivity.RESULT_OK) {
