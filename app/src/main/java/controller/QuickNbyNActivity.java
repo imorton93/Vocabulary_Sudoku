@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
     private static final String KEY_preset = "Preset";
     private static final String KEY_listen_game = "Game initialzied in listen mode";
     private static final String KEY_GRID_SIZE = "grid_size";
+    private static final String KEY_Chrono_Time = "ChronoTime";
     /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
         //The leftmost column
         private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
@@ -103,6 +106,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
     Locale locEnglish = new Locale("eng", "US");
     TextToSpeech span;
     TextToSpeech eng;
+    private Chronometer timer;
     //End of variables for listen mode
     /*
     Button[] mainButtons = { //This Button array is actually for TestCases
@@ -198,6 +202,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        timer = findViewById(R.id.timer);
 
         Log.d(TAG, "onCreate(Bundle) called");
         gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
@@ -271,6 +276,9 @@ public class QuickNbyNActivity extends AppCompatActivity {
         if ((savedInstanceState != null)) {
             //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
             // so user does not need to restart game.
+            timer = findViewById(R.id.timer);
+            timer.setBase(savedInstanceState.getLong(KEY_Chrono_Time));
+            timer.start();
             Button mButtons;
             InitializedGame = savedInstanceState.getBoolean(KEY_InitializedGame);
             fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
@@ -531,6 +539,9 @@ public class QuickNbyNActivity extends AppCompatActivity {
     public void getGameGrid(String msg) {
         Log.d(TAG, "Game in normal mode is initialized.");
         InitializedGame = true;
+        timer = findViewById(R.id.timer);
+        timer.setBase(SystemClock.elapsedRealtime());
+        timer.start();
         Sudoku = initialGame.generateGrid(msg,list);
         Log.d(TAG, "restored_s is " + restored_s);
         for(int i = 0; i < gridSize; i++){
@@ -589,6 +600,9 @@ public class QuickNbyNActivity extends AppCompatActivity {
     public void getListenGameGrid(String msg) {
         Log.d(TAG, "Game in listen mode is initialized.");
         InitializedGame = true;
+        timer = findViewById(R.id.timer);
+        timer.setBase(SystemClock.elapsedRealtime());
+        timer.start();
         listen_mode_game_init = true; //User has initialized a game in listen mode
         l_number = 0;
         int indx_temp = -1;
@@ -717,6 +731,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (InitializedGame) {
+                    timer.stop();
                     String[][] checkSudoku = new String[gridSize][gridSize];
                     String[][] originalSudoku = new String[gridSize][gridSize];
                     if (listen_mode_game_init) {
@@ -1238,6 +1253,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+        timer = findViewById(R.id.timer);
         Log.i(TAG, "onSaveInstanceState");
         //Saves: InitializedGame , Sudoku[][], words on gridButton
         savedInstanceState.putBoolean(KEY_InitializedGame, InitializedGame);
@@ -1250,6 +1266,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
         savedInstanceState.putIntArray(KEY_preset, preset);
         //savedInstanceState.put(KEY_filled_words, gridButton);
         savedInstanceState.putInt(KEY_GRID_SIZE, gridSize);
+        savedInstanceState.putLong(KEY_Chrono_Time,timer.getBase());
         int x = 0;
         String[] stringA_p_temp = new String[gridSize];
         String[][] stringA_preset = new String[gridSize][gridSize]; //Array of preset words
