@@ -8,24 +8,27 @@
     android:tag="720"
     tools:context="controller.finishPage">
 
-    <Chronometer
-        android:id="@+id/finalTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/sResult"
+        android:layout_width="191dp"
+        android:layout_height="127dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:format="%s"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout9"
+        android:minLines="2"
+        android:text="The Sudoku is Incorrect, try again."
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/finalTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/square2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.486" />
 
-    <android.support.v7.widget.GridLayout
-        android:id="@+id/gridLayout9"
+    <Chronometer
+        android:id="@+id/finalTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,10 +36,29 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:format="%s"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/square4"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47000003" />
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/gridLayout10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/square6"
+        app:layout_constraintTop_toBottomOf="@+id/finalTime"
+        app:layout_constraintVertical_bias="0.9">
 
         <!--Comment / uncomment a line of code. -->
 
@@ -46,119 +68,43 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_1"
+            android:layout_width="175dp"
+            android:layout_height="65dp"
+            android:text="Play again with Same Settings"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
+            android:textSize="18sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_2"
+            android:layout_width="175dp"
+            android:layout_height="65dp"
+            android:text="Play again with New Settings"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
+            android:textSize="18sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="0" />
+            app:layout_column="0"
+            app:layout_row="1" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_3"
+            android:layout_width="175dp"
+            android:layout_height="65dp"
+            android:text="Main Menu"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="0"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_4"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_7"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
+            android:textSize="18sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
             app:layout_column="0"
             app:layout_row="2" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_5"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="2" />
-
-        <Button
-            android:id="@+id/button10"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="clearButtonOnClick"
-            android:text="@string/clear_button"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="0"
-            app:layout_row="3" />
-
-        <Button
-            android:id="@+id/fin_button"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:longClickable="false"
-            android:maxLines="1"
-            android:text="@string/fin_button"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="3" />
 
 
     </android.support.v7.widget.GridLayout>
