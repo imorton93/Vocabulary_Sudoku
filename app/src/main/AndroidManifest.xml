@@ -17,6 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".finish4"></activity>
+        <activity android:name=".finish6" />
+        <activity android:name="controller.finishPage" />
+        <activity android:name=".Finish9" />
         <activity
             android:name="controller.StartPage"
             android:label="Start page">
