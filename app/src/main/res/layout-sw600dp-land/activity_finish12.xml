@@ -8,6 +8,26 @@
     android:tag="600"
     tools:context="controller.finishPage">
 
+    <TextView
+        android:id="@+id/sResult"
+        android:layout_width="174dp"
+        android:layout_height="118dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:minLines="2"
+        android:text="The Sudoku is Incorrect, try again."
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/finalTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toEndOf="@+id/square3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.486" />
+
     <Chronometer
         android:id="@+id/finalTime"
         android:layout_width="wrap_content"
@@ -18,10 +38,11 @@
         android:layout_marginRight="8dp"
         android:format="%s"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/square3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />
 
     <android.support.v7.widget.GridLayout
         android:id="@+id/square12"
@@ -526,10 +547,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/square6"

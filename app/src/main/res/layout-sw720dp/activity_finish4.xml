@@ -8,24 +8,8 @@
     android:tag="720"
     tools:context="controller.finishPage">
 
-    <Chronometer
-        android:id="@+id/finalTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:format="%s"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/square2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.89"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.v7.widget.GridLayout
-        android:id="@+id/gridLayout"
+    <TextView
+        android:id="@+id/sResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -34,10 +18,45 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/square2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/square4">
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Chronometer
+        android:id="@+id/finalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:format="%s"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gridLayout10"
+        app:layout_constraintTop_toBottomOf="@+id/square4" />
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/gridLayout10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/square3">
 
         <!--Comment / uncomment a line of code. -->
 
@@ -47,89 +66,46 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="150dp"
-            android:layout_height="75dp"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
             android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_1"
+            android:text="Play again with Same Settings"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="28sp"
-            app:autoSizeMinTextSize="20sp"
+            android:textSize="30sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="150dp"
-            android:layout_height="75dp"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
             android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_2"
+            android:text="Play again with New Settings"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="28sp"
-            app:autoSizeMinTextSize="20sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="0" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="150dp"
-            android:layout_height="75dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_3"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="28sp"
-            app:autoSizeMinTextSize="20sp"
+            android:textSize="30sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
             app:layout_column="0"
             app:layout_row="1" />
 
         <Button
-            android:id="@+id/button4"
-            android:layout_width="150dp"
-            android:layout_height="75dp"
+            android:id="@+id/button3"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
             android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_4"
+            android:text="Main Menu"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="28sp"
-            app:autoSizeMinTextSize="20sp"
+            android:textSize="30sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/button10"
-            android:layout_width="150dp"
-            android:layout_height="75dp"
-            android:maxLines="1"
-            android:onClick="clearButtonOnClick"
-            android:text="@string/clear_button"
-            app:autoSizeMaxTextSize="28sp"
-            app:autoSizeMinTextSize="20sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="3"
-            app:layout_row="0" />
-
-        <Button
-            android:id="@+id/fin_button"
-            android:layout_width="150dp"
-            android:layout_height="75dp"
-            android:longClickable="false"
-            android:maxLines="1"
-            android:text="@string/fin_button"
-            app:autoSizeMaxTextSize="28sp"
-            app:autoSizeMinTextSize="20sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="3"
-            app:layout_row="1" />
+            app:layout_column="0"
+            app:layout_row="2" />
 
 
     </android.support.v7.widget.GridLayout>
