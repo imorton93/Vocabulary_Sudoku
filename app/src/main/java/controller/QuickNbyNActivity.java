@@ -726,6 +726,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (InitializedGame) {
                     timer.stop();
+                    timer.setBase(SystemClock.elapsedRealtime());
                     String[][] checkSudoku = new String[gridSize][gridSize];
                     String[][] originalSudoku = new String[gridSize][gridSize];
                     if (listen_mode_game_init) {
@@ -854,7 +855,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
         //only for test
         //intent the 9*9 Grid Sudoku to a new page
 
-        Intent intent = new Intent(QuickNbyNActivity.this, SudokuDisplay.class);
+        Intent intent = new Intent(QuickNbyNActivity.this, finishPage.class);
         ArrayList<String> words = new ArrayList<String>();
         for (int x = 0; x < gridSize; x++) {
             words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));

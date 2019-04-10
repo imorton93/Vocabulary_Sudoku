@@ -768,6 +768,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (InitializedGame) {
                     timer.stop();
+                    timer.setBase(SystemClock.elapsedRealtime());
                     String[][] checkSudoku = new String[gridSize][gridSize];
                     String[][] originalSudoku = new String[gridSize][gridSize];
                     if (listen_mode_game_init) {
@@ -884,7 +885,8 @@ public class MainActivity extends AppCompatActivity {
         // setup the alert builder
 
         Intent intent;
-        intent = new Intent(MainActivity.this, SudokuDisplay.class);
+
+        intent = new Intent(MainActivity.this, finishPage.class);
         ArrayList<String> words = new ArrayList<String>();
         for (int x = 0; x < gridSize; x++) {
             words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
@@ -1488,6 +1490,9 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+
+
 
     //To make debugger display tags
     @Override
