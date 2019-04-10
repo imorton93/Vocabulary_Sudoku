@@ -1,11 +1,8 @@
 package controller;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.speech.tts.TextToSpeech;
@@ -18,20 +15,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import Model.DBHelper;
 import com.example.myapplication.R;
 
-import controller.Load_Pairs;
 import Model.SudokuChecker;
 import Model.SudokuGenerator;
 import Model.WordsPairs;
@@ -244,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         if ((savedInstanceState != null)) {
             //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
             // so user does not need to restart game.
-            timer = findViewById(R.id.timer);
+            timer = findViewById(R.id.finalTime);
             timer.setBase(savedInstanceState.getLong(KEY_Chrono_Time));
             timer.start();
             Button mButtons;
@@ -582,7 +573,7 @@ public class MainActivity extends AppCompatActivity {
     public void getGameGrid(String msg) {
         Log.d(TAG, "Game in normal mode is initialized.");
         InitializedGame = true;
-        timer = findViewById(R.id.timer);
+        timer = findViewById(R.id.finalTime);
         timer.setBase(SystemClock.elapsedRealtime());
         timer.start();
 
@@ -643,7 +634,7 @@ public class MainActivity extends AppCompatActivity {
     public void getListenGameGrid(String msg) {
         Log.d(TAG, "Game in listen mode is initialized.");
         InitializedGame = true;
-        timer = findViewById(R.id.timer);
+        timer = findViewById(R.id.finalTime);
         timer.setBase(SystemClock.elapsedRealtime());
         timer.start();
         listen_mode_game_init = true; //User has initialized a game in listen mode
@@ -1447,7 +1438,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void pickAFile(final String msg){
         // setup the alert builder
-        timer = findViewById(R.id.timer);
+        timer = findViewById(R.id.finalTime);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose a words list");
