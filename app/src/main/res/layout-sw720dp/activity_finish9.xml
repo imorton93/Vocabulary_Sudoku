@@ -6,7 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="720"
-    tools:context="controller.MainActivity">
+    tools:context="controller.finishPage">
+
+    <TextView
+        android:id="@+id/sResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/square2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Chronometer
         android:id="@+id/finalTime"
@@ -16,13 +33,14 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:format="%s"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/square3"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.89"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/gridLayout10"
+        app:layout_constraintTop_toBottomOf="@+id/square9"
+        app:layout_constraintVertical_bias="0.78" />
 
     <android.support.v7.widget.GridLayout
         android:id="@+id/square2"
@@ -162,7 +180,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32999998">
+        app:layout_constraintVertical_bias="0.39999998">
 
         <Button
             android:id="@+id/b41"
@@ -534,7 +552,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/square5"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32999998">
+        app:layout_constraintVertical_bias="0.39999998">
 
         <Button
             android:id="@+id/b47"
@@ -782,7 +800,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32999998">
+        app:layout_constraintVertical_bias="0.39999998">
 
         <Button
             android:id="@+id/b44"
@@ -1140,18 +1158,21 @@
     </android.support.v7.widget.GridLayout>
 
     <android.support.v7.widget.GridLayout
+        android:id="@+id/gridLayout10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/square8">
+        app:layout_constraintTop_toBottomOf="@+id/square8"
+        app:layout_constraintVertical_bias="0.37">
 
         <!--Comment / uncomment a line of code. -->
 
@@ -1161,162 +1182,45 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/span_1"
+            android:text="Play again with Same Settings"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
+            android:textSize="36sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/span_2"
+            android:text="Play again with New Settings"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
+            android:textSize="36sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="0" />
+            app:layout_column="0"
+            app:layout_row="1" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/span_3"
+            android:text="Main Menu"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="2"
-            app:layout_row="0" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/span_4"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
+            android:textSize="36sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
             app:layout_column="0"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/span_5"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="0"
-            app:layout_row="2" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/span_6"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/span_7"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="2" />
-
-        <Button
-            android:id="@+id/button8"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/span_8"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="2"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/button9"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/span_9"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="2"
-            app:layout_row="2" />
-
-        <Button
-            android:id="@+id/button10"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            android:maxLines="1"
-            android:onClick="clearButtonOnClick"
-            android:text="@string/clear_button"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="3"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/fin_button"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            android:maxLines="1"
-            android:text="@string/fin_button"
-            app:autoSizeMaxTextSize="36sp"
-            app:autoSizeMinTextSize="24sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="3"
             app:layout_row="2" />
 
 

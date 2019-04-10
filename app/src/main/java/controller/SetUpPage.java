@@ -391,5 +391,13 @@ public class SetUpPage extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent startmenu = new Intent(SetUpPage.this, StartPage.class);
+        startActivity(startmenu);
+        return;
+
+    }
+
 
 }

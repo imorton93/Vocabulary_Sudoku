@@ -18,15 +18,14 @@
         android:id="@+id/sudoku_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:horizontalSpacing="0.0dip"
         android:gravity="center"
+        android:horizontalSpacing="0.0dip"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp">
         <!--//android:text="@string/sudoku_view"-->
 
     </GridView>
-
 
 
 </LinearLayout>
