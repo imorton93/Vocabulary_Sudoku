@@ -6,26 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="720"
-    tools:context="controller.MainActivity">
+    tools:context="controller.finishPage">
 
-    <Chronometer
-        android:id="@+id/finalTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:format="%s"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/square2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.v7.widget.GridLayout
-        android:id="@+id/gridLayout9"
+    <TextView
+        android:id="@+id/sResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,10 +17,46 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/square2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Chronometer
+        android:id="@+id/finalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:format="%s"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/square4"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toEndOf="@+id/gridLayout10"
+        app:layout_constraintTop_toBottomOf="@+id/square6" />
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/gridLayout10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/square5">
 
         <!--Comment / uncomment a line of code. -->
 
@@ -46,119 +66,46 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="120dp"
+            android:layout_width="275dp"
             android:layout_height="60dp"
             android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_1"
+            android:text="Play again with Same Settings"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
+            android:textSize="30sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="120dp"
+            android:layout_width="275dp"
             android:layout_height="60dp"
             android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_2"
+            android:text="Play again with New Settings"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
+            android:textSize="30sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="0" />
+            app:layout_column="0"
+            app:layout_row="1" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="120dp"
+            android:layout_width="275dp"
             android:layout_height="60dp"
             android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_3"
+            android:text="Main Menu"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="0"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_4"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="1" />
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_7"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
+            android:textSize="30sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform"
             app:layout_column="0"
             app:layout_row="2" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="insertButtonOnClick"
-            android:text="@string/B_5"
-            android:textAllCaps="false"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="2" />
-
-        <Button
-            android:id="@+id/button10"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:maxLines="1"
-            android:onClick="clearButtonOnClick"
-            android:text="@string/clear_button"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="0"
-            app:layout_row="3" />
-
-        <Button
-            android:id="@+id/fin_button"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:longClickable="false"
-            android:maxLines="1"
-            android:text="@string/fin_button"
-            app:autoSizeMaxTextSize="26sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
-            app:layout_column="1"
-            app:layout_row="3" />
 
 
     </android.support.v7.widget.GridLayout>
@@ -177,13 +124,13 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.51">
+        app:layout_constraintVertical_bias="0.39">
 
         <Button
             android:id="@+id/b31"
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -192,8 +139,8 @@
 
         <Button
             android:id="@+id/b32"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -204,8 +151,8 @@
 
         <Button
             android:id="@+id/b33"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -216,8 +163,8 @@
 
         <Button
             android:id="@+id/b41"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -228,8 +175,8 @@
 
         <Button
             android:id="@+id/b42"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -240,8 +187,8 @@
 
         <Button
             android:id="@+id/b43"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -256,8 +203,6 @@
         android:id="@+id/square4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
@@ -265,16 +210,16 @@
         android:background="@android:drawable/editbox_dropdown_dark_frame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.91"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.51">
+        app:layout_constraintVertical_bias="0.39">
 
         <Button
             android:id="@+id/b34"
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -283,8 +228,8 @@
 
         <Button
             android:id="@+id/b35"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -295,8 +240,8 @@
 
         <Button
             android:id="@+id/b36"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -307,8 +252,8 @@
 
         <Button
             android:id="@+id/b44"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -319,8 +264,8 @@
 
         <Button
             android:id="@+id/b45"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -331,8 +276,8 @@
 
         <Button
             android:id="@+id/b46"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -347,15 +292,13 @@
         android:id="@+id/square6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:drawable/editbox_dropdown_dark_frame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.91"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/square4"
         app:layout_constraintVertical_bias="0.0">
@@ -363,8 +306,8 @@
         <Button
             android:id="@+id/b54"
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -373,8 +316,8 @@
 
         <Button
             android:id="@+id/b55"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -385,8 +328,8 @@
 
         <Button
             android:id="@+id/b56"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -397,8 +340,8 @@
 
         <Button
             android:id="@+id/b64"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -409,8 +352,8 @@
 
         <Button
             android:id="@+id/b65"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -421,8 +364,8 @@
 
         <Button
             android:id="@+id/b66"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -437,15 +380,13 @@
         android:id="@+id/square2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@android:drawable/editbox_dropdown_dark_frame"
         app:layout_constraintBottom_toTopOf="@+id/square4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.91"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
@@ -453,8 +394,8 @@
         <Button
             android:id="@+id/b14"
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -463,8 +404,8 @@
 
         <Button
             android:id="@+id/b15"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -475,8 +416,8 @@
 
         <Button
             android:id="@+id/b16"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -487,8 +428,8 @@
 
         <Button
             android:id="@+id/b24"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -499,8 +440,8 @@
 
         <Button
             android:id="@+id/b25"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -511,8 +452,8 @@
 
         <Button
             android:id="@+id/b26"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -541,8 +482,8 @@
         <Button
             android:id="@+id/b51"
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -551,8 +492,8 @@
 
         <Button
             android:id="@+id/b52"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -563,8 +504,8 @@
 
         <Button
             android:id="@+id/b53"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -575,8 +516,8 @@
 
         <Button
             android:id="@+id/b61"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -587,8 +528,8 @@
 
         <Button
             android:id="@+id/b62"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -599,8 +540,8 @@
 
         <Button
             android:id="@+id/b63"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -629,8 +570,8 @@
         <Button
             android:id="@+id/b11"
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:gravity="center"
             android:longClickable="true"
@@ -643,8 +584,8 @@
 
         <Button
             android:id="@+id/b12"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:gravity="center"
             android:longClickable="true"
@@ -657,8 +598,8 @@
 
         <Button
             android:id="@+id/b13"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:gravity="center"
             android:longClickable="true"
@@ -671,8 +612,8 @@
 
         <Button
             android:id="@+id/b21"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:gravity="center"
             android:longClickable="true"
@@ -685,8 +626,8 @@
 
         <Button
             android:id="@+id/b22"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:gravity="center"
             android:longClickable="true"
@@ -699,8 +640,8 @@
 
         <Button
             android:id="@+id/b23"
-            android:layout_width="125dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="95dp"
             android:background="@drawable/unclicked_button"
             android:gravity="center"
             android:longClickable="true"
