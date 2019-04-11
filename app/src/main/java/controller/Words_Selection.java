@@ -70,6 +70,7 @@ public class Words_Selection extends AppCompatActivity {
     //show/hide wrong words from users
     Boolean isShown = false;
     private int gridSize;
+    private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
 
     DBHelper mDBHelper = new DBHelper(this);
 
@@ -83,6 +84,7 @@ public class Words_Selection extends AppCompatActivity {
         //grid size
         gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
         message = getIntent().getStringExtra(EXTRA_MESSAGE);
+        listen_mode = getIntent().getBooleanExtra("LISTEN_MODE",false);
         tv = new TextView[gridSize];
         pre_pos = new int[gridSize];
 
@@ -521,6 +523,33 @@ public class Words_Selection extends AppCompatActivity {
                         isShown = true;
                         Toast.makeText(Words_Selection.this, "That words got wrong in your previous game will " +
                                 "show in RED COLOR", Toast.LENGTH_LONG).show();
+                        //make difficult words in front
+                        /*    ArrayList<WordsPairs> wrongList = mDBHelper.getData();
+                        ArrayList<String> wrong = new ArrayList<>();
+                        for(int i = 0; i < wrongList.size();i++){
+                            wrong.add(wrongList.get(i).getENG()+","+wrongList.get(i).getSPAN());
+                        }
+                        while (wrong.size() < strings.size()){
+                            for(int i = 0; i < eng_wordsList.size(); i++){
+                                if(!lookForWrongWords(i)){
+                                    wrong.add(strings.get(i));
+                                }
+                            }
+                        }
+                        strings = wrong;
+                        eng_wordsList.clear();
+                        span_wordsList.clear();
+                        eng_wordsList_gridview.clear();
+                        span_wordsList_gridview.clear();
+                        setWordsList(strings,pages);
+                        switch (message){
+                            case "SPAN":
+                                gridView.setAdapter(new GridAdapter(span_wordsList_gridview, Words_Selection.this));
+                                break;
+                            case "ENG":
+                                gridView.setAdapter(new GridAdapter(eng_wordsList_gridview, Words_Selection.this));
+                                break;
+                        }*/
                         int count = 0;
                         Button button = (Button)findViewById(R.id.button_words);
                         button.setText("Hide Difficult Words");
@@ -605,6 +634,7 @@ public class Words_Selection extends AppCompatActivity {
         data.putExtra("LANGUAGE", msg);
         //data.putExtra("EXTRA_WORDS_LIST", lists);
         data.putParcelableArrayListExtra("EXTRA_WORDS_LIST", words);
+        data.putExtra("LISTEN_MODE", listen_mode);
         for (int i = 0; i < gridSize; i++) {
             Log.d(TAG, "Words ing selection ENG and SPAN are " + words.get(i).getENG() + "  " +words.get(i).getSPAN());
             Log.d(TAG, "Words in selection LANGUAGE msg is " + msg);
