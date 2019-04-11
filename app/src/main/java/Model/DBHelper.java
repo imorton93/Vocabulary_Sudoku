@@ -82,7 +82,6 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_NAME_WRONG, new String[]{ENG, SPAN},  "English =? and Spanish =?",
                 new String[]{mPairs.getENG(), mPairs.getSPAN()},null,null,null);
 
-
         if(cursor.getCount() > 0){
             Log.d(TAG, "\"Already Exist!\"" + cursor.getCount());
             hasWord = true;

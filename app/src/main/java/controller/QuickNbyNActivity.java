@@ -54,6 +54,8 @@ public class QuickNbyNActivity extends AppCompatActivity {
     private static final String KEY_listen_game = "Game initialzied in listen mode";
     private static final String KEY_GRID_SIZE = "grid_size";
     private static final String KEY_Chrono_Time = "ChronoTime";
+    private static final String KEY_QUICK_LAN = "quick_language";
+    private static final String MESSAGE_LANGUAGE = "Message_Language";
     /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
         //The leftmost column
         private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
@@ -86,6 +88,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
     String[][] Sudoku_user;
     //WordsPairs object
     private ArrayList<WordsPairs> list = new ArrayList<>();
+    private String msg;
 
     int[] preset;
     //initial database
@@ -255,6 +258,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
     fill_Eng = prev_intent.getBooleanExtra(KEY_fill_Eng, false);
     fill_Span = prev_intent.getBooleanExtra(KEY_fill_Span, false);
     listen_mode =  prev_intent.getBooleanExtra(KEY_Listen, false);
+    msg = getIntent().getStringExtra(KEY_QUICK_LAN);
     int jj = 0;
 
     span_words = getResources().getStringArray(R.array.Span_words);
@@ -282,6 +286,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
             preset = savedInstanceState.getIntArray(KEY_preset);
             listen_mode_game_init =  savedInstanceState.getBoolean(KEY_listen_game);
             gridSize = savedInstanceState.getInt(KEY_GRID_SIZE);
+            msg = savedInstanceState.getString(MESSAGE_LANGUAGE);
       /*      if (listen_mode){
                 MenuItem listen_t = menu.findItem(R.id.listen);
                 listen_t.setTitle("Exit Listen Comprehension Mode");
@@ -603,6 +608,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
         for(int i = 0; i < gridSize; i++){
             for(int j = 0; j < gridSize; j++){
                 preset[i*gridSize + j] = 1;
+                gridButton[i][j].setText("");
             }
         }
         Sudoku = initialGame.generateGrid(msg,list);
@@ -861,9 +867,12 @@ public class QuickNbyNActivity extends AppCompatActivity {
             words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
-        //boolean of whether sudoku is correct or not is passed to next activity
+        intent.putExtra(KEY_GRID_SIZE, gridSize);
+        intent.putParcelableArrayListExtra("PLAYING_WORDS_LIST", list);
+        intent.putExtra("PLAYING_LANGUAGE", msg);
         intent.putExtra("result",resultmsg);
-        startActivity(intent);
+        intent.putExtra("LISTEN_MODE", listen_mode);
+        startActivityForResult(intent, 1);
     }
 
 
@@ -1262,6 +1271,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
         //savedInstanceState.put(KEY_filled_words, gridButton);
         savedInstanceState.putInt(KEY_GRID_SIZE, gridSize);
         savedInstanceState.putLong(KEY_Chrono_Time,timer.getBase());
+        savedInstanceState.putString(MESSAGE_LANGUAGE,msg);
         int x = 0;
         String[] stringA_p_temp = new String[gridSize];
         String[][] stringA_preset = new String[gridSize][gridSize]; //Array of preset words
@@ -1411,8 +1421,9 @@ public class QuickNbyNActivity extends AppCompatActivity {
                 return;
             }
             //Deals with the results sent from words selection
-            String msg = data.getStringExtra("LANGUAGE");
+            msg = data.getStringExtra("LANGUAGE");
             list = data.getParcelableArrayListExtra("EXTRA_WORDS_LIST");
+            listen_mode = data.getBooleanExtra("LISTEN_MODE", false);
 
             for (int i = 0; i < gridSize; i++) {
                 Log.d(TAG, "Words from selection ENG and SPAN are " + list.get(i).getENG() + "  " +list.get(i).getSPAN());
