@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_GRID_SIZE = "grid_size";
     private static final String KEY_Chrono_Time = "ChronoTime";
     private static final String KEY_QUICK_LAN = "quick_language";
+    private static final String MESSAGE_LANGUAGE = "Message_Language";
     /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
         //The leftmost column
         private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
@@ -245,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
             preset = savedInstanceState.getIntArray(KEY_preset);
             listen_mode_game_init =  savedInstanceState.getBoolean(KEY_listen_game);
             gridSize = savedInstanceState.getInt(KEY_GRID_SIZE);
+            msg = savedInstanceState.getString(MESSAGE_LANGUAGE);
       /*      if (listen_mode){
                 MenuItem listen_t = menu.findItem(R.id.listen);
                 listen_t.setTitle("Exit Listen Comprehension Mode");
@@ -842,13 +844,9 @@ public class MainActivity extends AppCompatActivity {
     public void checkAnswer(String[][] Sudoku, String[][] originalSudoku) {
         //String msg;
         Boolean resultmsg;
-        if (resultCheck.sudokuCheck(Sudoku, list)){
-            resultmsg = true;
-            //msg = "Congratulation! Sudoku is correct!";
-        }else {
-            resultmsg = false;
-            //msg = "Sudoku is incorrect, try again!";
-        }
+        //msg = "Congratulation! Sudoku is correct!";
+//msg = "Sudoku is incorrect, try again!";
+        resultmsg = resultCheck.sudokuCheck(Sudoku, list);
         /*Toast result = Toast.makeText(QuickNbyNActivity.this, msg, Toast.LENGTH_LONG);
         result.setGravity(Gravity.TOP, 0, 400);
         result.show();*/
@@ -1231,6 +1229,7 @@ public class MainActivity extends AppCompatActivity {
         //savedInstanceState.put(KEY_filled_words, gridButton);
         savedInstanceState.putInt(KEY_GRID_SIZE, gridSize);
         savedInstanceState.putLong(KEY_Chrono_Time,timer.getBase());
+        savedInstanceState.putString(MESSAGE_LANGUAGE, msg);
         int x = 0;
         String[] stringA_p_temp = new String[gridSize];
         String[][] stringA_preset = new String[gridSize][gridSize]; //Array of preset words
