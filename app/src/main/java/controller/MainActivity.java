@@ -872,13 +872,9 @@ public class MainActivity extends AppCompatActivity {
     public void checkAnswer(String[][] Sudoku, final String[][] originalSudoku) {
         //final String fin_msg;
         Boolean resultmsg;
-        if (resultCheck.sudokuCheck(Sudoku, list)){
-            resultmsg = true;
-            //fin_msg = "Congratulation! Sudoku is correct!";
-        }else {
-            resultmsg = false;
-            //fin_msg = "Sudoku is incorrect, try again!";
-        }
+        //fin_msg = "Congratulation! Sudoku is correct!";
+//fin_msg = "Sudoku is incorrect, try again!";
+        resultmsg = resultCheck.sudokuCheck(Sudoku, list);
         /*Toast result = Toast.makeText(MainActivity.this, fin_msg, Toast.LENGTH_LONG);
         result.setGravity(Gravity.TOP, 0, 400);
         result.show();*/
@@ -893,8 +889,10 @@ public class MainActivity extends AppCompatActivity {
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
         intent.putExtra(KEY_GRID_SIZE, gridSize);
+        intent.putParcelableArrayListExtra("PLAYING_WORDS_LIST", list);
+        intent.putExtra("PLAYING_LANGUAGE", msg);
         intent.putExtra("result",resultmsg);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
 
@@ -1406,7 +1404,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             //Deals with the results sent from words selection
-            String msg = data.getStringExtra("LANGUAGE");
+            msg = data.getStringExtra("LANGUAGE");
             list = data.getParcelableArrayListExtra("EXTRA_WORDS_LIST");
 
             for (int i = 0; i < gridSize; i++) {

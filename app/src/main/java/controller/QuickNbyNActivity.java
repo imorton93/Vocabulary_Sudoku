@@ -86,6 +86,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
     String[][] Sudoku_user;
     //WordsPairs object
     private ArrayList<WordsPairs> list = new ArrayList<>();
+    private String msg;
 
     int[] preset;
     //initial database
@@ -861,9 +862,11 @@ public class QuickNbyNActivity extends AppCompatActivity {
             words.addAll(Arrays.asList(originalSudoku[x]).subList(0, gridSize));
         }
         intent.putStringArrayListExtra(EXTRA_MESSAGE,words);
-        //boolean of whether sudoku is correct or not is passed to next activity
+        intent.putExtra(KEY_GRID_SIZE, gridSize);
+        intent.putParcelableArrayListExtra("PLAYING_WORDS_LIST", list);
+        intent.putExtra("PLAYING_LANGUAGE", msg);
         intent.putExtra("result",resultmsg);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
 
@@ -1411,7 +1414,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
                 return;
             }
             //Deals with the results sent from words selection
-            String msg = data.getStringExtra("LANGUAGE");
+            msg = data.getStringExtra("LANGUAGE");
             list = data.getParcelableArrayListExtra("EXTRA_WORDS_LIST");
 
             for (int i = 0; i < gridSize; i++) {
