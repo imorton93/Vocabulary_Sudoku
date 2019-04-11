@@ -56,10 +56,6 @@
             android:label="Display Word Pairs"
             android:parentActivityName="controller.MainActivity" />
         <activity
-            android:name="controller.SudokuDisplay"
-            android:label="Sudoku Correct Grid"
-            android:parentActivityName="controller.MainActivity" />
-        <activity
             android:name="controller.Words_Selection"
             android:label=""
             android:parentActivityName="controller.SetUpPage"
