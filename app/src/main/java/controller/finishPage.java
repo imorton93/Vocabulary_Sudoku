@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class finishPage extends AppCompatActivity {
     private ArrayList<WordsPairs> mPairs;
     private String msg;
     private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
+    private Chronometer time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,11 @@ public class finishPage extends AppCompatActivity {
         else{
             Result.setText(getString(R.string.s_incorrect));
         }
+
+        long finalTime = getIntent().getExtras().getLong("finalTime");
+        time = findViewById(R.id.finalTime);
+        time.setBase(finalTime);
+
     }
 
     View.OnClickListener listener1 = new View.OnClickListener() {
