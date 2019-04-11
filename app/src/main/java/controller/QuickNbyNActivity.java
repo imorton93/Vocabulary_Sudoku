@@ -54,6 +54,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
     private static final String KEY_listen_game = "Game initialzied in listen mode";
     private static final String KEY_GRID_SIZE = "grid_size";
     private static final String KEY_Chrono_Time = "ChronoTime";
+    private static final String KEY_QUICK_LAN = "quick_language";
     /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
         //The leftmost column
         private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
@@ -256,6 +257,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
     fill_Eng = prev_intent.getBooleanExtra(KEY_fill_Eng, false);
     fill_Span = prev_intent.getBooleanExtra(KEY_fill_Span, false);
     listen_mode =  prev_intent.getBooleanExtra(KEY_Listen, false);
+    msg = getIntent().getStringExtra(KEY_QUICK_LAN);
     int jj = 0;
 
     span_words = getResources().getStringArray(R.array.Span_words);
@@ -604,6 +606,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
         for(int i = 0; i < gridSize; i++){
             for(int j = 0; j < gridSize; j++){
                 preset[i*gridSize + j] = 1;
+                gridButton[i][j].setText("");
             }
         }
         Sudoku = initialGame.generateGrid(msg,list);
@@ -866,6 +869,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
         intent.putParcelableArrayListExtra("PLAYING_WORDS_LIST", list);
         intent.putExtra("PLAYING_LANGUAGE", msg);
         intent.putExtra("result",resultmsg);
+        intent.putExtra("LISTEN_MODE", listen_mode);
         startActivityForResult(intent, 1);
     }
 
@@ -1416,6 +1420,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
             //Deals with the results sent from words selection
             msg = data.getStringExtra("LANGUAGE");
             list = data.getParcelableArrayListExtra("EXTRA_WORDS_LIST");
+            listen_mode = data.getBooleanExtra("LISTEN_MODE", false);
 
             for (int i = 0; i < gridSize; i++) {
                 Log.d(TAG, "Words from selection ENG and SPAN are " + list.get(i).getENG() + "  " +list.get(i).getSPAN());

@@ -70,6 +70,7 @@ public class Words_Selection extends AppCompatActivity {
     //show/hide wrong words from users
     Boolean isShown = false;
     private int gridSize;
+    private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
 
     DBHelper mDBHelper = new DBHelper(this);
 
@@ -83,6 +84,7 @@ public class Words_Selection extends AppCompatActivity {
         //grid size
         gridSize = getIntent().getIntExtra(KEY_GRID_SIZE, 9);
         message = getIntent().getStringExtra(EXTRA_MESSAGE);
+        listen_mode = getIntent().getBooleanExtra("LISTEN_MODE",false);
         tv = new TextView[gridSize];
         pre_pos = new int[gridSize];
 
@@ -632,6 +634,7 @@ public class Words_Selection extends AppCompatActivity {
         data.putExtra("LANGUAGE", msg);
         //data.putExtra("EXTRA_WORDS_LIST", lists);
         data.putParcelableArrayListExtra("EXTRA_WORDS_LIST", words);
+        data.putExtra("LISTEN_MODE", listen_mode);
         for (int i = 0; i < gridSize; i++) {
             Log.d(TAG, "Words ing selection ENG and SPAN are " + words.get(i).getENG() + "  " +words.get(i).getSPAN());
             Log.d(TAG, "Words in selection LANGUAGE msg is " + msg);

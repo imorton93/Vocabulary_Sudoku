@@ -27,9 +27,7 @@ public class finishPage extends AppCompatActivity {
     private Button[][] gridButton;
     private ArrayList<WordsPairs> mPairs;
     private String msg;
-
-
-
+    private boolean listen_mode = false; //Checks if the app is in listen comprehension mode
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +52,8 @@ public class finishPage extends AppCompatActivity {
         final ArrayList<String> list=getIntent().getStringArrayListExtra(EXTRA_MESSAGE);
         mPairs = getIntent().getParcelableArrayListExtra("PLAYING_WORDS_LIST");
         msg = getIntent().getStringExtra("PLAYING_LANGUAGE");
+        listen_mode = getIntent().getBooleanExtra("LISTEN_MODE",false);
+        Log.d("LISTEN MODE ", "LISTEN MODE IS "+ listen_mode);
         String[][] sudoku = new String[gridSize][gridSize];
         gridButton = new Button[gridSize][gridSize];//buttons b11-b99
         for (int x = 0; x < gridSize; x++) {
@@ -106,6 +106,7 @@ public class finishPage extends AppCompatActivity {
             Intent data = new Intent();
             data.putExtra("LANGUAGE", msg);
             data.putParcelableArrayListExtra("EXTRA_WORDS_LIST", mPairs);
+            data.putExtra("LISTEN_MODE", listen_mode);
             setResult(RESULT_OK, data);
             finish();
         }
