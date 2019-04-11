@@ -732,7 +732,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (InitializedGame) {
                     timer.stop();
-                    timer.setBase(SystemClock.elapsedRealtime());
+                    
                     String[][] checkSudoku = new String[gridSize][gridSize];
                     String[][] originalSudoku = new String[gridSize][gridSize];
                     if (listen_mode_game_init) {
@@ -872,6 +872,8 @@ public class QuickNbyNActivity extends AppCompatActivity {
         intent.putExtra("PLAYING_LANGUAGE", msg);
         intent.putExtra("result",resultmsg);
         intent.putExtra("LISTEN_MODE", listen_mode);
+        intent.putExtra("finalTime", timer.getBase());
+        timer.setBase(SystemClock.elapsedRealtime());
         startActivityForResult(intent, 1);
     }
 
