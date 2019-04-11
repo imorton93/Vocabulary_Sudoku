@@ -22,6 +22,9 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 public class finishPage extends AppCompatActivity {
 
     private static final String KEY_GRID_SIZE = "grid_size";
+    private static final String WORDSLIST = "WORDSPAIRS";
+    private static final String MESSAGE_LANGUAGE = "Message_Language";
+    private static final String LISTEN = "listen_mode";
 
     public TextView Result;
     private Button[][] gridButton;
@@ -48,6 +51,12 @@ public class finishPage extends AppCompatActivity {
             int layoutID = getResources().getIdentifier("activity_main"+ gridSize, "layout", getPackageName());
             setContentView(layoutID);
         }*/
+
+        if (savedInstanceState != null) {
+            msg = savedInstanceState.getString(MESSAGE_LANGUAGE);
+            mPairs = savedInstanceState.getParcelableArrayList(WORDSLIST);
+            listen_mode = savedInstanceState.getBoolean(LISTEN);
+        }
 
         final ArrayList<String> list=getIntent().getStringArrayListExtra(EXTRA_MESSAGE);
         mPairs = getIntent().getParcelableArrayListExtra("PLAYING_WORDS_LIST");
@@ -143,4 +152,11 @@ public class finishPage extends AppCompatActivity {
         startActivity(mainMenu);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putParcelableArrayList(WORDSLIST, mPairs);
+        savedInstanceState.putString(MESSAGE_LANGUAGE,msg);
+        savedInstanceState.putBoolean(LISTEN, listen_mode);
+    }
 }
