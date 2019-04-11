@@ -23,6 +23,7 @@ public class StartPage extends AppCompatActivity {
     private static final String KEY_fill_Span = "fill_Span";
     private static final String KEY_Listen = "Listen_Mode";
     private static final String KEY_GRID_SIZE = "grid_size";
+    private static final String KEY_QUICK_LAN = "quick_language";
 
     Boolean listen_mode = false;
     Boolean fill_English = false;
@@ -42,6 +43,7 @@ public class StartPage extends AppCompatActivity {
         q_game.setOnClickListener( new View.OnClickListener()
         {
             public void onClick(View view) {
+                String msg;
                 //Do stuff for Quick Start game
                //Generate a random game for user
                 final int fill = new Random().nextInt(2); //return 0 or 1
@@ -49,10 +51,12 @@ public class StartPage extends AppCompatActivity {
                 if (fill == 0){
                     fill_English = true;
                     fill_Spanish = false;
+                    msg = "ENG";
                 }
                 else{
                     fill_Spanish = true;
                     fill_English = false;
+                    msg = "SPAN";
                 }
                 final int listen = new Random().nextInt(4); //return 0,... 3
                 //Determine whether game starts in listen mode
@@ -77,6 +81,7 @@ public class StartPage extends AppCompatActivity {
                 quick_game.putExtra(KEY_fill_Eng, fill_English);
                 quick_game.putExtra(KEY_fill_Span, fill_Spanish);
                 quick_game.putExtra(KEY_Listen, listen_mode);
+                quick_game.putExtra(KEY_QUICK_LAN, msg);
                 quick_game.putExtra(KEY_GRID_SIZE, g_Sizes[g_Sizes_indx]);
                 startActivity(quick_game);
             }

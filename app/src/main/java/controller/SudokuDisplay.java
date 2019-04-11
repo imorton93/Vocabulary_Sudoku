@@ -40,7 +40,6 @@ public class SudokuDisplay extends AppCompatActivity {
         Result  = (TextView)findViewById(R.id.sResult);
         if(result){
             Result.setText(getString(R.string.s_correct));
-
         }
         else{
             Result.setText(getString(R.string.s_incorrect));
