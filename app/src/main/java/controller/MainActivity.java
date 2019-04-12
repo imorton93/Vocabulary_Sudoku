@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 
             timer = findViewById(R.id.finalTime);
             timer.setBase(savedInstanceState.getLong(KEY_Chrono_Time));
-            timer.start();
+
 
 
             //set timer on rotation
@@ -264,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 int xxxxx = 0;
             } */
             if (InitializedGame) {
+                timer.start();
                 //If a game has been initialized
                 int j = 0;  //For breakpoint purpose
                 Log.i(TAG, "loads the words user filled in before");

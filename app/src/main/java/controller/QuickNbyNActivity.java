@@ -296,8 +296,9 @@ public class QuickNbyNActivity extends AppCompatActivity {
             //set timer on rotation
             timer = findViewById(R.id.finalTime);
             timer.setBase(savedInstanceState.getLong(KEY_Chrono_Time));
-            timer.start();
+
             if (InitializedGame) {
+                timer.start();
                 //If a game has been initialized
                 int j = 0;  //For breakpoint purpose
                 Log.i(TAG, "loads the words user filled in before");
