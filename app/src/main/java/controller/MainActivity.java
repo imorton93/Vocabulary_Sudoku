@@ -61,20 +61,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_Chrono_Time = "ChronoTime";
     private static final String KEY_QUICK_LAN = "quick_language";
     private static final String MESSAGE_LANGUAGE = "Message_Language";
-    /*    private static final String KEY_filled_words_0 = "col_0"; //The words that the user has filled
-        //The leftmost column
-        private static final String KEY_filled_words_1 = "col_1"; //The words that the user has filled
-        private static final String KEY_filled_words_2 = "col_2"; //The words that the user has filled
-        private static final String KEY_filled_words_3 = "col_3"; //The words that the user has filled
-        private static final String KEY_filled_words_4 = "col_4"; //The words that the user has filled
-        private static final String KEY_filled_words_5 = "col_5"; //The words that the user has filled
-        private static final String KEY_filled_words_6 = "col_6"; //The words that the user has filled
-        private static final String KEY_filled_words_7 = "col_7"; //The words that the user has filled
-        private static final String KEY_filled_words_8 = "col_8"; //The words that the user has filled */
-/*    private String[] KEY_filled_words =
-            {KEY_filled_words_0, KEY_filled_words_1, KEY_filled_words_2, KEY_filled_words_3,
-            KEY_filled_words_4, KEY_filled_words_5, KEY_filled_words_6, KEY_filled_words_7,
-            KEY_filled_words_8 }; */
     private static final String TAG = "CMPT276-1191E1-Delta";
     private int gridSize;
     private static Button[][] gridButton = null;//buttons b11-b99
@@ -822,7 +808,7 @@ public class MainActivity extends AppCompatActivity {
                     listen_mode_game_init = false;
                 }
                 //Generate a new game immediately ,with the same parameters
-                String msg;
+/*                String msg;
                 if (fill_Eng){
                     msg = "ENG";
                 }
@@ -834,7 +820,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     getGameGrid(msg);
-                }
+                }*/
             }
         });
     }
