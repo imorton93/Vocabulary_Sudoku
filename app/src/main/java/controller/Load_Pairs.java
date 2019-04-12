@@ -156,6 +156,8 @@ public class Load_Pairs extends AppCompatActivity {
                 // create and show the alert dialog
                 AlertDialog dialog = builder.create();
                 dialog.show();
+
+                doKeepDialog(dialog);
             }
         });
 
@@ -396,8 +398,19 @@ public class Load_Pairs extends AppCompatActivity {
 
             dialogBuilder.setView(dialogView);
             dialogBuilder.show();
+
+            doKeepDialog(dialogBuilder);
         }
 
+    }
+
+    // Prevent dialog dismiss when orientation changes
+    private static void doKeepDialog(AlertDialog dialog){
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
     }
 
     //store words while onDestroy
