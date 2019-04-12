@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<WordsPairs> list = new ArrayList<>();
     private String msg;
 
+
     int[] preset;
     //initial database
     DBHelper mDBHelper = new DBHelper(this);
@@ -238,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
         if ((savedInstanceState != null)) {
             //If there is an incomplete sudoku, the game loads the words on Sudoku that the user filled in before,
             // so user does not need to restart game.
+
             Button mButtons;
             InitializedGame = savedInstanceState.getBoolean(KEY_InitializedGame);
             fill_Eng = savedInstanceState.getBoolean(KEY_fill_Eng);
@@ -248,12 +250,21 @@ public class MainActivity extends AppCompatActivity {
             listen_mode_game_init =  savedInstanceState.getBoolean(KEY_listen_game);
             gridSize = savedInstanceState.getInt(KEY_GRID_SIZE);
             msg = savedInstanceState.getString(MESSAGE_LANGUAGE);
+
+            timer = findViewById(R.id.finalTime);
+            timer.setBase(savedInstanceState.getLong(KEY_Chrono_Time));
+
+
+
+            //set timer on rotation
+
       /*      if (listen_mode){
                 MenuItem listen_t = menu.findItem(R.id.listen);
                 listen_t.setTitle("Exit Listen Comprehension Mode");
                 int xxxxx = 0;
             } */
             if (InitializedGame) {
+                timer.start();
                 //If a game has been initialized
                 int j = 0;  //For breakpoint purpose
                 Log.i(TAG, "loads the words user filled in before");
@@ -469,6 +480,8 @@ public class MainActivity extends AppCompatActivity {
                 //allow user to pick a word list
                 pickAFile("SPAN");
             }
+
+
         }
 
         //finish Button

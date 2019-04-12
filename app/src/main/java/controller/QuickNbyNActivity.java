@@ -292,7 +292,13 @@ public class QuickNbyNActivity extends AppCompatActivity {
                 listen_t.setTitle("Exit Listen Comprehension Mode");
                 int xxxxx = 0;
             } */
+
+            //set timer on rotation
+            timer = findViewById(R.id.finalTime);
+            timer.setBase(savedInstanceState.getLong(KEY_Chrono_Time));
+
             if (InitializedGame) {
+                timer.start();
                 //If a game has been initialized
                 int j = 0;  //For breakpoint purpose
                 Log.i(TAG, "loads the words user filled in before");
@@ -732,7 +738,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (InitializedGame) {
                     timer.stop();
-                    
+
                     String[][] checkSudoku = new String[gridSize][gridSize];
                     String[][] originalSudoku = new String[gridSize][gridSize];
                     if (listen_mode_game_init) {
