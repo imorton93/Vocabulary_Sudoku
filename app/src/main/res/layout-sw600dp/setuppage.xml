@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--layout directory name (such as layout-w600dp for screens that have 600dp of available width).-->
+
     <!--page version 2, has 3 buttons that goes to different layouts and 2 check boxes for Fill in English and Spanish-->
 
     <CheckBox

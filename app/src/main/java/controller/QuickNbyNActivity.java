@@ -491,13 +491,13 @@ public class QuickNbyNActivity extends AppCompatActivity {
         if (fill_Eng){
             fill_Span = false;
             Toast result2 = Toast.makeText(QuickNbyNActivity.this,
-                    "User chooses to fill in English", Toast.LENGTH_LONG);
+                    "Fill in English", Toast.LENGTH_LONG);
             result2.setGravity(Gravity.TOP, 0, 400);
             result2.show();
                 /* If the game has not been initialized, and there had been more than 3 mistakes,
                 A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                 */
-                Log.d(TAG, "User chooses to fill in English");
+                Log.d(TAG, "Fill in English");
             String msg = "ENG";
             for (i = 0; i < list.size(); i++) {
                 Button_ids[i].setText(list.get(i).getENG());
@@ -513,13 +513,13 @@ public class QuickNbyNActivity extends AppCompatActivity {
         else if (fill_Span){
             fill_Eng = false;
             Toast result1 = Toast.makeText(QuickNbyNActivity.this,
-                    "User chooses to fill in Spanish", Toast.LENGTH_LONG);
+                    "Fill in Spanish", Toast.LENGTH_LONG);
             result1.setGravity(Gravity.TOP, 0, 400);
             result1.show();
                 /* If the game has not been initialized, and there had been more than 3 mistakes,
                 A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                 */
-             Log.d(TAG, "User chooses to fill in Spanish");
+             Log.d(TAG, "Fill in Spanish");
             String msg = "SPAN";
             for (i = 0; i < list.size(); i++) {
                 Button_ids[i].setText(list.get(i).getSPAN());
@@ -832,7 +832,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
                     listen_mode_game_init = false;
                 }
                 //Generate a new game immediately ,with the same parameters
-                String msg;
+/*                String msg;
                 if (fill_Eng){
                     msg = "ENG";
                 }
@@ -844,7 +844,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
                 }
                 else{
                     getGameGrid(msg);
-                }
+                }*/
             }
         });
     }
@@ -888,6 +888,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
 
 
     public boolean checkFilledWord(String buttonText){
+        //Future updates: the word becomes red only when conflict arise
         String tmp = null;
         String str = null;
         //check which word should be right
@@ -975,11 +976,13 @@ public class QuickNbyNActivity extends AppCompatActivity {
                     }
                     //set the Selected Buttons Text as text from input button
                 }
+                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
             }
         } else {
             //Normal mode
             if (SelectedButton != null) {
                 Button button = (Button) w;
+
                 // text of input button is extracted
                 CharSequence buttonText = button.getText();
                 /* when inserting a new word into puzzle, check if right or wrong
@@ -1030,6 +1033,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
                     //allow user to keep track of what they get correct
                 }
                 //set the Selected Buttons Text as text from input button
+                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
             }
         }
     }
@@ -1040,226 +1044,6 @@ public class QuickNbyNActivity extends AppCompatActivity {
             SelectedButton.setText(null);
         }
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        this.menu = menu;
-        return true;
-    } */
-
-    //reinit_dialog Reinit_warn = new reinit_dialog(MainActivity.this);
-
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        //Button mButton1 = (Button) findViewById(R.id.button1);
-        // menu = this.menu;
-        Button mButtons;
-        int i;
-        Intent intent;
-        String select;
-        switch (item.getItemId()) {
-            case R.id.fill_Span:
-                fill_Span = true;
-                fill_Eng = false;
-                String msg = "SPAN";
-                Toast result1 = Toast.makeText(QuickNbyNActivity.this,
-                        "User chooses to fill in Spanish", Toast.LENGTH_LONG);
-                result1.setGravity(Gravity.TOP, 0, 400);
-                result1.show();
-                if (!InitializedGame || mistakeCount >= 3) {
-                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
-                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    *//*
-                    Log.d(TAG, "User chooses to fill in Spanish");
-                    //Start a new game with the same nine words. The sudoku will be pre-filled in English
-                     //After choosing "fill in Spanish", start a new game with Spanish
-                    for (i = 0; i < list.size(); i++) {
-                        Button_ids[i].setText(list.get(i).getSPAN());
-                    }
-                    if (listen_mode){
-                        getListenGameGrid(msg);
-                    }
-                    else{
-                        getGameGrid(msg);
-                    }
-                } else {
-                    //Temporary Toast
-                    Toast fin = Toast.makeText(QuickNbyNActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
-                    fin.setGravity(Gravity.TOP, 0, 400);
-                    fin.show();
-                }
-                return true;
-
-            case R.id.fill_Eng:
-                //The big buttons will display English
-                //mButton1.setText(R.string.eng_1);
-                fill_Eng = true;
-                fill_Span = false;
-                msg = "ENG";
-                Toast result2 = Toast.makeText(QuickNbyNActivity.this,
-                        "User chooses to fill in English", Toast.LENGTH_LONG);
-                result2.setGravity(Gravity.TOP, 0, 400);
-                result2.show();
-                if (!InitializedGame || mistakeCount >= 3) {
-                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
-                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    *//*
-                    Log.d(TAG, "User chooses to fill in English");
-                    //Uses preset wordpairs to setup the game
-                    for (i = 0; i < list.size(); i++) {
-                        Button_ids[i].setText(list.get(i).getENG());
-                    }
-                    if (listen_mode){
-                        getListenGameGrid(msg);
-                    }
-                    else{
-                        getGameGrid(msg);
-                    }
-                } else {
-                    //Temporary Toast
-                    Toast.makeText(QuickNbyNActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
-                }
-                return true;
-
-            case R.id.new_pick_eng:
-                fill_Eng = true;
-                fill_Span = false;
-                msg = "ENG";
-                Toast result3 = Toast.makeText(QuickNbyNActivity.this,
-                        "User chooses to fill in English", Toast.LENGTH_LONG);
-                result3.setGravity(Gravity.TOP, 0, 400);
-                result3.show();
-                if (!InitializedGame || mistakeCount >= 3) {
-                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
-                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    *//*
-                    //call random function ***
-                    Log.d(TAG, "User chooses to fill in English");
-                    //Uses preset wordpairs to setup the game
-                    for (i = 0; i < list.size(); i++) {
-                        Button_ids[i].setText(list.get(i).getENG());
-                    }
-                    if (listen_mode){
-                        getListenGameGrid(msg);
-                    }
-                    else{
-                        getGameGrid(msg);
-                    }
-                } else {
-                    //Temporary Toast
-                    Toast.makeText(QuickNbyNActivity.this, R.string.cant_init, Toast.LENGTH_LONG).show();
-                }
-                return true;
-
-            case R.id.new_pick_span:
-                fill_Span = true;
-                fill_Eng = false;
-                msg = "SPAN";
-                Toast result4 = Toast.makeText(QuickNbyNActivity.this,
-                        "User chooses to fill in Spanish", Toast.LENGTH_LONG);
-                result4.setGravity(Gravity.TOP, 0, 400);
-                result4.show();
-                if (!InitializedGame || mistakeCount >= 3) {
-                    *//* If the game has not been initialized, and there had been more than 3 mistakes,
-                    A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
-                    *//*
-                    //Call the random function to update the list ********
-                    Log.d(TAG, "User chooses to fill in Spanish");
-                    //Start a new game with the same nine words. The sudoku will be pre-filled in English
-                    //After choosing "fill in Spanish", start a new game with Spanish
-                    for (i = 0; i < list.size(); i++) {
-                        Button_ids[i].setText(list.get(i).getSPAN());
-                    }
-                    if (listen_mode){
-                        getListenGameGrid(msg);
-                    }
-                    else{
-                        getGameGrid(msg);
-                    }
-                } else {
-                    //Temporary Toast
-                    Toast fin = Toast.makeText(QuickNbyNActivity.this, R.string.cant_init, Toast.LENGTH_LONG);
-                    fin.setGravity(Gravity.TOP, 0, 400);
-                    fin.show();
-                }
-                return true;
-
-            case R.id.display_words:
-                Log.d(TAG, "User chooses to see word pairs");
-
-                *//*
-                //Displays the warning dialog before displaying the word pairs translation
-                reinit_dialog Reinit_warn = new reinit_dialog(this);
-                Reinit_warn.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                Reinit_warn.show();  *//*
-
-                if (InitializedGame) {
-                    Intent display_w = new Intent(this, Display_Words.class);
-                    display_w.putParcelableArrayListExtra(KEY_wordlist, list);
-                    display_w.putExtra(KEY_GRID_SIZE, gridSize);
-                    display_w.putExtra(KEY_fill_Span, fill_Span);
-                    display_w.putExtra(KEY_fill_Eng, fill_Eng);
-                    display_w.putExtra(KEY_InitializedGame, InitializedGame);
-                    this.startActivity(display_w);
-                    Log.d(TAG, "Word pairs page loaded");
-                } else {
-                    //Do a new layout here. Display all word pairs
-                    Toast warn = Toast.makeText(this,"Please start a game first, then look at your chosen word pairs.", Toast.LENGTH_LONG);
-                    warn.setGravity(Gravity.TOP,0,500);
-                    warn.show();
-                }
-                return true;
-
-            case R.id.load_wordpairs:
-                *//*intent = new Intent(QuickNbyNActivity.this, Load_Pairs.class);
-                startActivityForResult(intent, 1); *//*
-                //Do nothing
-                return true;
-
-            case R.id.listen:
-                //listening comprehension mode
-                if (listen_mode) { //App already in listen mode. User clicks this option to exit listen mode.
-                    listen_mode = false;
-                    item.setTitle("Listen Comprehension Mode");
-                    Toast listen = Toast.makeText(QuickNbyNActivity.this,
-                            "Exiting Listen Comprehension Mode" ,Toast.LENGTH_LONG);
-                    listen.setGravity(Gravity.TOP, 0, 400);
-                    listen.show();
-                    Log.d(TAG, "Exiting Listening Comprehension Mode");
-                } else {
-                    listen_mode = true;
-                    // MenuItem listen = menu.findItem(R.id.listen);
-                    item.setTitle("Exit Listen Comprehension Mode");
-                    Toast listen = Toast.makeText(QuickNbyNActivity.this,
-                            "Entering Listen Comprehension Mode, " +
-                                    "please now choose a language to fill the sudoku in", Toast.LENGTH_LONG);
-                    //I could make a dialog here
-                    listen.setGravity(Gravity.TOP, 0, 400);
-                    listen.show();
-                    Log.d(TAG, "Entering Listen Comprehension Mode");
-                }
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
-
-
-    /*
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if(listen_mode){
-            MenuItem listen_t = menu.findItem(R.id.listen);
-            listen_t.setTitle("Exit Listen Comprehension Mode");
-            int xxxxx = 0;
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
-    */
 
     //After the grids are created, save the words
     @Override
