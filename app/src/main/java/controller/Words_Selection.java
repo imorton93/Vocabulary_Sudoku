@@ -193,8 +193,18 @@ public class Words_Selection extends AppCompatActivity {
                         params.width = 295;
                         params.height = 125;
                     }else {
-                        params.width = 225;
-                        params.height = 95;
+                        if (metrics.densityDpi < 200 && (getResources().getConfiguration().screenLayout &
+                                Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE){
+                            params.width = 125;
+                            params.height = 55;
+                        }else if (metrics.densityDpi < 300 && (getResources().getConfiguration().screenLayout &
+                                Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE){
+                            params.width = 145;
+                            params.height = 65;
+                        }else{
+                            params.width = 225;
+                            params.height = 95;
+                        }
                     }
                 }
 
@@ -231,7 +241,12 @@ public class Words_Selection extends AppCompatActivity {
                     gridLayout.addView(tv[i]);
                 }
             }else{
-                gridLayout.setColumnCount(gridSize);
+                if (gridSize == 12 && metrics.densityDpi < 300 && (getResources().getConfiguration().screenLayout &
+                        Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE){
+                    gridLayout.setColumnCount(gridSize/2);
+                }else{
+                    gridLayout.setColumnCount(gridSize);
+                }
                 for (int i = 0; i < gridSize; i++) {
                     tv[i] = new TextView(this);
                     tv[i].setText("");
@@ -241,8 +256,18 @@ public class Words_Selection extends AppCompatActivity {
                         params.height = 45;
                     }else{
                         if(gridSize == 12){
-                            params.width = 145;
-                            params.height = 90;
+                            if (metrics.densityDpi < 200 && (getResources().getConfiguration().screenLayout &
+                                    Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE){
+                                params.width = 85;
+                                params.height = 30;
+                            }else if (metrics.densityDpi < 300 && (getResources().getConfiguration().screenLayout &
+                                    Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE){
+                                params.width = 115;
+                                params.height = 45;
+                            }else{
+                                params.width = 145;
+                                params.height = 90;
+                            }
                         }else if(metrics.densityDpi < 400 && (getResources().getConfiguration().screenLayout &
                                 Configuration.SCREENLAYOUT_SIZE_MASK) <= 2) {
                             params.width = 115;
@@ -251,8 +276,18 @@ public class Words_Selection extends AppCompatActivity {
                             params.width = 225;
                             params.height = 105;
                         }else{
-                            params.width = 175;
-                            params.height = 90;
+                            if (metrics.densityDpi < 200 && (getResources().getConfiguration().screenLayout &
+                                    Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE){
+                                params.width = 95;
+                                params.height = 35;
+                            }else if (metrics.densityDpi < 300 && (getResources().getConfiguration().screenLayout &
+                                    Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE){
+                                params.width = 115;
+                                params.height = 45;
+                            }else{
+                                params.width = 175;
+                                params.height = 90;
+                            }
                         }
                     }
 
