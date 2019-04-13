@@ -78,8 +78,6 @@ public class finishPage extends AppCompatActivity {
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 gridButton[x][y] = findViewById(resID);
             }
-            String wordButton = "button" + (x+1);
-            int ID = getResources().getIdentifier(wordButton, "id", getPackageName());
         }
         int j = 0;
         for (int x = 0; x < gridSize; x++) {

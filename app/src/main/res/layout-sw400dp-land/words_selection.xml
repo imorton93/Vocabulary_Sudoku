@@ -40,14 +40,14 @@
 
         <Button
             android:id="@+id/prev"
-            android:layout_width="38dp"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:text="@string/prev" />
         <GridView
             android:id="@+id/selection_view"
-            android:layout_width="470dp"
-            android:layout_height="158dp"
+            android:layout_width="550dp"
+            android:layout_height="190dp"
             android:horizontalSpacing="0.0dip"
             android:listSelector="@null"
             android:numColumns="9"
@@ -59,7 +59,7 @@
 
         <Button
             android:id="@+id/next"
-            android:layout_width="38dp"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
             android:text="@string/next" />
