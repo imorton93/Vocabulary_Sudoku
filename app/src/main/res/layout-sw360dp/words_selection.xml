@@ -26,9 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_view"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="156dp"
+            android:layout_marginLeft="196dp"
             android:layout_alignStart="@id/tv_view"
-            android:layout_marginStart="156dp" />
+            android:layout_marginStart="196dp" />
 
     </RelativeLayout>
 
@@ -49,8 +49,8 @@
 
         <GridView
             android:id="@+id/selection_view"
-            android:layout_width="234dp"
-            android:layout_height="190dp"
+            android:layout_width="274dp"
+            android:layout_height="240dp"
             android:horizontalSpacing="0.0dip"
             android:listSelector="@null"
             android:numColumns="6"

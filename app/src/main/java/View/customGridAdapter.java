@@ -81,7 +81,8 @@ public class customGridAdapter extends BaseAdapter {
 
         int  height = ((GridView) parent).getHeight();
         int orientation = mContext.getResources().getConfiguration().orientation;
-        if ( metrics.densityDpi == DisplayMetrics.DENSITY_XHIGH) {
+        if ((mContext.getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
             // on a large screen device ...
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 // In landscape

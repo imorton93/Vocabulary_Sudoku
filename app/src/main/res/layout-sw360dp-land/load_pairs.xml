@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:background="@color/colorAccent">
         <TextView
             android:layout_width="wrap_content"
@@ -25,16 +25,16 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_view"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="196dp"
+            android:layout_marginLeft="500dp"
             android:layout_alignStart="@id/tv_view"
-            android:layout_marginStart="196dp" />
+            android:layout_marginStart="500dp" />
 
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_height="200dp"
         android:background="@android:color/background_light">
 
         <GridView
@@ -45,54 +45,45 @@
 
         </GridView>
 
+
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/edit_file"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="EDIT EXISTED LISTS"
-            />
-
-        <Button
-            android:id="@+id/more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="LOAD MORE WORDS" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
 
         <Button
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="left"
             android:text="SAVE" />
 
+        <Button
+            android:id="@+id/edit_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="EDIT EXISTED LISTS" />
 
+        <Button
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="LOAD MORE WORDS" />
 
         <Button
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="left"
             android:text="BACK" />
-
-
-
     </LinearLayout>
+
 
 </LinearLayout>

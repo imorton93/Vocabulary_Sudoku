@@ -25,16 +25,16 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_view"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="500dp"
+            android:layout_marginLeft="400dp"
             android:layout_alignStart="@id/tv_view"
-            android:layout_marginStart="500dp" />
+            android:layout_marginStart="400dp" />
 
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="180dp"
         android:background="@android:color/background_light">
 
         <GridView

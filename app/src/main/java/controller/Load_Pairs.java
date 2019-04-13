@@ -184,7 +184,8 @@ public class Load_Pairs extends AppCompatActivity {
         int density = metrics.densityDpi;
         Log.d(TAG, "metrics.densityDpi of this device is " + density);
 
-        if (density == DisplayMetrics.DENSITY_XHIGH)  {
+        if ((getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE)  {
             // on a large screen device ...
             int orientation = this.getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
