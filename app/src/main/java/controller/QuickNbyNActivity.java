@@ -491,13 +491,13 @@ public class QuickNbyNActivity extends AppCompatActivity {
         if (fill_Eng){
             fill_Span = false;
             Toast result2 = Toast.makeText(QuickNbyNActivity.this,
-                    "User chooses to fill in English", Toast.LENGTH_LONG);
+                    "Fill in English", Toast.LENGTH_LONG);
             result2.setGravity(Gravity.TOP, 0, 400);
             result2.show();
                 /* If the game has not been initialized, and there had been more than 3 mistakes,
                 A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                 */
-                Log.d(TAG, "User chooses to fill in English");
+                Log.d(TAG, "Fill in English");
             String msg = "ENG";
             for (i = 0; i < list.size(); i++) {
                 Button_ids[i].setText(list.get(i).getENG());
@@ -513,13 +513,13 @@ public class QuickNbyNActivity extends AppCompatActivity {
         else if (fill_Span){
             fill_Eng = false;
             Toast result1 = Toast.makeText(QuickNbyNActivity.this,
-                    "User chooses to fill in Spanish", Toast.LENGTH_LONG);
+                    "Fill in Spanish", Toast.LENGTH_LONG);
             result1.setGravity(Gravity.TOP, 0, 400);
             result1.show();
                 /* If the game has not been initialized, and there had been more than 3 mistakes,
                 A new game is generated and the sudoku cells will be filled. [The functions that generate the sudoku will be called.
                 */
-             Log.d(TAG, "User chooses to fill in Spanish");
+             Log.d(TAG, "Fill in Spanish");
             String msg = "SPAN";
             for (i = 0; i < list.size(); i++) {
                 Button_ids[i].setText(list.get(i).getSPAN());
@@ -976,11 +976,13 @@ public class QuickNbyNActivity extends AppCompatActivity {
                     }
                     //set the Selected Buttons Text as text from input button
                 }
+                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
             }
         } else {
             //Normal mode
             if (SelectedButton != null) {
                 Button button = (Button) w;
+
                 // text of input button is extracted
                 CharSequence buttonText = button.getText();
                 /* when inserting a new word into puzzle, check if right or wrong
@@ -1031,6 +1033,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
                     //allow user to keep track of what they get correct
                 }
                 //set the Selected Buttons Text as text from input button
+                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
             }
         }
     }

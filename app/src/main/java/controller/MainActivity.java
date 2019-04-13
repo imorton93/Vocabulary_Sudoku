@@ -961,11 +961,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                     //set the Selected Buttons Text as text from input button
                 }
+                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
             }
         } else {
             //Normal mode
             if (SelectedButton != null) {
                 Button button = (Button) w;
+
                 // text of input button is extracted
                 CharSequence buttonText = button.getText();
                 /* when inserting a new word into puzzle, check if right or wrong
@@ -1016,6 +1018,7 @@ public class MainActivity extends AppCompatActivity {
                     //allow user to keep track of what they get correct
                 }
                 //set the Selected Buttons Text as text from input button
+                SelectedButton.setBackgroundResource(R.drawable.clicked_button);
             }
         }
     }
