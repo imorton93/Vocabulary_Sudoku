@@ -1,6 +1,7 @@
 package controller;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -279,7 +280,8 @@ public class SetUpPage extends AppCompatActivity {
 
         three_by_four = findViewById(R.id.t3by4);
         if (three_by_four != null) {
-            if (density == DisplayMetrics.DENSITY_XHIGH) {
+            if ((getResources().getConfiguration().screenLayout &
+                    Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE ) {
                 three_by_four.setVisibility(View.VISIBLE);
             } else {
                 three_by_four.setVisibility(View.GONE);
