@@ -7,8 +7,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@color/colorAccent">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -25,11 +26,12 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_view"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="500dp"
+            android:layout_marginLeft="236dp"
             android:layout_alignStart="@id/tv_view"
-            android:layout_marginStart="500dp" />
+            android:layout_marginStart="236dp" />
 
     </RelativeLayout>
+
 
     <GridLayout
         android:layout_width="wrap_content"
@@ -40,17 +42,18 @@
 
         <Button
             android:id="@+id/prev"
-            android:layout_width="38dp"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:text="@string/prev" />
+
         <GridView
             android:id="@+id/selection_view"
-            android:layout_width="470dp"
-            android:layout_height="158dp"
+            android:layout_width="317dp"
+            android:layout_height="280dp"
             android:horizontalSpacing="0.0dip"
             android:listSelector="@null"
-            android:numColumns="9"
+            android:numColumns="6"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:stretchMode="columnWidth"
             android:verticalSpacing="0.0dip">
@@ -59,7 +62,7 @@
 
         <Button
             android:id="@+id/next"
-            android:layout_width="38dp"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
             android:text="@string/next" />
@@ -74,17 +77,19 @@
         android:layout_gravity="center_horizontal"
         android:useDefaultMargins="true"
         android:id="@+id/grid_layout"
-        android:padding="3dp">
+        android:padding="7dp">
+
 
 
 
     </GridLayout>
 
+
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:padding="3dp">
+        android:padding="5dp">
 
         <Button
             android:id="@+id/undo"
@@ -101,7 +106,8 @@
             android:text="@string/start_game"/>
 
 
-
     </GridLayout>
+
+
 
 </LinearLayout>

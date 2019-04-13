@@ -42,15 +42,15 @@
 
         <Button
             android:id="@+id/prev"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:text="@string/prev" />
 
         <GridView
             android:id="@+id/selection_view"
-            android:layout_width="317dp"
-            android:layout_height="280dp"
+            android:layout_width="274dp"
+            android:layout_height="240dp"
             android:horizontalSpacing="0.0dip"
             android:listSelector="@null"
             android:numColumns="6"
@@ -62,7 +62,7 @@
 
         <Button
             android:id="@+id/next"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
             android:text="@string/next" />
@@ -77,7 +77,7 @@
         android:layout_gravity="center_horizontal"
         android:useDefaultMargins="true"
         android:id="@+id/grid_layout"
-        android:padding="7dp">
+        android:padding="4dp">
 
 
 
@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:padding="5dp">
+        android:padding="2dp">
 
         <Button
             android:id="@+id/undo"

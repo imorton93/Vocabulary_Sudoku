@@ -1009,7 +1009,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
                     }
                 }
                 if (!checkFilledWord(buttonText.toString())) {
-                    SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                    //SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
                     if(buttonText.length() > 6 && gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }
@@ -1022,7 +1022,7 @@ public class QuickNbyNActivity extends AppCompatActivity {
                     //ask user whether they want to save to My words
                 } else {
                     //if it's right, makes it green
-                    SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
+                    //SelectedButton.setBackgroundResource(R.drawable.unclicked_button);
                     if(buttonText.length() > 6 && gridSize != 4){
                         buttonText = buttonText.subSequence(0,6) + "..";
                     }

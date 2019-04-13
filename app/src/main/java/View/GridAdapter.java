@@ -88,6 +88,10 @@ public class GridAdapter extends BaseAdapter {
         if ( metrics.densityDpi == DisplayMetrics.DENSITY_XHIGH) {
             textView.setTextSize(20);
         }
+        if (metrics.densityDpi < 400 && (mContext.getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) <= 2){
+            textView.setTextSize(12);
+        }
 
         textView.setBackgroundResource(R.drawable.grid_items_border);
 
