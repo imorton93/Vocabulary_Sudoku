@@ -166,6 +166,11 @@ public class Words_Selection extends AppCompatActivity {
         int row = (int)Math.sqrt(gridSize);
         int col = gridSize/row;
 
+        Log.d(TAG, "(getResources().getConfiguration().screenLayout &\n" +
+                "                    Configuration.SCREENLAYOUT_SIZE_MASK) is " +(getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK));
+        Log.d(TAG, "metrics.densityDpi " +metrics.densityDpi);
+
         int orientation = this.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             gridLayout.setColumnCount(col);
@@ -174,14 +179,28 @@ public class Words_Selection extends AppCompatActivity {
                 tv[i] = new TextView(this);
                 tv[i].setText("");
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                params.width = 225;
-                params.height = 95;
+                if (metrics.densityDpi < 400 && (getResources().getConfiguration().screenLayout &
+                        Configuration.SCREENLAYOUT_SIZE_MASK) <= 2){
+                    params.width = 155;
+                    params.height = 65;
+                }else if (metrics.densityDpi >= 560) {
+                    params.width = 295;
+                    params.height = 125;
+                }
+                else {
+                    params.width = 225;
+                    params.height = 95;
+                }
                 tv[i].setLayoutParams(params);
                 tv[i].setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
                 tv[i].setBackgroundColor(Color.GRAY);
                 tv[i].setTextColor(Color.WHITE);
                 if ( metrics.densityDpi == DisplayMetrics.DENSITY_XHIGH) {
                     tv[i].setTextSize(20);
+                }
+                if(metrics.densityDpi < 400 && (getResources().getConfiguration().screenLayout &
+                        Configuration.SCREENLAYOUT_SIZE_MASK) <= 2){
+                    tv[i].setTextSize(12);
                 }
                 gridLayout.addView(tv[i]);
             }
@@ -213,6 +232,13 @@ public class Words_Selection extends AppCompatActivity {
                     if(gridSize == 12){
                         params.width = 145;
                         params.height = 90;
+                    }else if(metrics.densityDpi < 400 && (getResources().getConfiguration().screenLayout &
+                            Configuration.SCREENLAYOUT_SIZE_MASK) <= 2) {
+                        params.width = 115;
+                        params.height = 50;
+                    }else if (metrics.densityDpi >= 560) {
+                        params.width = 225;
+                        params.height = 105;
                     }else{
                         params.width = 175;
                         params.height = 90;
@@ -223,6 +249,10 @@ public class Words_Selection extends AppCompatActivity {
                     tv[i].setTextColor(Color.WHITE);
                     if ( metrics.densityDpi == DisplayMetrics.DENSITY_XHIGH) {
                         tv[i].setTextSize(17);
+                    }
+                    if(metrics.densityDpi < 400 && (getResources().getConfiguration().screenLayout &
+                            Configuration.SCREENLAYOUT_SIZE_MASK) <= 2){
+                        tv[i].setTextSize(11);
                     }
                     gridLayout.addView(tv[i]);
                 }
